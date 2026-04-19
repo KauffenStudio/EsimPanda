@@ -100,13 +100,47 @@ Deferred to future release. Tracked but not in current roadmap.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| *(populated during roadmap creation)* | | |
+| CAT-01 | Phase 2 | Pending |
+| CAT-02 | Phase 2 | Pending |
+| CAT-03 | Phase 2 | Pending |
+| CAT-04 | Phase 2 | Pending |
+| CHK-01 | Phase 3 | Pending |
+| CHK-02 | Phase 3 | Pending |
+| CHK-03 | Phase 3 | Pending |
+| CHK-04 | Phase 3 | Pending |
+| CHK-05 | Phase 3 | Pending |
+| DEL-01 | Phase 4 | Pending |
+| DEL-02 | Phase 4 | Pending |
+| DEL-03 | Phase 4 | Pending |
+| DEL-04 | Phase 2 | Pending |
+| MGT-01 | Phase 6 | Pending |
+| MGT-02 | Phase 6 | Pending |
+| MGT-03 | Phase 6 | Pending |
+| MGT-04 | Phase 6 | Pending |
+| ACC-01 | Phase 5 | Pending |
+| ACC-02 | Phase 5 | Pending |
+| ACC-03 | Phase 5 | Pending |
+| ACC-04 | Phase 5 | Pending |
+| GRW-01 | Phase 8 | Pending |
+| GRW-02 | Phase 7 | Pending |
+| GRW-03 | Phase 7 | Pending |
+| GRW-04 | Phase 8 | Pending |
+| UXD-01 | Phase 1 | Pending |
+| UXD-02 | Phase 9 | Pending |
+| UXD-03 | Phase 9 | Pending |
+| UXD-04 | Phase 9 | Pending |
+| INF-01 | Phase 1 | Pending |
+| INF-02 | Phase 1 | Pending |
+| INF-03 | Phase 4 | Pending |
+| INF-04 | Phase 4 | Pending |
+| INF-05 | Phase 3 | Pending |
+| INF-06 | Phase 1 | Pending |
 
 **Coverage:**
-- v1 requirements: 29 total
-- Mapped to phases: 0
-- Unmapped: 29 ⚠️
+- v1 requirements: 35 total
+- Mapped to phases: 35
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-04-19*
-*Last updated: 2026-04-19 after initial definition*
+*Last updated: 2026-04-19 after roadmap creation*
