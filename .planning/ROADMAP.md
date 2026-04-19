@@ -25,21 +25,21 @@ Decimal phases appear between their surrounding integers in numeric order.
 ## Phase Details
 
 ### Phase 1: Foundation and Design System
-**Goal**: Project skeleton is running with database schema deployed, wholesale provider abstraction established, i18n framework wired, and the premium design system (Tailwind + Framer Motion) producing animated, mobile-first UI components
+**Goal**: Project skeleton is running with database schema deployed, wholesale provider abstraction established, i18n framework wired, and the premium design system (Tailwind + Motion) producing animated, mobile-first UI components
 **Depends on**: Nothing (first phase)
 **Requirements**: INF-01, INF-02, INF-06, UXD-01
 **Success Criteria** (what must be TRUE):
   1. Next.js 15 app deploys to Vercel with Supabase connected and database schema migrated
   2. Provider abstraction layer exists with a normalized interface that can swap wholesale providers without changing business logic
   3. Catalog sync job runs on schedule and populates local database with plan data from wholesale API
-  4. Design system produces animated, mobile-first components with Framer Motion micro-interactions
+  4. Design system produces animated, mobile-first components with Motion micro-interactions
   5. i18n framework is wired so all user-facing strings go through translation keys (even if only EN exists)
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 01-01: TBD
-- [ ] 01-02: TBD
-- [ ] 01-03: TBD
+- [ ] 01-01-PLAN.md -- Project skeleton, DB schema, provider abstraction with CELITECH adapter
+- [ ] 01-02-PLAN.md -- Design system UI primitives, layout components, Bambu mascot pose system
+- [ ] 01-03-PLAN.md -- i18n wiring with next-intl, catalog sync cron endpoint, app shell integration
 
 ### Phase 2: Catalog and Browsing
 **Goal**: Users can browse eSIM plans by destination, filter by duration/data/price, view regional plans, compare plans side-by-side, and check device compatibility -- all from cached local data (never hitting wholesale API on page load)
@@ -169,7 +169,7 @@ Note: Phase 8 depends on Phase 5 (not Phase 7), so it could run in parallel with
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation and Design System | 0/3 | Not started | - |
+| 1. Foundation and Design System | 0/3 | Planning complete | - |
 | 2. Catalog and Browsing | 0/2 | Not started | - |
 | 3. Checkout and Payments | 0/2 | Not started | - |
 | 4. eSIM Delivery | 0/2 | Not started | - |
