@@ -1,8 +1,23 @@
-# eSIM Reseller Platform
+# eSIM Panda
 
 ## What This Is
 
-A mobile-first eSIM reseller platform targeting international students (Erasmus, exchange) and young travelers in Europe. Users can browse destinations, purchase data plans (24h to semester-long), receive instant QR code activation, top-up data, and manage active eSIMs — all in a few taps with Apple Pay, PayPal, or Google Pay. The platform differentiates through student-focused pricing (30% discount), brutally good UX with animations, guided device-specific setup, and long-duration plans nobody else offers.
+A mobile-first eSIM reseller platform called **eSIM Panda**, targeting international students (Erasmus, exchange) and young travelers in Europe. Users can browse destinations, purchase data plans (24h to semester-long), receive instant QR code activation, top-up data, and manage active eSIMs — all in a few taps with Apple Pay, PayPal, or Google Pay. The platform differentiates through student-focused pricing (30% discount), brutally good UX with animations, guided device-specific setup, and long-duration plans nobody else offers.
+
+## Brand Identity
+
+**Name:** eSIM Panda
+**Mascot:** A panda character that appears throughout the app as an interactive companion:
+- **Idle/Browse:** Panda sits relaxed, occasionally blinks or waves — subtle ambient animation
+- **Searching:** Panda peers through binoculars or holds a magnifying glass while user browses destinations
+- **Checkout:** Panda gives a thumbs up or does a happy bounce when payment succeeds
+- **QR Delivery:** Panda "hands" the QR code to the user with a celebratory animation
+- **Loading states:** Panda munches bamboo or does a little dance instead of boring spinners
+- **Empty states:** Panda looks curious/inviting ("No eSIMs yet? Let's fix that!")
+- **Errors:** Panda looks apologetic with a sweat drop
+- **Setup guide:** Panda walks alongside the user, pointing at each step
+
+The panda creates emotional connection with the young audience, makes the brand instantly recognizable, and turns utility moments (loading, errors) into delightful micro-interactions.
 
 ## Core Value
 
@@ -63,6 +78,7 @@ A student arriving in a new country gets connected with mobile data in under 2 m
 | Web app (not native) | Faster to build, no app store approval, instant access via link | — Pending |
 | Markup pricing model | Simple, proven (Airalo model), healthy margins ~60% | — Pending |
 | Student discount 30% | Key differentiator, still profitable at wholesale margins | — Pending |
+| Brand: eSIM Panda | Panda mascot with interactive animations throughout UX — emotional connection with young audience | — Pending |
 
 ---
-*Last updated: 2026-04-19 after initialization*
+*Last updated: 2026-04-19 after brand identity defined*
