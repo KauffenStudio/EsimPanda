@@ -52,13 +52,17 @@ Exceptions:
 | Role | Size | Weight | Line Height | Usage |
 |------|------|--------|-------------|-------|
 | Body | 16px | 400 (Regular) | 1.5 | Paragraph text, descriptions, form labels |
-| Label | 14px | 500 (Medium) | 1.4 | Nav tab labels, badges, metadata, captions |
+| Label | 14px | 400 (Regular) | 1.4 | Nav tab labels, badges, metadata, captions |
 | Heading | 24px | 700 (Bold) | 1.2 | Page titles, section headings, card titles |
-| Display | 36px | 800 (ExtraBold) | 1.1 | Landing page hero headline, marketing callouts |
+| Display | 36px | 700 (Bold) | 1.1 | Landing page hero headline, marketing callouts |
 
-**Weights used:** 400 (Regular) and 700 (Bold) are the two primary weights. 500 (Medium) is used only for labels/nav. 800 (ExtraBold) is used only for the display/hero size.
+**Weights used:** 400 (Regular) and 700 (Bold) only. Two weights total.
 
-**Font loading:** Plus Jakarta Sans via `next/font/google` with `subsets: ['latin']` and `display: 'swap'`. Weights: 400, 500, 700, 800.
+**Label differentiation:** Labels are distinguished from Body by their smaller 14px size. Where additional visual separation is needed (e.g., nav tab labels, badge text, section overlines), use `letter-spacing: 0.02em` and/or `text-transform: uppercase` rather than a separate font weight.
+
+**Display emphasis:** The Display role achieves visual hierarchy through its large 36px size at 700 Bold. No heavier weight is needed -- the size difference from Heading (24px) provides sufficient contrast.
+
+**Font loading:** Plus Jakarta Sans via `next/font/google` with `subsets: ['latin']` and `display: 'swap'`. Weights: `['400', '700']`.
 
 ---
 
@@ -113,6 +117,14 @@ Exceptions:
 | accent | #2979FF | #448AFF (slightly lighter for dark bg contrast) |
 
 Dark mode activation: Manual toggle only (per CONTEXT.md decision). Stored in Zustand, persisted to localStorage. No system auto-detect.
+
+---
+
+## Focal Point
+
+**Landing page primary anchor:** Bambu hero illustration centered horizontally in the viewport upper-third, with the Display headline ("Get Connected Anywhere") directly above and the "Get Connected" CTA button immediately below. The eye path flows: headline -> Bambu illustration -> CTA button, in a single vertical axis. The accent-colored CTA is the strongest contrast element on the page, drawing the final click action.
+
+**Interior pages primary anchor:** The page heading (24px Bold) at the top-left of the content area, immediately below the sticky header. Content flows top-to-bottom in a single scrollable column.
 
 ---
 
