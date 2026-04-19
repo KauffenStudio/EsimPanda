@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { createProvider, type ESIMProvider } from '../provider';
+import { createProvider } from '../provider';
 
 describe('createProvider', () => {
   it('returns an object with all 5 ESIMProvider methods', () => {
