@@ -1,16 +1,20 @@
 'use client';
 
 import { motion } from 'motion/react';
-import { type ButtonHTMLAttributes, type ReactNode } from 'react';
+import { type ReactNode } from 'react';
 
 type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'destructive';
 type ButtonSize = 'sm' | 'md' | 'lg';
 
-interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'type'> {
+interface ButtonProps {
   variant?: ButtonVariant;
   size?: ButtonSize;
   children: ReactNode;
+  className?: string;
+  disabled?: boolean;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   type?: 'button' | 'submit' | 'reset';
+  'aria-label'?: string;
 }
 
 const variantStyles: Record<ButtonVariant, string> = {
@@ -34,7 +38,7 @@ export function Button({
   disabled,
   onClick,
   type = 'button',
-  ...props
+  'aria-label': ariaLabel,
 }: ButtonProps) {
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (typeof navigator !== 'undefined' && navigator.vibrate) {
@@ -50,8 +54,8 @@ export function Button({
       onClick={handleClick}
       whileTap={disabled ? undefined : { scale: 0.97 }}
       transition={{ duration: 0.15, ease: 'easeInOut' }}
+      aria-label={ariaLabel}
       className={`inline-flex items-center justify-center rounded-button font-semibold min-h-[44px] transition-colors duration-150 ease-in-out ${variantStyles[variant]} ${sizeStyles[size]} ${disabled ? 'opacity-50 pointer-events-none' : ''} ${className}`}
-      {...props}
     >
       {children}
     </motion.button>
