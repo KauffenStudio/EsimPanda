@@ -52,7 +52,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### UX/Design
 
-- [ ] **UXD-01**: App has premium animations and micro-interactions (Framer Motion)
+- [x] **UXD-01**: App has premium animations and micro-interactions (Framer Motion)
 - [ ] **UXD-02**: App is installable as PWA (add to home screen)
 - [ ] **UXD-03**: App supports dark mode (auto-detect + manual toggle)
 - [ ] **UXD-04**: User receives push notifications for eSIM expiry and promotions
@@ -125,7 +125,7 @@ Deferred to future release. Tracked but not in current roadmap.
 | GRW-02 | Phase 7 | Pending |
 | GRW-03 | Phase 7 | Pending |
 | GRW-04 | Phase 8 | Pending |
-| UXD-01 | Phase 1 | Pending |
+| UXD-01 | Phase 1 | Complete |
 | UXD-02 | Phase 9 | Pending |
 | UXD-03 | Phase 9 | Pending |
 | UXD-04 | Phase 9 | Pending |
