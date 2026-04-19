@@ -59,8 +59,8 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Infrastructure
 
-- [ ] **INF-01**: Wholesale provider abstraction layer (swap providers without rewriting business logic)
-- [ ] **INF-02**: Catalog sync from wholesale API on schedule (never call wholesale API on page load)
+- [x] **INF-01**: Wholesale provider abstraction layer (swap providers without rewriting business logic)
+- [x] **INF-02**: Catalog sync from wholesale API on schedule (never call wholesale API on page load)
 - [ ] **INF-03**: Stripe webhook handlers for payment confirmation and eSIM provisioning
 - [ ] **INF-04**: QR codes stored encrypted with on-demand generation
 - [ ] **INF-05**: Stripe Radar + 3D Secure enabled for chargeback prevention
@@ -129,8 +129,8 @@ Deferred to future release. Tracked but not in current roadmap.
 | UXD-02 | Phase 9 | Pending |
 | UXD-03 | Phase 9 | Pending |
 | UXD-04 | Phase 9 | Pending |
-| INF-01 | Phase 1 | Pending |
-| INF-02 | Phase 1 | Pending |
+| INF-01 | Phase 1 | Complete |
+| INF-02 | Phase 1 | Complete |
 | INF-03 | Phase 4 | Pending |
 | INF-04 | Phase 4 | Pending |
 | INF-05 | Phase 3 | Pending |
