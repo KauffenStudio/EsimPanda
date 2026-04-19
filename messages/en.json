@@ -1,0 +1,31 @@
+{
+  "nav": {
+    "home": "Home",
+    "destinations": "Destinations",
+    "esims": "My eSIMs",
+    "profile": "Profile"
+  },
+  "theme": {
+    "dark": "Dark mode",
+    "light": "Light mode"
+  },
+  "landing": {
+    "headline": "Get Connected Anywhere",
+    "cta_primary": "Get Connected",
+    "cta_secondary": "Browse Plans"
+  },
+  "browse": {
+    "title": "Destinations",
+    "empty": "No destinations available yet. Check back soon!"
+  },
+  "dashboard": {
+    "title": "My eSIMs",
+    "empty_title": "No eSIMs yet",
+    "empty_body": "Find the perfect plan for your next destination. Bambu will help you get connected in minutes.",
+    "empty_cta": "Browse Destinations"
+  },
+  "errors": {
+    "generic": "Something went wrong. Try again or contact us on WhatsApp for help.",
+    "network": "Could not connect. Check your internet and try again."
+  }
+}
