@@ -27,7 +27,7 @@ Requirements for initial release. Each maps to roadmap phases.
 - [ ] **DEL-01**: User receives QR code on-screen immediately after successful payment
 - [ ] **DEL-02**: User receives QR code backup via email
 - [ ] **DEL-03**: User sees device-specific setup guide (step-by-step for their device model)
-- [ ] **DEL-04**: User can check device eSIM compatibility before purchasing
+- [x] **DEL-04**: User can check device eSIM compatibility before purchasing
 
 ### Management
 
@@ -112,7 +112,7 @@ Deferred to future release. Tracked but not in current roadmap.
 | DEL-01 | Phase 4 | Pending |
 | DEL-02 | Phase 4 | Pending |
 | DEL-03 | Phase 4 | Pending |
-| DEL-04 | Phase 2 | Pending |
+| DEL-04 | Phase 2 | Complete |
 | MGT-01 | Phase 6 | Pending |
 | MGT-02 | Phase 6 | Pending |
 | MGT-03 | Phase 6 | Pending |

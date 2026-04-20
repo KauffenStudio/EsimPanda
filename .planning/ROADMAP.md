@@ -171,7 +171,7 @@ Note: Phase 8 depends on Phase 5 (not Phase 7), so it could run in parallel with
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation and Design System | 0/3 | Planning complete | - |
-| 2. Catalog and Browsing | 1/3 | In Progress|  |
+| 2. Catalog and Browsing | 2/3 | In Progress|  |
 | 3. Checkout and Payments | 0/2 | Not started | - |
 | 4. eSIM Delivery | 0/2 | Not started | - |
 | 5. User Accounts | 0/1 | Not started | - |
