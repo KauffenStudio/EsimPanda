@@ -51,11 +51,12 @@ Plans:
   3. User can view multi-country/regional plans (e.g., Europe-wide coverage)
   4. User can compare 2-3 plans side by side on a comparison view
   5. User can check whether their device supports eSIM before starting a purchase
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 02-01: TBD
-- [ ] 02-02: TBD
+- [ ] 02-01-PLAN.md — Data layer (mock data, stores, hooks) + destination grid with search, photo cards, regional plan, accordion
+- [ ] 02-02-PLAN.md — Plan cards with auto-tagging, duration filter chips, comparison bar and bottom sheet
+- [ ] 02-03-PLAN.md — Device eSIM compatibility checker (static JSON, store with localStorage, picker UI)
 
 ### Phase 3: Checkout and Payments
 **Goal**: Users can purchase an eSIM plan through a fast, secure checkout flow with multiple payment methods, discount coupons, correct EU VAT handling, and chargeback prevention
@@ -170,7 +171,7 @@ Note: Phase 8 depends on Phase 5 (not Phase 7), so it could run in parallel with
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation and Design System | 0/3 | Planning complete | - |
-| 2. Catalog and Browsing | 0/2 | Not started | - |
+| 2. Catalog and Browsing | 0/3 | Planning complete | - |
 | 3. Checkout and Payments | 0/2 | Not started | - |
 | 4. eSIM Delivery | 0/2 | Not started | - |
 | 5. User Accounts | 0/1 | Not started | - |
