@@ -47,6 +47,29 @@ vi.mock('@/stores/browse', () => ({
   useBrowseStore: (selector: (state: typeof mockStore) => unknown) => selector(mockStore),
 }));
 
+// Mock comparison store
+vi.mock('@/stores/comparison', () => ({
+  useComparisonStore: (selector: (state: Record<string, unknown>) => unknown) =>
+    selector({
+      selectedPlanIds: [],
+      isSheetOpen: false,
+      togglePlan: vi.fn(),
+      clearSelection: vi.fn(),
+      openSheet: vi.fn(),
+      closeSheet: vi.fn(),
+    }),
+}));
+
+// Mock motion/react
+vi.mock('motion/react', () => ({
+  motion: {
+    div: ({ children, ...props }: { children?: React.ReactNode; [key: string]: unknown }) => (
+      <div {...props}>{children}</div>
+    ),
+  },
+  AnimatePresence: ({ children }: { children?: React.ReactNode }) => <>{children}</>,
+}));
+
 describe('DestinationGrid', () => {
   beforeEach(() => {
     mockStore.searchQuery = '';
@@ -75,9 +98,10 @@ describe('DestinationGrid', () => {
     expect(screen.getByText(/No plans for "zzzznotfound" yet/)).toBeInTheDocument();
   });
 
-  it('expands accordion when destination card is clicked', () => {
+  it('expands accordion with plan cards when destination is expanded', () => {
     mockStore.expandedDestination = 'france';
     render(<DestinationGrid />);
-    expect(screen.getByText('Plans loading...')).toBeInTheDocument();
+    // Should show duration filter chips and plan cards instead of loading placeholder
+    expect(screen.getByText('browse.filterAll')).toBeInTheDocument();
   });
 });

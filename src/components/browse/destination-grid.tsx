@@ -4,14 +4,46 @@ import { memo } from 'react';
 import { useTranslations } from 'next-intl';
 import { useDestinations } from '@/hooks/use-destinations';
 import { useBrowseStore } from '@/stores/browse';
+import { usePlans } from '@/hooks/use-plans';
 import { getStartingPrice } from '@/lib/mock-data/plans';
+import { tagPlans } from '@/lib/mock-data/tag-plans';
 import { DestinationSearch } from './destination-search';
 import { DestinationCard } from './destination-card';
 import { RegionalPlanCard } from './regional-plan-card';
 import { PlanAccordion } from './plan-accordion';
+import { DurationFilter } from './duration-filter';
+import { PlanCard } from './plan-card';
+import { ComparisonBar } from './comparison-bar';
+import { ComparisonSheet } from './comparison-sheet';
 import { BambuEmpty } from '@/components/bambu/bambu-empty';
 
 const MemoizedDestinationCard = memo(DestinationCard);
+
+function PlanList({ destinationId }: { destinationId: string }) {
+  const { plans } = usePlans(destinationId);
+  const taggedPlans = tagPlans(plans);
+
+  return (
+    <div className="flex flex-col gap-2 p-4">
+      <DurationFilter />
+      {taggedPlans.length === 0 ? (
+        <p className="text-center text-gray-400 py-4">No plans match this filter</p>
+      ) : (
+        taggedPlans.map((plan) => (
+          <PlanCard
+            key={plan.id}
+            id={plan.id}
+            data_gb={plan.data_gb}
+            duration_days={plan.duration_days}
+            retail_price_cents={plan.retail_price_cents}
+            isBestValue={plan.isBestValue}
+            isMostPopular={plan.isMostPopular}
+          />
+        ))
+      )}
+    </div>
+  );
+}
 
 export function DestinationGrid() {
   const t = useTranslations();
@@ -48,9 +80,7 @@ export function DestinationGrid() {
               {expandedDestination === dest.slug && (
                 <div className="col-span-full">
                   <PlanAccordion isOpen={true}>
-                    <div className="p-4 text-center text-gray-400">
-                      Plans loading...
-                    </div>
+                    <PlanList destinationId={dest.id} />
                   </PlanAccordion>
                 </div>
               )}
@@ -58,6 +88,9 @@ export function DestinationGrid() {
           ))}
         </div>
       )}
+
+      <ComparisonBar />
+      <ComparisonSheet />
     </div>
   );
 }
