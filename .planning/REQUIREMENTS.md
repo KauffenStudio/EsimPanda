@@ -9,9 +9,9 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Catalog
 
-- [ ] **CAT-01**: User can browse eSIM plans by destination country (Europe-first)
+- [x] **CAT-01**: User can browse eSIM plans by destination country (Europe-first)
 - [ ] **CAT-02**: User can filter plans by duration (24h, 7d, 14d, 30d, semester), data amount, and price
-- [ ] **CAT-03**: User can view multi-country/regional plans (e.g., Europe-wide)
+- [x] **CAT-03**: User can view multi-country/regional plans (e.g., Europe-wide)
 - [ ] **CAT-04**: User can compare 2-3 plans side by side
 
 ### Checkout
@@ -100,9 +100,9 @@ Deferred to future release. Tracked but not in current roadmap.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| CAT-01 | Phase 2 | Pending |
+| CAT-01 | Phase 2 | Complete |
 | CAT-02 | Phase 2 | Pending |
-| CAT-03 | Phase 2 | Pending |
+| CAT-03 | Phase 2 | Complete |
 | CAT-04 | Phase 2 | Pending |
 | CHK-01 | Phase 3 | Pending |
 | CHK-02 | Phase 3 | Pending |
