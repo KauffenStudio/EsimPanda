@@ -16,7 +16,25 @@
   },
   "browse": {
     "title": "Destinations",
-    "empty": "No destinations available yet. Check back soon!"
+    "empty": "No destinations available yet. Check back soon!",
+    "searchPlaceholder": "Search destinations...",
+    "europePlan": "Europe-Wide Coverage",
+    "europeDescription": "One plan, 30+ countries",
+    "from": "from",
+    "noResults": "No plans for \"{query}\" yet",
+    "noResultsSuggestion": "Try the Europe-wide plan or browse popular destinations",
+    "comingSoon": "Coming soon",
+    "filterAll": "All",
+    "filter24h": "24h",
+    "filter7d": "7 days",
+    "filter14d": "14 days",
+    "filter30d": "30 days",
+    "filterSemester": "90+ days",
+    "bestValue": "Best Value",
+    "mostPopular": "Most Popular",
+    "compare": "Compare",
+    "selectToCompare": "Select to compare",
+    "deviceCheck": "Check compatibility"
   },
   "dashboard": {
     "title": "My eSIMs",
