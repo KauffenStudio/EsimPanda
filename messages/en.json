@@ -34,7 +34,14 @@
     "mostPopular": "Most Popular",
     "compare": "Compare",
     "selectToCompare": "Select to compare",
-    "deviceCheck": "Check compatibility"
+    "deviceCheck": "Check Device Compatibility",
+    "selectBrand": "Select brand...",
+    "selectModel": "Select model...",
+    "checkButton": "Check Compatibility",
+    "deviceCompatible": "Your {brand} {model} supports eSIM!",
+    "deviceIncompatible": "Sorry, {brand} {model} doesn't support eSIM",
+    "browseAnyway": "Browse anyway",
+    "resetDevice": "Check a different device"
   },
   "dashboard": {
     "title": "My eSIMs",
