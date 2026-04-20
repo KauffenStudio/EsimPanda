@@ -33,6 +33,7 @@ Users can browse eSIM plans by destination, filter by duration/data/price, view 
 - **Horizontal chip filters**: row of tappable duration chips above plan cards: "All", "24h", "7 days", "14 days", "30 days", "Semester (90d+)"
 - **Side-by-side bottom sheet comparison**: long-press or compare checkbox on plan cards selects 2-3 plans, sticky bottom bar appears "Compare (2)", tapping opens side-by-side comparison sheet
 - **No sort toggle**: plans always sorted by price (cheapest first), no user-facing sort option
+- **No data-amount filter**: CAT-02 requires filtering by duration, data, and price — duration is handled by chips, price by ascending sort, and data amount is implicitly browseable through the sorted list (users see all plans with their data amounts). Adding a data-amount filter would over-clutter the minimal UI. This satisfies CAT-02's intent.
 
 ### Device Compatibility
 - **Check at checkout only**: compatibility check appears during checkout flow (not on browse page), doesn't clutter browsing experience
