@@ -24,6 +24,10 @@
     "empty_body": "Find the perfect plan for your next destination. Bambu will help you get connected in minutes.",
     "empty_cta": "Browse Destinations"
   },
+  "profile": {
+    "title": "Profile",
+    "empty": "Sign in to manage your eSIMs, view purchase history, and track your data usage."
+  },
   "errors": {
     "generic": "Something went wrong. Try again or contact us on WhatsApp for help.",
     "network": "Could not connect. Check your internet and try again."

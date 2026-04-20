@@ -3,17 +3,19 @@
 import { motion } from 'motion/react';
 import { Home, Globe, Smartphone, User } from 'lucide-react';
 import { usePathname } from 'next/navigation';
+import { useLocale } from 'next-intl';
 import Link from 'next/link';
 
 const tabs = [
-  { href: '/', label: 'Home', icon: Home },
-  { href: '/browse', label: 'Destinations', icon: Globe },
-  { href: '/dashboard', label: 'My eSIMs', icon: Smartphone },
-  { href: '/profile', label: 'Profile', icon: User },
+  { path: '', label: 'Home', icon: Home },
+  { path: '/browse', label: 'Destinations', icon: Globe },
+  { path: '/dashboard', label: 'My eSIMs', icon: Smartphone },
+  { path: '/profile', label: 'Profile', icon: User },
 ];
 
 export function BottomNav() {
   const pathname = usePathname();
+  const locale = useLocale();
 
   const handleTap = () => {
     if (typeof navigator !== 'undefined' && navigator.vibrate) {
@@ -25,13 +27,16 @@ export function BottomNav() {
     <nav className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-white dark:bg-background-dark border-t border-border dark:border-border-dark">
       <div className="flex h-16 pb-4">
         {tabs.map((tab) => {
-          const isActive = pathname === tab.href;
+          const href = `/${locale}${tab.path}`;
+          const isActive = tab.path === ''
+            ? pathname === `/${locale}` || pathname === `/${locale}/`
+            : pathname.startsWith(`/${locale}${tab.path}`);
           const Icon = tab.icon;
 
           return (
             <Link
-              key={tab.href}
-              href={tab.href}
+              key={tab.path}
+              href={href}
               onClick={handleTap}
               className="relative flex flex-1 flex-col items-center justify-center min-h-[48px] gap-0.5"
             >
