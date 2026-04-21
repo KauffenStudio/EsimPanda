@@ -16,6 +16,8 @@ import { PaymentDivider } from './payment-divider';
 import { CardPayment } from './card-payment';
 import { PayButton } from './pay-button';
 import { CheckoutSkeleton } from './checkout-skeleton';
+import { PaymentProcessing } from './payment-processing';
+import { PaymentError } from './payment-error';
 
 interface CheckoutPageProps {
   plan: MockPlan;
@@ -26,6 +28,7 @@ export function CheckoutPage({ plan, couponFromUrl }: CheckoutPageProps) {
   const {
     client_secret,
     payment_status,
+    error_message,
     setClientSecret,
     setPricing,
     setPlan,
@@ -121,12 +124,13 @@ export function CheckoutPage({ plan, couponFromUrl }: CheckoutPageProps) {
           <PayButton />
         </div>
 
-        {/* Payment status overlays are wired in Task 2 */}
-        {payment_status === 'processing' && (
-          <div data-testid="processing-placeholder" />
-        )}
+        {/* Payment status overlays */}
+        {payment_status === 'processing' && <PaymentProcessing />}
         {payment_status === 'failed' && (
-          <div data-testid="error-placeholder" />
+          <PaymentError
+            errorType={(error_message as 'declined' | 'network' | 'generic') || 'generic'}
+            onRetry={() => setPaymentStatus('idle')}
+          />
         )}
       </Elements>
     </div>
