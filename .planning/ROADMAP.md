@@ -14,7 +14,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [ ] **Phase 1: Foundation and Design System** - Project skeleton, database schema, provider abstraction layer, i18n framework, and premium design system
 - [x] **Phase 2: Catalog and Browsing** - Wholesale API sync, destination pages, plan browsing with filters, comparison, and device compatibility check (completed 2026-04-20)
-- [ ] **Phase 3: Checkout and Payments** - Guest checkout, Stripe integration (card, Apple Pay, Google Pay, PayPal), coupon application, VAT compliance, and fraud prevention
+- [x] **Phase 3: Checkout and Payments** - Guest checkout, Stripe integration (card, Apple Pay, Google Pay, PayPal), coupon application, VAT compliance, and fraud prevention (completed 2026-04-21)
 - [ ] **Phase 4: eSIM Delivery** - QR code generation and delivery (web + email), webhook-driven provisioning pipeline, and device-specific setup guides
 - [ ] **Phase 5: User Accounts** - Guest-to-account conversion, email/password auth, password reset, persistent sessions
 - [ ] **Phase 6: eSIM Management** - Active eSIM dashboard, data usage tracking, top-up flow, purchase history
@@ -172,7 +172,7 @@ Note: Phase 8 depends on Phase 5 (not Phase 7), so it could run in parallel with
 |-------|----------------|--------|-----------|
 | 1. Foundation and Design System | 0/3 | Planning complete | - |
 | 2. Catalog and Browsing | 3/3 | Complete   | 2026-04-20 |
-| 3. Checkout and Payments | 1/2 | In Progress|  |
+| 3. Checkout and Payments | 2/2 | Complete   | 2026-04-21 |
 | 4. eSIM Delivery | 0/2 | Not started | - |
 | 5. User Accounts | 0/1 | Not started | - |
 | 6. eSIM Management | 0/2 | Not started | - |

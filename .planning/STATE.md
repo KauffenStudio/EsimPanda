@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: unknown
-stopped_at: Completed 03-01-PLAN.md
-last_updated: "2026-04-21T08:56:35.708Z"
+status: active
+stopped_at: Completed 03-02-PLAN.md
+last_updated: "2026-04-21T09:31:00.000Z"
 progress:
   total_phases: 9
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 8
-  completed_plans: 7
+  completed_plans: 8
 ---
 
 # Project State
@@ -23,8 +23,8 @@ See: .planning/PROJECT.md (updated 2026-04-19)
 
 ## Current Position
 
-Phase: 03 (checkout-and-payments) — EXECUTING
-Plan: 2 of 2
+Phase: 03 (checkout-and-payments) — COMPLETE
+Plan: 2 of 2 (all plans complete)
 
 ## Performance Metrics
 
@@ -52,6 +52,7 @@ Plan: 2 of 2
 | Phase 02 P03 | 2min | 2 tasks | 5 files |
 | Phase 02 P02 | 4min | 2 tasks | 11 files |
 | Phase 03-01 P01 | 8min | 2 tasks | 22 files |
+| Phase 03-02 P02 | 35min | 3 tasks | 30 files |
 
 ## Accumulated Context
 
@@ -73,6 +74,10 @@ Recent decisions affecting current work:
 - [Phase 03-01]: Relaxed plan_id schema from uuid() to min(1) for mock data compatibility
 - [Phase 03-01]: Installed @stripe/stripe-js for type-safe Stripe Elements config
 - [Phase 03-01]: EU VAT rates hardcoded for 27 member states; production uses Stripe Tax API
+- [Phase 03-02]: Mock mode (NEXT_PUBLIC_STRIPE_MOCK=true) enables full checkout UI in dev without real Stripe keys
+- [Phase 03-02]: Success page redirect guard — payment_intent searchParam required to prevent spurious success display on refresh
+- [Phase 03-02]: Stable order ID derived from payment_intent suffix (ORD-{last8}) — deterministic, no regeneration on refresh
+- [Phase 03-02]: Pure CSS @keyframes confetti (40 particles) — no external library needed
 
 ### Pending Todos
 
@@ -86,6 +91,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-21T08:56:35.703Z
-Stopped at: Completed 03-01-PLAN.md
+Last session: 2026-04-21T09:31:00.000Z
+Stopped at: Completed 03-02-PLAN.md
 Resume file: None

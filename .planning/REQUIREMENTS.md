@@ -17,8 +17,8 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Checkout
 
 - [x] **CHK-01**: User can purchase an eSIM without creating an account (guest checkout, email only)
-- [ ] **CHK-02**: User can pay with Apple Pay or Google Pay via Stripe
-- [ ] **CHK-03**: User can pay with PayPal
+- [x] **CHK-02**: User can pay with Apple Pay or Google Pay via Stripe
+- [x] **CHK-03**: User can pay with PayPal
 - [x] **CHK-04**: User can apply a student/traveler discount coupon (30% off)
 - [x] **CHK-05**: System processes EU VAT correctly via Stripe Tax (OSS compliance)
 
@@ -105,8 +105,8 @@ Deferred to future release. Tracked but not in current roadmap.
 | CAT-03 | Phase 2 | Complete |
 | CAT-04 | Phase 2 | Complete |
 | CHK-01 | Phase 3 | Complete |
-| CHK-02 | Phase 3 | Pending |
-| CHK-03 | Phase 3 | Pending |
+| CHK-02 | Phase 3 | Complete |
+| CHK-03 | Phase 3 | Complete |
 | CHK-04 | Phase 3 | Complete |
 | CHK-05 | Phase 3 | Complete |
 | DEL-01 | Phase 4 | Pending |
