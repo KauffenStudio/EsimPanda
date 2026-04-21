@@ -1,7 +1,8 @@
 ---
 phase: 3
 slug: checkout-and-payments
-status: draft
+status: approved
+reviewed_at: 2026-04-21
 shadcn_initialized: false
 preset: none
 created: 2026-04-21
@@ -195,10 +196,10 @@ These are the new components this phase must produce. All reuse existing primiti
 | Device check not checked | "Check your device compatibility" | `checkout.device.check` |
 | Coupon trigger link | "Have a code?" | `checkout.coupon.trigger` |
 | Coupon input placeholder | "Enter discount code" | `checkout.coupon.placeholder` |
-| Coupon apply button | "Apply" | `checkout.coupon.apply` |
+| Coupon apply button | "Apply Code" | `checkout.coupon.apply` |
 | Coupon applied feedback | "You save {amount}" | `checkout.coupon.savings` |
-| Coupon invalid error | "Invalid code" | `checkout.coupon.invalid` |
-| Coupon remove link | "Remove" | `checkout.coupon.remove` |
+| Coupon invalid error | "Invalid code — check spelling and try again" | `checkout.coupon.invalid` |
+| Coupon remove link | "Remove code" | `checkout.coupon.remove` |
 | Express checkout section | "Express checkout" | `checkout.express.title` |
 | Payment divider | "or pay with card" | `checkout.divider` |
 | Order summary heading | "Order summary" | `checkout.summary.title` |
