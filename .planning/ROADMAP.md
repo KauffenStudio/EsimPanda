@@ -68,11 +68,11 @@ Plans:
   3. User can pay with PayPal as an alternative payment method
   4. User can apply a student/traveler discount coupon and see the reduced price before confirming
   5. Checkout charges correct EU VAT based on customer location (Stripe Tax) and has 3D Secure + Radar enabled
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 03-01: TBD
-- [ ] 03-02: TBD
+- [ ] 03-01-PLAN.md — Checkout data layer: types, pricing/coupon/tax logic, Zustand store, mock API routes, Stripe config, unit tests
+- [ ] 03-02-PLAN.md — Checkout UI: Stripe Elements, all checkout components, coupon UX, Bambu payment status screens, success page, i18n
 
 ### Phase 4: eSIM Delivery
 **Goal**: After successful payment, the system provisions an eSIM via the wholesale API, generates and stores the QR code securely, and delivers it instantly on-screen and via email backup, alongside device-specific setup instructions
@@ -172,7 +172,7 @@ Note: Phase 8 depends on Phase 5 (not Phase 7), so it could run in parallel with
 |-------|----------------|--------|-----------|
 | 1. Foundation and Design System | 0/3 | Planning complete | - |
 | 2. Catalog and Browsing | 3/3 | Complete   | 2026-04-20 |
-| 3. Checkout and Payments | 0/2 | Not started | - |
+| 3. Checkout and Payments | 0/2 | Planning complete | - |
 | 4. eSIM Delivery | 0/2 | Not started | - |
 | 5. User Accounts | 0/1 | Not started | - |
 | 6. eSIM Management | 0/2 | Not started | - |
