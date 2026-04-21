@@ -8,7 +8,7 @@ export const checkoutFormSchema = z.object({
 
 export const createIntentRequestSchema = z.object({
   plan_id: z.string().min(1),
-  email: z.string().email(),
+  email: z.string().email().optional().or(z.literal('')),
   coupon_code: z.string().optional(),
 });
 

@@ -2,23 +2,29 @@
 
 import { useCallback, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { useStripe, useElements } from '@stripe/react-stripe-js';
 import { Button } from '@/components/ui/button';
 import { useCheckoutStore } from '@/stores/checkout';
+import { STRIPE_MOCK_MODE } from '@/lib/stripe/client';
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+// Conditionally import Stripe hooks only when not in mock mode
+function useStripeHooks() {
+  if (STRIPE_MOCK_MODE) return { stripe: null, elements: null };
+  // eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires
+  const { useStripe, useElements } = require('@stripe/react-stripe-js');
+  return { stripe: useStripe(), elements: useElements() };
+}
+
 export function PayButton() {
   const t = useTranslations('checkout');
-  const stripe = useStripe();
-  const elements = useElements();
+  const { stripe, elements } = useStripeHooks();
   const { email, total_cents, payment_status, setPaymentStatus } = useCheckoutStore();
   const [processing, setProcessing] = useState(false);
 
   const totalFormatted = (total_cents / 100).toFixed(2);
   const isDisabled =
-    !stripe ||
-    !elements ||
+    (!STRIPE_MOCK_MODE && (!stripe || !elements)) ||
     !email ||
     !EMAIL_REGEX.test(email) ||
     payment_status === 'processing' ||
@@ -26,7 +32,7 @@ export function PayButton() {
     processing;
 
   const handlePay = useCallback(async () => {
-    if (!stripe || !elements || isDisabled) return;
+    if (isDisabled) return;
 
     if (typeof navigator !== 'undefined' && navigator.vibrate) {
       navigator.vibrate(10);
@@ -34,6 +40,13 @@ export function PayButton() {
 
     setProcessing(true);
     setPaymentStatus('processing');
+
+    if (STRIPE_MOCK_MODE) {
+      // Simulate payment processing in mock mode
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      window.location.href = `${window.location.origin}/en/checkout/success?payment_intent=pi_mock_${Date.now()}`;
+      return;
+    }
 
     try {
       const { error } = await stripe.confirmPayment({
@@ -55,7 +68,6 @@ export function PayButton() {
         }
         setPaymentStatus('failed', errorType);
       }
-      // If no error, Stripe redirects to return_url
     } catch {
       setPaymentStatus('failed', 'generic');
     } finally {

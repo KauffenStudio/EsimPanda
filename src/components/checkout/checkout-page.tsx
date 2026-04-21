@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Elements } from '@stripe/react-stripe-js';
-import { getStripe } from '@/lib/stripe/client';
+import { getStripe, STRIPE_MOCK_MODE } from '@/lib/stripe/client';
 import { stripeAppearance } from '@/lib/stripe/config';
 import { useCheckoutStore } from '@/stores/checkout';
 import type { MockPlan } from '@/lib/mock-data/plans';
@@ -102,6 +102,52 @@ export function CheckoutPage({ plan, couponFromUrl }: CheckoutPageProps) {
     return <CheckoutSkeleton />;
   }
 
+  const checkoutContent = (
+    <>
+      <div className="flex flex-col gap-4">
+        <OrderSummary plan={plan} />
+        <EmailField />
+        <DeviceCheck />
+        <CouponInput />
+        {STRIPE_MOCK_MODE ? (
+          <div className="rounded-lg border border-border p-4 bg-surface text-center">
+            <p className="text-sm text-gray-500 mb-2">Payment methods</p>
+            <p className="text-xs text-gray-400">Stripe Elements will render here with real API keys</p>
+            <div className="mt-3 flex gap-2 justify-center">
+              <div className="h-8 w-16 rounded bg-gray-100 border border-gray-200 flex items-center justify-center text-xs text-gray-400">Apple</div>
+              <div className="h-8 w-16 rounded bg-gray-100 border border-gray-200 flex items-center justify-center text-xs text-gray-400">Google</div>
+              <div className="h-8 w-16 rounded bg-gray-100 border border-gray-200 flex items-center justify-center text-xs text-gray-400">PayPal</div>
+            </div>
+          </div>
+        ) : (
+          <>
+            <ExpressCheckout />
+            <PaymentDivider />
+            <CardPayment />
+          </>
+        )}
+        <PayButton />
+      </div>
+
+      {/* Payment status overlays */}
+      {payment_status === 'processing' && <PaymentProcessing />}
+      {payment_status === 'failed' && (
+        <PaymentError
+          errorType={(error_message as 'declined' | 'network' | 'generic') || 'generic'}
+          onRetry={() => setPaymentStatus('idle')}
+        />
+      )}
+    </>
+  );
+
+  if (STRIPE_MOCK_MODE) {
+    return (
+      <div className="w-full max-w-[480px] mx-auto px-4 pb-24 md:pb-8">
+        {checkoutContent}
+      </div>
+    );
+  }
+
   const stripePromise = getStripe();
 
   return (
@@ -113,25 +159,7 @@ export function CheckoutPage({ plan, couponFromUrl }: CheckoutPageProps) {
           appearance: stripeAppearance,
         }}
       >
-        <div className="flex flex-col gap-4">
-          <OrderSummary plan={plan} />
-          <EmailField />
-          <DeviceCheck />
-          <CouponInput />
-          <ExpressCheckout />
-          <PaymentDivider />
-          <CardPayment />
-          <PayButton />
-        </div>
-
-        {/* Payment status overlays */}
-        {payment_status === 'processing' && <PaymentProcessing />}
-        {payment_status === 'failed' && (
-          <PaymentError
-            errorType={(error_message as 'declined' | 'network' | 'generic') || 'generic'}
-            onRetry={() => setPaymentStatus('idle')}
-          />
-        )}
+        {checkoutContent}
       </Elements>
     </div>
   );
