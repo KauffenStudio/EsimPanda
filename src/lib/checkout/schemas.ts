@@ -2,12 +2,12 @@ import { z } from 'zod/v4';
 
 export const checkoutFormSchema = z.object({
   email: z.string().email(),
-  plan_id: z.string().uuid(),
+  plan_id: z.string().min(1),
   coupon_code: z.string().optional(),
 });
 
 export const createIntentRequestSchema = z.object({
-  plan_id: z.string().uuid(),
+  plan_id: z.string().min(1),
   email: z.string().email(),
   coupon_code: z.string().optional(),
 });
