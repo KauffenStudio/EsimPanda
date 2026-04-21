@@ -16,11 +16,11 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Checkout
 
-- [ ] **CHK-01**: User can purchase an eSIM without creating an account (guest checkout, email only)
+- [x] **CHK-01**: User can purchase an eSIM without creating an account (guest checkout, email only)
 - [ ] **CHK-02**: User can pay with Apple Pay or Google Pay via Stripe
 - [ ] **CHK-03**: User can pay with PayPal
-- [ ] **CHK-04**: User can apply a student/traveler discount coupon (30% off)
-- [ ] **CHK-05**: System processes EU VAT correctly via Stripe Tax (OSS compliance)
+- [x] **CHK-04**: User can apply a student/traveler discount coupon (30% off)
+- [x] **CHK-05**: System processes EU VAT correctly via Stripe Tax (OSS compliance)
 
 ### Delivery
 
@@ -63,7 +63,7 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **INF-02**: Catalog sync from wholesale API on schedule (never call wholesale API on page load)
 - [ ] **INF-03**: Stripe webhook handlers for payment confirmation and eSIM provisioning
 - [ ] **INF-04**: QR codes stored encrypted with on-demand generation
-- [ ] **INF-05**: Stripe Radar + 3D Secure enabled for chargeback prevention
+- [x] **INF-05**: Stripe Radar + 3D Secure enabled for chargeback prevention
 - [ ] **INF-06**: i18n framework wired from the start (even if translations come later)
 
 ## v2 Requirements
@@ -104,11 +104,11 @@ Deferred to future release. Tracked but not in current roadmap.
 | CAT-02 | Phase 2 | Complete |
 | CAT-03 | Phase 2 | Complete |
 | CAT-04 | Phase 2 | Complete |
-| CHK-01 | Phase 3 | Pending |
+| CHK-01 | Phase 3 | Complete |
 | CHK-02 | Phase 3 | Pending |
 | CHK-03 | Phase 3 | Pending |
-| CHK-04 | Phase 3 | Pending |
-| CHK-05 | Phase 3 | Pending |
+| CHK-04 | Phase 3 | Complete |
+| CHK-05 | Phase 3 | Complete |
 | DEL-01 | Phase 4 | Pending |
 | DEL-02 | Phase 4 | Pending |
 | DEL-03 | Phase 4 | Pending |
@@ -133,7 +133,7 @@ Deferred to future release. Tracked but not in current roadmap.
 | INF-02 | Phase 1 | Complete |
 | INF-03 | Phase 4 | Pending |
 | INF-04 | Phase 4 | Pending |
-| INF-05 | Phase 3 | Pending |
+| INF-05 | Phase 3 | Complete |
 | INF-06 | Phase 1 | Pending |
 
 **Coverage:**
