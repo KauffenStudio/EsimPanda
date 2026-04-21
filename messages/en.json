@@ -56,5 +56,55 @@
   "errors": {
     "generic": "Something went wrong. Try again or contact us on WhatsApp for help.",
     "network": "Could not connect. Check your internet and try again."
+  },
+  "checkout": {
+    "title": "Checkout",
+    "email": {
+      "label": "Email address",
+      "placeholder": "your@email.com",
+      "error": "Please enter a valid email address"
+    },
+    "device": {
+      "label": "Your device",
+      "compatible": "{brand} {model} -- eSIM compatible",
+      "incompatible": "This device may not support eSIM. You can still purchase for another device.",
+      "check": "Check your device compatibility"
+    },
+    "coupon": {
+      "trigger": "Have a code?",
+      "placeholder": "Enter discount code",
+      "apply": "Apply Code",
+      "savings": "You save EUR {amount}",
+      "invalid": "Invalid code -- check spelling and try again",
+      "remove": "Remove code"
+    },
+    "express": {
+      "title": "Express checkout"
+    },
+    "divider": "or pay with card",
+    "summary": {
+      "title": "Order summary",
+      "subtotal": "Subtotal",
+      "discount": "Student discount (30%)",
+      "vat": "VAT ({rate}%)",
+      "vatCalculating": "Calculating...",
+      "total": "Total"
+    },
+    "pay": "Pay EUR {amount}",
+    "success": {
+      "heading": "Your eSIM is ready!",
+      "order": "Order {id}",
+      "email": "Check your email for confirmation and setup instructions.",
+      "redirect": "Redirecting in {seconds}s...",
+      "dashboard": "Go to dashboard"
+    },
+    "error": {
+      "heading": "Payment failed",
+      "declined": "Your card was declined. Please try a different payment method.",
+      "generic": "Something went wrong. Please try again.",
+      "network": "Could not connect. Check your internet and try again.",
+      "retry": "Try again",
+      "contact": "Need help? Contact us on WhatsApp"
+    }
   }
 }
