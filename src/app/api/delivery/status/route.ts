@@ -15,6 +15,9 @@ export async function GET(request: NextRequest) {
   }
 
   const state = provisioningState.get(parsed.data.payment_intent);
+  // Response includes encrypted_payload (AES-256-GCM blob) when status is 'ready'.
+  // When Supabase is connected, this endpoint will fall back to DB read
+  // if payment_intent is not found in the in-memory Map.
 
   if (!state) {
     return NextResponse.json({ status: 'pending' });

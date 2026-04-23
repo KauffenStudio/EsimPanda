@@ -72,7 +72,7 @@ export function DeliveryPage({ paymentIntentId, email }: DeliveryPageProps) {
     fetch('/api/delivery/provision', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ payment_intent_id: paymentIntentId }),
+      body: JSON.stringify({ payment_intent_id: paymentIntentId, email }),
     }).catch(() => {
       // Provision request failed, polling will handle detection
     });
