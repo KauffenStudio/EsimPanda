@@ -2,7 +2,14 @@ import { Resend } from 'resend';
 import QRCode from 'qrcode';
 import { DeliveryEmail } from './templates/delivery-email';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Lazy-initialize to avoid constructor error when RESEND_API_KEY is not set (e.g. in tests/mock mode)
+let _resend: Resend | null = null;
+function getResend(): Resend {
+  if (!_resend) {
+    _resend = new Resend(process.env.RESEND_API_KEY);
+  }
+  return _resend;
+}
 
 export interface SendDeliveryEmailParams {
   to: string;
@@ -45,7 +52,7 @@ export async function sendDeliveryEmail(
   // is acceptable.
   const setupGuideUrl = `https://esimpanda.com/en/setup?order=${params.orderId}`;
 
-  const { data, error } = await resend.emails.send({
+  const { data, error } = await getResend().emails.send({
     from: 'eSIM Panda <noreply@esimpanda.com>',
     to: params.to,
     subject: `Your eSIM for ${params.destination} is ready!`,
