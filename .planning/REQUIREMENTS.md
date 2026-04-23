@@ -24,7 +24,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Delivery
 
-- [ ] **DEL-01**: User receives QR code on-screen immediately after successful payment
+- [x] **DEL-01**: User receives QR code on-screen immediately after successful payment
 - [ ] **DEL-02**: User receives QR code backup via email
 - [ ] **DEL-03**: User sees device-specific setup guide (step-by-step for their device model)
 - [x] **DEL-04**: User can check device eSIM compatibility before purchasing
@@ -61,8 +61,8 @@ Requirements for initial release. Each maps to roadmap phases.
 
 - [x] **INF-01**: Wholesale provider abstraction layer (swap providers without rewriting business logic)
 - [x] **INF-02**: Catalog sync from wholesale API on schedule (never call wholesale API on page load)
-- [ ] **INF-03**: Stripe webhook handlers for payment confirmation and eSIM provisioning
-- [ ] **INF-04**: QR codes stored encrypted with on-demand generation
+- [x] **INF-03**: Stripe webhook handlers for payment confirmation and eSIM provisioning
+- [x] **INF-04**: QR codes stored encrypted with on-demand generation
 - [x] **INF-05**: Stripe Radar + 3D Secure enabled for chargeback prevention
 - [ ] **INF-06**: i18n framework wired from the start (even if translations come later)
 
@@ -109,7 +109,7 @@ Deferred to future release. Tracked but not in current roadmap.
 | CHK-03 | Phase 3 | Complete |
 | CHK-04 | Phase 3 | Complete |
 | CHK-05 | Phase 3 | Complete |
-| DEL-01 | Phase 4 | Pending |
+| DEL-01 | Phase 4 | Complete |
 | DEL-02 | Phase 4 | Pending |
 | DEL-03 | Phase 4 | Pending |
 | DEL-04 | Phase 2 | Complete |
@@ -131,8 +131,8 @@ Deferred to future release. Tracked but not in current roadmap.
 | UXD-04 | Phase 9 | Pending |
 | INF-01 | Phase 1 | Complete |
 | INF-02 | Phase 1 | Complete |
-| INF-03 | Phase 4 | Pending |
-| INF-04 | Phase 4 | Pending |
+| INF-03 | Phase 4 | Complete |
+| INF-04 | Phase 4 | Complete |
 | INF-05 | Phase 3 | Complete |
 | INF-06 | Phase 1 | Pending |
 
