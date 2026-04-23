@@ -1,6 +1,7 @@
 import { encrypt } from './encryption';
 import { mockProvision } from '@/lib/mock-data/delivery';
 import { createProvider } from '@/lib/esim/provider';
+import { sendDeliveryEmail } from '@/lib/email/send-delivery';
 import type { ProvisionResult, DeliveryData } from './types';
 import type { NormalizedPurchase } from '@/lib/esim/types';
 
@@ -25,11 +26,11 @@ function extractSmdpAddress(activationCode: string): string {
 /**
  * Builds DeliveryData from a NormalizedPurchase response.
  */
-function buildDeliveryData(purchase: NormalizedPurchase): DeliveryData {
+function buildDeliveryData(purchase: NormalizedPurchase): DeliveryData & { encrypted_payload: string } {
   const smdpAddress = extractSmdpAddress(purchase.manualActivationCode);
 
-  // Encrypt sensitive activation data
-  encrypt(
+  // Encrypt sensitive activation data for DB persistence
+  const encrypted_payload = encrypt(
     JSON.stringify({
       activation_code: purchase.manualActivationCode,
       smdp_address: smdpAddress,
@@ -44,6 +45,7 @@ function buildDeliveryData(purchase: NormalizedPurchase): DeliveryData {
     smdp_address: smdpAddress,
     ios_activation_link: purchase.iosActivationLink,
     android_activation_link: purchase.androidActivationLink,
+    encrypted_payload,
   };
 }
 
@@ -61,7 +63,7 @@ function generateOrderId(paymentIntentId: string): string {
  * - In real mode, calls the ESIMProvider.purchase().
  * - Retries up to 3 times on failure.
  */
-export async function provisionEsim(paymentIntentId: string): Promise<ProvisionResult> {
+export async function provisionEsim(paymentIntentId: string, email?: string): Promise<ProvisionResult> {
   // Idempotency check: if already provisioned or delivered, return existing
   const existing = provisioningState.get(paymentIntentId);
   if (existing && (existing.status === 'ready' || existing.status === 'failed')) {
@@ -90,15 +92,40 @@ export async function provisionEsim(paymentIntentId: string): Promise<ProvisionR
         purchase = await provider.purchase('placeholder-plan-id', 1);
       }
 
-      const deliveryData = buildDeliveryData(purchase);
+      const { encrypted_payload, ...deliveryData } = buildDeliveryData(purchase);
 
       const result: ProvisionResult = {
         status: 'ready',
         data: deliveryData,
         order_id: orderId,
+        encrypted_payload,
       };
 
       provisioningState.set(paymentIntentId, result);
+
+      // Send delivery email (non-blocking -- don't fail provisioning if email fails)
+      if (email) {
+        try {
+          await sendDeliveryEmail({
+            to: email,
+            orderId: orderId,
+            planName: 'eSIM Data Plan', // placeholder -- real value from order/plan lookup
+            destination: 'Europe', // placeholder -- real value from order/plan lookup
+            dataGb: '5', // placeholder
+            durationDays: '30', // placeholder
+            smdpAddress: deliveryData.smdp_address,
+            activationCode: deliveryData.manual_activation_code,
+            iosLink: deliveryData.ios_activation_link,
+            androidLink: deliveryData.android_activation_link,
+            amountPaid: '29.99', // placeholder
+            currency: 'EUR', // placeholder
+          });
+        } catch (emailError) {
+          console.error('Failed to send delivery email, continuing:', emailError);
+          // Don't throw -- provisioning succeeded, email is best-effort
+        }
+      }
+
       return result;
     } catch (error) {
       lastError = error instanceof Error ? error : new Error(String(error));

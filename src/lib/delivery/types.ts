@@ -16,4 +16,6 @@ export interface ProvisionResult {
   order_id: string;
   error?: string;
   retry_count?: number;
+  /** AES-256-GCM encrypted blob (iv_hex:authTag_hex:ciphertext_hex). Present when status is 'ready'. */
+  encrypted_payload?: string;
 }

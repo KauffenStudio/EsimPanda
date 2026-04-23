@@ -2,6 +2,7 @@ import { z } from 'zod';
 
 export const provisionRequestSchema = z.object({
   payment_intent_id: z.string().min(1),
+  email: z.string().email().optional(),
 });
 
 export const statusRequestSchema = z.object({

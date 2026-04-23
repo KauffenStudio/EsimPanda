@@ -16,7 +16,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const { payment_intent_id } = parsed.data;
+    const { payment_intent_id, email } = parsed.data;
 
     // In real mode, verify the payment intent actually succeeded
     if (!isMockMode()) {
@@ -39,7 +39,7 @@ export async function POST(request: Request) {
       }
     }
 
-    const result = await provisionEsim(payment_intent_id);
+    const result = await provisionEsim(payment_intent_id, email);
     return NextResponse.json(result);
   } catch (error) {
     console.error('provision error:', error);
