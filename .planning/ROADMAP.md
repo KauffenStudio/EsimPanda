@@ -84,11 +84,12 @@ Plans:
   3. User sees step-by-step setup guide specific to their device model (iOS, Samsung, Pixel, etc.)
   4. QR code data is stored encrypted server-side and can be re-accessed if the user returns
   5. Stripe webhook handlers process payment confirmations idempotently and trigger eSIM provisioning
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 04-01: TBD
-- [ ] 04-02: TBD
+- [ ] 04-01-PLAN.md — Delivery data layer: provisioning pipeline, webhook handler, encryption, mock mode, DB migration
+- [ ] 04-02-PLAN.md — Delivery UI: success page transformation, smart device detection, QR/install display, setup guides, Bambu animations
+- [ ] 04-03-PLAN.md — Email delivery: branded React Email template via Resend, QR code generation, receipt, referral footer
 
 ### Phase 5: User Accounts
 **Goal**: Users who purchased as guests can create an account to persist their eSIM history, and returning users can log in with email/password to access their dashboard
@@ -173,7 +174,7 @@ Note: Phase 8 depends on Phase 5 (not Phase 7), so it could run in parallel with
 | 1. Foundation and Design System | 0/3 | Planning complete | - |
 | 2. Catalog and Browsing | 3/3 | Complete   | 2026-04-20 |
 | 3. Checkout and Payments | 2/2 | Complete   | 2026-04-21 |
-| 4. eSIM Delivery | 0/2 | Not started | - |
+| 4. eSIM Delivery | 0/3 | Planning complete | - |
 | 5. User Accounts | 0/1 | Not started | - |
 | 6. eSIM Management | 0/2 | Not started | - |
 | 7. SEO and Internationalization | 0/1 | Not started | - |
