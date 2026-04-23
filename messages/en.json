@@ -106,5 +106,46 @@
       "retry": "Try again",
       "contact": "Need help? Contact us on WhatsApp"
     }
+  },
+  "delivery": {
+    "provisioning": {
+      "heading": "Setting up your eSIM...",
+      "message1": "Setting up your eSIM...",
+      "message2": "Almost there...",
+      "message3": "Preparing your connection..."
+    },
+    "ready": {
+      "heading": "Your eSIM is Ready!",
+      "subheading": "Scan the QR code or tap Install to activate"
+    },
+    "install": "Install eSIM",
+    "qr": {
+      "instruction": "Scan this QR code with your phone"
+    },
+    "manual": {
+      "trigger": "Enter details manually",
+      "smdp": "SM-DP+ Address",
+      "code": "Activation Code"
+    },
+    "copy": "Copy",
+    "copy_success": "Copied to clipboard",
+    "setup": {
+      "trigger": "Need help setting up?",
+      "ios": { "heading": "Setup on iPhone" },
+      "samsung": { "heading": "Setup on Samsung" },
+      "pixel": { "heading": "Setup on Pixel / Android" },
+      "android": { "heading": "Setup on Android" },
+      "help": "Need help? Chat with us on WhatsApp"
+    },
+    "error": {
+      "heading": "Something went wrong",
+      "body": "We could not set up your eSIM. We are working on it and you will receive it by email shortly.",
+      "retry": "Retrying... ({count}/3)",
+      "final": "We are still working on your eSIM. You will receive it by email within a few minutes.",
+      "contact": "Need help? Contact us on WhatsApp"
+    },
+    "email": {
+      "reminder": "We also sent everything to {email}"
+    }
   }
 }
