@@ -27,19 +27,18 @@ A student arriving in a new country gets connected with mobile data in under 2 m
 
 ### Validated
 
-(None yet — ship to validate)
+- [x] Browse eSIM plans by destination (Europe-first) — Validated in Phase 2: Catalog and Browsing
+- [x] Purchase plans: 24h, 7-day, 14-day, 30-day, semester (90-180 day) — Validated in Phase 2
+- [x] Instant checkout with Apple Pay, Google Pay, PayPal — Validated in Phase 3: Checkout and Payments
+- [x] Student/traveler discount system (30% off with coupon) — Validated in Phase 3
+- [x] Receive QR code for eSIM activation after purchase — Validated in Phase 4: eSIM Delivery
+- [x] Device-specific setup guides (step-by-step with screenshots per device model) — Validated in Phase 4
+- [x] Mobile-first responsive web app with premium design and animations — Validated in Phase 1
 
 ### Active
 
-- [ ] Browse eSIM plans by destination (Europe-first)
-- [ ] Purchase plans: 24h, 7-day, 14-day, 30-day, semester (90-180 day)
-- [ ] Instant checkout with Apple Pay, Google Pay, PayPal
-- [ ] Receive QR code for eSIM activation after purchase
 - [ ] Top-up data on active eSIM plans
 - [ ] Manage active eSIMs (view usage, expiry, status)
-- [ ] Student/traveler discount system (30% off with coupon)
-- [ ] Device-specific setup guides (step-by-step with screenshots per device model)
-- [ ] Mobile-first responsive web app with premium design and animations
 - [ ] SEO-optimized landing pages per destination
 - [ ] WhatsApp support integration
 - [ ] Referral program (share link, earn credit)
@@ -81,4 +80,4 @@ A student arriving in a new country gets connected with mobile data in under 2 m
 | Brand: eSIM Panda | Panda mascot with interactive animations throughout UX — emotional connection with young audience | — Pending |
 
 ---
-*Last updated: 2026-04-19 after brand identity defined*
+*Last updated: 2026-04-23 — Phase 4 (eSIM Delivery) complete*
