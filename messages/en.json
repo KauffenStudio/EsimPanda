@@ -107,6 +107,71 @@
       "contact": "Need help? Contact us on WhatsApp"
     }
   },
+  "auth": {
+    "login": {
+      "heading": "Log In",
+      "submit": "Log In",
+      "noAccount": "Don't have an account? Create one",
+      "forgotPassword": "Forgot password?"
+    },
+    "signup": {
+      "heading": "Create Account",
+      "submit": "Create Account",
+      "hasAccount": "Already have an account? Log in"
+    },
+    "forgot": {
+      "heading": "Reset Password",
+      "body": "Enter your email and we'll send you a link to reset your password.",
+      "submit": "Send Reset Link",
+      "successHeading": "Check Your Email",
+      "successBody": "If an account exists with that email, we've sent a reset link. Check your inbox."
+    },
+    "reset": {
+      "heading": "Set New Password",
+      "submit": "Set New Password"
+    },
+    "convert": {
+      "heading": "Save your eSIM",
+      "body": "Create an account to access your eSIM anytime, manage your plans, and get top-up reminders.",
+      "submit": "Create Account",
+      "skip": "Skip for now",
+      "success": "Account created!"
+    },
+    "header": {
+      "login": "Log in"
+    },
+    "menu": {
+      "esims": "My eSIMs",
+      "settings": "Settings",
+      "logout": "Log out"
+    },
+    "field": {
+      "email": "Email",
+      "password": "Password",
+      "newPassword": "New password",
+      "confirmPassword": "Confirm password",
+      "choosePassword": "Choose a password"
+    },
+    "email": {
+      "resetSubject": "Reset your eSIM Panda password",
+      "resetHeading": "Reset Your Password",
+      "resetBody": "Click below to set a new password for your account.",
+      "resetCta": "Reset Password",
+      "resetExpiry": "This link expires in 1 hour. If you didn't request this, ignore this email."
+    },
+    "error": {
+      "invalidCredentials": "Incorrect email or password. Try again.",
+      "emailExists": "This email already has an account. Log in instead?",
+      "passwordShort": "Password must be at least 8 characters.",
+      "passwordMismatch": "Passwords don't match.",
+      "emailRequired": "Please enter your email.",
+      "passwordRequired": "Please enter a password.",
+      "emailInvalid": "Please enter a valid email address.",
+      "resetExpired": "This reset link has expired. Request a new one.",
+      "generic": "Something went wrong. Please try again.",
+      "conversionExists": "This email already has an account. Log in to link your eSIM."
+    }
+  },
   "delivery": {
     "provisioning": {
       "heading": "Setting up your eSIM...",
@@ -145,7 +210,18 @@
       "contact": "Need help? Contact us on WhatsApp"
     },
     "email": {
-      "reminder": "We also sent everything to {email}"
+      "reminder": "We also sent everything to {email}",
+      "subject": "Your eSIM for {destination} is ready!",
+      "preview": "Scan the QR code or tap to install your eSIM",
+      "heading": "Your eSIM is Ready!",
+      "qr": { "instruction": "Scan this QR code with your phone camera" },
+      "manual": {
+        "heading": "Manual Setup",
+        "instruction": "If the QR code does not work, enter these details manually in your phone settings"
+      },
+      "receipt": { "heading": "Order Receipt" },
+      "setup": { "button": "View Setup Guide" },
+      "referral": "Know someone traveling? Share eSIM Panda"
     }
   }
 }
