@@ -40,5 +40,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/', '/(en)/:path*'],
+  matcher: ['/', '/(en|pt|es|fr)/:path*'],
 };
