@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useLocale } from 'next-intl';
 import { ThemeToggle } from './theme-toggle';
+import { LanguageSwitcher } from '@/components/layout/language-switcher';
 import { UserMenu } from '@/components/auth/user-menu';
 
 const navLinks = [
@@ -43,6 +44,7 @@ export function Header() {
 
         {/* User menu + Theme toggle */}
         <div className="flex items-center gap-2">
+          <LanguageSwitcher />
           <UserMenu />
           <ThemeToggle />
         </div>

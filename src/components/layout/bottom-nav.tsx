@@ -5,6 +5,7 @@ import { Home, Globe, Smartphone, User } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { useLocale } from 'next-intl';
 import Link from 'next/link';
+import { LanguageSwitcher } from '@/components/layout/language-switcher';
 
 const tabs = [
   { path: '', label: 'Home', icon: Home },
@@ -71,6 +72,9 @@ export function BottomNav() {
             </Link>
           );
         })}
+        <div className="flex items-center justify-center px-1">
+          <LanguageSwitcher />
+        </div>
       </div>
     </nav>
   );

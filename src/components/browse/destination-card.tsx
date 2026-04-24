@@ -1,9 +1,9 @@
 'use client';
 
 import Image from 'next/image';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
+import { useRouter } from 'next/navigation';
 import { Card } from '@/components/ui/card';
-import { useBrowseStore } from '@/stores/browse';
 
 interface DestinationCardProps {
   name: string;
@@ -29,7 +29,8 @@ export function DestinationCard({
   startingPriceCents,
 }: DestinationCardProps) {
   const t = useTranslations();
-  const toggleDestination = useBrowseStore((state) => state.toggleDestination);
+  const locale = useLocale();
+  const router = useRouter();
 
   const price = (startingPriceCents / 100).toFixed(2);
   const flag = isoToFlag(isoCode);
@@ -38,7 +39,7 @@ export function DestinationCard({
     <Card
       variant="elevated"
       className="cursor-pointer overflow-hidden"
-      onClick={() => toggleDestination(slug)}
+      onClick={() => router.push(`/${locale}/esim/${slug}`)}
     >
       <div className="aspect-[4/3] relative overflow-hidden rounded-[var(--radius-card)]">
         <Image
