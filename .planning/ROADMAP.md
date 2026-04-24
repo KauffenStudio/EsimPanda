@@ -131,10 +131,12 @@ Plans:
   1. Each destination has an SEO-optimized landing page with structured data, unique content, and proper meta tags
   2. Platform supports EN, PT, ES, and FR languages with user language selection
   3. SEO pages render server-side (SSR/ISR) and are indexable by search engines
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 07-01: TBD
+- [ ] 07-01-PLAN.md — i18n infrastructure: expand locales to EN/PT/ES/FR, navigation module, middleware matcher, translation files
+- [ ] 07-02-PLAN.md — SEO data layer and destination landing pages: structured data, FAQ templates, breadcrumb/hero/FAQ components, /esim/[slug] page
+- [ ] 07-03-PLAN.md — Sitemap/robots, language switcher, browse page rewire to link destination pages
 
 ### Phase 8: Growth and Acquisition
 **Goal**: Growth levers are active -- users can refer friends for credit, and support is accessible via WhatsApp
@@ -180,6 +182,6 @@ Note: Phase 8 depends on Phase 5 (not Phase 7), so it could run in parallel with
 | 4. eSIM Delivery | 2/3 | In Progress|  |
 | 5. User Accounts | 0/3 | Planning complete | - |
 | 6. eSIM Management | 2/3 | In Progress|  |
-| 7. SEO and Internationalization | 0/1 | Not started | - |
+| 7. SEO and Internationalization | 0/3 | Planning complete | - |
 | 8. Growth and Acquisition | 0/2 | Not started | - |
 | 9. PWA and Polish | 0/2 | Not started | - |
