@@ -34,6 +34,9 @@ A student arriving in a new country gets connected with mobile data in under 2 m
 - [x] Receive QR code for eSIM activation after purchase — Validated in Phase 4: eSIM Delivery
 - [x] Device-specific setup guides (step-by-step with screenshots per device model) — Validated in Phase 4
 - [x] Mobile-first responsive web app with premium design and animations — Validated in Phase 1
+- [x] Guest-to-account conversion with order auto-linking — Validated in Phase 5: User Accounts
+- [x] Email/password login with persistent sessions — Validated in Phase 5
+- [x] Password reset via branded email link — Validated in Phase 5
 
 ### Active
 
@@ -80,4 +83,4 @@ A student arriving in a new country gets connected with mobile data in under 2 m
 | Brand: eSIM Panda | Panda mascot with interactive animations throughout UX — emotional connection with young audience | — Pending |
 
 ---
-*Last updated: 2026-04-23 — Phase 4 (eSIM Delivery) complete*
+*Last updated: 2026-04-24 — Phase 5 (User Accounts) complete*
