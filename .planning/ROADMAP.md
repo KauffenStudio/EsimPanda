@@ -116,11 +116,12 @@ Plans:
   2. User can top up data on an active eSIM plan from the dashboard
   3. User can see near-real-time data usage (polled/cached, not live) for active eSIMs
   4. User can view full purchase history with order details
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 06-01: TBD
-- [ ] 06-02: TBD
+- [ ] 06-01-PLAN.md — Data layer: types, Zustand store, mock data, API routes, middleware extension, i18n keys
+- [ ] 06-02-PLAN.md — Dashboard UI: CircularGauge, EsimCard, tabs, low-data banner, skeleton, dashboard page
+- [ ] 06-03-PLAN.md — Top-up modal with Stripe payment, purchase history with expandable rows, QR re-access
 
 ### Phase 7: SEO and Internationalization
 **Goal**: Destination pages are optimized for organic search (structured data, meta tags, content) and the platform supports multiple languages to reach the pan-European student audience
@@ -178,7 +179,7 @@ Note: Phase 8 depends on Phase 5 (not Phase 7), so it could run in parallel with
 | 3. Checkout and Payments | 2/2 | Complete   | 2026-04-21 |
 | 4. eSIM Delivery | 2/3 | In Progress|  |
 | 5. User Accounts | 0/3 | Planning complete | - |
-| 6. eSIM Management | 0/2 | Not started | - |
+| 6. eSIM Management | 0/3 | Planning complete | - |
 | 7. SEO and Internationalization | 0/1 | Not started | - |
 | 8. Growth and Acquisition | 0/2 | Not started | - |
 | 9. PWA and Polish | 0/2 | Not started | - |
