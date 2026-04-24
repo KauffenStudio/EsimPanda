@@ -38,10 +38,10 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Account
 
-- [ ] **ACC-01**: User can create account after purchase (guest-to-account conversion)
-- [ ] **ACC-02**: User can log in with email/password
-- [ ] **ACC-03**: User can reset password via email link
-- [ ] **ACC-04**: User session persists across browser refresh
+- [x] **ACC-01**: User can create account after purchase (guest-to-account conversion)
+- [x] **ACC-02**: User can log in with email/password
+- [x] **ACC-03**: User can reset password via email link
+- [x] **ACC-04**: User session persists across browser refresh
 
 ### Growth
 
@@ -117,10 +117,10 @@ Deferred to future release. Tracked but not in current roadmap.
 | MGT-02 | Phase 6 | Pending |
 | MGT-03 | Phase 6 | Pending |
 | MGT-04 | Phase 6 | Pending |
-| ACC-01 | Phase 5 | Pending |
-| ACC-02 | Phase 5 | Pending |
-| ACC-03 | Phase 5 | Pending |
-| ACC-04 | Phase 5 | Pending |
+| ACC-01 | Phase 5 | Complete |
+| ACC-02 | Phase 5 | Complete |
+| ACC-03 | Phase 5 | Complete |
+| ACC-04 | Phase 5 | Complete |
 | GRW-01 | Phase 8 | Pending |
 | GRW-02 | Phase 7 | Pending |
 | GRW-03 | Phase 7 | Pending |
