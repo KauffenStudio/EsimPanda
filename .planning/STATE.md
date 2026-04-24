@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-stopped_at: Completed 05-03-PLAN.md
-last_updated: "2026-04-24T09:22:48.490Z"
+stopped_at: Completed 06-01-PLAN.md
+last_updated: "2026-04-24T12:53:50.190Z"
 progress:
   total_phases: 9
   completed_phases: 5
-  total_plans: 15
-  completed_plans: 15
+  total_plans: 18
+  completed_plans: 16
 ---
 
 # Project State
@@ -19,12 +19,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-19)
 
 **Core value:** A student arriving in a new country gets connected with mobile data in under 2 minutes
-**Current focus:** Phase 05 — user-accounts
+**Current focus:** Phase 06 — esim-management
 
 ## Current Position
 
-Phase: 05 (user-accounts) — EXECUTING
-Plan: 3 of 3
+Phase: 06 (esim-management) — EXECUTING
+Plan: 2 of 3
 
 ## Performance Metrics
 
@@ -59,6 +59,7 @@ Plan: 3 of 3
 | Phase 05 P01 | 3min | 2 tasks | 10 files |
 | Phase 05 P02 | 4min | 2 tasks | 9 files |
 | Phase 05 P03 | 8min | 2 tasks | 14 files |
+| Phase 06 P01 | 4min | 2 tasks | 12 files |
 
 ## Accumulated Context
 
@@ -92,6 +93,8 @@ Recent decisions affecting current work:
 - [Phase 05]: useActionState (React 19) for auth form server action integration; BambuLoading inline at 24px for button loading states
 - [Phase 05]: Branded reset email via Resend (not Supabase default) using admin.generateLink
 - [Phase 05]: Order auto-linking silently handles errors -- account creation is primary, linking is best-effort
+- [Phase 06]: Top-up flow uses state machine pattern (idle -> plan-select -> payment -> processing -> success/error)
+- [Phase 06]: Mock mode bypass in middleware for development without Supabase auth
 
 ### Pending Todos
 
@@ -105,6 +108,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-24T09:19:00.638Z
-Stopped at: Completed 05-03-PLAN.md
+Last session: 2026-04-24T12:53:50.188Z
+Stopped at: Completed 06-01-PLAN.md
 Resume file: None

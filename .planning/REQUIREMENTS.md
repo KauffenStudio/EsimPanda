@@ -31,10 +31,10 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Management
 
-- [ ] **MGT-01**: User can view dashboard of active eSIMs (status, expiry, data remaining)
-- [ ] **MGT-02**: User can top-up data on an active eSIM plan
-- [ ] **MGT-03**: User can track data usage in near-real-time (if provider supports)
-- [ ] **MGT-04**: User can view full purchase history
+- [x] **MGT-01**: User can view dashboard of active eSIMs (status, expiry, data remaining)
+- [x] **MGT-02**: User can top-up data on an active eSIM plan
+- [x] **MGT-03**: User can track data usage in near-real-time (if provider supports)
+- [x] **MGT-04**: User can view full purchase history
 
 ### Account
 
@@ -113,10 +113,10 @@ Deferred to future release. Tracked but not in current roadmap.
 | DEL-02 | Phase 4 | Pending |
 | DEL-03 | Phase 4 | Complete |
 | DEL-04 | Phase 2 | Complete |
-| MGT-01 | Phase 6 | Pending |
-| MGT-02 | Phase 6 | Pending |
-| MGT-03 | Phase 6 | Pending |
-| MGT-04 | Phase 6 | Pending |
+| MGT-01 | Phase 6 | Complete |
+| MGT-02 | Phase 6 | Complete |
+| MGT-03 | Phase 6 | Complete |
+| MGT-04 | Phase 6 | Complete |
 | ACC-01 | Phase 5 | Complete |
 | ACC-02 | Phase 5 | Complete |
 | ACC-03 | Phase 5 | Complete |
