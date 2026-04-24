@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-stopped_at: Completed 05-02-PLAN.md
-last_updated: "2026-04-24T09:14:30Z"
+stopped_at: Completed 05-03-PLAN.md
+last_updated: "2026-04-24T09:19:00.640Z"
 progress:
   total_phases: 9
-  completed_phases: 4
+  completed_phases: 5
   total_plans: 15
-  completed_plans: 14
+  completed_plans: 15
 ---
 
 # Project State
@@ -58,6 +58,7 @@ Plan: 3 of 3
 | Phase 04 P04 | 1min | 2 tasks | 6 files |
 | Phase 05 P01 | 3min | 2 tasks | 10 files |
 | Phase 05 P02 | 4min | 2 tasks | 9 files |
+| Phase 05 P03 | 8min | 2 tasks | 14 files |
 
 ## Accumulated Context
 
@@ -89,6 +90,8 @@ Recent decisions affecting current work:
 - [Phase 04]: encrypted_payload destructured from buildDeliveryData return, clean DeliveryData kept separate
 - [Phase 05]: admin.generateLink for branded reset email via Resend instead of resetPasswordForEmail
 - [Phase 05]: useActionState (React 19) for auth form server action integration; BambuLoading inline at 24px for button loading states
+- [Phase 05]: Branded reset email via Resend (not Supabase default) using admin.generateLink
+- [Phase 05]: Order auto-linking silently handles errors -- account creation is primary, linking is best-effort
 
 ### Pending Todos
 
@@ -102,6 +105,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-24T09:14:30Z
-Stopped at: Completed 05-02-PLAN.md
+Last session: 2026-04-24T09:19:00.638Z
+Stopped at: Completed 05-03-PLAN.md
 Resume file: None
