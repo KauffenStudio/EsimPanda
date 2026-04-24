@@ -32,7 +32,7 @@ Declared values (must be multiples of 4):
 | Token | Value | Usage |
 |-------|-------|-------|
 | xs | 4px | Icon gaps, inline badge padding |
-| sm | 8px | Compact element spacing, breadcrumb separator gaps |
+| sm | 8px | Compact element spacing, breadcrumb separator gaps, breadcrumb bar vertical padding |
 | md | 16px | Default element spacing, card padding, plan card gaps |
 | lg | 24px | Section padding, FAQ item vertical spacing |
 | xl | 32px | Hero-to-plans gap, section margins |
@@ -112,7 +112,7 @@ Additional semantic colors in use:
 ## Page Layout: Destination Landing Page (`/[locale]/esim/[slug]`)
 
 ```
-[Breadcrumb Bar]          -- surface background, 12px vertical padding
+[Breadcrumb Bar]          -- surface background, sm (8px) vertical padding
   Home > Destinations > Portugal
 
 [Destination Hero]        -- 48px top padding, 24px bottom padding
