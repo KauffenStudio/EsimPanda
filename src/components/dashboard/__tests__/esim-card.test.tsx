@@ -84,13 +84,16 @@ describe('EsimCard', () => {
   it('active status badge has green color classes', () => {
     render(<EsimCard esim={mockActiveEsim} onTopUp={() => {}} />);
     const badge = screen.getByText('Active');
-    expect(badge.className).toContain('#43A047');
+    expect(badge.style.color).toMatch(/(#43A047|rgb\(67,\s*160,\s*71\))/);
   });
 
   it('expired status badge has gray color classes', () => {
     render(<EsimCard esim={mockExpiredEsim} onTopUp={() => {}} />);
-    const badge = screen.getByText('Expired');
-    expect(badge.className).toContain('#616161');
+    // "Expired" appears in both badge and gauge — find the badge by its pill styling
+    const badges = screen.getAllByText('Expired');
+    const badge = badges.find((el) => el.classList.contains('rounded-full'));
+    expect(badge).toBeDefined();
+    expect(badge!.style.color).toMatch(/(#616161|rgb\(97,\s*97,\s*97\))/);
   });
 
   it('calls onTopUp callback when "Top Up" button is clicked', () => {
