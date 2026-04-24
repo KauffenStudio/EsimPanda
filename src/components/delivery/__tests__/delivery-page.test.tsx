@@ -15,6 +15,7 @@ vi.mock('next-intl', () => ({
     }
     return key;
   },
+  useLocale: () => 'en',
 }));
 
 // Mock motion/react to avoid animation complexity

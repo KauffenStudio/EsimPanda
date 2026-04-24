@@ -4,17 +4,9 @@ import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
 import { createClient } from '@/lib/supabase/server';
 import { isMockMode } from './mock';
+import { sendResetEmail } from '@/lib/email/send-reset';
+import { linkOrdersByEmail } from '@/lib/auth/order-linking';
 import type { AuthResult } from './types';
-
-// STUB: Will be replaced by Plan 03 Task 1 with real import from @/lib/email/send-reset
-async function sendResetEmail(_params: { to: string; resetUrl: string }) {
-  console.log('[STUB] sendResetEmail -- will be replaced by Plan 03');
-}
-
-// STUB: Will be replaced by Plan 03 Task 2 with real order-linking logic
-async function linkOrdersByEmail(email: string, userId: string) {
-  console.log('[STUB] linkOrdersByEmail -- will be replaced by Plan 03', { email, userId });
-}
 
 async function getLocale(): Promise<string> {
   const cookieStore = await cookies();

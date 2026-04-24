@@ -4,11 +4,13 @@ import { useEffect, useRef, useMemo, useCallback } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useTranslations } from 'next-intl';
 import { useDeliveryStore } from '@/stores/delivery';
+import { useAuthStore } from '@/stores/auth';
 import { detectDeviceFamily } from './device-detection';
 import { ProvisioningState } from './provisioning-state';
 import { EsimCredentials } from './esim-credentials';
 import { SetupGuide } from './setup-guide';
 import { ProvisioningError } from './provisioning-error';
+import { AccountConversionCTA } from '@/components/auth/account-conversion-cta';
 
 interface DeliveryPageProps {
   paymentIntentId: string;
@@ -22,6 +24,7 @@ export function DeliveryPage({ paymentIntentId, email }: DeliveryPageProps) {
   const t = useTranslations('delivery');
   const { status, data, error, retry_count, setStatus, setData, setError, setEmail } =
     useDeliveryStore();
+  const authUser = useAuthStore((s) => s.user);
 
   const pollingRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -129,6 +132,16 @@ export function DeliveryPage({ paymentIntentId, email }: DeliveryPageProps) {
             )}
 
             <SetupGuide deviceFamily={deviceFamily} />
+
+            {email && !authUser && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1 }}
+              >
+                <AccountConversionCTA email={email} />
+              </motion.div>
+            )}
           </motion.div>
         )}
 

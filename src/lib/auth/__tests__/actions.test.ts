@@ -18,6 +18,19 @@ vi.mock('next/headers', () => ({
   }),
 }));
 
+// Mock resend (needed because sendResetEmail is now a real import)
+const mockResendSend = vi.fn().mockResolvedValue({ data: { id: 'test_id' }, error: null });
+vi.mock('resend', () => ({
+  Resend: class MockResend {
+    emails = { send: mockResendSend };
+  },
+}));
+
+// Mock react email template
+vi.mock('@/lib/email/templates/reset-email', () => ({
+  ResetEmail: vi.fn(() => '<ResetEmail />'),
+}));
+
 // Mock supabase server client
 const mockSignInWithPassword = vi.fn();
 const mockSignUp = vi.fn();
@@ -25,6 +38,11 @@ const mockSignOut = vi.fn();
 const mockResetPasswordForEmail = vi.fn();
 const mockUpdateUser = vi.fn();
 const mockGenerateLink = vi.fn();
+const mockSelect = vi.fn().mockResolvedValue({ data: [{ id: 'order-1' }], error: null });
+const mockIs = vi.fn().mockReturnValue({ select: mockSelect });
+const mockEq = vi.fn().mockReturnValue({ is: mockIs });
+const mockUpdate = vi.fn().mockReturnValue({ eq: mockEq });
+const mockFrom = vi.fn().mockReturnValue({ update: mockUpdate });
 
 vi.mock('@/lib/supabase/server', () => ({
   createClient: vi.fn().mockResolvedValue({
@@ -38,6 +56,7 @@ vi.mock('@/lib/supabase/server', () => ({
         generateLink: mockGenerateLink,
       },
     },
+    from: mockFrom,
   }),
 }));
 
@@ -111,6 +130,7 @@ describe('Auth Actions', () => {
             updateUser: mockUpdateUser,
             admin: { generateLink: mockGenerateLink },
           },
+          from: mockFrom,
         }),
       }));
 
@@ -182,6 +202,7 @@ describe('Auth Actions', () => {
             updateUser: mockUpdateUser,
             admin: { generateLink: mockGenerateLink },
           },
+          from: mockFrom,
         }),
       }));
 
@@ -232,6 +253,7 @@ describe('Auth Actions', () => {
             updateUser: mockUpdateUser,
             admin: { generateLink: mockGenerateLink },
           },
+          from: mockFrom,
         }),
       }));
 
@@ -305,6 +327,7 @@ describe('Auth Actions', () => {
             updateUser: mockUpdateUser,
             admin: { generateLink: mockGenerateLink },
           },
+          from: mockFrom,
         }),
       }));
 
@@ -369,6 +392,7 @@ describe('Auth Actions', () => {
             updateUser: mockUpdateUser,
             admin: { generateLink: mockGenerateLink },
           },
+          from: mockFrom,
         }),
       }));
 
@@ -422,7 +446,6 @@ describe('Auth Actions', () => {
 
     it('calls linkOrdersByEmail after successful signup', async () => {
       const { convertGuestToAccount } = await import('../actions');
-      const consoleSpy = vi.spyOn(console, 'log');
       mockSignUp.mockResolvedValue({
         data: { user: { id: 'new-user-id' } },
         error: null,
@@ -433,12 +456,10 @@ describe('Auth Actions', () => {
       formData.set('password', 'password123');
 
       await convertGuestToAccount(formData);
-      // The stub logs a message containing linkOrdersByEmail
-      expect(consoleSpy).toHaveBeenCalledWith(
-        expect.stringContaining('linkOrdersByEmail'),
-        expect.objectContaining({ email: 'guest@example.com', userId: 'new-user-id' })
-      );
-      consoleSpy.mockRestore();
+      // linkOrdersByEmail is now real -- verify it called supabase
+      expect(mockFrom).toHaveBeenCalledWith('orders');
+      expect(mockUpdate).toHaveBeenCalledWith({ user_id: 'new-user-id' });
+      expect(mockEq).toHaveBeenCalledWith('email', 'guest@example.com');
     });
 
     it('returns mock response in mock mode', async () => {
@@ -467,6 +488,7 @@ describe('Auth Actions', () => {
             updateUser: mockUpdateUser,
             admin: { generateLink: mockGenerateLink },
           },
+          from: mockFrom,
         }),
       }));
 
