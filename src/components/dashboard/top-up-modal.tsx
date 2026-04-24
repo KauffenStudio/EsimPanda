@@ -89,8 +89,8 @@ export function TopUpModal() {
           }),
         });
         const data = await res.json();
-        if (data.clientSecret) {
-          setClientSecret(data.clientSecret);
+        if (data.client_secret) {
+          setClientSecret(data.client_secret);
         } else {
           setErrorMessage(data.error || 'Failed to create payment intent');
           setTopUpStatus('error');
