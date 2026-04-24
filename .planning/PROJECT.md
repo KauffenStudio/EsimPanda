@@ -41,10 +41,10 @@ A student arriving in a new country gets connected with mobile data in under 2 m
 - [x] Manage active eSIMs (view usage, expiry, status) — Validated in Phase 6
 - [x] View full purchase history with order details — Validated in Phase 6
 - [x] Track near-real-time data usage for active eSIMs — Validated in Phase 6
+- [x] SEO-optimized landing pages per destination — Validated in Phase 7: SEO and Internationalization
+- [x] Multi-language support (EN, PT, ES, FR) — Validated in Phase 7
 
 ### Active
-
-- [ ] SEO-optimized landing pages per destination
 - [ ] WhatsApp support integration
 - [ ] Referral program (share link, earn credit)
 
@@ -85,4 +85,4 @@ A student arriving in a new country gets connected with mobile data in under 2 m
 | Brand: eSIM Panda | Panda mascot with interactive animations throughout UX — emotional connection with young audience | — Pending |
 
 ---
-*Last updated: 2026-04-24 — Phase 6 (eSIM Management) complete*
+*Last updated: 2026-04-24 — Phase 7 (SEO and Internationalization) complete*
