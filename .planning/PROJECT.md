@@ -37,11 +37,13 @@ A student arriving in a new country gets connected with mobile data in under 2 m
 - [x] Guest-to-account conversion with order auto-linking — Validated in Phase 5: User Accounts
 - [x] Email/password login with persistent sessions — Validated in Phase 5
 - [x] Password reset via branded email link — Validated in Phase 5
+- [x] Top-up data on active eSIM plans — Validated in Phase 6: eSIM Management
+- [x] Manage active eSIMs (view usage, expiry, status) — Validated in Phase 6
+- [x] View full purchase history with order details — Validated in Phase 6
+- [x] Track near-real-time data usage for active eSIMs — Validated in Phase 6
 
 ### Active
 
-- [ ] Top-up data on active eSIM plans
-- [ ] Manage active eSIMs (view usage, expiry, status)
 - [ ] SEO-optimized landing pages per destination
 - [ ] WhatsApp support integration
 - [ ] Referral program (share link, earn credit)
@@ -83,4 +85,4 @@ A student arriving in a new country gets connected with mobile data in under 2 m
 | Brand: eSIM Panda | Panda mascot with interactive animations throughout UX — emotional connection with young audience | — Pending |
 
 ---
-*Last updated: 2026-04-24 — Phase 5 (User Accounts) complete*
+*Last updated: 2026-04-24 — Phase 6 (eSIM Management) complete*
