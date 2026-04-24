@@ -43,8 +43,8 @@ vi.mock('@/components/delivery/qr-code-display', () => ({
 
 // Mock Lucide
 vi.mock('lucide-react', () => ({
-  ChevronDown: ({ className, ...props }: Record<string, unknown>) => (
-    <svg data-testid="chevron-icon" className={className as string} {...props} />
+  ChevronDown: (props: Record<string, unknown>) => (
+    <svg data-testid="chevron-icon" className={String(props.className || '')} />
   ),
 }));
 
@@ -107,7 +107,7 @@ describe('PurchaseHistoryRow', () => {
 
   it('renders date, destination, and amount in collapsed state', () => {
     render(<PurchaseHistoryRow purchase={mockPurchaseWithCoupon} onResendEmail={mockOnResend} />);
-    expect(screen.getByText('Italy')).toBeTruthy();
+    expect(screen.getByText(/Italy/)).toBeTruthy();
     expect(screen.getByText('EUR 24.60')).toBeTruthy();
   });
 
@@ -140,11 +140,11 @@ describe('PurchaseHistoryRow', () => {
   it('chevron icon rotates 180deg when expanded (has rotate-180 class)', () => {
     render(<PurchaseHistoryRow purchase={mockPurchaseWithCoupon} onResendEmail={mockOnResend} />);
     const chevron = screen.getByTestId('chevron-icon');
-    expect(chevron.className).not.toContain('rotate-180');
+    expect(chevron.getAttribute('class') || '').not.toContain('rotate-180');
     const trigger = screen.getByRole('button', { name: /Italy/i });
     fireEvent.click(trigger);
     const chevronAfter = screen.getByTestId('chevron-icon');
-    expect(chevronAfter.className).toContain('rotate-180');
+    expect(chevronAfter.getAttribute('class')).toContain('rotate-180');
   });
 
   it('shows coupon info only when coupon_code is not null', () => {

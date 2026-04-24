@@ -85,6 +85,7 @@
     "resend_email": "Re-send Email",
     "resend_email_success": "Delivery email sent to {email}",
     "resend_email_error": "Could not re-send email. Please try again.",
+    "no_purchases": "No purchases yet",
     "data_added": "Data added!"
   },
   "profile": {

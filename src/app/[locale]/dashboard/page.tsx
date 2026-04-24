@@ -12,12 +12,17 @@ import { DashboardTabs } from '@/components/dashboard/dashboard-tabs';
 import { LowDataBanner } from '@/components/dashboard/low-data-banner';
 import { UsageTimestamp } from '@/components/dashboard/usage-timestamp';
 import { EsimGrid } from '@/components/dashboard/esim-grid';
+import { TopUpModal } from '@/components/dashboard/top-up-modal';
+import { PurchaseHistoryList } from '@/components/dashboard/purchase-history-list';
+import { resendDeliveryEmail } from '@/lib/dashboard/actions';
+import { toast } from 'sonner';
 import Link from 'next/link';
 
 export default function DashboardPage() {
   const t = useTranslations();
   const {
     esims,
+    purchases,
     loading,
     error,
     active_tab,
@@ -35,6 +40,15 @@ export default function DashboardPage() {
 
   const handleTopUp = (esim: Parameters<typeof openTopUp>[0]) => {
     openTopUp(esim);
+  };
+
+  const handleResendEmail = async (orderId: string) => {
+    const result = await resendDeliveryEmail(orderId, '');
+    if (result.success) {
+      toast.success(t('dashboard.resend_email_success', { email: '' }));
+    } else {
+      toast.error(t('dashboard.resend_email_error'));
+    }
   };
 
   // Loading state
@@ -123,13 +137,17 @@ export default function DashboardPage() {
               exit={{ opacity: 0, x: -10 }}
               transition={{ duration: 0.2, ease: 'easeInOut' }}
             >
-              <p className="text-base" style={{ color: '#616161' }}>
-                Purchase History
-              </p>
+              <PurchaseHistoryList
+                purchases={purchases}
+                onResendEmail={handleResendEmail}
+              />
             </motion.div>
           )}
         </AnimatePresence>
       </div>
+
+      {/* Top-up modal — always mounted, visibility controlled by store */}
+      <TopUpModal />
     </div>
   );
 }
