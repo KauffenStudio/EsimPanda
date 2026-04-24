@@ -100,10 +100,12 @@ Plans:
   2. User can log in with email and password
   3. User can reset a forgotten password via email link
   4. User session persists across browser refresh and tab close
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 05-01: TBD
+- [ ] 05-01-PLAN.md — Auth foundation: types, server actions, mock mode, middleware extension, PKCE callback, Zustand auth store, i18n keys, tests
+- [ ] 05-02-PLAN.md — Auth pages: login/signup pages, Bambu welcome pose, auth forms, header user menu, AuthProvider
+- [ ] 05-03-PLAN.md — Password reset flow and guest conversion: forgot/reset pages, branded reset email, delivery page conversion CTA
 
 ### Phase 6: eSIM Management
 **Goal**: Logged-in users can manage their active eSIMs from a dashboard -- viewing status, tracking data usage, topping up data, and reviewing purchase history
@@ -175,7 +177,7 @@ Note: Phase 8 depends on Phase 5 (not Phase 7), so it could run in parallel with
 | 2. Catalog and Browsing | 3/3 | Complete   | 2026-04-20 |
 | 3. Checkout and Payments | 2/2 | Complete   | 2026-04-21 |
 | 4. eSIM Delivery | 2/3 | In Progress|  |
-| 5. User Accounts | 0/1 | Not started | - |
+| 5. User Accounts | 0/3 | Planning complete | - |
 | 6. eSIM Management | 0/2 | Not started | - |
 | 7. SEO and Internationalization | 0/1 | Not started | - |
 | 8. Growth and Acquisition | 0/2 | Not started | - |
