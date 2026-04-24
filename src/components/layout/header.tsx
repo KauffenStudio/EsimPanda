@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useLocale } from 'next-intl';
 import { ThemeToggle } from './theme-toggle';
+import { UserMenu } from '@/components/auth/user-menu';
 
 const navLinks = [
   { path: '', label: 'Home' },
@@ -40,8 +41,11 @@ export function Header() {
           ))}
         </nav>
 
-        {/* Theme toggle */}
-        <ThemeToggle />
+        {/* User menu + Theme toggle */}
+        <div className="flex items-center gap-2">
+          <UserMenu />
+          <ThemeToggle />
+        </div>
       </div>
     </header>
   );
