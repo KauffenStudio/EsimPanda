@@ -45,10 +45,10 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Growth
 
-- [ ] **GRW-01**: User can share referral link and earn credit when friends purchase
+- [x] **GRW-01**: User can share referral link and earn credit when friends purchase
 - [x] **GRW-02**: Destination pages are SEO-optimized with structured data
 - [x] **GRW-03**: Platform supports multiple languages (EN, PT, ES, FR minimum)
-- [ ] **GRW-04**: User can contact support via WhatsApp button
+- [x] **GRW-04**: User can contact support via WhatsApp button
 
 ### UX/Design
 
@@ -121,10 +121,10 @@ Deferred to future release. Tracked but not in current roadmap.
 | ACC-02 | Phase 5 | Complete |
 | ACC-03 | Phase 5 | Complete |
 | ACC-04 | Phase 5 | Complete |
-| GRW-01 | Phase 8 | Pending |
+| GRW-01 | Phase 8 | Complete |
 | GRW-02 | Phase 7 | Complete |
 | GRW-03 | Phase 7 | Complete |
-| GRW-04 | Phase 8 | Pending |
+| GRW-04 | Phase 8 | Complete |
 | UXD-01 | Phase 1 | Complete |
 | UXD-02 | Phase 9 | Pending |
 | UXD-03 | Phase 9 | Pending |
