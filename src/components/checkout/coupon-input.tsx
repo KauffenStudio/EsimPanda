@@ -24,12 +24,12 @@ export function CouponInput() {
       const res = await fetch('/api/checkout/validate-coupon', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ code: code.trim() }),
+        body: JSON.stringify({ code: code.trim(), plan_id }),
       });
       const data = await res.json();
 
       if (!data.valid) {
-        setError(t('invalid'));
+        setError(data.error === 'min_order' ? t('min_order') : t('invalid'));
         setValidating(false);
         return;
       }

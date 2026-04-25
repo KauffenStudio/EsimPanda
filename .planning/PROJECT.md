@@ -30,7 +30,7 @@ A student arriving in a new country gets connected with mobile data in under 2 m
 - [x] Browse eSIM plans by destination (Europe-first) — Validated in Phase 2: Catalog and Browsing
 - [x] Purchase plans: 24h, 7-day, 14-day, 30-day, semester (90-180 day) — Validated in Phase 2
 - [x] Instant checkout with Apple Pay, Google Pay, PayPal — Validated in Phase 3: Checkout and Payments
-- [x] Student/traveler discount system (30% off with coupon) — Validated in Phase 3
+- [x] Student/traveler discount system (15% off with coupon, min order €9.99) — Validated in Phase 3
 - [x] Receive QR code for eSIM activation after purchase — Validated in Phase 4: eSIM Delivery
 - [x] Device-specific setup guides (step-by-step with screenshots per device model) — Validated in Phase 4
 - [x] Mobile-first responsive web app with premium design and animations — Validated in Phase 1
@@ -81,7 +81,7 @@ A student arriving in a new country gets connected with mobile data in under 2 m
 | Reseller model (not MVNO) | Zero infrastructure investment, pay-per-sale, fast to market | — Pending |
 | Web app (not native) | Faster to build, no app store approval, instant access via link | — Pending |
 | Markup pricing model | Simple, proven (Airalo model), healthy margins ~60% | — Pending |
-| Student discount 30% | Key differentiator, still profitable at wholesale margins | — Pending |
+| Student discount 15% (min €9.99) | Key differentiator, profitable at wholesale margins. Reduced from 30% to protect margins on small plans | — Pending |
 | Brand: eSIM Panda | Panda mascot with interactive animations throughout UX — emotional connection with young audience | — Pending |
 
 ---

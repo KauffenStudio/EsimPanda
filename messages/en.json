@@ -115,6 +115,7 @@
       "apply": "Apply Code",
       "savings": "You save EUR {amount}",
       "invalid": "Invalid code -- check spelling and try again",
+      "min_order": "Minimum order of €9.99 required for this coupon",
       "remove": "Remove code"
     },
     "express": {
@@ -124,7 +125,7 @@
     "summary": {
       "title": "Order summary",
       "subtotal": "Subtotal",
-      "discount": "Student discount (30%)",
+      "discount": "Student discount (15%)",
       "vat": "VAT ({rate}%)",
       "vatCalculating": "Calculating...",
       "total": "Total"

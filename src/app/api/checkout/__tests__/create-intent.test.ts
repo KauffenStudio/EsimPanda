@@ -44,7 +44,7 @@ describe('POST /api/checkout/create-intent', () => {
     const res = await POST(makeRequest({
       plan_id: VALID_PLAN_ID,
       email: 'test@example.com',
-      coupon_code: 'STUDENT30',
+      coupon_code: 'STUDENT15',
     }));
     const data = await res.json();
 

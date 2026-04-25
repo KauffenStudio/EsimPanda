@@ -115,6 +115,7 @@
       "apply": "Appliquer le Code",
       "savings": "Vous economisez EUR {amount}",
       "invalid": "Code invalide -- verifiez l'orthographe et reessayez",
+      "min_order": "Commande minimum de 9,99€ requise pour ce coupon",
       "remove": "Supprimer le code"
     },
     "express": {
@@ -124,7 +125,7 @@
     "summary": {
       "title": "Resume de la commande",
       "subtotal": "Sous-total",
-      "discount": "Reduction etudiant (30%)",
+      "discount": "Reduction etudiant (15%)",
       "vat": "TVA ({rate}%)",
       "vatCalculating": "Calcul en cours...",
       "total": "Total"

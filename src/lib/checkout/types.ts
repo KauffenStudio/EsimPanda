@@ -34,6 +34,7 @@ export interface CreateIntentResponse {
 export interface Coupon {
   code: string;
   discount_percent: number;
+  min_order_cents?: number;
   max_uses: number;
   current_uses: number;
   valid_from: string;

@@ -31,9 +31,9 @@ describe('useCheckoutStore', () => {
   });
 
   it('applyCoupon updates coupon and pricing fields', () => {
-    useCheckoutStore.getState().applyCoupon('STUDENT30', 300, 700, 161, 861);
+    useCheckoutStore.getState().applyCoupon('STUDENT15', 300, 700, 161, 861);
     const state = useCheckoutStore.getState();
-    expect(state.coupon_code).toBe('STUDENT30');
+    expect(state.coupon_code).toBe('STUDENT15');
     expect(state.discount_cents).toBe(300);
     expect(state.subtotal_cents).toBe(700);
     expect(state.tax_cents).toBe(161);
@@ -41,7 +41,7 @@ describe('useCheckoutStore', () => {
   });
 
   it('removeCoupon resets coupon_code and discount_cents', () => {
-    useCheckoutStore.getState().applyCoupon('STUDENT30', 300, 700, 161, 861);
+    useCheckoutStore.getState().applyCoupon('STUDENT15', 300, 700, 161, 861);
     useCheckoutStore.getState().removeCoupon();
     const state = useCheckoutStore.getState();
     expect(state.coupon_code).toBeNull();
@@ -69,7 +69,7 @@ describe('useCheckoutStore', () => {
   it('reset returns all fields to initial state', () => {
     useCheckoutStore.getState().setPlan('plan-123');
     useCheckoutStore.getState().setEmail('test@example.com');
-    useCheckoutStore.getState().applyCoupon('STUDENT30', 300, 700, 161, 861);
+    useCheckoutStore.getState().applyCoupon('STUDENT15', 300, 700, 161, 861);
     useCheckoutStore.getState().setPaymentStatus('processing');
     useCheckoutStore.getState().reset();
 

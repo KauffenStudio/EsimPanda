@@ -14,7 +14,7 @@ export function calculatePrice(planId: string, couponCode?: string): PriceResult
   const retail_price_cents = plan.retail_price_cents;
 
   if (couponCode) {
-    const coupon = validateCoupon(couponCode);
+    const coupon = validateCoupon(couponCode, retail_price_cents);
     if (coupon) {
       const discount_cents = Math.round(retail_price_cents * coupon.discount_percent / 100);
       return {

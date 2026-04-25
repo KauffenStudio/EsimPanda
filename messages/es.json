@@ -115,6 +115,7 @@
       "apply": "Aplicar Codigo",
       "savings": "Ahorras EUR {amount}",
       "invalid": "Codigo invalido -- verifica la ortografia e intentalo de nuevo",
+      "min_order": "Pedido minimo de €9,99 requerido para este cupon",
       "remove": "Eliminar codigo"
     },
     "express": {
@@ -124,7 +125,7 @@
     "summary": {
       "title": "Resumen del pedido",
       "subtotal": "Subtotal",
-      "discount": "Descuento estudiante (30%)",
+      "discount": "Descuento estudiante (15%)",
       "vat": "IVA ({rate}%)",
       "vatCalculating": "Calculando...",
       "total": "Total"
