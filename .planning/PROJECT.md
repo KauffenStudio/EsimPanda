@@ -45,12 +45,19 @@ A student arriving in a new country gets connected with mobile data in under 2 m
 - [x] Multi-language support (EN, PT, ES, FR) — Validated in Phase 7
 
 ### Active
+
+*All v1 requirements validated.*
+
+### Recently Validated
 - [x] WhatsApp support integration — Validated in Phase 8: Growth and Acquisition
 - [x] Referral program (share link, earn free 1GB plan) — Validated in Phase 8
+- [x] Installable PWA with offline QR code access — Validated in Phase 9: PWA and Polish
+- [x] Dark mode with manual toggle across all components — Validated in Phase 9
+- [x] Push notifications for eSIM expiry, low data, and promotions — Validated in Phase 9
 
 ### Out of Scope
 
-- Native mobile app (iOS/Android) — web-first, PWA later
+- Native mobile app (iOS/Android) — PWA covers mobile use case
 - Real-time chat support — WhatsApp handles this
 - eSIM for IoT/enterprise — consumer focus only
 - Building own MVNO infrastructure — pure reseller model
@@ -85,4 +92,4 @@ A student arriving in a new country gets connected with mobile data in under 2 m
 | Brand: eSIM Panda | Panda mascot with interactive animations throughout UX — emotional connection with young audience | — Pending |
 
 ---
-*Last updated: 2026-04-25 — Phase 8 (Growth and Acquisition) complete*
+*Last updated: 2026-04-25 — Phase 9 (PWA and Polish) complete — ALL v1 PHASES COMPLETE*
