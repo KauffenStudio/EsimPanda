@@ -19,6 +19,7 @@
     "celitech-sdk": "^1.3.63",
     "lucide-react": "^1.8.0",
     "motion": "^12.38.0",
+    "nanoid": "^5.1.9",
     "next": "15.5.15",
     "next-intl": "^4.9.1",
     "qrcode": "^1.5.4",

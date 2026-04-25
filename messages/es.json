@@ -183,6 +183,7 @@
     "menu": {
       "esims": "Mis eSIMs",
       "settings": "Configuracion",
+      "inviteFriends": "Invitar Amigos",
       "logout": "Cerrar sesion"
     },
     "field": {
@@ -210,6 +211,50 @@
       "resetExpired": "Este enlace de recuperacion ha expirado. Solicita uno nuevo.",
       "generic": "Algo salio mal. Intentalo de nuevo.",
       "conversionExists": "Este email ya tiene una cuenta. Inicia sesion para vincular tu eSIM."
+    }
+  },
+  "referral": {
+    "title": "Invita Amigos, Consigue Datos Gratis",
+    "subtitle": "Comparte tu enlace y ambos obtienen un pase diario de 1GB gratis",
+    "copyLink": "Copiar Enlace de Referencia",
+    "copied": "Copiado!",
+    "shareVia": "Compartir via",
+    "shareWhatsapp": "WhatsApp",
+    "shareTwitter": "Twitter/X",
+    "shareCopy": "Copiar",
+    "shareText": "Consigue un eSIM de 1GB gratis para tu proximo viaje! Usa mi enlace: {url}",
+    "statsInvited": "Amigos Invitados",
+    "statsEarned": "Planes Gratis Ganados",
+    "statsRemaining": "Planes Gratis Restantes Este Mes",
+    "capReached": "Has alcanzado tu limite mensual de 5 planes gratis. Tu limite se reinicia el {date}.",
+    "postPurchaseTitle": "Compartir con un Amigo",
+    "postPurchaseSubtitle": "Ambos obtienen un pase diario de 1GB gratis",
+    "noAccount": "Crea una cuenta para obtener tu enlace de referencia y ganar planes de 1GB gratis cuando tus amigos se registren.",
+    "noAccountCta": "Empezar a Ganar Datos Gratis",
+    "error": "No se pudo generar tu enlace de referencia. Intentalo de nuevo o contacta al soporte."
+  },
+  "whatsapp": {
+    "ariaLabel": "Contactar soporte en WhatsApp",
+    "browsePage": "Hola! Necesito ayuda para elegir un plan eSIM",
+    "checkoutPage": "Hola! Necesito ayuda con mi pago",
+    "deliveryPage": "Hola! Necesito ayuda con mi pedido",
+    "dashboardPage": "Hola! Necesito ayuda con mi eSIM",
+    "defaultMessage": "Hola!"
+  },
+  "admin": {
+    "coupons": {
+      "title": "Cupones de Influencers",
+      "createButton": "Crear Cupon",
+      "emptyTitle": "Sin Cupones Aun",
+      "emptyBody": "Crea tu primer cupon de influencer para empezar a rastrear el rendimiento.",
+      "emptyCta": "Crear Primer Cupon",
+      "codeExists": "Este codigo ya esta en uso. Elige un codigo diferente.",
+      "authFailed": "No tienes acceso de administrador. Inicia sesion con una cuenta de administrador.",
+      "deactivateTitle": "Desactivar Cupon",
+      "deactivateBody": "Esto impedira nuevos usos del codigo {code}. Los descuentos ya aplicados no se ven afectados. Desactivar?",
+      "statsActive": "Cupones Activos",
+      "statsUses": "Total de Usos",
+      "statsRevenue": "Ingresos Totales"
     }
   },
   "delivery": {

@@ -183,6 +183,7 @@
     "menu": {
       "esims": "Mes eSIMs",
       "settings": "Parametres",
+      "inviteFriends": "Inviter des Amis",
       "logout": "Se deconnecter"
     },
     "field": {
@@ -210,6 +211,50 @@
       "resetExpired": "Ce lien de reinitialisation a expire. Demandez-en un nouveau.",
       "generic": "Une erreur est survenue. Reessayez.",
       "conversionExists": "Cet email a deja un compte. Connectez-vous pour lier votre eSIM."
+    }
+  },
+  "referral": {
+    "title": "Invitez des Amis, Obtenez des Donnees Gratuites",
+    "subtitle": "Partagez votre lien et vous obtenez tous les deux un pass journalier de 1Go gratuit",
+    "copyLink": "Copier le Lien de Parrainage",
+    "copied": "Copie!",
+    "shareVia": "Partager via",
+    "shareWhatsapp": "WhatsApp",
+    "shareTwitter": "Twitter/X",
+    "shareCopy": "Copier",
+    "shareText": "Obtenez un eSIM de 1Go gratuit pour votre prochain voyage! Utilisez mon lien: {url}",
+    "statsInvited": "Amis Invites",
+    "statsEarned": "Forfaits Gratuits Gagnes",
+    "statsRemaining": "Forfaits Gratuits Restants Ce Mois",
+    "capReached": "Vous avez atteint votre limite mensuelle de 5 forfaits gratuits. Votre limite se reinitialise le {date}.",
+    "postPurchaseTitle": "Partager avec un Ami",
+    "postPurchaseSubtitle": "Vous obtenez tous les deux un pass journalier de 1Go gratuit",
+    "noAccount": "Creez un compte pour obtenir votre lien de parrainage et gagner des forfaits de 1Go gratuits quand vos amis s'inscrivent.",
+    "noAccountCta": "Commencer a Gagner des Donnees Gratuites",
+    "error": "Impossible de generer votre lien de parrainage. Reessayez ou contactez le support."
+  },
+  "whatsapp": {
+    "ariaLabel": "Contacter le support sur WhatsApp",
+    "browsePage": "Bonjour! J'ai besoin d'aide pour choisir un forfait eSIM",
+    "checkoutPage": "Bonjour! J'ai besoin d'aide avec mon paiement",
+    "deliveryPage": "Bonjour! J'ai besoin d'aide avec ma commande",
+    "dashboardPage": "Bonjour! J'ai besoin d'aide avec mon eSIM",
+    "defaultMessage": "Bonjour!"
+  },
+  "admin": {
+    "coupons": {
+      "title": "Coupons Influenceurs",
+      "createButton": "Creer un Coupon",
+      "emptyTitle": "Pas Encore de Coupons",
+      "emptyBody": "Creez votre premier coupon influenceur pour commencer a suivre les performances.",
+      "emptyCta": "Creer le Premier Coupon",
+      "codeExists": "Ce code est deja utilise. Choisissez un code different.",
+      "authFailed": "Vous n'avez pas d'acces administrateur. Connectez-vous avec un compte administrateur.",
+      "deactivateTitle": "Desactiver le Coupon",
+      "deactivateBody": "Cela empechera les nouvelles utilisations du code {code}. Les reductions deja appliquees ne sont pas affectees. Desactiver?",
+      "statsActive": "Coupons Actifs",
+      "statsUses": "Total d'Utilisations",
+      "statsRevenue": "Revenu Total"
     }
   },
   "delivery": {

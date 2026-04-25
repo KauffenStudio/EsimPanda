@@ -183,6 +183,7 @@
     "menu": {
       "esims": "Meus eSIMs",
       "settings": "Definicoes",
+      "inviteFriends": "Convidar Amigos",
       "logout": "Sair"
     },
     "field": {
@@ -210,6 +211,50 @@
       "resetExpired": "Este link de recuperacao expirou. Solicite um novo.",
       "generic": "Algo correu mal. Tente novamente.",
       "conversionExists": "Este email ja tem uma conta. Inicie sessao para associar o seu eSIM."
+    }
+  },
+  "referral": {
+    "title": "Convide Amigos, Ganhe Dados Gratis",
+    "subtitle": "Partilhe o seu link e ambos recebem um passe diario de 1GB gratis",
+    "copyLink": "Copiar Link de Referencia",
+    "copied": "Copiado!",
+    "shareVia": "Partilhar via",
+    "shareWhatsapp": "WhatsApp",
+    "shareTwitter": "Twitter/X",
+    "shareCopy": "Copiar",
+    "shareText": "Obtem um eSIM de 1GB gratis para a tua proxima viagem! Usa o meu link: {url}",
+    "statsInvited": "Amigos Convidados",
+    "statsEarned": "Planos Gratis Ganhos",
+    "statsRemaining": "Planos Gratis Restantes Este Mes",
+    "capReached": "Atingiu o limite mensal de 5 planos gratis. O seu limite reinicia em {date}.",
+    "postPurchaseTitle": "Partilhar com um Amigo",
+    "postPurchaseSubtitle": "Ambos recebem um passe diario de 1GB gratis",
+    "noAccount": "Crie uma conta para obter o seu link de referencia e ganhar planos de 1GB gratis quando amigos se registam.",
+    "noAccountCta": "Comecar a Ganhar Dados Gratis",
+    "error": "Nao foi possivel gerar o seu link de referencia. Tente novamente ou contacte o suporte."
+  },
+  "whatsapp": {
+    "ariaLabel": "Contactar suporte no WhatsApp",
+    "browsePage": "Ola! Preciso de ajuda para escolher um plano eSIM",
+    "checkoutPage": "Ola! Preciso de ajuda com o meu pagamento",
+    "deliveryPage": "Ola! Preciso de ajuda com a minha encomenda",
+    "dashboardPage": "Ola! Preciso de ajuda com o meu eSIM",
+    "defaultMessage": "Ola!"
+  },
+  "admin": {
+    "coupons": {
+      "title": "Cupoes de Influenciadores",
+      "createButton": "Criar Cupao",
+      "emptyTitle": "Sem Cupoes Ainda",
+      "emptyBody": "Crie o seu primeiro cupao de influenciador para comecar a acompanhar o desempenho.",
+      "emptyCta": "Criar Primeiro Cupao",
+      "codeExists": "Este codigo ja esta em uso. Escolha um codigo diferente.",
+      "authFailed": "Nao tem acesso de administrador. Inicie sessao com uma conta de administrador.",
+      "deactivateTitle": "Desativar Cupao",
+      "deactivateBody": "Isto impedira novas utilizacoes do codigo {code}. Descontos ja aplicados nao sao afetados. Desativar?",
+      "statsActive": "Cupoes Ativos",
+      "statsUses": "Total de Utilizacoes",
+      "statsRevenue": "Receita Total"
     }
   },
   "delivery": {

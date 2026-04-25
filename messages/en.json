@@ -183,6 +183,7 @@
     "menu": {
       "esims": "My eSIMs",
       "settings": "Settings",
+      "inviteFriends": "Invite Friends",
       "logout": "Log out"
     },
     "field": {
@@ -210,6 +211,50 @@
       "resetExpired": "This reset link has expired. Request a new one.",
       "generic": "Something went wrong. Please try again.",
       "conversionExists": "This email already has an account. Log in to link your eSIM."
+    }
+  },
+  "referral": {
+    "title": "Invite Friends, Get Free Data",
+    "subtitle": "Share your link and you both get a free 1GB day pass",
+    "copyLink": "Copy Referral Link",
+    "copied": "Copied!",
+    "shareVia": "Share via",
+    "shareWhatsapp": "WhatsApp",
+    "shareTwitter": "Twitter/X",
+    "shareCopy": "Copy",
+    "shareText": "Get a free 1GB eSIM for your next trip! Use my link: {url}",
+    "statsInvited": "Friends Invited",
+    "statsEarned": "Free Plans Earned",
+    "statsRemaining": "Free Plans Left This Month",
+    "capReached": "You have reached your monthly limit of 5 free plans. Your limit resets on {date}.",
+    "postPurchaseTitle": "Share with a Friend",
+    "postPurchaseSubtitle": "You both get a free 1GB day pass",
+    "noAccount": "Create an account to get your referral link and earn free 1GB plans when friends sign up.",
+    "noAccountCta": "Start Earning Free Data",
+    "error": "Could not generate your referral link. Please try again or contact support."
+  },
+  "whatsapp": {
+    "ariaLabel": "Contact support on WhatsApp",
+    "browsePage": "Hi! I need help choosing an eSIM plan",
+    "checkoutPage": "Hi! I need help with my checkout",
+    "deliveryPage": "Hi! I need help with my order",
+    "dashboardPage": "Hi! I need help with my eSIM",
+    "defaultMessage": "Hi!"
+  },
+  "admin": {
+    "coupons": {
+      "title": "Influencer Coupons",
+      "createButton": "Create Coupon",
+      "emptyTitle": "No Coupons Yet",
+      "emptyBody": "Create your first influencer coupon code to start tracking performance.",
+      "emptyCta": "Create First Coupon",
+      "codeExists": "This code is already taken. Choose a different code.",
+      "authFailed": "You do not have admin access. Please log in with an admin account.",
+      "deactivateTitle": "Deactivate Coupon",
+      "deactivateBody": "This will prevent new uses of code {code}. Existing discounts already applied are not affected. Deactivate?",
+      "statsActive": "Active Coupons",
+      "statsUses": "Total Uses",
+      "statsRevenue": "Total Revenue"
     }
   },
   "delivery": {

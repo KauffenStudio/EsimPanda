@@ -40,4 +40,5 @@ export interface Coupon {
   valid_from: string;
   valid_until: string | null;
   is_active: boolean;
+  type?: 'standard' | 'influencer' | 'referral_reward';
 }
