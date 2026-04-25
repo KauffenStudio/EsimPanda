@@ -10,10 +10,12 @@ const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 // Conditionally import Stripe hooks only when not in mock mode
 function useStripeHooks() {
-  if (STRIPE_MOCK_MODE) return { stripe: null, elements: null };
-  // eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires
-  const { useStripe, useElements } = require('@stripe/react-stripe-js');
-  return { stripe: useStripe(), elements: useElements() };
+  // eslint-disable-next-line react-hooks/rules-of-hooks, @typescript-eslint/no-require-imports
+  if (!STRIPE_MOCK_MODE) {
+    const { useStripe, useElements } = require('@stripe/react-stripe-js');
+    return { stripe: useStripe(), elements: useElements() };
+  }
+  return { stripe: null, elements: null };
 }
 
 export function PayButton() {

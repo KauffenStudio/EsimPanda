@@ -19,20 +19,16 @@ vi.mock('next-intl', () => ({
 }));
 
 // Mock motion/react to avoid animation complexity
-vi.mock('motion/react', () => {
-  const React = require('react');
+vi.mock('motion/react', async () => {
+  const React = await import('react');
   const createMotionComponent = (tag: string) => {
-    return React.forwardRef((props: Record<string, unknown>, ref: React.Ref<unknown>) => {
-      const {
-        initial: _initial,
-        animate: _animate,
-        exit: _exit,
-        transition: _transition,
-        whileTap: _whileTap,
-        ...rest
-      } = props;
+    const Component = React.forwardRef((props: Record<string, unknown>, ref: React.Ref<unknown>) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { initial, animate, exit, transition, whileTap, ...rest } = props;
       return React.createElement(tag, { ...rest, ref });
     });
+    Component.displayName = `motion.${tag}`;
+    return Component;
   };
 
   return {
@@ -47,12 +43,14 @@ vi.mock('motion/react', () => {
 });
 
 // Mock qrcode.react
-vi.mock('qrcode.react', () => ({
-  QRCodeSVG: (props: { value: string }) => {
-    const React = require('react');
-    return React.createElement('div', { 'data-testid': 'qr-code', 'data-value': props.value });
-  },
-}));
+vi.mock('qrcode.react', async () => {
+  const React = await import('react');
+  return {
+    QRCodeSVG: (props: { value: string }) => {
+      return React.createElement('div', { 'data-testid': 'qr-code', 'data-value': props.value });
+    },
+  };
+});
 
 const mockDeliveryData = {
   iccid: 'TEST-ICCID-1234',
