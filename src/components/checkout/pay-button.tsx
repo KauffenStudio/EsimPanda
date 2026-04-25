@@ -9,7 +9,6 @@ import { STRIPE_MOCK_MODE } from '@/lib/stripe/client';
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function MockPayButton() {
-  const t = useTranslations('checkout');
   const { email, total_cents, payment_status, setPaymentStatus } = useCheckoutStore();
   const [processing, setProcessing] = useState(false);
 
@@ -36,10 +35,10 @@ function MockPayButton() {
 }
 
 function RealPayButton() {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   const { useStripe, useElements } = require('@stripe/react-stripe-js') as typeof import('@stripe/react-stripe-js');
   const stripe = useStripe();
   const elements = useElements();
-  const t = useTranslations('checkout');
   const { email, total_cents, payment_status, setPaymentStatus } = useCheckoutStore();
   const [processing, setProcessing] = useState(false);
 
@@ -123,7 +122,6 @@ function PayButtonUI({ processing, isDisabled, totalFormatted, onClick }: {
   );
 }
 
-// eslint-disable-next-line @typescript-eslint/no-require-imports
 export function PayButton() {
   return STRIPE_MOCK_MODE ? <MockPayButton /> : <RealPayButton />;
 }
