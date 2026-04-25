@@ -308,5 +308,15 @@
       "setup": { "button": "Ver Guia de Configuracion" },
       "referral": "Conoces a alguien que viaja? Comparte eSIM Panda"
     }
+  },
+  "pwa": {
+    "install_heading": "Accede a tus eSIMs sin conexion",
+    "install_body": "Instala eSIM Panda para acceso instantaneo al codigo QR — incluso sin internet.",
+    "install_cta": "Instalar App",
+    "install_ios": "Toca el boton Compartir y luego 'Anadir a la pantalla de inicio'",
+    "offline_message": "Sin conexion — mostrando datos en cache",
+    "offline_last_updated": "Ultima actualizacion {time}",
+    "sync_complete": "Datos actualizados",
+    "sw_error": "Modo sin conexion no disponible — intenta actualizar la pagina."
   }
 }

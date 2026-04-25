@@ -6,6 +6,7 @@ import { PageTransition } from '@/components/layout/page-transition';
 import { Toaster } from 'sonner';
 import { AuthProvider } from '@/components/auth/auth-provider';
 import { WhatsAppButton } from '@/components/layout/whatsapp-button';
+import { OfflineIndicator } from '@/components/pwa/offline-indicator';
 import { routing } from '@/i18n/routing';
 
 export function generateStaticParams() {
@@ -27,6 +28,7 @@ export default async function LocaleLayout({
     <NextIntlClientProvider locale={locale} messages={messages}>
       <AuthProvider>
         <Header />
+        <OfflineIndicator />
         <main className="pt-14 pb-20 md:pb-0 min-h-screen">
           <PageTransition>{children}</PageTransition>
         </main>

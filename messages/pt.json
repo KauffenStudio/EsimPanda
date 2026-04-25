@@ -308,5 +308,15 @@
       "setup": { "button": "Ver Guia de Configuracao" },
       "referral": "Conhece alguem a viajar? Partilhe o eSIM Panda"
     }
+  },
+  "pwa": {
+    "install_heading": "Aceda aos seus eSIMs offline",
+    "install_body": "Instale o eSIM Panda para acesso instantaneo ao codigo QR — mesmo sem internet.",
+    "install_cta": "Instalar App",
+    "install_ios": "Toque no botao Partilhar e depois em 'Adicionar ao Ecra Inicial'",
+    "offline_message": "Esta offline — a mostrar dados em cache",
+    "offline_last_updated": "Ultima atualizacao {time}",
+    "sync_complete": "Dados atualizados",
+    "sw_error": "Modo offline indisponivel — tente atualizar a pagina."
   }
 }

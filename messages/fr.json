@@ -308,5 +308,15 @@
       "setup": { "button": "Voir le Guide de Configuration" },
       "referral": "Vous connaissez quelqu'un qui voyage? Partagez eSIM Panda"
     }
+  },
+  "pwa": {
+    "install_heading": "Accedez a vos eSIMs hors ligne",
+    "install_body": "Installez eSIM Panda pour un acces instantane au code QR — meme sans internet.",
+    "install_cta": "Installer l'app",
+    "install_ios": "Appuyez sur le bouton Partager puis 'Ajouter a l'ecran d'accueil'",
+    "offline_message": "Vous etes hors ligne — affichage des donnees en cache",
+    "offline_last_updated": "Derniere mise a jour {time}",
+    "sync_complete": "Donnees actualisees",
+    "sw_error": "Mode hors ligne indisponible — essayez de rafraichir la page."
   }
 }

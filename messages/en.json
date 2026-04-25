@@ -308,5 +308,15 @@
       "setup": { "button": "View Setup Guide" },
       "referral": "Know someone traveling? Share eSIM Panda"
     }
+  },
+  "pwa": {
+    "install_heading": "Access your eSIMs offline",
+    "install_body": "Install eSIM Panda for instant QR code access — even without internet.",
+    "install_cta": "Install App",
+    "install_ios": "Tap the Share button, then 'Add to Home Screen'",
+    "offline_message": "You're offline — showing cached data",
+    "offline_last_updated": "Last updated {time}",
+    "sync_complete": "Data refreshed",
+    "sw_error": "Offline mode unavailable — try refreshing the page."
   }
 }
