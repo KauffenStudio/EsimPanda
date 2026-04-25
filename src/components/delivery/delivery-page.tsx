@@ -97,6 +97,25 @@ export function DeliveryPage({ paymentIntentId, email }: DeliveryPageProps) {
     return () => stopPolling();
   }, [paymentIntentId, email, setEmail, setStatus, pollStatus, stopPolling, setError]);
 
+  // Cache QR data in service worker for offline access
+  useEffect(() => {
+    if (status === 'ready' && data && 'serviceWorker' in navigator) {
+      navigator.serviceWorker.ready.then((reg) => {
+        if (reg.active) {
+          reg.active.postMessage({
+            type: 'CACHE_QR',
+            orderId: paymentIntentId,
+            qrData: data.activation_qr_base64,
+            setupGuide: {
+              smdp_address: data.smdp_address,
+              manual_activation_code: data.manual_activation_code,
+            },
+          });
+        }
+      });
+    }
+  }, [status, data, paymentIntentId]);
+
   // Fetch referral data when delivery is ready and user is logged in
   useEffect(() => {
     if (status === 'ready' && authUser) {

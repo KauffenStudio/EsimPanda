@@ -6,6 +6,7 @@ import { PageTransition } from '@/components/layout/page-transition';
 import { Toaster } from 'sonner';
 import { AuthProvider } from '@/components/auth/auth-provider';
 import { WhatsAppButton } from '@/components/layout/whatsapp-button';
+import { PushManager } from '@/components/pwa/push-manager';
 import { OfflineIndicator } from '@/components/pwa/offline-indicator';
 import { routing } from '@/i18n/routing';
 
@@ -35,6 +36,7 @@ export default async function LocaleLayout({
         <BottomNav />
         <Toaster />
         <WhatsAppButton />
+        <PushManager />
       </AuthProvider>
     </NextIntlClientProvider>
   );

@@ -309,6 +309,24 @@
       "referral": "Conoces a alguien que viaja? Comparte eSIM Panda"
     }
   },
+  "notifications": {
+    "title": "Notificaciones",
+    "expiry_alerts": "Alertas de expiracion",
+    "usage_alerts": "Alertas de uso",
+    "promotions": "Promociones",
+    "permission_heading": "Mantente informado",
+    "permission_body": "Recibe alertas cuando tu eSIM este a punto de expirar o con pocos datos.",
+    "permission_allow": "Permitir Notificaciones",
+    "permission_dismiss": "Ahora no",
+    "permission_denied": "Notificaciones bloqueadas — activalas en la configuracion del navegador para recibir alertas de expiracion.",
+    "expiry_24h": "Tu eSIM {destination} expira manana",
+    "expiry_1h": "Tu eSIM {destination} expira en 1 hora",
+    "low_data_80": "Has usado el 80% de los datos de tu plan {plan}",
+    "low_data_95": "Casi sin datos en tu plan {plan}",
+    "action_renew": "Renovar",
+    "action_topup": "Recargar ahora",
+    "action_view": "Ver oferta"
+  },
   "pwa": {
     "install_heading": "Accede a tus eSIMs sin conexion",
     "install_body": "Instala eSIM Panda para acceso instantaneo al codigo QR — incluso sin internet.",

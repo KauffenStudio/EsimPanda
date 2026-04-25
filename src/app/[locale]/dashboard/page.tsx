@@ -13,6 +13,7 @@ import { LowDataBanner } from '@/components/dashboard/low-data-banner';
 import { UsageTimestamp } from '@/components/dashboard/usage-timestamp';
 import { EsimGrid } from '@/components/dashboard/esim-grid';
 import { TopUpModal } from '@/components/dashboard/top-up-modal';
+import { NotificationPrefs } from '@/components/dashboard/notification-prefs';
 import { PurchaseHistoryList } from '@/components/dashboard/purchase-history-list';
 import { resendDeliveryEmail } from '@/lib/dashboard/actions';
 import { toast } from 'sonner';
@@ -145,6 +146,8 @@ export default function DashboardPage() {
           )}
         </AnimatePresence>
       </div>
+
+      <NotificationPrefs />
 
       {/* Top-up modal — always mounted, visibility controlled by store */}
       <TopUpModal />
