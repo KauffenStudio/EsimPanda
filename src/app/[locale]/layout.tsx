@@ -5,6 +5,7 @@ import { BottomNav } from '@/components/layout/bottom-nav';
 import { PageTransition } from '@/components/layout/page-transition';
 import { Toaster } from 'sonner';
 import { AuthProvider } from '@/components/auth/auth-provider';
+import { WhatsAppButton } from '@/components/layout/whatsapp-button';
 import { routing } from '@/i18n/routing';
 
 export function generateStaticParams() {
@@ -31,6 +32,7 @@ export default async function LocaleLayout({
         </main>
         <BottomNav />
         <Toaster />
+        <WhatsAppButton />
       </AuthProvider>
     </NextIntlClientProvider>
   );
