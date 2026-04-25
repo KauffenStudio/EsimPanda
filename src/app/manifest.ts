@@ -1,0 +1,27 @@
+import type { MetadataRoute } from 'next';
+
+export default function manifest(): MetadataRoute.Manifest {
+  return {
+    name: 'eSIM Panda',
+    short_name: 'eSIM Panda',
+    description: 'Affordable eSIM plans for students and travelers',
+    start_url: '/',
+    display: 'standalone',
+    orientation: 'portrait',
+    theme_color: '#2979FF',
+    background_color: '#FFFFFF',
+    icons: [
+      {
+        src: '/icon-192x192.png',
+        sizes: '192x192',
+        type: 'image/png',
+      },
+      {
+        src: '/icon-512x512.png',
+        sizes: '512x512',
+        type: 'image/png',
+        purpose: 'maskable any',
+      },
+    ],
+  };
+}

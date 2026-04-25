@@ -14,14 +14,33 @@ export const metadata: Metadata = {
   description: 'Get connected with mobile data anywhere in the world',
 };
 
+const swRegistrationScript = `if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js', { scope: '/' });
+}`;
+
+const darkModeHydrationScript = `try {
+  var stored = JSON.parse(localStorage.getItem('esim-panda-theme') || '{}');
+  if (stored.state && stored.state.isDark) {
+    document.documentElement.classList.add('dark');
+    document.documentElement.style.colorScheme = 'dark';
+  }
+} catch (e) {}`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={plusJakartaSans.variable} style={{ colorScheme: 'light' }}>
-      <body className="font-sans antialiased">{children}</body>
+    <html lang="en" className={plusJakartaSans.variable}>
+      <head>
+        <meta name="theme-color" content="#2979FF" />
+      </head>
+      <body className="font-sans antialiased">
+        <script dangerouslySetInnerHTML={{ __html: darkModeHydrationScript }} />
+        <script dangerouslySetInnerHTML={{ __html: swRegistrationScript }} />
+        {children}
+      </body>
     </html>
   );
 }
