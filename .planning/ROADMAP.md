@@ -160,13 +160,14 @@ Plans:
 **Success Criteria** (what must be TRUE):
   1. User can install the app to their home screen (PWA manifest, service worker)
   2. User can access their QR codes offline after installation
-  3. App supports dark mode with auto-detection and manual toggle
+  3. App supports dark mode with manual toggle (always starts in light mode)
   4. User receives push notifications for eSIM expiry warnings and promotions
 **Plans**: 3 plans
 
 Plans:
-- [ ] 09-01: TBD
-- [ ] 09-02: TBD
+- [ ] 09-01-PLAN.md — PWA foundation: manifest, service worker, SW registration, install banner, offline indicator, i18n keys
+- [ ] 09-02-PLAN.md — Dark mode completion: CSS tokens, hydration fix, dark: classes across all 60 components
+- [ ] 09-03-PLAN.md — Push notifications: web-push, VAPID, server actions, notification store, permission modal, prefs UI, offline QR caching
 
 ## Progress
 
@@ -185,4 +186,4 @@ Note: Phase 8 depends on Phase 5 (not Phase 7), so it could run in parallel with
 | 6. eSIM Management | 2/3 | In Progress|  |
 | 7. SEO and Internationalization | 3/4 | In Progress|  |
 | 8. Growth and Acquisition | 3/3 | Complete   | 2026-04-25 |
-| 9. PWA and Polish | 0/2 | Not started | - |
+| 9. PWA and Polish | 0/3 | Planning complete | - |
