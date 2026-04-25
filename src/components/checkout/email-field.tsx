@@ -37,6 +37,7 @@ export function EmailField() {
       onChange={handleChange}
       onBlur={handleBlur}
       error={error}
+      className="dark:text-gray-100"
       style={{ fontSize: '16px' }}
     />
   );

@@ -28,14 +28,13 @@ export function PostPurchaseShareCTA({ referralCode }: PostPurchaseShareCTAProps
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, ease: 'easeOut' }}
-      className="relative rounded-lg p-4"
-      style={{ backgroundColor: '#F5F5F5' }}
+      className="relative rounded-lg p-4 bg-surface dark:bg-surface-dark"
     >
       {/* Dismiss button */}
       <button
         type="button"
         onClick={() => setDismissed(true)}
-        className="absolute top-3 right-3 p-1 rounded hover:bg-gray-200 transition-colors"
+        className="absolute top-3 right-3 p-1 rounded hover:bg-gray-200 dark:hover:bg-background-dark transition-colors"
         aria-label="Dismiss"
       >
         <X className="h-4 w-4 text-gray-500" />
@@ -44,8 +43,8 @@ export function PostPurchaseShareCTA({ referralCode }: PostPurchaseShareCTAProps
       {referralCode ? (
         /* Logged in: show share CTA with referral link */
         <div>
-          <h3 className="text-base font-bold mb-1 pr-6">{t('postPurchaseTitle')}</h3>
-          <p className="text-sm text-gray-600 mb-3">{t('postPurchaseSubtitle')}</p>
+          <h3 className="text-base font-bold mb-1 pr-6 dark:text-gray-100">{t('postPurchaseTitle')}</h3>
+          <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">{t('postPurchaseSubtitle')}</p>
           <ShareButtons
             referralUrl={referralUrl}
             shareText={t('shareText', { url: referralUrl })}
@@ -54,7 +53,7 @@ export function PostPurchaseShareCTA({ referralCode }: PostPurchaseShareCTAProps
       ) : (
         /* Not logged in: show signup CTA */
         <div className="text-center pr-6">
-          <p className="text-sm text-gray-600 mb-3">
+          <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
             Create an account to start referring friends
           </p>
           <Link href={`/${locale}/signup`}>

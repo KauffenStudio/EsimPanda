@@ -44,7 +44,7 @@ export function UsageTimestamp({
           onClick={onRefresh}
           disabled={refreshing}
           aria-label={t('dashboard.refresh_label')}
-          className="p-1 rounded-full hover:bg-gray-100 transition-colors disabled:opacity-50"
+          className="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-surface-dark transition-colors disabled:opacity-50"
         >
           <RefreshCw
             size={16}

@@ -51,7 +51,8 @@ export function CircularGauge({
           cy={center}
           r={radius}
           fill="none"
-          stroke="#E5E5E5"
+          stroke="currentColor"
+          className="text-border dark:text-border-dark"
           strokeWidth={stroke_width}
         />
 
@@ -82,10 +83,10 @@ export function CircularGauge({
           </span>
         ) : (
           <>
-            <span className="text-2xl font-bold leading-none" style={{ fontSize: 24, fontWeight: 700 }}>
+            <span className="text-2xl font-bold leading-none dark:text-gray-100" style={{ fontSize: 24, fontWeight: 700 }}>
               {remaining_gb.toFixed(1)}
             </span>
-            <span className="text-sm font-normal" style={{ fontSize: 14, fontWeight: 400, color: '#616161' }}>
+            <span className="text-sm font-normal text-gray-600 dark:text-gray-400" style={{ fontSize: 14, fontWeight: 400 }}>
               GB left
             </span>
           </>

@@ -39,10 +39,10 @@ export function SetupSteps({ deviceFamily }: SetupStepsProps) {
             </div>
             <div className="flex-1">
               <div className="flex items-center gap-2">
-                <Icon size={16} className="text-gray-400" />
-                <span className="text-base font-bold">{step.title}</span>
+                <Icon size={16} className="text-gray-400 dark:text-gray-600" />
+                <span className="text-base font-bold dark:text-gray-100">{step.title}</span>
               </div>
-              <p className="mt-0.5 text-base text-gray-600">{step.description}</p>
+              <p className="mt-0.5 text-base text-gray-600 dark:text-gray-400">{step.description}</p>
             </div>
           </div>
         );

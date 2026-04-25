@@ -23,10 +23,9 @@ export function ReferralLinkCard({ code, onCopy }: ReferralLinkCardProps) {
 
   return (
     <div
-      className="rounded-lg p-4"
-      style={{ backgroundColor: '#F5F5F5' }}
+      className="rounded-lg p-4 bg-surface dark:bg-surface-dark"
     >
-      <p className="text-sm font-bold mb-2">Your Referral Link</p>
+      <p className="text-sm font-bold mb-2 dark:text-gray-100">Your Referral Link</p>
       <div className="flex items-center gap-3">
         <span className="font-mono text-sm truncate flex-1" style={{ color: '#2979FF' }}>
           esimpanda.com/r/{code}

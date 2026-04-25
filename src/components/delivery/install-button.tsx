@@ -29,7 +29,7 @@ export function InstallButton({ href }: InstallButtonProps) {
       <a
         href={href}
         onClick={handleClick}
-        className="flex h-14 w-full items-center justify-center rounded-lg bg-accent text-lg font-semibold text-white transition-colors duration-150 hover:bg-accent-hover active:scale-[0.97]"
+        className="flex h-14 w-full items-center justify-center rounded-lg bg-accent text-lg font-semibold text-white transition-colors duration-150 hover:bg-accent-hover active:scale-[0.97] dark:shadow-card-dark"
       >
         {t('install')}
       </a>

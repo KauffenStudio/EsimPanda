@@ -19,7 +19,7 @@ export function DashboardTabs({ active_tab, onTabChange }: DashboardTabsProps) {
   const t = useTranslations();
 
   return (
-    <div role="tablist" className="flex w-full h-12 border-b border-gray-200 relative">
+    <div role="tablist" className="flex w-full h-12 border-b border-gray-200 dark:border-border-dark relative">
       {tabs.map((tab) => {
         const isActive = active_tab === tab.value;
         return (

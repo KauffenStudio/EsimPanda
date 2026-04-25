@@ -76,16 +76,16 @@ export function CouponTable({ coupons, onDeactivate, onReactivate, loading }: Co
   // Loading skeleton
   if (loading) {
     return (
-      <div className="overflow-x-auto rounded-lg border border-border">
+      <div className="overflow-x-auto rounded-lg border border-border dark:border-border-dark">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-border" style={{ backgroundColor: '#F5F5F5' }}>
+            <tr className="border-b border-border dark:border-border-dark bg-surface dark:bg-surface-dark">
               {columns.map((col) => (
-                <th key={col.key} scope="col" className="px-4 py-3 text-left text-sm font-bold">
+                <th key={col.key} scope="col" className="px-4 py-3 text-left text-sm font-bold dark:text-gray-100">
                   {col.label}
                 </th>
               ))}
-              <th scope="col" className="px-4 py-3 text-left text-sm font-bold">
+              <th scope="col" className="px-4 py-3 text-left text-sm font-bold dark:text-gray-100">
                 Actions
               </th>
             </tr>
@@ -110,22 +110,22 @@ export function CouponTable({ coupons, onDeactivate, onReactivate, loading }: Co
   if (coupons.length === 0) {
     return (
       <div className="text-center py-12">
-        <h3 className="text-xl font-bold mb-2">{t('emptyTitle')}</h3>
-        <p className="text-gray-600 mb-4">{t('emptyBody')}</p>
+        <h3 className="text-xl font-bold mb-2 dark:text-gray-100">{t('emptyTitle')}</h3>
+        <p className="text-gray-600 dark:text-gray-400 mb-4">{t('emptyBody')}</p>
       </div>
     );
   }
 
   return (
-    <div className="overflow-x-auto rounded-lg border border-border">
+    <div className="overflow-x-auto rounded-lg border border-border dark:border-border-dark">
       <table className="w-full text-sm">
         <thead>
-          <tr className="border-b border-border" style={{ backgroundColor: '#F5F5F5' }}>
+          <tr className="border-b border-border dark:border-border-dark bg-surface dark:bg-surface-dark">
             {columns.map((col) => (
               <th
                 key={col.key}
                 scope="col"
-                className="px-4 py-3 text-left text-sm font-bold cursor-pointer select-none hover:bg-gray-200 transition-colors"
+                className="px-4 py-3 text-left text-sm font-bold dark:text-gray-100 cursor-pointer select-none hover:bg-gray-200 dark:hover:bg-background-dark transition-colors"
                 onClick={() => handleSort(col.key)}
               >
                 <span className="inline-flex items-center gap-1">
@@ -139,10 +139,10 @@ export function CouponTable({ coupons, onDeactivate, onReactivate, loading }: Co
                 </span>
               </th>
             ))}
-            <th scope="col" className="px-4 py-3 text-left text-sm font-bold">
+            <th scope="col" className="px-4 py-3 text-left text-sm font-bold dark:text-gray-100">
               Profile
             </th>
-            <th scope="col" className="px-4 py-3 text-left text-sm font-bold">
+            <th scope="col" className="px-4 py-3 text-left text-sm font-bold dark:text-gray-100">
               Actions
             </th>
           </tr>
@@ -154,16 +154,16 @@ export function CouponTable({ coupons, onDeactivate, onReactivate, loading }: Co
             return (
               <tr
                 key={coupon.code}
-                className={`border-b border-border last:border-0 transition-colors duration-200 ${
-                  isConfirming ? 'bg-red-50' : 'hover:bg-gray-50'
+                className={`border-b border-border dark:border-border-dark last:border-0 transition-colors duration-200 ${
+                  isConfirming ? 'bg-red-50 dark:bg-destructive-dark/10' : 'hover:bg-gray-50 dark:hover:bg-surface-dark'
                 }`}
                 onKeyDown={(e) => handleKeyDown(e, coupon.code)}
               >
-                <td className="px-4 py-3 font-mono font-bold">{coupon.code}</td>
-                <td className="px-4 py-3">{coupon.influencer_name}</td>
-                <td className="px-4 py-3">{coupon.total_uses}</td>
-                <td className="px-4 py-3">{'\u20AC'}{(coupon.total_revenue_cents / 100).toFixed(2)}</td>
-                <td className="px-4 py-3 text-gray-600">
+                <td className="px-4 py-3 font-mono font-bold dark:text-gray-100">{coupon.code}</td>
+                <td className="px-4 py-3 dark:text-gray-100">{coupon.influencer_name}</td>
+                <td className="px-4 py-3 dark:text-gray-100">{coupon.total_uses}</td>
+                <td className="px-4 py-3 dark:text-gray-100">{'\u20AC'}{(coupon.total_revenue_cents / 100).toFixed(2)}</td>
+                <td className="px-4 py-3 text-gray-600 dark:text-gray-400">
                   {coupon.last_used ? formatRelativeDate(coupon.last_used) : '--'}
                 </td>
                 <td className="px-4 py-3">

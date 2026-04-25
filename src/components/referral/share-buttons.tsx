@@ -45,11 +45,11 @@ export function ShareButtons({ referralUrl, shareText }: ShareButtonsProps) {
   if (canShare) {
     return (
       <div>
-        <p className="text-sm font-bold mb-2">{t('shareVia')}</p>
+        <p className="text-sm font-bold mb-2 dark:text-gray-100">{t('shareVia')}</p>
         <button
           type="button"
           onClick={handleNativeShare}
-          className="flex items-center gap-2 rounded-md border border-gray-200 px-4 py-2.5 text-sm font-bold hover:bg-gray-50 transition-colors"
+          className="flex items-center gap-2 rounded-md border border-gray-200 dark:border-border-dark px-4 py-2.5 text-sm font-bold dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-surface-dark transition-colors"
           aria-label="Share referral link"
         >
           <Share2 className="h-4 w-4" />
@@ -62,13 +62,13 @@ export function ShareButtons({ referralUrl, shareText }: ShareButtonsProps) {
   // Desktop fallback: individual buttons
   return (
     <div>
-      <p className="text-sm font-bold mb-2">{t('shareVia')}</p>
+      <p className="text-sm font-bold mb-2 dark:text-gray-100">{t('shareVia')}</p>
       <div className="flex gap-3">
         {/* Copy */}
         <button
           type="button"
           onClick={handleCopy}
-          className="flex flex-col items-center gap-1 rounded-md border border-gray-200 px-4 py-3 hover:bg-gray-50 transition-colors min-w-[80px]"
+          className="flex flex-col items-center gap-1 rounded-md border border-gray-200 dark:border-border-dark px-4 py-3 hover:bg-gray-50 dark:hover:bg-surface-dark transition-colors min-w-[80px]"
           aria-label="Copy referral link"
         >
           {copied ? (
@@ -76,7 +76,7 @@ export function ShareButtons({ referralUrl, shareText }: ShareButtonsProps) {
           ) : (
             <Copy className="h-5 w-5" />
           )}
-          <span className="text-sm font-bold">{t('shareCopy')}</span>
+          <span className="text-sm font-bold dark:text-gray-100">{t('shareCopy')}</span>
         </button>
 
         {/* WhatsApp */}
@@ -84,11 +84,11 @@ export function ShareButtons({ referralUrl, shareText }: ShareButtonsProps) {
           href={`https://wa.me/?text=${encodedText}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex flex-col items-center gap-1 rounded-md border border-gray-200 px-4 py-3 hover:bg-gray-50 transition-colors min-w-[80px]"
+          className="flex flex-col items-center gap-1 rounded-md border border-gray-200 dark:border-border-dark px-4 py-3 hover:bg-gray-50 dark:hover:bg-surface-dark transition-colors min-w-[80px]"
           aria-label="Share via WhatsApp"
         >
           <MessageCircle className="h-5 w-5" style={{ color: '#25D366' }} />
-          <span className="text-sm font-bold">{t('shareWhatsapp')}</span>
+          <span className="text-sm font-bold dark:text-gray-100">{t('shareWhatsapp')}</span>
         </a>
 
         {/* Twitter/X */}
@@ -96,13 +96,13 @@ export function ShareButtons({ referralUrl, shareText }: ShareButtonsProps) {
           href={`https://twitter.com/intent/tweet?text=${encodedText}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex flex-col items-center gap-1 rounded-md border border-gray-200 px-4 py-3 hover:bg-gray-50 transition-colors min-w-[80px]"
+          className="flex flex-col items-center gap-1 rounded-md border border-gray-200 dark:border-border-dark px-4 py-3 hover:bg-gray-50 dark:hover:bg-surface-dark transition-colors min-w-[80px]"
           aria-label="Share via Twitter"
         >
           <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
             <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
           </svg>
-          <span className="text-sm font-bold">{t('shareTwitter')}</span>
+          <span className="text-sm font-bold dark:text-gray-100">{t('shareTwitter')}</span>
         </a>
       </div>
     </div>

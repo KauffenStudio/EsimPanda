@@ -62,23 +62,23 @@ export function PurchaseHistoryRow({ purchase, onResendEmail }: PurchaseHistoryR
   };
 
   return (
-    <div className="bg-white">
+    <div className="bg-white dark:bg-background-dark">
       {/* Collapsed row trigger */}
       <button
         type="button"
         onClick={() => setExpanded(!expanded)}
         aria-expanded={expanded}
-        className="w-full flex items-center justify-between px-4 py-3 hover:bg-gray-50 transition-colors cursor-pointer"
+        className="w-full flex items-center justify-between px-4 py-3 hover:bg-gray-50 dark:hover:bg-surface-dark transition-colors cursor-pointer"
         style={{ minHeight: 56 }}
       >
         <div className="flex items-center gap-3">
-          <span className="text-sm text-gray-600">{formattedDate}</span>
-          <span className="text-base font-bold">
+          <span className="text-sm text-gray-600 dark:text-gray-400">{formattedDate}</span>
+          <span className="text-base font-bold dark:text-gray-100">
             {isoToFlag(purchase.destination_iso)} {purchase.destination}
           </span>
         </div>
         <div className="flex items-center gap-3">
-          <span className="text-base">{formattedAmount}</span>
+          <span className="text-base dark:text-gray-100">{formattedAmount}</span>
           <ChevronDown
             size={16}
             className={`transition-transform duration-200 ${expanded ? 'rotate-180' : ''}`}
@@ -96,7 +96,7 @@ export function PurchaseHistoryRow({ purchase, onResendEmail }: PurchaseHistoryR
             transition={{ type: 'spring', stiffness: 300, damping: 25 }}
             className="overflow-hidden"
           >
-            <div className="border-t border-gray-200 px-4 py-3 space-y-2">
+            <div className="border-t border-gray-200 dark:border-border-dark px-4 py-3 space-y-2">
               {/* Detail rows */}
               <DetailRow label={t('dashboard.history_order_id')} value={`ORD-${purchase.order_id}`} />
               <DetailRow label={t('dashboard.history_plan')} value={purchase.plan_name} />
@@ -133,7 +133,7 @@ export function PurchaseHistoryRow({ purchase, onResendEmail }: PurchaseHistoryR
                 <button
                   type="button"
                   onClick={() => setShowQr(!showQr)}
-                  className="rounded-lg border border-gray-300 px-3 py-1.5 text-sm font-medium hover:bg-gray-50 transition-colors"
+                  className="rounded-lg border border-gray-300 dark:border-border-dark px-3 py-1.5 text-sm font-medium dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-surface-dark transition-colors"
                 >
                   View QR Code
                 </button>
@@ -141,7 +141,7 @@ export function PurchaseHistoryRow({ purchase, onResendEmail }: PurchaseHistoryR
                   type="button"
                   onClick={handleResendEmail}
                   disabled={resending}
-                  className="rounded-lg px-3 py-1.5 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors disabled:opacity-50"
+                  className="rounded-lg px-3 py-1.5 text-sm font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-surface-dark transition-colors disabled:opacity-50"
                 >
                   Re-send Email
                 </button>
@@ -174,8 +174,8 @@ export function PurchaseHistoryRow({ purchase, onResendEmail }: PurchaseHistoryR
 function DetailRow({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex justify-between items-center">
-      <span className="text-sm text-gray-600">{label}</span>
-      <span className="text-sm text-gray-900">{value}</span>
+      <span className="text-sm text-gray-600 dark:text-gray-400">{label}</span>
+      <span className="text-sm text-gray-900 dark:text-gray-100">{value}</span>
     </div>
   );
 }

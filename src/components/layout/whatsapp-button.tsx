@@ -110,7 +110,7 @@ export function WhatsAppButton() {
             whileTap={{ scale: 0.95 }}
             animate={showPulse ? { scale: [1, 1.15, 1] } : {}}
             transition={showPulse ? { duration: 0.6, repeat: 2, ease: 'easeInOut' } : {}}
-            className="flex items-center justify-center w-14 h-14 rounded-full shadow-[0_4px_12px_rgba(0,0,0,0.15)]"
+            className="flex items-center justify-center w-14 h-14 rounded-full shadow-[0_4px_12px_rgba(0,0,0,0.15)] dark:shadow-[0_4px_12px_rgba(0,0,0,0.4)]"
             style={{ backgroundColor: '#25D366' }}
           >
             <svg viewBox="0 0 24 24" width="28" height="28" fill="white">

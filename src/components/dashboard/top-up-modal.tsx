@@ -146,7 +146,7 @@ export function TopUpModal() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/50 z-50"
+            className="fixed inset-0 bg-black/50 dark:bg-overlay-dark z-50"
             onClick={closeTopUp}
           />
 
@@ -160,19 +160,19 @@ export function TopUpModal() {
             className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none"
           >
             <div
-              className="bg-white rounded-2xl max-w-[480px] w-full max-h-[90vh] overflow-y-auto p-6 pointer-events-auto shadow-xl"
+              className="bg-white dark:bg-surface-dark rounded-2xl max-w-[480px] w-full max-h-[90vh] overflow-y-auto p-6 pointer-events-auto shadow-xl"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Header */}
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-2xl font-bold">
+                <h2 className="text-2xl font-bold dark:text-gray-100">
                   {isoToFlag(esim.destination_iso)}{' '}
                   {t('dashboard.top_up_title', { destination: esim.destination })}
                 </h2>
                 <button
                   type="button"
                   onClick={closeTopUp}
-                  className="p-1 rounded-lg hover:bg-gray-100 transition-colors"
+                  className="p-1 rounded-lg hover:bg-gray-100 dark:hover:bg-background-dark dark:text-gray-100 transition-colors"
                 >
                   <X size={24} />
                 </button>
@@ -180,7 +180,7 @@ export function TopUpModal() {
 
               {/* Reactivation note for expired eSIMs */}
               {esim.status === 'expired' && (
-                <p className="text-sm italic text-gray-600 mb-4">
+                <p className="text-sm italic text-gray-600 dark:text-gray-400 mb-4">
                   {t('dashboard.top_up_reactivate_note')}
                 </p>
               )}
@@ -204,8 +204,8 @@ export function TopUpModal() {
                 <div className="space-y-4">
                   {STRIPE_MOCK_MODE || process.env.NEXT_PUBLIC_STRIPE_MOCK === 'true' ? (
                     <div className="space-y-4">
-                      <div className="rounded-lg border border-dashed border-gray-300 p-4 text-center">
-                        <p className="text-sm text-gray-500 mb-3">Mock Mode - Stripe Elements disabled</p>
+                      <div className="rounded-lg border border-dashed border-gray-300 dark:border-border-dark p-4 text-center">
+                        <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">Mock Mode - Stripe Elements disabled</p>
                         <button
                           type="button"
                           onClick={handleMockPayment}
@@ -243,7 +243,7 @@ export function TopUpModal() {
               {status === 'processing' && (
                 <div className="flex flex-col items-center py-8 gap-4">
                   <BambuLoading size={80} />
-                  <p className="text-base text-gray-600">
+                  <p className="text-base text-gray-600 dark:text-gray-400">
                     {t('dashboard.top_up_processing')}
                   </p>
                 </div>
@@ -253,7 +253,7 @@ export function TopUpModal() {
               {status === 'success' && (
                 <div className="flex flex-col items-center py-8 gap-4">
                   <BambuSuccess size={80} />
-                  <p className="text-lg font-bold text-gray-900">
+                  <p className="text-lg font-bold text-gray-900 dark:text-gray-100">
                     {t('dashboard.data_added')}
                   </p>
                 </div>
@@ -263,13 +263,13 @@ export function TopUpModal() {
               {status === 'error' && (
                 <div className="flex flex-col items-center py-8 gap-4">
                   <BambuError size={80} />
-                  <p className="text-base text-gray-600">
+                  <p className="text-base text-gray-600 dark:text-gray-400">
                     {errorMessage || t('dashboard.top_up_error')}
                   </p>
                   <button
                     type="button"
                     onClick={handleTryAgain}
-                    className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium hover:bg-gray-50 transition-colors"
+                    className="rounded-lg border border-gray-300 dark:border-border-dark px-4 py-2 text-sm font-medium dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-background-dark transition-colors"
                   >
                     {t('dashboard.top_up_try_again')}
                   </button>

@@ -26,13 +26,12 @@ export function ReferralStats({ stats }: ReferralStatsProps) {
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1, duration: 0.3, ease: 'easeOut' }}
-            className="rounded-lg p-4 text-center"
-            style={{ backgroundColor: '#F5F5F5' }}
+            className="rounded-lg p-4 text-center bg-surface dark:bg-surface-dark"
           >
-            <dd className="text-2xl font-bold">
+            <dd className="text-2xl font-bold dark:text-gray-100">
               {stats[item.field]}
             </dd>
-            <dt className="text-sm text-gray-600 mt-1">
+            <dt className="text-sm text-gray-600 dark:text-gray-400 mt-1">
               {t(item.key)}
             </dt>
           </motion.div>

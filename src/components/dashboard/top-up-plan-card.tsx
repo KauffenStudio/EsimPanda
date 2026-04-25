@@ -18,15 +18,15 @@ export function TopUpPlanCard({ package: pkg, selected, onSelect }: TopUpPlanCar
       onClick={() => onSelect(pkg)}
       className={`w-full rounded-lg p-4 text-left cursor-pointer transition-colors duration-150 ${
         selected
-          ? 'border-2 border-[#2979FF] bg-[#E3F0FF]'
-          : 'border border-gray-200 bg-white hover:border-gray-300'
+          ? 'border-2 border-[#2979FF] bg-[#E3F0FF] dark:bg-accent-soft-dark'
+          : 'border border-gray-200 dark:border-border-dark bg-white dark:bg-background-dark hover:border-gray-300 dark:hover:border-gray-600'
       }`}
     >
-      <p className="text-base font-bold text-gray-900">{pkg.name}</p>
+      <p className="text-base font-bold text-gray-900 dark:text-gray-100">{pkg.name}</p>
       <div className="mt-1 flex items-baseline gap-2">
-        <span className="text-sm text-gray-600">{pkg.data_gb} GB</span>
-        <span className="text-sm text-gray-400">|</span>
-        <span className="text-sm text-gray-600">{pkg.duration_days} days</span>
+        <span className="text-sm text-gray-600 dark:text-gray-400">{pkg.data_gb} GB</span>
+        <span className="text-sm text-gray-400 dark:text-gray-600">|</span>
+        <span className="text-sm text-gray-600 dark:text-gray-400">{pkg.duration_days} days</span>
       </div>
       <p className="mt-2 text-base font-bold text-[#2979FF]">
         EUR {(pkg.price_cents / 100).toFixed(2)}

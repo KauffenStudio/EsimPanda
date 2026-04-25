@@ -48,8 +48,7 @@ export function EsimCard({ esim, onTopUp }: EsimCardProps) {
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="rounded-[10px] p-4"
-      style={{ backgroundColor: '#F5F5F5' }}
+      className="rounded-[10px] p-4 bg-surface dark:bg-surface-dark"
     >
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
@@ -57,7 +56,7 @@ export function EsimCard({ esim, onTopUp }: EsimCardProps) {
           <span className="text-2xl" role="img" aria-label={esim.destination}>
             {flag}
           </span>
-          <span className="text-base font-bold">{esim.destination}</span>
+          <span className="text-base font-bold dark:text-gray-100">{esim.destination}</span>
         </div>
         <span
           className="px-2 py-0.5 rounded-full text-sm font-normal"
@@ -81,11 +80,11 @@ export function EsimCard({ esim, onTopUp }: EsimCardProps) {
       {/* Info */}
       <div className="text-center mb-3 space-y-1">
         {expiryDate && (
-          <p className="text-sm" style={{ color: '#616161' }}>
+          <p className="text-sm text-gray-600 dark:text-gray-400">
             {t('dashboard.expires', { date: expiryDate })}
           </p>
         )}
-        <p className="text-sm" style={{ color: '#616161' }}>
+        <p className="text-sm text-gray-600 dark:text-gray-400">
           {t('dashboard.data_used', {
             used: esim.data_used_gb.toString(),
             total: esim.data_total_gb.toString(),
@@ -95,7 +94,7 @@ export function EsimCard({ esim, onTopUp }: EsimCardProps) {
 
       {/* Reactivate note for expired */}
       {esim.status === 'expired' && (
-        <p className="text-sm italic text-center mb-2" style={{ color: '#616161' }}>
+        <p className="text-sm italic text-center mb-2 text-gray-600 dark:text-gray-400">
           {t('dashboard.top_up_reactivate_note')}
         </p>
       )}

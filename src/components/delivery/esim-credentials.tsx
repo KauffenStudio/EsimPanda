@@ -37,7 +37,7 @@ export function EsimCredentials({ data }: EsimCredentialsProps) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
-      className="space-y-4"
+      className="space-y-4 dark:text-gray-100"
     >
       {mobile && activationLink ? (
         <InstallButton href={activationLink} />

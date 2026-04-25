@@ -43,7 +43,7 @@ export function LowDataBanner({ esims, onTopUp }: LowDataBannerProps) {
               borderLeft: `4px solid ${borderColor}`,
             }}
           >
-            <span className="text-sm" style={{ color: '#1A1A1A' }}>
+            <span className="text-sm text-gray-800 dark:text-gray-100">
               {t(messageKey, {
                 destination: esim.destination,
                 percent: Math.round(esim.data_remaining_pct).toString(),

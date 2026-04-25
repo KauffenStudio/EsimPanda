@@ -25,11 +25,10 @@ export function CouponStatsCard({ activeCount, totalUses, totalRevenueCents }: C
       {stats.map((stat) => (
         <div
           key={stat.label}
-          className="rounded-lg p-4"
-          style={{ backgroundColor: '#F5F5F5' }}
+          className="rounded-lg p-4 bg-surface dark:bg-surface-dark"
         >
-          <p className="text-sm text-gray-600">{stat.label}</p>
-          <p className="text-2xl font-bold mt-1">{stat.value}</p>
+          <p className="text-sm text-gray-600 dark:text-gray-400">{stat.label}</p>
+          <p className="text-2xl font-bold mt-1 dark:text-gray-100">{stat.value}</p>
         </div>
       ))}
     </div>

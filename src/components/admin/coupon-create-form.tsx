@@ -94,12 +94,11 @@ export function CouponCreateForm({ onCreated, existingCodes }: CouponCreateFormP
           >
             <form
               onSubmit={handleSubmit}
-              className="mt-4 rounded-lg p-4 space-y-4 border border-border"
-              style={{ backgroundColor: '#F5F5F5' }}
+              className="mt-4 rounded-lg p-4 space-y-4 border border-border dark:border-border-dark bg-surface dark:bg-surface-dark"
             >
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label htmlFor="coupon-code" className="block text-sm font-bold mb-1">
+                  <label htmlFor="coupon-code" className="block text-sm font-bold mb-1 dark:text-gray-100">
                     Code
                   </label>
                   <input
@@ -114,17 +113,17 @@ export function CouponCreateForm({ onCreated, existingCodes }: CouponCreateFormP
                     required
                     minLength={3}
                     maxLength={20}
-                    className="w-full rounded-lg border border-border px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-accent"
+                    className="w-full rounded-lg border border-border dark:border-border-dark px-3 py-2 text-sm bg-white dark:bg-background-dark dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-accent"
                   />
                   {codeError && (
-                    <p className="text-sm mt-1" style={{ color: '#E53935' }}>
+                    <p className="text-sm mt-1 text-destructive dark:text-destructive-dark">
                       {codeError}
                     </p>
                   )}
                 </div>
 
                 <div>
-                  <label htmlFor="influencer-name" className="block text-sm font-bold mb-1">
+                  <label htmlFor="influencer-name" className="block text-sm font-bold mb-1 dark:text-gray-100">
                     Influencer Name
                   </label>
                   <input
@@ -135,12 +134,12 @@ export function CouponCreateForm({ onCreated, existingCodes }: CouponCreateFormP
                     placeholder="Influencer name"
                     required
                     maxLength={100}
-                    className="w-full rounded-lg border border-border px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-accent"
+                    className="w-full rounded-lg border border-border dark:border-border-dark px-3 py-2 text-sm bg-white dark:bg-background-dark dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-accent"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="social-url" className="block text-sm font-bold mb-1">
+                  <label htmlFor="social-url" className="block text-sm font-bold mb-1 dark:text-gray-100">
                     Social URL
                   </label>
                   <input
@@ -149,12 +148,12 @@ export function CouponCreateForm({ onCreated, existingCodes }: CouponCreateFormP
                     value={socialUrl}
                     onChange={(e) => setSocialUrl(e.target.value)}
                     placeholder="https://instagram.com/..."
-                    className="w-full rounded-lg border border-border px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-accent"
+                    className="w-full rounded-lg border border-border dark:border-border-dark px-3 py-2 text-sm bg-white dark:bg-background-dark dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-accent"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="coupon-notes" className="block text-sm font-bold mb-1">
+                  <label htmlFor="coupon-notes" className="block text-sm font-bold mb-1 dark:text-gray-100">
                     Notes
                   </label>
                   <textarea
