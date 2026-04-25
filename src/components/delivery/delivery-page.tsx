@@ -12,6 +12,7 @@ import { SetupGuide } from './setup-guide';
 import { ProvisioningError } from './provisioning-error';
 import { AccountConversionCTA } from '@/components/auth/account-conversion-cta';
 import { PostPurchaseShareCTA } from '@/components/referral/post-purchase-share-cta';
+import { InstallBanner } from '@/components/pwa/install-banner';
 import { useReferralStore } from '@/stores/referral';
 
 interface DeliveryPageProps {
@@ -156,17 +157,17 @@ export function DeliveryPage({ paymentIntentId, email }: DeliveryPageProps) {
             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
             className="w-full space-y-4 text-center"
           >
-            <h1 className="text-2xl font-bold text-success">
+            <h1 className="text-2xl font-bold text-success dark:text-success-dark">
               {t('ready.heading')}
             </h1>
-            <p className="text-base text-gray-600">
+            <p className="text-base text-gray-600 dark:text-gray-400">
               {t('ready.subheading')}
             </p>
 
             <EsimCredentials data={data} />
 
             {email && (
-              <p className="text-sm text-gray-600">
+              <p className="text-sm text-gray-600 dark:text-gray-400">
                 {t('email.reminder', { email })}
               </p>
             )}
@@ -192,6 +193,8 @@ export function DeliveryPage({ paymentIntentId, email }: DeliveryPageProps) {
             >
               <PostPurchaseShareCTA referralCode={referralCode ?? undefined} />
             </motion.div>
+
+            <InstallBanner />
           </motion.div>
         )}
 

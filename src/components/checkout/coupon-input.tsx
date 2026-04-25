@@ -88,13 +88,13 @@ export function CouponInput() {
   if (coupon_code) {
     return (
       <div className="flex items-center gap-2 text-sm">
-        <span className="inline-flex items-center gap-1 bg-success/10 text-success px-2 py-1 rounded-lg font-medium">
+        <span className="inline-flex items-center gap-1 bg-success/10 dark:bg-success-dark/10 text-success dark:text-success-dark px-2 py-1 rounded-lg font-medium">
           {coupon_code}
         </span>
         <button
           type="button"
           onClick={handleRemove}
-          className="text-gray-600 underline text-sm hover:text-destructive"
+          className="text-gray-600 dark:text-gray-400 underline text-sm hover:text-destructive"
         >
           {t('remove')}
         </button>
@@ -109,7 +109,7 @@ export function CouponInput() {
         <button
           type="button"
           onClick={() => setExpanded(true)}
-          className="text-sm text-gray-600 underline hover:text-accent"
+          className="text-sm text-gray-600 dark:text-gray-400 underline hover:text-accent"
         >
           {t('trigger')}
         </button>

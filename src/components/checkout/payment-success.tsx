@@ -49,11 +49,11 @@ export function PaymentSuccess({ orderId }: PaymentSuccessProps) {
         {t('heading')}
       </h1>
 
-      <p className="text-sm text-gray-600 mt-2">
+      <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
         {t('order', { id: orderId })}
       </p>
 
-      <p className="text-base mt-4">
+      <p className="text-base mt-4 dark:text-gray-100">
         {t('email')}
       </p>
 
@@ -63,7 +63,7 @@ export function PaymentSuccess({ orderId }: PaymentSuccessProps) {
 
       <Link
         href="/en/dashboard"
-        className="text-sm text-gray-600 underline mt-2 hover:text-accent"
+        className="text-sm text-gray-600 dark:text-gray-400 underline mt-2 hover:text-accent"
       >
         {t('dashboard')}
       </Link>

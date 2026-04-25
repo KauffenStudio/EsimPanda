@@ -20,7 +20,7 @@ export function ManualCodes({ smdpAddress, activationCode }: ManualCodesProps) {
       <button
         type="button"
         onClick={() => setExpanded(!expanded)}
-        className="flex w-full items-center justify-between py-2 text-base text-gray-600 transition-colors duration-150 hover:text-accent"
+        className="flex w-full items-center justify-between py-2 text-base text-gray-600 dark:text-gray-400 transition-colors duration-150 hover:text-accent"
       >
         <span>{t('manual.trigger')}</span>
         {expanded ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
@@ -36,7 +36,7 @@ export function ManualCodes({ smdpAddress, activationCode }: ManualCodesProps) {
             transition={{ duration: 0.2, ease: 'easeInOut' }}
             className="overflow-hidden"
           >
-            <div className="space-y-3 rounded-lg bg-[#F5F5F5] p-4">
+            <div className="space-y-3 rounded-lg bg-[#F5F5F5] dark:bg-surface-dark p-4">
               <CopyableField label={t('manual.smdp')} value={smdpAddress} />
               <CopyableField label={t('manual.code')} value={activationCode} />
             </div>

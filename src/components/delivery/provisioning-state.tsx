@@ -34,7 +34,7 @@ export function ProvisioningState() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -4 }}
             transition={{ duration: 0.4 }}
-            className="absolute inset-0 text-center text-base text-gray-600"
+            className="absolute inset-0 text-center text-base text-gray-600 dark:text-gray-400"
           >
             {t(MESSAGE_KEYS[messageIndex])}
           </motion.p>

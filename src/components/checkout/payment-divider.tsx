@@ -7,11 +7,11 @@ export function PaymentDivider() {
 
   return (
     <div className="flex items-center gap-3">
-      <div className="flex-1 border-t border-gray-200" />
-      <span className="text-sm text-gray-400 uppercase tracking-[0.05em]">
+      <div className="flex-1 border-t border-gray-200 dark:border-border-dark" />
+      <span className="text-sm text-gray-400 dark:text-gray-600 uppercase tracking-[0.05em]">
         {t('divider')}
       </span>
-      <div className="flex-1 border-t border-gray-200" />
+      <div className="flex-1 border-t border-gray-200 dark:border-border-dark" />
     </div>
   );
 }

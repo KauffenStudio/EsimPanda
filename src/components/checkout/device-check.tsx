@@ -13,8 +13,8 @@ export function DeviceCheck() {
   const hasChecked = brand && model && isCompatible !== null;
 
   return (
-    <div className="bg-[#F5F5F5] rounded-xl p-3">
-      <p className="text-sm text-gray-500 mb-1">{t('label')}</p>
+    <div className="bg-[#F5F5F5] dark:bg-surface-dark rounded-xl p-3">
+      <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">{t('label')}</p>
 
       {hasChecked && isCompatible ? (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }}>

@@ -81,7 +81,7 @@ export function PayButton() {
       <div className="h-6" />
 
       {/* Mobile sticky wrapper */}
-      <div className="fixed bottom-0 left-0 right-0 z-30 p-4 pb-[calc(16px+env(safe-area-inset-bottom))] bg-white/90 backdrop-blur-sm border-t border-gray-100 md:static md:bg-transparent md:backdrop-blur-none md:border-0 md:p-0 md:pb-0">
+      <div className="fixed bottom-0 left-0 right-0 z-30 p-4 pb-[calc(16px+env(safe-area-inset-bottom))] bg-white/90 dark:bg-background-dark/90 backdrop-blur-sm border-t border-gray-100 dark:border-border-dark md:static md:bg-transparent md:backdrop-blur-none md:border-0 md:p-0 md:pb-0">
         <Button
           variant="primary"
           size="lg"

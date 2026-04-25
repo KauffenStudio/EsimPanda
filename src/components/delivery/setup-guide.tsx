@@ -37,7 +37,7 @@ export function SetupGuide({ deviceFamily }: SetupGuideProps) {
       <button
         type="button"
         onClick={() => setExpanded(!expanded)}
-        className="flex w-full items-center justify-between py-2 text-base text-gray-600 transition-colors duration-150 hover:text-accent"
+        className="flex w-full items-center justify-between py-2 text-base text-gray-600 dark:text-gray-400 transition-colors duration-150 hover:text-accent"
       >
         <span>{t('setup.trigger')}</span>
         {expanded ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
@@ -53,7 +53,7 @@ export function SetupGuide({ deviceFamily }: SetupGuideProps) {
             transition={{ duration: 0.3, ease: 'easeInOut' }}
             className="overflow-hidden"
           >
-            <div className="rounded-lg bg-[#F5F5F5] p-4">
+            <div className="rounded-lg bg-[#F5F5F5] dark:bg-surface-dark p-4">
               {/* Desktop: show tabs for all device families */}
               {!mobile && (
                 <div className="mb-4 flex gap-2">
@@ -65,7 +65,7 @@ export function SetupGuide({ deviceFamily }: SetupGuideProps) {
                       className={`rounded-md px-3 py-1.5 text-sm font-semibold transition-colors duration-150 ${
                         selectedTab === tab.key
                           ? 'bg-accent text-white'
-                          : 'bg-white text-gray-600 hover:text-accent'
+                          : 'bg-white dark:bg-background-dark text-gray-600 dark:text-gray-400 hover:text-accent'
                       }`}
                     >
                       {tab.label}

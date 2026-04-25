@@ -33,7 +33,7 @@ export function ExpressCheckout() {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3, ease: 'easeOut' }}
     >
-      <p className="text-sm text-gray-400 uppercase tracking-wide mb-2">
+      <p className="text-sm text-gray-400 dark:text-gray-600 uppercase tracking-wide mb-2">
         {t('title')}
       </p>
       <ExpressCheckoutElement

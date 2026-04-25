@@ -30,7 +30,7 @@ export function PaymentError({ errorType, onRetry }: PaymentErrorProps) {
         {t('heading')}
       </h2>
 
-      <p className="text-base text-gray-600 mt-3 max-w-sm">
+      <p className="text-base text-gray-600 dark:text-gray-400 mt-3 max-w-sm">
         {errorMessage}
       </p>
 
@@ -47,7 +47,7 @@ export function PaymentError({ errorType, onRetry }: PaymentErrorProps) {
         href="https://wa.me/351000000000"
         target="_blank"
         rel="noopener noreferrer"
-        className="text-sm text-gray-600 underline mt-4 hover:text-accent"
+        className="text-sm text-gray-600 dark:text-gray-400 underline mt-4 hover:text-accent"
       >
         {t('contact')}
       </a>

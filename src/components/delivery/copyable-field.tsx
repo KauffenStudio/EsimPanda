@@ -36,17 +36,17 @@ export function CopyableField({ label, value }: CopyableFieldProps) {
 
   return (
     <div className="space-y-1">
-      <label className="block text-sm font-normal text-gray-600">
+      <label className="block text-sm font-normal text-gray-600 dark:text-gray-400">
         {label}
       </label>
-      <div className="flex items-center gap-2 rounded-lg bg-[#F5F5F5] p-3">
-        <span className="flex-1 font-mono text-base select-all break-all">
+      <div className="flex items-center gap-2 rounded-lg bg-[#F5F5F5] dark:bg-surface-dark p-3">
+        <span className="flex-1 font-mono text-base select-all break-all dark:text-gray-100">
           {value}
         </span>
         <button
           type="button"
           onClick={handleCopy}
-          className="flex-shrink-0 rounded-md bg-transparent p-2 text-gray-600 transition-colors duration-150 hover:bg-white hover:text-accent"
+          className="flex-shrink-0 rounded-md bg-transparent p-2 text-gray-600 dark:text-gray-400 transition-colors duration-150 hover:bg-white dark:hover:bg-background-dark hover:text-accent"
           aria-label={t('copy')}
         >
           <span className="relative inline-flex h-4 w-4 items-center justify-center">

@@ -27,16 +27,16 @@ export function ProvisioningError({ retryCount }: ProvisioningErrorProps) {
           initial={{ opacity: 0.5 }}
           animate={{ opacity: [0.5, 1, 0.5] }}
           transition={{ duration: 1.5, repeat: Infinity }}
-          className="text-base text-gray-600"
+          className="text-base text-gray-600 dark:text-gray-400"
         >
           {t('error.retry', { count: retryCount })}
         </motion.p>
       ) : (
         <div className="space-y-2">
-          <h3 className="text-lg font-bold text-primary">
+          <h3 className="text-lg font-bold text-primary dark:text-gray-100">
             {t('error.heading')}
           </h3>
-          <p className="text-base text-gray-600">
+          <p className="text-base text-gray-600 dark:text-gray-400">
             {t('error.final')}
           </p>
         </div>

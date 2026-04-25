@@ -24,13 +24,13 @@ export function OrderSummary({ plan }: OrderSummaryProps) {
   const taxRate = 23; // Default EU VAT rate, updated by API
 
   return (
-    <Card variant="flat" className="bg-[#F5F5F5] shadow-[0_2px_8px_rgba(0,0,0,0.06)] p-4">
-      <h2 className="text-base font-semibold mb-3">{t('title')}</h2>
+    <Card variant="flat" className="bg-[#F5F5F5] dark:bg-surface-dark shadow-[0_2px_8px_rgba(0,0,0,0.06)] dark:shadow-card-dark p-4">
+      <h2 className="text-base font-semibold mb-3 dark:text-gray-100">{t('title')}</h2>
 
       {/* Plan info */}
       <div className="flex items-center justify-between mb-3">
         <div>
-          <p className="text-base font-medium">{plan.name}</p>
+          <p className="text-base font-medium dark:text-gray-100">{plan.name}</p>
           <Badge variant="default" className="mt-1">
             {plan.data_gb}GB / {plan.duration_days} days
           </Badge>
@@ -38,7 +38,7 @@ export function OrderSummary({ plan }: OrderSummaryProps) {
       </div>
 
       {/* Price breakdown */}
-      <div className="flex flex-col gap-2 border-t border-gray-200 pt-3">
+      <div className="flex flex-col gap-2 border-t border-gray-200 dark:border-border-dark pt-3">
         {/* Subtotal */}
         <div className="flex justify-between text-base">
           <span>{t('subtotal')}</span>
@@ -90,13 +90,13 @@ export function OrderSummary({ plan }: OrderSummaryProps) {
         </div>
 
         {/* Total */}
-        <div className="flex justify-between border-t border-gray-200 pt-2 mt-1">
-          <span className="text-2xl font-bold">{t('total')}</span>
+        <div className="flex justify-between border-t border-gray-200 dark:border-border-dark pt-2 mt-1">
+          <span className="text-2xl font-bold dark:text-gray-100">{t('total')}</span>
           <motion.span
             key={total_cents}
             layout
             transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-            className="text-2xl font-bold"
+            className="text-2xl font-bold dark:text-gray-100"
           >
             {formatEur(total_cents || displaySubtotal)}
           </motion.span>

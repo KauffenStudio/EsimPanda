@@ -23,7 +23,7 @@ export function QrCodeDisplay({ data, size }: QrCodeDisplayProps) {
       }}
       className="flex flex-col items-center"
     >
-      <div className="rounded-[10px] border border-border border-t-[3px] border-t-accent bg-white p-4 sm:p-6">
+      <div className="rounded-[10px] border border-border dark:border-border-dark border-t-[3px] border-t-accent bg-white p-4 sm:p-6">
         <QRCodeSVG
           value={data}
           size={size}
@@ -32,7 +32,7 @@ export function QrCodeDisplay({ data, size }: QrCodeDisplayProps) {
           className="h-[160px] w-[160px] sm:h-[200px] sm:w-[200px]"
         />
       </div>
-      <p className="mt-2 text-center text-base text-gray-600">
+      <p className="mt-2 text-center text-base text-gray-600 dark:text-gray-400">
         {t('qr.instruction')}
       </p>
     </motion.div>
