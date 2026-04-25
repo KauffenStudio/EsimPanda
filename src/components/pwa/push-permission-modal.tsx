@@ -34,7 +34,7 @@ export function PushPermissionModal() {
 
   useEffect(() => {
     // Only show in standalone/PWA mode
-    if (!window.matchMedia('(display-mode: standalone)').matches) return;
+    if (!window.matchMedia?.('(display-mode: standalone)')?.matches) return;
 
     // Already subscribed
     if (pushSubscribed) return;

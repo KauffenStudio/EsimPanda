@@ -20,7 +20,7 @@ export function InstallBanner() {
 
   useEffect(() => {
     // Check if already installed as standalone
-    if (window.matchMedia('(display-mode: standalone)').matches) {
+    if (window.matchMedia?.('(display-mode: standalone)')?.matches) {
       setIsStandalone(true);
       return;
     }
