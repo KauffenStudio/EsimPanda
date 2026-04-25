@@ -146,11 +146,12 @@ Plans:
   1. User can share a unique referral link and earn credit when a referred friend completes a purchase
   2. Referral credits are tracked and can be applied to future purchases
   3. User can reach support via a WhatsApp button visible on all pages
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 08-01: TBD
-- [ ] 08-02: TBD
+- [ ] 08-01-PLAN.md — Referral data layer, coupon extension, WhatsApp button, Wave 0 tests
+- [ ] 08-02-PLAN.md — Referral UI: page, share buttons, post-purchase CTA, menu and email integration
+- [ ] 08-03-PLAN.md — Admin influencer coupons page with CRUD, sortable table, stats
 
 ### Phase 9: PWA and Polish
 **Goal**: The platform is installable as a PWA for offline QR access, supports dark mode, and sends push notifications for eSIM expiry and promotions
@@ -161,7 +162,7 @@ Plans:
   2. User can access their QR codes offline after installation
   3. App supports dark mode with auto-detection and manual toggle
   4. User receives push notifications for eSIM expiry warnings and promotions
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
 - [ ] 09-01: TBD
@@ -183,5 +184,5 @@ Note: Phase 8 depends on Phase 5 (not Phase 7), so it could run in parallel with
 | 5. User Accounts | 0/3 | Planning complete | - |
 | 6. eSIM Management | 2/3 | In Progress|  |
 | 7. SEO and Internationalization | 3/4 | In Progress|  |
-| 8. Growth and Acquisition | 0/2 | Not started | - |
+| 8. Growth and Acquisition | 0/3 | Planning complete | - |
 | 9. PWA and Polish | 0/2 | Not started | - |
