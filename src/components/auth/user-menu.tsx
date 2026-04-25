@@ -110,6 +110,16 @@ export function UserMenu() {
               {t('menu.settings')}
             </button>
 
+            {/* Invite Friends */}
+            <Link href={`/${locale}/referral`} onClick={() => setOpen(false)}>
+              <button
+                type="button"
+                className="w-full h-10 px-4 text-left text-sm hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+              >
+                {t('menu.inviteFriends')}
+              </button>
+            </Link>
+
             {/* Separator */}
             <div className="border-t border-[#E5E5E5] dark:border-border-dark" />
 

@@ -31,6 +31,7 @@ export interface DeliveryEmailProps {
   vat?: string;
   setupGuideUrl: string;
   email: string;
+  referralCode?: string;
 }
 
 const fontFamily = 'Plus Jakarta Sans, Arial, sans-serif';
@@ -61,6 +62,7 @@ export function DeliveryEmail({
   vat,
   setupGuideUrl,
   email,
+  referralCode,
 }: DeliveryEmailProps) {
   return (
     <Html>
@@ -475,7 +477,7 @@ export function DeliveryEmail({
           {/* Referral footer */}
           <Section style={{ padding: '20px 40px', textAlign: 'center' }}>
             <Link
-              href="https://esimpanda.com"
+              href={referralCode ? `https://esimpanda.com/r/${referralCode}` : 'https://esimpanda.com'}
               style={{
                 fontSize: '14px',
                 color: '#666666',
@@ -483,7 +485,9 @@ export function DeliveryEmail({
                 textDecoration: 'none',
               }}
             >
-              Know someone traveling? Share eSIM Panda
+              {referralCode
+                ? 'Share with a friend — you both get a free 1GB plan!'
+                : 'Know someone traveling? Share eSIM Panda'}
             </Link>
           </Section>
 
