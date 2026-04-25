@@ -11,6 +11,8 @@ import { EsimCredentials } from './esim-credentials';
 import { SetupGuide } from './setup-guide';
 import { ProvisioningError } from './provisioning-error';
 import { AccountConversionCTA } from '@/components/auth/account-conversion-cta';
+import { PostPurchaseShareCTA } from '@/components/referral/post-purchase-share-cta';
+import { useReferralStore } from '@/stores/referral';
 
 interface DeliveryPageProps {
   paymentIntentId: string;
@@ -25,6 +27,8 @@ export function DeliveryPage({ paymentIntentId, email }: DeliveryPageProps) {
   const { status, data, error, retry_count, setStatus, setData, setError, setEmail } =
     useDeliveryStore();
   const authUser = useAuthStore((s) => s.user);
+  const referralCode = useReferralStore((s) => s.code);
+  const fetchReferralData = useReferralStore((s) => s.fetchReferralData);
 
   const pollingRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -92,6 +96,42 @@ export function DeliveryPage({ paymentIntentId, email }: DeliveryPageProps) {
     return () => stopPolling();
   }, [paymentIntentId, email, setEmail, setStatus, pollStatus, stopPolling, setError]);
 
+  // Fetch referral data when delivery is ready and user is logged in
+  useEffect(() => {
+    if (status === 'ready' && authUser) {
+      fetchReferralData();
+    }
+  }, [status, authUser, fetchReferralData]);
+
+  // TODO: Production — move reward trigger to provisioning webhook (after eSIM activation, not on payment alone)
+  // Trigger referral reward API when ref cookie exists
+  useEffect(() => {
+    if (status !== 'ready') return;
+
+    // Read ref cookie (set by /r/[code] redirect)
+    const refCookie = document.cookie
+      .split('; ')
+      .find(row => row.startsWith('ref='))
+      ?.split('=')[1];
+
+    if (!refCookie) return;
+
+    const buyerEmail = email || authUser?.email;
+    if (!buyerEmail) return;
+
+    // Trigger reward for the referrer (mock mode: immediate; production: would be on eSIM activation webhook)
+    fetch('/api/referral/reward', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ referrer_code: refCookie, buyer_email: buyerEmail }),
+    }).then(() => {
+      // Clear the ref cookie after claiming
+      document.cookie = 'ref=; Max-Age=0; path=/';
+    }).catch(() => {
+      // Silently fail — reward will be handled on retry or manually
+    });
+  }, [status, email, authUser]);
+
   return (
     <div className="mx-auto flex min-h-[60vh] max-w-[480px] flex-col items-center justify-center px-4">
       <AnimatePresence mode="wait">
@@ -142,6 +182,16 @@ export function DeliveryPage({ paymentIntentId, email }: DeliveryPageProps) {
                 <AccountConversionCTA email={email} />
               </motion.div>
             )}
+
+            {/* Referral share CTA — shown for all users on successful delivery */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.5 }}
+              className="w-full mt-4"
+            >
+              <PostPurchaseShareCTA referralCode={referralCode ?? undefined} />
+            </motion.div>
           </motion.div>
         )}
 
