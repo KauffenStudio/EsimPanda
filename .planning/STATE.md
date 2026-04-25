@@ -3,7 +3,7 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-stopped_at: Completed 08-02-PLAN.md
+stopped_at: Completed 08-03-PLAN.md
 last_updated: "2026-04-25T09:05:07.604Z"
 progress:
   total_phases: 9
@@ -67,6 +67,7 @@ Plan: 3 of 3
 | Phase 07 P03 | 2min | 2 tasks | 7 files |
 | Phase 08 P01 | 6min | 3 tasks | 20 files |
 | Phase 08 P02 | 3min | 3 tasks | 8 files |
+| Phase 08 P03 | 3min | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -116,6 +117,8 @@ Recent decisions affecting current work:
 - [Phase 08]: Referral reward coupons marked redeemed inline during validateCoupon (single-use enforcement)
 - [Phase 08]: Web Share API on mobile covers Instagram via native share sheet; Instagram omitted from desktop fallback
 - [Phase 08]: Referral reward triggered on delivery ready in mock mode; production should move to provisioning webhook
+- [Phase 08]: zod/v4 for admin API validation consistent with checkout and dashboard schemas
+- [Phase 08]: Inline deactivation confirmation per UI-SPEC with row highlight and Confirm/Cancel buttons
 
 ### Pending Todos
 
@@ -129,6 +132,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-25T09:05:07.601Z
-Stopped at: Completed 08-02-PLAN.md
+Last session: 2026-04-25T09:05:30Z
+Stopped at: Completed 08-03-PLAN.md
 Resume file: None

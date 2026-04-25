@@ -19,7 +19,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 5: User Accounts** - Guest-to-account conversion, email/password auth, password reset, persistent sessions
 - [ ] **Phase 6: eSIM Management** - Active eSIM dashboard, data usage tracking, top-up flow, purchase history
 - [ ] **Phase 7: SEO and Internationalization** - SEO-optimized destination landing pages with structured data, multi-language support (EN, PT, ES, FR)
-- [ ] **Phase 8: Growth and Acquisition** - Referral program with credit system, WhatsApp support integration
+- [x] **Phase 8: Growth and Acquisition** - Referral program with credit system, WhatsApp support integration (completed 2026-04-25)
 - [ ] **Phase 9: PWA and Polish** - Installable PWA, dark mode, push notifications for expiry and promotions
 
 ## Phase Details
@@ -184,5 +184,5 @@ Note: Phase 8 depends on Phase 5 (not Phase 7), so it could run in parallel with
 | 5. User Accounts | 0/3 | Planning complete | - |
 | 6. eSIM Management | 2/3 | In Progress|  |
 | 7. SEO and Internationalization | 3/4 | In Progress|  |
-| 8. Growth and Acquisition | 1/3 | In Progress|  |
+| 8. Growth and Acquisition | 3/3 | Complete   | 2026-04-25 |
 | 9. PWA and Polish | 0/2 | Not started | - |
