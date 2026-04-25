@@ -39,7 +39,7 @@ Declared values (must be multiples of 4):
 | 2xl | 48px | Major section breaks |
 | 3xl | 64px | Page-level vertical spacing |
 
-Exceptions: WhatsApp floating button uses 20px offset from bottom-right viewport edge. Touch target minimum 44px on all interactive elements.
+Exceptions: WhatsApp floating button uses 20px offset from bottom-right viewport edge (viewport edge offset, not a spacing token -- matches common floating action button inset convention). Touch target minimum 44px on all interactive elements (WCAG 2.5.5 minimum touch target size requirement).
 
 ---
 
@@ -54,9 +54,9 @@ Exceptions: WhatsApp floating button uses 20px offset from bottom-right viewport
 
 Phase-specific notes:
 - Referral stats numbers: 28px bold (display role)
-- Admin table headers: 14px semibold (600)
+- Admin table headers: 14px bold (700)
 - Admin table body: 14px normal (400)
-- Share button labels: 14px semibold (600)
+- Share button labels: 14px bold (700)
 
 ---
 
