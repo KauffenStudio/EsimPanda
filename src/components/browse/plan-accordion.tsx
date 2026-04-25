@@ -17,6 +17,7 @@ export function PlanAccordion({ isOpen, children }: PlanAccordionProps) {
           animate={{ height: 'auto', opacity: 1 }}
           exit={{ height: 0, opacity: 0 }}
           transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+          className="dark:text-gray-100"
           style={{ overflow: 'hidden' }}
         >
           {children}

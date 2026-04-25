@@ -19,9 +19,9 @@ interface ButtonProps {
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary: 'bg-accent text-white hover:bg-accent-hover active:bg-accent-pressed',
-  secondary: 'border border-border bg-transparent text-primary hover:bg-surface',
-  ghost: 'bg-transparent text-primary hover:bg-surface',
-  destructive: 'bg-destructive text-white hover:bg-destructive-hover',
+  secondary: 'border border-border dark:border-border-dark bg-transparent text-primary dark:text-gray-100 hover:bg-surface dark:hover:bg-surface-dark',
+  ghost: 'bg-transparent text-primary dark:text-gray-100 hover:bg-surface dark:hover:bg-surface-dark',
+  destructive: 'bg-destructive text-white hover:bg-destructive-hover dark:bg-destructive-dark dark:hover:bg-destructive-dark/90',
 };
 
 const sizeStyles: Record<ButtonSize, string> = {

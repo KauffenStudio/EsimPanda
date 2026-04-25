@@ -9,7 +9,7 @@ interface BambuLoadingProps {
 
 export function BambuLoading({ size = 120, className = '' }: BambuLoadingProps) {
   return (
-    <div className={`inline-flex items-center justify-center ${className}`}>
+    <div className={`inline-flex items-center justify-center dark:drop-shadow-[0_0_8px_rgba(255,255,255,0.15)] ${className}`}>
       <motion.div
         animate={{ rotate: [0, -10, 0, 10, 0] }}
         transition={{

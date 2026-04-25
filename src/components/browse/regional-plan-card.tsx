@@ -25,7 +25,7 @@ export function RegionalPlanCard() {
 
   return (
     <div
-      className="relative w-full h-40 md:h-48 rounded-[var(--radius-card)] overflow-hidden cursor-pointer shadow-card hover:shadow-card-hover transition-shadow duration-200"
+      className="relative w-full h-40 md:h-48 rounded-[var(--radius-card)] overflow-hidden cursor-pointer shadow-card dark:shadow-card-dark hover:shadow-card-hover dark:hover:shadow-card-hover-dark transition-shadow duration-200"
       onClick={() => toggleDestination(regionalPlan.slug)}
       role="button"
       tabIndex={0}

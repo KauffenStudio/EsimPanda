@@ -20,7 +20,7 @@ export function ComparisonBar() {
           transition={{ type: 'spring', bounce: 0.2, duration: 0.4 }}
           className="fixed bottom-16 left-0 right-0 z-40"
         >
-          <div className="mx-4 p-3 bg-accent rounded-[var(--radius-card)] shadow-lg flex items-center justify-between">
+          <div className="mx-4 p-3 bg-accent rounded-[var(--radius-card)] shadow-lg dark:shadow-card-dark flex items-center justify-between">
             <span className="text-white font-bold">
               {t('browse.compare')} ({selectedPlanIds.length})
             </span>

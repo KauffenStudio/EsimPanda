@@ -9,10 +9,10 @@ interface BadgeProps {
 }
 
 const variantStyles: Record<BadgeVariant, string> = {
-  default: 'bg-surface text-gray-600',
-  accent: 'bg-accent-soft text-accent',
-  success: 'bg-success/10 text-success',
-  warning: 'bg-warning/10 text-warning',
+  default: 'bg-surface dark:bg-surface-dark text-gray-600 dark:text-gray-400',
+  accent: 'bg-accent-soft dark:bg-accent-soft-dark text-accent',
+  success: 'bg-success/10 dark:bg-success-dark/10 text-success dark:text-success-dark',
+  warning: 'bg-warning/10 dark:bg-warning-dark/10 text-warning dark:text-warning-dark',
 };
 
 export function Badge({

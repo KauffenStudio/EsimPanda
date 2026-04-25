@@ -10,7 +10,7 @@ interface BambuWelcomeProps {
 
 export function BambuWelcome({ variant = 'wave', size = 120, className = '' }: BambuWelcomeProps) {
   return (
-    <div className={`inline-flex items-center justify-center ${className}`}>
+    <div className={`inline-flex items-center justify-center dark:drop-shadow-[0_0_8px_rgba(255,255,255,0.15)] ${className}`}>
       <motion.div
         initial={variant === 'bounce' ? { scale: 1, y: 0 } : undefined}
         animate={

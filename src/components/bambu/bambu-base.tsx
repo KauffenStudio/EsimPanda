@@ -106,7 +106,7 @@ export function Bambu({ pose = 'idle', size = 120, className = '' }: BambuProps)
 
   return (
     <motion.div
-      className={`inline-flex items-center justify-center ${className}`}
+      className={`inline-flex items-center justify-center dark:drop-shadow-[0_0_8px_rgba(255,255,255,0.15)] ${className}`}
       animate={variant}
       transition={{
         type: 'spring',

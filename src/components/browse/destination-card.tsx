@@ -38,7 +38,7 @@ export function DestinationCard({
   return (
     <Card
       variant="elevated"
-      className="cursor-pointer overflow-hidden"
+      className="cursor-pointer overflow-hidden dark:border dark:border-border-dark"
       onClick={() => router.push(`/${locale}/esim/${slug}`)}
     >
       <div className="aspect-[4/3] relative overflow-hidden rounded-[var(--radius-card)]">

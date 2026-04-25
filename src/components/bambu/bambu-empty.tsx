@@ -9,7 +9,7 @@ interface BambuEmptyProps {
 
 export function BambuEmpty({ size = 120, className = '' }: BambuEmptyProps) {
   return (
-    <div className={`inline-flex items-center justify-center ${className}`}>
+    <div className={`inline-flex items-center justify-center dark:drop-shadow-[0_0_8px_rgba(255,255,255,0.15)] ${className}`}>
       <motion.div
         animate={{ y: [0, -8, 0] }}
         transition={{

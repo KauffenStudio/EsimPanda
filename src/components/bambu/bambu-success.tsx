@@ -9,7 +9,7 @@ interface BambuSuccessProps {
 
 export function BambuSuccess({ size = 120, className = '' }: BambuSuccessProps) {
   return (
-    <div className={`inline-flex items-center justify-center relative ${className}`}>
+    <div className={`inline-flex items-center justify-center relative dark:drop-shadow-[0_0_8px_rgba(255,255,255,0.15)] ${className}`}>
       {/* Sparkle top-left */}
       <motion.svg
         className="absolute -top-2 -left-2"

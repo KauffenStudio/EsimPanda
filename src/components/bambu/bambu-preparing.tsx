@@ -9,7 +9,7 @@ interface BambuPreparingProps {
 
 export function BambuPreparing({ size = 160, className = '' }: BambuPreparingProps) {
   return (
-    <div className={`inline-flex items-center justify-center ${className}`}>
+    <div className={`inline-flex items-center justify-center dark:drop-shadow-[0_0_8px_rgba(255,255,255,0.15)] ${className}`}>
       <motion.div
         animate={{ y: [-5, 5, -5], rotate: [-3, 3, -3] }}
         transition={{
