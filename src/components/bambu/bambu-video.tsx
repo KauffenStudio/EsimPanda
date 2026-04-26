@@ -9,6 +9,7 @@ interface BambuVideoProps {
   size?: number;
   className?: string;
   loop?: boolean;
+  raw?: boolean;
   onEnded?: () => void;
 }
 
@@ -28,6 +29,7 @@ export function BambuVideo({
   size = 120,
   className = '',
   loop = true,
+  raw = false,
   onEnded,
 }: BambuVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -37,7 +39,6 @@ export function BambuVideo({
     const video = videoRef.current;
     if (!video) return;
 
-    // Lazy play: only play when visible in viewport
     observerRef.current = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -56,6 +57,22 @@ export function BambuVideo({
     };
   }, []);
 
+  if (raw) {
+    return (
+      <video
+        ref={videoRef}
+        src={videoMap[variant]}
+        loop={loop}
+        muted
+        playsInline
+        preload={variant === 'splash' ? 'auto' : 'metadata'}
+        onEnded={onEnded}
+        className={`object-contain mix-blend-multiply dark:mix-blend-screen ${className}`}
+        style={{ width: size, height: size }}
+      />
+    );
+  }
+
   return (
     <div
       className={`inline-flex items-center justify-center overflow-hidden rounded-full ${className}`}
@@ -71,8 +88,7 @@ export function BambuVideo({
         playsInline
         preload={variant === 'splash' ? 'auto' : 'metadata'}
         onEnded={onEnded}
-        className="w-full h-full object-cover dark:mix-blend-screen"
-        style={{ mixBlendMode: 'multiply' }}
+        className="w-full h-full object-cover mix-blend-multiply dark:mix-blend-screen"
       />
     </div>
   );
