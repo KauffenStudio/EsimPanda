@@ -17,11 +17,11 @@ export function Card({
   className = '',
   onClick,
 }: CardProps) {
-  const baseStyles = 'rounded-card bg-white dark:bg-surface-dark';
+  const baseStyles = 'rounded-card bg-white dark:bg-surface-dark border border-border dark:border-border-dark';
   const variantStyles =
     variant === 'elevated'
-      ? 'shadow-card transition-shadow duration-200 hover:shadow-card-hover'
-      : 'bg-surface dark:bg-surface-dark';
+      ? 'shadow-card transition-all duration-300 hover:shadow-card-hover hover:-translate-y-0.5'
+      : '';
 
   return (
     <div

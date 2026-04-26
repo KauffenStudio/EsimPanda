@@ -25,8 +25,8 @@ export function BottomNav() {
   };
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-white dark:bg-background-dark border-t border-border dark:border-border-dark">
-      <div className="flex h-16 pb-4">
+    <nav className="fixed bottom-3 left-3 right-3 z-50 md:hidden">
+      <div className="flex h-14 rounded-full bg-white/80 dark:bg-surface-dark/80 backdrop-blur-xl border border-border dark:border-border-dark shadow-[0_4px_24px_rgba(0,0,0,0.08)]">
         {tabs.map((tab) => {
           const href = `/${locale}${tab.path}`;
           const isActive = tab.path === ''
@@ -44,24 +44,24 @@ export function BottomNav() {
               {isActive && (
                 <motion.div
                   layoutId="activeTab"
-                  className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-0.5 bg-accent rounded-full"
+                  className="absolute inset-1.5 bg-accent/10 dark:bg-accent/15 rounded-full"
                   transition={{
                     type: 'spring',
                     stiffness: 400,
-                    damping: 25,
+                    damping: 30,
                   }}
                 />
               )}
               <Icon
-                size={22}
+                size={20}
                 className={
                   isActive
-                    ? 'text-accent'
+                    ? 'text-accent relative z-10'
                     : 'text-gray-400 dark:text-gray-600'
                 }
               />
               <span
-                className={`text-xs ${
+                className={`text-[10px] font-medium relative z-10 ${
                   isActive
                     ? 'text-accent'
                     : 'text-gray-400 dark:text-gray-600'
@@ -72,7 +72,7 @@ export function BottomNav() {
             </Link>
           );
         })}
-        <div className="flex items-center justify-center px-1">
+        <div className="flex items-center justify-center px-2">
           <LanguageSwitcher />
         </div>
       </div>

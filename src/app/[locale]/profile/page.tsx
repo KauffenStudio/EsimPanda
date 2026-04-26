@@ -8,7 +8,7 @@ export default function ProfilePage() {
 
   return (
     <div className="flex flex-col items-center px-4 py-8">
-      <h1 className="text-2xl font-bold text-primary dark:text-gray-100 mb-8">
+      <h1 className="text-3xl font-bold tracking-tighter text-primary dark:text-gray-100 mb-8">
         {t('profile.title')}
       </h1>
 

@@ -100,7 +100,7 @@ export default function DashboardPage() {
   // Populated state
   return (
     <div className="px-4 py-8 max-w-5xl mx-auto">
-      <h1 className="text-2xl font-bold mb-6">{t('dashboard.title')}</h1>
+      <h1 className="text-3xl font-bold tracking-tighter text-primary dark:text-gray-100 mb-6">{t('dashboard.title')}</h1>
 
       {/* Low data banners */}
       <div className="mb-4">

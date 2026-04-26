@@ -30,7 +30,7 @@ export default async function LocaleLayout({
       <AuthProvider>
         <Header />
         <OfflineIndicator />
-        <main className="pt-14 pb-20 md:pb-0 min-h-screen">
+        <main className="pt-20 pb-20 md:pb-0 min-h-screen">
           <PageTransition>{children}</PageTransition>
         </main>
         <BottomNav />
