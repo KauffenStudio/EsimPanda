@@ -8,6 +8,7 @@ import { AuthProvider } from '@/components/auth/auth-provider';
 import { WhatsAppButton } from '@/components/layout/whatsapp-button';
 import { PushManager } from '@/components/pwa/push-manager';
 import { OfflineIndicator } from '@/components/pwa/offline-indicator';
+import { SplashScreen } from '@/components/pwa/splash-screen';
 import { routing } from '@/i18n/routing';
 
 export function generateStaticParams() {
@@ -37,6 +38,7 @@ export default async function LocaleLayout({
         <Toaster />
         <WhatsAppButton />
         <PushManager />
+        <SplashScreen />
       </AuthProvider>
     </NextIntlClientProvider>
   );

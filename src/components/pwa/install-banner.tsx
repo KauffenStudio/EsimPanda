@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
 import { useTranslations } from 'next-intl';
 import { X } from 'lucide-react';
-import { BambuSuccess } from '@/components/bambu/bambu-success';
+import { BambuVideo } from '@/components/bambu/bambu-video';
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
@@ -79,7 +79,7 @@ export function InstallBanner() {
 
         <div className="flex items-center gap-4">
           <div className="shrink-0">
-            <BambuSuccess size={40} />
+            <BambuVideo variant="success" size={40} />
           </div>
 
           <div className="flex-1 text-left">

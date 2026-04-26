@@ -11,7 +11,7 @@ import { DestinationCard } from './destination-card';
 import { RegionalPlanCard } from './regional-plan-card';
 import { ComparisonBar } from './comparison-bar';
 import { ComparisonSheet } from './comparison-sheet';
-import { BambuEmpty } from '@/components/bambu/bambu-empty';
+import { BambuVideo } from '@/components/bambu/bambu-video';
 
 const MemoizedDestinationCard = memo(DestinationCard);
 
@@ -27,7 +27,7 @@ export function DestinationGrid() {
 
       {destinations.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-16">
-          <BambuEmpty size={120} className="mb-4" />
+          <BambuVideo variant="empty" size={120} className="mb-4" />
           <p className="text-gray-600 dark:text-gray-400 text-center font-semibold">
             {t('browse.noResults', { query: searchQuery })}
           </p>

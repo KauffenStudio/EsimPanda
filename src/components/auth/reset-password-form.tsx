@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { BambuLoading } from '@/components/bambu/bambu-loading';
-import { BambuSuccess } from '@/components/bambu/bambu-success';
+import { BambuVideo } from '@/components/bambu/bambu-video';
 import type { AuthResult } from '@/lib/auth/types';
 
 export function ResetPasswordForm() {
@@ -41,7 +41,7 @@ export function ResetPasswordForm() {
   return (
     <Card className="w-full max-w-[400px] px-8 py-6">
       <div className="flex flex-col items-center mb-4">
-        <BambuSuccess size={64} />
+        <BambuVideo variant="success" size={64} />
       </div>
 
       <h1 className="text-2xl font-bold text-primary dark:text-gray-100 mb-6 text-center">

@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from 'motion/react';
 import { useTranslations } from 'next-intl';
 import { useNotificationStore } from '@/stores/notifications';
 import { subscribeUser } from '@/lib/push/actions';
-import { BambuSuccess } from '@/components/bambu/bambu-success';
+import { BambuVideo } from '@/components/bambu/bambu-video';
 
 function urlBase64ToUint8Array(base64String: string): Uint8Array {
   const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
@@ -110,7 +110,7 @@ export function PushPermissionModal() {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex justify-center mb-4">
-              <BambuSuccess size={48} />
+              <BambuVideo variant="success" size={48} />
             </div>
 
             <h2 className="text-xl font-semibold dark:text-gray-100">

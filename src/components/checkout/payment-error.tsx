@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { useTranslations } from 'next-intl';
-import { BambuError } from '@/components/bambu/bambu-error';
+import { BambuVideo } from '@/components/bambu/bambu-video';
 import { Button } from '@/components/ui/button';
 
 interface PaymentErrorProps {
@@ -24,7 +24,7 @@ export function PaymentError({ errorType, onRetry }: PaymentErrorProps) {
 
   return (
     <div className="flex flex-col items-center justify-center py-12 px-4 text-center">
-      <BambuError size={120} />
+      <BambuVideo variant="error" size={120} />
 
       <h2 className="text-2xl font-bold text-destructive mt-6">
         {t('heading')}

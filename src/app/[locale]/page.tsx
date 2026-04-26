@@ -3,7 +3,7 @@
 import { useTranslations, useLocale } from 'next-intl';
 import { motion } from 'motion/react';
 import { Button } from '@/components/ui/button';
-import { BambuWelcome } from '@/components/bambu/bambu-welcome';
+import { BambuVideo } from '@/components/bambu/bambu-video';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 
@@ -59,7 +59,7 @@ export default function LandingPage() {
           <div className="relative">
             {/* Soft glow behind mascot */}
             <div className="absolute inset-0 bg-accent/10 dark:bg-accent/5 rounded-full blur-3xl scale-150" />
-            <BambuWelcome size={220} className="relative z-10" />
+            <BambuVideo variant="welcome" size={220} className="relative z-10" />
           </div>
         </motion.div>
       </div>

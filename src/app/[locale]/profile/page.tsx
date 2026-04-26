@@ -1,7 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { BambuEmpty } from '@/components/bambu/bambu-empty';
+import { BambuVideo } from '@/components/bambu/bambu-video';
 
 export default function ProfilePage() {
   const t = useTranslations();
@@ -13,7 +13,7 @@ export default function ProfilePage() {
       </h1>
 
       <div className="flex flex-col items-center justify-center py-12">
-        <BambuEmpty size={120} className="mb-4" />
+        <BambuVideo variant="empty" size={120} className="mb-4" />
         <p className="text-gray-600 dark:text-gray-400 text-center max-w-sm">
           {t('profile.empty')}
         </p>

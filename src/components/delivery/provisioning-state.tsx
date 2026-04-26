@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useTranslations } from 'next-intl';
-import { BambuPreparing } from '@/components/bambu/bambu-preparing';
+import { BambuVideo } from '@/components/bambu/bambu-video';
 
 const MESSAGE_KEYS = [
   'provisioning.message1',
@@ -24,7 +24,7 @@ export function ProvisioningState() {
 
   return (
     <div className="flex flex-col items-center justify-center px-4" style={{ maxWidth: 480 }}>
-      <BambuPreparing size={160} />
+      <BambuVideo variant="preparing" size={160} />
 
       <div className="mt-4 h-8 relative w-full">
         <AnimatePresence mode="wait">

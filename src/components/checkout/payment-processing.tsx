@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { BambuLoading } from '@/components/bambu/bambu-loading';
+import { BambuVideo } from '@/components/bambu/bambu-video';
 
 export function PaymentProcessing() {
   // Prevent body scroll while visible
@@ -24,7 +24,7 @@ export function PaymentProcessing() {
           to { opacity: 1; }
         }
       `}</style>
-      <BambuLoading size={120} />
+      <BambuVideo variant="loading" size={120} />
     </div>
   );
 }

@@ -2,7 +2,7 @@
 
 import { motion } from 'motion/react';
 import { useTranslations } from 'next-intl';
-import { BambuError } from '@/components/bambu/bambu-error';
+import { BambuVideo } from '@/components/bambu/bambu-video';
 
 interface ProvisioningErrorProps {
   retryCount: number;
@@ -19,7 +19,7 @@ export function ProvisioningError({ retryCount }: ProvisioningErrorProps) {
       transition={{ duration: 0.3, ease: 'easeOut' }}
       className="flex flex-col items-center space-y-4 text-center"
     >
-      <BambuError size={120} />
+      <BambuVideo variant="error" size={120} />
 
       {retryCount < 3 ? (
         <motion.p

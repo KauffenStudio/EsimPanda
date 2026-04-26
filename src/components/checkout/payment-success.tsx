@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import { BambuSuccess } from '@/components/bambu/bambu-success';
+import { BambuVideo } from '@/components/bambu/bambu-video';
 import { ConfettiEffect } from './confetti-effect';
 import Link from 'next/link';
 
@@ -43,7 +43,7 @@ export function PaymentSuccess({ orderId }: PaymentSuccessProps) {
     <div className="flex flex-col items-center justify-center min-h-[60vh] max-w-[480px] mx-auto px-4 text-center">
       <ConfettiEffect active={true} />
 
-      <BambuSuccess size={160} />
+      <BambuVideo variant="success" size={160} />
 
       <h1 className="text-2xl font-bold mt-6 text-success">
         {t('heading')}

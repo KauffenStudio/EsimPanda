@@ -4,8 +4,7 @@ import { useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { AnimatePresence, motion } from 'motion/react';
 import { useDashboardStore } from '@/stores/dashboard';
-import { BambuEmpty } from '@/components/bambu/bambu-empty';
-import { BambuError } from '@/components/bambu/bambu-error';
+import { BambuVideo } from '@/components/bambu/bambu-video';
 import { Button } from '@/components/ui/button';
 import { DashboardSkeleton } from '@/components/dashboard/dashboard-skeleton';
 import { DashboardTabs } from '@/components/dashboard/dashboard-tabs';
@@ -65,7 +64,7 @@ export default function DashboardPage() {
   if (error) {
     return (
       <div className="flex flex-col items-center px-4 py-8 max-w-5xl mx-auto">
-        <BambuError size={100} className="mb-4" />
+        <BambuVideo variant="error" size={100} className="mb-4" />
         <h2 className="text-lg font-bold mb-2">
           {t('dashboard.error_title')}
         </h2>
@@ -83,7 +82,7 @@ export default function DashboardPage() {
   if (esims.length === 0) {
     return (
       <div className="flex flex-col items-center px-4 py-8 max-w-5xl mx-auto">
-        <BambuEmpty size={100} className="mb-4" />
+        <BambuVideo variant="empty" size={100} className="mb-4" />
         <h2 className="text-lg font-bold mb-2">
           {t('dashboard.empty_title')}
         </h2>

@@ -13,9 +13,7 @@ import { mockTopUpPackages } from '@/lib/mock-data/dashboard';
 import { TopUpPlanCard } from './top-up-plan-card';
 import { CardPayment } from '@/components/checkout/card-payment';
 import { ExpressCheckout } from '@/components/checkout/express-checkout';
-import { BambuLoading } from '@/components/bambu/bambu-loading';
-import { BambuSuccess } from '@/components/bambu/bambu-success';
-import { BambuError } from '@/components/bambu/bambu-error';
+import { BambuVideo } from '@/components/bambu/bambu-video';
 import type { TopUpPackage, DashboardEsim } from '@/lib/dashboard/types';
 
 function isoToFlag(iso: string): string {
@@ -233,7 +231,7 @@ export function TopUpModal() {
                     </Elements>
                   ) : (
                     <div className="flex justify-center py-8">
-                      <BambuLoading size={80} />
+                      <BambuVideo variant="loading" size={80} />
                     </div>
                   )}
                 </div>
@@ -242,7 +240,7 @@ export function TopUpModal() {
               {/* Processing State */}
               {status === 'processing' && (
                 <div className="flex flex-col items-center py-8 gap-4">
-                  <BambuLoading size={80} />
+                  <BambuVideo variant="loading" size={80} />
                   <p className="text-base text-gray-600 dark:text-gray-400">
                     {t('dashboard.top_up_processing')}
                   </p>
@@ -252,7 +250,7 @@ export function TopUpModal() {
               {/* Success State */}
               {status === 'success' && (
                 <div className="flex flex-col items-center py-8 gap-4">
-                  <BambuSuccess size={80} />
+                  <BambuVideo variant="success" size={80} />
                   <p className="text-lg font-bold text-gray-900 dark:text-gray-100">
                     {t('dashboard.data_added')}
                   </p>
@@ -262,7 +260,7 @@ export function TopUpModal() {
               {/* Error State */}
               {status === 'error' && (
                 <div className="flex flex-col items-center py-8 gap-4">
-                  <BambuError size={80} />
+                  <BambuVideo variant="error" size={80} />
                   <p className="text-base text-gray-600 dark:text-gray-400">
                     {errorMessage || t('dashboard.top_up_error')}
                   </p>

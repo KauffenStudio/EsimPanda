@@ -49,15 +49,9 @@ vi.mock('@stripe/react-stripe-js', () => ({
   ExpressCheckoutElement: () => <div data-testid="express-checkout-element" />,
 }));
 
-// Mock Bambu components
-vi.mock('@/components/bambu/bambu-success', () => ({
-  BambuSuccess: () => <div data-testid="bambu-success" />,
-}));
-vi.mock('@/components/bambu/bambu-loading', () => ({
-  BambuLoading: () => <div data-testid="bambu-loading" />,
-}));
-vi.mock('@/components/bambu/bambu-error', () => ({
-  BambuError: () => <div data-testid="bambu-error" />,
+// Mock Bambu video component
+vi.mock('@/components/bambu/bambu-video', () => ({
+  BambuVideo: ({ variant }: { variant: string }) => <div data-testid={`bambu-${variant}`} />,
 }));
 
 // Mock Stripe client

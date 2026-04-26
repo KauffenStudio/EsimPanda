@@ -3,8 +3,7 @@
 import { motion } from 'motion/react';
 import { useTranslations } from 'next-intl';
 import { useDeviceCompatStore, getBrands, getModelsForBrand } from '@/hooks/use-device-compat';
-import { BambuError } from '@/components/bambu/bambu-error';
-import { BambuSuccess } from '@/components/bambu/bambu-success';
+import { BambuVideo } from '@/components/bambu/bambu-video';
 import { Button } from '@/components/ui/button';
 
 export function DeviceChecker() {
@@ -72,14 +71,14 @@ export function DeviceChecker() {
         >
           {isCompatible ? (
             <>
-              <BambuSuccess size={120} />
+              <BambuVideo variant="success" size={120} />
               <p className="text-success font-medium">
                 {t('deviceCompatible', { brand: brand!, model: model! })}
               </p>
             </>
           ) : (
             <>
-              <BambuError size={120} />
+              <BambuVideo variant="error" size={120} />
               <p className="text-destructive font-medium">
                 {t('deviceIncompatible', { brand: brand!, model: model! })}
               </p>

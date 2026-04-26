@@ -11,7 +11,7 @@ import { useAuthStore } from '@/stores/auth';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { BambuLoading } from '@/components/bambu/bambu-loading';
-import { BambuSuccess } from '@/components/bambu/bambu-success';
+import { BambuVideo } from '@/components/bambu/bambu-video';
 import type { AuthResult } from '@/lib/auth/types';
 
 interface AccountConversionCTAProps {
@@ -61,7 +61,7 @@ export function AccountConversionCTA({ email }: AccountConversionCTAProps) {
         className="w-full rounded-[10px] p-6 text-center"
         style={{ backgroundColor: '#E3F0FF' }}
       >
-        <BambuSuccess size={80} className="mx-auto mb-3" />
+        <BambuVideo variant="success" size={80} className="mx-auto mb-3" />
         <div className="flex items-center justify-center gap-2 mb-1">
           <Check size={24} className="text-[#43A047]" />
           <span

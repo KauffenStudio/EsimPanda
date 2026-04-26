@@ -9,7 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { BambuLoading } from '@/components/bambu/bambu-loading';
-import { BambuSuccess } from '@/components/bambu/bambu-success';
+import { BambuVideo } from '@/components/bambu/bambu-video';
 import type { AuthResult } from '@/lib/auth/types';
 
 export function ForgotPasswordForm() {
@@ -32,7 +32,7 @@ export function ForgotPasswordForm() {
     return (
       <Card className="w-full max-w-[400px] px-8 py-6">
         <div className="flex flex-col items-center text-center gap-4">
-          <BambuSuccess size={80} />
+          <BambuVideo variant="success" size={80} />
           <h1 className="text-2xl font-bold text-primary dark:text-gray-100">
             {t('forgot.successHeading')}
           </h1>
