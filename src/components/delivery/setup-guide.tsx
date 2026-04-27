@@ -7,6 +7,7 @@ import { useTranslations } from 'next-intl';
 import type { DeviceFamily } from './device-detection';
 import { isMobile } from './device-detection';
 import { SetupSteps } from './setup-steps';
+import { WHATSAPP_SUPPORT_URL } from '@/lib/config/support';
 
 interface SetupGuideProps {
   deviceFamily: DeviceFamily;
@@ -16,11 +17,12 @@ const TABS: { key: string; label: string }[] = [
   { key: 'ios', label: 'iPhone' },
   { key: 'samsung', label: 'Samsung' },
   { key: 'pixel', label: 'Pixel' },
+  { key: 'android-other', label: 'Other Android' },
 ];
 
 export function SetupGuide({ deviceFamily }: SetupGuideProps) {
   const t = useTranslations('delivery');
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(true);
 
   const mobile = useMemo(
     () => (typeof navigator !== 'undefined' ? isMobile(navigator.userAgent) : false),
@@ -78,7 +80,7 @@ export function SetupGuide({ deviceFamily }: SetupGuideProps) {
 
               <p className="mt-4 text-center">
                 <a
-                  href="https://wa.me/your-number"
+                  href={WHATSAPP_SUPPORT_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-base text-accent underline transition-colors duration-150 hover:text-accent-hover"

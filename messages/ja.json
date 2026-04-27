@@ -89,7 +89,13 @@
     "resend_email_success": "{email}に配信メールを送信しました",
     "resend_email_error": "メールを再送信できませんでした。再試行してください。",
     "no_purchases": "購入履歴はありません",
-    "data_added": "データが追加されました！"
+    "data_added": "データが追加されました！",
+    "done": "完了",
+    "top_up_steps": {
+      "select": "選択",
+      "payment": "支払い",
+      "done": "完了"
+    }
   },
   "profile": {
     "title": "プロフィール",
@@ -109,8 +115,10 @@
     "device": {
       "label": "お使いのデバイス",
       "compatible": "{brand} {model}——eSIM対応",
-      "incompatible": "このデバイスはeSIMに対応していない可能性があります。別のデバイス用に購入できます。",
-      "check": "デバイスの互換性を確認"
+      "incompatible": "このデバイスはeSIMに対応していない可能性があります",
+      "incompatible_detail": "お使いの{brand} {model}はeSIMに対応していない可能性があります。別のデバイス用に購入できます。",
+      "check": "デバイスの互換性を確認",
+      "check_other": "別のデバイスを確認"
     },
     "coupon": {
       "trigger": "クーポンコードをお持ちですか？",
@@ -133,6 +141,17 @@
       "vatCalculating": "計算中...",
       "total": "合計"
     },
+    "progress": {
+      "review": "確認",
+      "details": "詳細",
+      "pay": "支払い"
+    },
+    "trust": {
+      "secure": "安全な決済",
+      "guarantee": "返金保証",
+      "travelers": "旅行者に信頼されています"
+    },
+    "email_required_hint": "続行するには有効なメールアドレスを入力してください",
     "pay": "${amount}を支払う",
     "success": {
       "heading": "eSIMの準備ができました！",
@@ -271,7 +290,8 @@
       "heading": "eSIMを設定中...",
       "message1": "eSIMを設定中...",
       "message2": "もうすぐです...",
-      "message3": "接続を準備中..."
+      "message3": "接続を準備中...",
+      "delayed": "通常より少し時間がかかっていますが、eSIMを準備中です。このページを閉じないでください。"
     },
     "ready": {
       "heading": "eSIMの準備ができました！",
@@ -279,7 +299,8 @@
     },
     "install": "eSIMをインストール",
     "qr": {
-      "instruction": "このQRコードをスマートフォンでスキャン"
+      "instruction": "このQRコードをスマートフォンでスキャン",
+      "download": "QRコードを保存"
     },
     "manual": {
       "trigger": "手動で詳細を入力",
@@ -296,6 +317,16 @@
       "android": { "heading": "Androidでの設定" },
       "help": "お困りですか？WhatsAppでお問い合わせください"
     },
+    "steps": {
+      "install": "eSIMをインストール",
+      "setup": "eSIMを設定",
+      "done": "準備完了！",
+      "done_body": "eSIMがインストールされ準備完了です。目的地に到着したら有効にしてください。",
+      "next": "完了、次のステップへ"
+    },
+    "email_me_details": "詳細をメールで送信",
+    "email_sent": "{email}に詳細を送信しました",
+    "email_failed": "メールを送信できませんでした。再試行してください。",
     "error": {
       "heading": "エラーが発生しました",
       "body": "eSIMを設定できませんでした。対応中です。まもなくメールでお届けします。",

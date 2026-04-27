@@ -1,17 +1,14 @@
 'use client';
 
-import { useEffect, useRef, useMemo, useCallback } from 'react';
+import { useEffect, useRef, useMemo, useCallback, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useTranslations } from 'next-intl';
 import { useDeliveryStore } from '@/stores/delivery';
 import { useAuthStore } from '@/stores/auth';
 import { detectDeviceFamily } from './device-detection';
 import { ProvisioningState } from './provisioning-state';
-import { EsimCredentials } from './esim-credentials';
-import { SetupGuide } from './setup-guide';
 import { ProvisioningError } from './provisioning-error';
-import { AccountConversionCTA } from '@/components/auth/account-conversion-cta';
-import { PostPurchaseShareCTA } from '@/components/referral/post-purchase-share-cta';
+import { DeliverySteps } from './delivery-steps';
 import { InstallBanner } from '@/components/pwa/install-banner';
 import { useReferralStore } from '@/stores/referral';
 
@@ -21,11 +18,12 @@ interface DeliveryPageProps {
 }
 
 const POLLING_INTERVAL = 2000;
-const PROVISIONING_TIMEOUT = 30000;
+const PROVISIONING_TIMEOUT = 60000;
+const DELAY_THRESHOLD = 20000;
 
 export function DeliveryPage({ paymentIntentId, email }: DeliveryPageProps) {
   const t = useTranslations('delivery');
-  const { status, data, error, retry_count, setStatus, setData, setError, setEmail } =
+  const { status, data, order_id, error, retry_count, setStatus, setData, setError, setEmail } =
     useDeliveryStore();
   const authUser = useAuthStore((s) => s.user);
   const referralCode = useReferralStore((s) => s.code);
@@ -33,7 +31,9 @@ export function DeliveryPage({ paymentIntentId, email }: DeliveryPageProps) {
 
   const pollingRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const delayRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const mountedRef = useRef(false);
+  const [isDelayed, setIsDelayed] = useState(false);
 
   const deviceFamily = useMemo(
     () => (typeof navigator !== 'undefined' ? detectDeviceFamily(navigator.userAgent) : 'desktop'),
@@ -48,6 +48,10 @@ export function DeliveryPage({ paymentIntentId, email }: DeliveryPageProps) {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
       timeoutRef.current = null;
+    }
+    if (delayRef.current) {
+      clearTimeout(delayRef.current);
+      delayRef.current = null;
     }
   }, []);
 
@@ -87,6 +91,11 @@ export function DeliveryPage({ paymentIntentId, email }: DeliveryPageProps) {
 
     // Start polling
     pollingRef.current = setInterval(pollStatus, POLLING_INTERVAL);
+
+    // Show reassurance message if provisioning takes longer than expected
+    delayRef.current = setTimeout(() => {
+      setIsDelayed(true);
+    }, DELAY_THRESHOLD);
 
     // Timeout guard
     timeoutRef.current = setTimeout(() => {
@@ -163,7 +172,7 @@ export function DeliveryPage({ paymentIntentId, email }: DeliveryPageProps) {
             exit={{ opacity: 0 }}
             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
           >
-            <ProvisioningState />
+            <ProvisioningState isDelayed={isDelayed} />
           </motion.div>
         )}
 
@@ -183,35 +192,14 @@ export function DeliveryPage({ paymentIntentId, email }: DeliveryPageProps) {
               {t('ready.subheading')}
             </p>
 
-            <EsimCredentials data={data} />
-
-            {email && (
-              <p className="text-sm text-gray-600 dark:text-gray-400">
-                {t('email.reminder', { email })}
-              </p>
-            )}
-
-            <SetupGuide deviceFamily={deviceFamily} />
-
-            {email && !authUser && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1 }}
-              >
-                <AccountConversionCTA email={email} />
-              </motion.div>
-            )}
-
-            {/* Referral share CTA — shown for all users on successful delivery */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.5 }}
-              className="w-full mt-4"
-            >
-              <PostPurchaseShareCTA referralCode={referralCode ?? undefined} />
-            </motion.div>
+            <DeliverySteps
+              data={data}
+              email={email}
+              deviceFamily={deviceFamily}
+              isGuest={!!email && !authUser}
+              referralCode={referralCode ?? undefined}
+              orderId={order_id}
+            />
 
             <InstallBanner />
           </motion.div>

@@ -11,7 +11,11 @@ const MESSAGE_KEYS = [
   'provisioning.message3',
 ] as const;
 
-export function ProvisioningState() {
+interface ProvisioningStateProps {
+  isDelayed?: boolean;
+}
+
+export function ProvisioningState({ isDelayed = false }: ProvisioningStateProps) {
   const t = useTranslations('delivery');
   const [messageIndex, setMessageIndex] = useState(0);
 
@@ -40,6 +44,17 @@ export function ProvisioningState() {
           </motion.p>
         </AnimatePresence>
       </div>
+
+      {isDelayed && (
+        <motion.p
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+          className="mt-4 text-center text-sm text-gray-500 dark:text-gray-400 max-w-xs"
+        >
+          {t('provisioning.delayed')}
+        </motion.p>
+      )}
     </div>
   );
 }

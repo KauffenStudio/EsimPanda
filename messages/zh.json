@@ -89,7 +89,13 @@
     "resend_email_success": "已将邮件发送至 {email}",
     "resend_email_error": "无法重发邮件。请重试。",
     "no_purchases": "暂无购买记录",
-    "data_added": "流量已添加！"
+    "data_added": "流量已添加！",
+    "done": "完成",
+    "top_up_steps": {
+      "select": "选择",
+      "payment": "支付",
+      "done": "完成"
+    }
   },
   "profile": {
     "title": "个人资料",
@@ -109,8 +115,10 @@
     "device": {
       "label": "您的设备",
       "compatible": "{brand} {model}——支持eSIM",
-      "incompatible": "此设备可能不支持eSIM。您仍可以为其他设备购买。",
-      "check": "检查设备兼容性"
+      "incompatible": "此设备可能不支持eSIM",
+      "incompatible_detail": "您的{brand} {model}可能不支持eSIM。您仍可以为其他设备购买。",
+      "check": "检查设备兼容性",
+      "check_other": "检查其他设备"
     },
     "coupon": {
       "trigger": "有优惠码？",
@@ -133,6 +141,17 @@
       "vatCalculating": "计算中...",
       "total": "总计"
     },
+    "progress": {
+      "review": "确认",
+      "details": "详情",
+      "pay": "支付"
+    },
+    "trust": {
+      "secure": "安全支付",
+      "guarantee": "退款保证",
+      "travelers": "深受旅行者信赖"
+    },
+    "email_required_hint": "请输入有效的邮箱地址以继续",
     "pay": "支付 ${amount}",
     "success": {
       "heading": "您的eSIM已就绪！",
@@ -271,7 +290,8 @@
       "heading": "正在设置您的eSIM...",
       "message1": "正在设置您的eSIM...",
       "message2": "即将完成...",
-      "message3": "正在准备连接..."
+      "message3": "正在准备连接...",
+      "delayed": "这比平时花费的时间稍长，但您的eSIM正在准备中。请不要关闭此页面。"
     },
     "ready": {
       "heading": "您的eSIM已就绪！",
@@ -279,7 +299,8 @@
     },
     "install": "安装eSIM",
     "qr": {
-      "instruction": "用手机扫描此二维码"
+      "instruction": "用手机扫描此二维码",
+      "download": "保存二维码"
     },
     "manual": {
       "trigger": "手动输入信息",
@@ -296,6 +317,16 @@
       "android": { "heading": "安卓设置" },
       "help": "需要帮助？通过WhatsApp联系我们"
     },
+    "steps": {
+      "install": "安装您的eSIM",
+      "setup": "设置您的eSIM",
+      "done": "一切就绪！",
+      "done_body": "您的eSIM已安装就绪。到达目的地后请启用它。",
+      "next": "完成，下一步"
+    },
+    "email_me_details": "将详情发送到我的邮箱",
+    "email_sent": "详情已发送至 {email}",
+    "email_failed": "无法发送邮件。请重试。",
     "error": {
       "heading": "出错了",
       "body": "无法设置您的eSIM。我们正在处理中，稍后将通过邮件发送给您。",

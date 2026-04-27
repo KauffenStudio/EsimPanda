@@ -2,6 +2,7 @@ export interface SetupStep {
   title: string;
   description: string;
   icon: string; // Lucide icon name
+  image_url?: string; // Optional illustration for this step
 }
 
 export interface SetupGuideData {
@@ -13,12 +14,12 @@ export const SETUP_GUIDES: Record<string, SetupGuideData> = {
   ios: {
     heading_key: 'delivery.setup.ios.heading',
     steps: [
-      { title: 'Open Settings', description: 'Go to Settings on your iPhone', icon: 'Settings' },
-      { title: 'Cellular / Mobile Data', description: 'Tap "Cellular" or "Mobile Data"', icon: 'Signal' },
-      { title: 'Add eSIM', description: 'Tap "Add eSIM" or "Add Cellular Plan"', icon: 'Plus' },
-      { title: 'Use QR Code', description: 'Choose "Use QR Code" and scan, or tap the install link', icon: 'QrCode' },
-      { title: 'Activate', description: 'Follow prompts to activate. Label it "Travel" for easy identification', icon: 'Check' },
-      { title: 'Enable Data Roaming', description: 'Go back to Cellular, tap your new plan, and enable "Data Roaming"', icon: 'Globe' },
+      { title: 'Open Settings', description: 'Go to Settings on your iPhone', icon: 'Settings', image_url: '/images/setup/ios-step-1.webp' },
+      { title: 'Cellular / Mobile Data', description: 'Tap "Cellular" or "Mobile Data"', icon: 'Signal', image_url: '/images/setup/ios-step-2.webp' },
+      { title: 'Add eSIM', description: 'Tap "Add eSIM" or "Add Cellular Plan"', icon: 'Plus', image_url: '/images/setup/ios-step-3.webp' },
+      { title: 'Use QR Code', description: 'Choose "Use QR Code" and scan, or tap the install link', icon: 'QrCode', image_url: '/images/setup/ios-step-4.webp' },
+      { title: 'Activate', description: 'Follow prompts to activate. Label it "Travel" for easy identification', icon: 'Check', image_url: '/images/setup/ios-step-5.webp' },
+      { title: 'Enable Data Roaming', description: 'Go back to Cellular, tap your new plan, and enable "Data Roaming"', icon: 'Globe', image_url: '/images/setup/ios-step-6.webp' },
     ],
   },
   samsung: {

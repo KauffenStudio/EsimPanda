@@ -3,6 +3,7 @@
 import { motion } from 'motion/react';
 import { useTranslations } from 'next-intl';
 import { BambuVideo } from '@/components/bambu/bambu-video';
+import { WHATSAPP_SUPPORT_URL } from '@/lib/config/support';
 
 interface ProvisioningErrorProps {
   retryCount: number;
@@ -43,7 +44,7 @@ export function ProvisioningError({ retryCount }: ProvisioningErrorProps) {
       )}
 
       <a
-        href="https://wa.me/your-number"
+        href={WHATSAPP_SUPPORT_URL}
         target="_blank"
         rel="noopener noreferrer"
         className="text-base text-accent underline transition-colors duration-150 hover:text-accent-hover"

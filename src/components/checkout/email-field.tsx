@@ -28,7 +28,7 @@ export function EmailField() {
 
   return (
     <Input
-      label={t('label')}
+      label={`${t('label')} *`}
       placeholder={t('placeholder')}
       type="email"
       inputMode="email"

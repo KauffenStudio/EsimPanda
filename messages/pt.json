@@ -89,7 +89,13 @@
     "resend_email_success": "Email de entrega enviado para {email}",
     "resend_email_error": "Não foi possível reenviar o email. Tente novamente.",
     "no_purchases": "Sem compras ainda",
-    "data_added": "Dados adicionados!"
+    "data_added": "Dados adicionados!",
+    "done": "Concluído",
+    "top_up_steps": {
+      "select": "Selecionar",
+      "payment": "Pagamento",
+      "done": "Concluído"
+    }
   },
   "profile": {
     "title": "Perfil",
@@ -109,8 +115,10 @@
     "device": {
       "label": "O seu dispositivo",
       "compatible": "{brand} {model} — compatível com eSIM",
-      "incompatible": "Este dispositivo pode não suportar eSIM. Pode comprar para outro dispositivo.",
-      "check": "Verificar compatibilidade do dispositivo"
+      "incompatible": "Este dispositivo pode não suportar eSIM",
+      "incompatible_detail": "O seu {brand} {model} pode não suportar eSIM. Pode comprar para outro dispositivo.",
+      "check": "Verificar compatibilidade do dispositivo",
+      "check_other": "Verificar outro dispositivo"
     },
     "coupon": {
       "trigger": "Tem um código?",
@@ -133,6 +141,17 @@
       "vatCalculating": "A calcular...",
       "total": "Total"
     },
+    "progress": {
+      "review": "Revisão",
+      "details": "Detalhes",
+      "pay": "Pagar"
+    },
+    "trust": {
+      "secure": "Pagamento seguro",
+      "guarantee": "Garantia de devolução",
+      "travelers": "Confiado por viajantes"
+    },
+    "email_required_hint": "Introduza um endereço de email válido para continuar",
     "pay": "Pagar ${amount}",
     "success": {
       "heading": "O seu eSIM está pronto!",
@@ -271,7 +290,8 @@
       "heading": "A configurar o seu eSIM...",
       "message1": "A configurar o seu eSIM...",
       "message2": "Quase lá...",
-      "message3": "A preparar a sua conexão..."
+      "message3": "A preparar a sua conexão...",
+      "delayed": "Está a demorar um pouco mais do que o habitual, mas o seu eSIM está a ser preparado. Por favor, não feche esta página."
     },
     "ready": {
       "heading": "O Seu eSIM Está Pronto!",
@@ -279,7 +299,8 @@
     },
     "install": "Instalar eSIM",
     "qr": {
-      "instruction": "Leia este código QR com o seu telemóvel"
+      "instruction": "Leia este código QR com o seu telemóvel",
+      "download": "Guardar código QR"
     },
     "manual": {
       "trigger": "Introduzir detalhes manualmente",
@@ -296,6 +317,16 @@
       "android": { "heading": "Configurar no Android" },
       "help": "Precisa de ajuda? Fale connosco no WhatsApp"
     },
+    "steps": {
+      "install": "Instalar o seu eSIM",
+      "setup": "Configurar o seu eSIM",
+      "done": "Está tudo pronto!",
+      "done_body": "O seu eSIM está instalado e pronto. Ative-o quando chegar ao destino.",
+      "next": "Feito, próximo passo"
+    },
+    "email_me_details": "Enviar detalhes por email",
+    "email_sent": "Detalhes enviados para {email}",
+    "email_failed": "Não foi possível enviar o email. Tente novamente.",
     "error": {
       "heading": "Algo correu mal",
       "body": "Não foi possível configurar o seu eSIM. Estamos a resolver e irá recebê-lo por email em breve.",

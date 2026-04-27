@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X } from 'lucide-react';
+import { X, ArrowLeft } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { toast } from 'sonner';
 import { Elements } from '@stripe/react-stripe-js';
@@ -15,6 +15,8 @@ import { CardPayment } from '@/components/checkout/card-payment';
 import { ExpressCheckout } from '@/components/checkout/express-checkout';
 import { BambuVideo } from '@/components/bambu/bambu-video';
 import type { TopUpPackage, DashboardEsim } from '@/lib/dashboard/types';
+import { TopUpSteps } from './top-up-steps';
+import { trackEvent, ANALYTICS_EVENTS } from '@/lib/analytics/events';
 
 function isoToFlag(iso: string): string {
   return iso
@@ -37,6 +39,8 @@ export function TopUpModal() {
   const [selectedPackage, setSelectedPackage] = useState<TopUpPackage | null>(null);
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string>('');
+  const [packages, setPackages] = useState<TopUpPackage[]>(mockTopUpPackages);
+  const [packagesLoading, setPackagesLoading] = useState(false);
 
   // Escape key handler
   useEffect(() => {
@@ -53,21 +57,39 @@ export function TopUpModal() {
     if (status !== 'success') return;
     const timer = setTimeout(() => {
       closeTopUp();
-    }, 2000);
+    }, 5000);
     return () => clearTimeout(timer);
   }, [status, closeTopUp]);
 
-  // Reset selection when modal opens
+  // Reset selection and fetch packages when modal opens
   useEffect(() => {
     if (status === 'plan-select') {
       setSelectedPackage(null);
       setClientSecret(null);
       setErrorMessage('');
+      if (esim) {
+        trackEvent(ANALYTICS_EVENTS.TOPUP_MODAL_OPENED, { destination: esim.destination });
+
+        // Fetch real packages for this destination
+        setPackagesLoading(true);
+        fetch(`/api/dashboard/top-up/packages?destination=${esim.destination_iso}`)
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.packages?.length) {
+              setPackages(data.packages);
+            }
+          })
+          .catch(() => {
+            // Keep mock packages as fallback
+          })
+          .finally(() => setPackagesLoading(false));
+      }
     }
-  }, [status]);
+  }, [status, esim]);
 
   const handleSelectPlan = useCallback(
     async (pkg: TopUpPackage) => {
+      trackEvent(ANALYTICS_EVENTS.TOPUP_PLAN_SELECTED, { package_id: pkg.id, data_gb: pkg.data_gb, price_cents: pkg.price_cents });
       setSelectedPackage(pkg);
       setTopUpStatus('payment');
 
@@ -127,6 +149,12 @@ export function TopUpModal() {
     }, 1500);
   }, [esim, esims, selectedPackage, setEsims, setTopUpStatus, t]);
 
+  const handleBack = useCallback(() => {
+    setTopUpStatus('plan-select');
+    setSelectedPackage(null);
+    setClientSecret(null);
+  }, [setTopUpStatus]);
+
   const handleTryAgain = useCallback(() => {
     setTopUpStatus('plan-select');
     setErrorMessage('');
@@ -163,10 +191,21 @@ export function TopUpModal() {
             >
               {/* Header */}
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-2xl font-bold dark:text-gray-100">
-                  {isoToFlag(esim.destination_iso)}{' '}
-                  {t('dashboard.top_up_title', { destination: esim.destination })}
-                </h2>
+                <div className="flex items-center gap-2">
+                  {status === 'payment' && (
+                    <button
+                      type="button"
+                      onClick={handleBack}
+                      className="p-1 rounded-lg hover:bg-gray-100 dark:hover:bg-background-dark dark:text-gray-100 transition-colors"
+                    >
+                      <ArrowLeft size={20} />
+                    </button>
+                  )}
+                  <h2 className="text-2xl font-bold dark:text-gray-100">
+                    {isoToFlag(esim.destination_iso)}{' '}
+                    {t('dashboard.top_up_title', { destination: esim.destination })}
+                  </h2>
+                </div>
                 <button
                   type="button"
                   onClick={closeTopUp}
@@ -175,6 +214,9 @@ export function TopUpModal() {
                   <X size={24} />
                 </button>
               </div>
+
+              {/* Step indicator */}
+              <TopUpSteps currentStatus={status} />
 
               {/* Reactivation note for expired eSIMs */}
               {esim.status === 'expired' && (
@@ -186,20 +228,40 @@ export function TopUpModal() {
               {/* Plan Select State */}
               {status === 'plan-select' && (
                 <div className="space-y-3">
-                  {mockTopUpPackages.map((pkg) => (
-                    <TopUpPlanCard
-                      key={pkg.id}
-                      package={pkg}
-                      selected={selectedPackage?.id === pkg.id}
-                      onSelect={handleSelectPlan}
-                    />
-                  ))}
+                  {packagesLoading ? (
+                    <div className="flex justify-center py-6">
+                      <BambuVideo variant="loading" size={48} />
+                    </div>
+                  ) : (
+                    packages.map((pkg) => (
+                      <TopUpPlanCard
+                        key={pkg.id}
+                        package={pkg}
+                        selected={selectedPackage?.id === pkg.id}
+                        onSelect={handleSelectPlan}
+                      />
+                    ))
+                  )}
                 </div>
               )}
 
               {/* Payment State */}
               {status === 'payment' && (
                 <div className="space-y-4">
+                  {/* Plan summary */}
+                  {selectedPackage && (
+                    <div className="rounded-lg bg-[#F5F5F5] dark:bg-background-dark p-3 flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <span className="text-lg">{isoToFlag(esim.destination_iso)}</span>
+                        <span className="text-sm font-medium dark:text-gray-100">
+                          {selectedPackage.data_gb}GB — {esim.destination}
+                        </span>
+                      </div>
+                      <span className="text-sm font-bold dark:text-gray-100">
+                        ${(selectedPackage.price_cents / 100).toFixed(2)}
+                      </span>
+                    </div>
+                  )}
                   {STRIPE_MOCK_MODE || process.env.NEXT_PUBLIC_STRIPE_MOCK === 'true' ? (
                     <div className="space-y-4">
                       <div className="rounded-lg border border-dashed border-gray-300 dark:border-border-dark p-4 text-center">
@@ -254,6 +316,13 @@ export function TopUpModal() {
                   <p className="text-lg font-bold text-gray-900 dark:text-gray-100">
                     {t('dashboard.data_added')}
                   </p>
+                  <button
+                    type="button"
+                    onClick={closeTopUp}
+                    className="rounded-lg bg-[#2979FF] px-6 py-2 text-white font-medium hover:bg-[#2164d9] transition-colors"
+                  >
+                    {t('dashboard.done')}
+                  </button>
                 </div>
               )}
 

@@ -96,16 +96,37 @@ function PayButtonUI({ processing, isDisabled, totalFormatted, onClick }: {
   onClick: () => void;
 }) {
   const t = useTranslations('checkout');
+  const email = useCheckoutStore((s) => s.email);
+  const [showEmailHint, setShowEmailHint] = useState(false);
+
+  const handleClick = () => {
+    if (isDisabled && (!email || !EMAIL_REGEX.test(email))) {
+      setShowEmailHint(true);
+      const emailInput = document.querySelector('input[type="email"]');
+      if (emailInput) {
+        emailInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        (emailInput as HTMLInputElement).focus();
+      }
+      return;
+    }
+    setShowEmailHint(false);
+    onClick();
+  };
 
   return (
     <>
       <div className="h-6" />
       <div className="fixed bottom-0 left-0 right-0 z-30 p-4 pb-[calc(16px+env(safe-area-inset-bottom))] bg-white/90 dark:bg-background-dark/90 backdrop-blur-sm border-t border-gray-100 dark:border-border-dark md:static md:bg-transparent md:backdrop-blur-none md:border-0 md:p-0 md:pb-0">
+        {showEmailHint && (
+          <p className="text-xs text-destructive text-center mb-2">
+            {t('email_required_hint')}
+          </p>
+        )}
         <Button
           variant="primary"
           size="lg"
-          onClick={onClick}
-          disabled={isDisabled}
+          onClick={handleClick}
+          disabled={processing}
           className="w-full h-12"
         >
           {processing ? (
