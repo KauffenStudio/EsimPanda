@@ -74,12 +74,12 @@ export default async function DestinationPage({ params }: Props) {
 
         {/* Plan cards section */}
         <section>
-          <h2 className="text-2xl font-bold mb-4">
+          <h2 className="text-2xl font-bold mb-4 dark:text-gray-100">
             {isRegional ? `${destination.name} Plans` : 'Available Plans'}
           </h2>
           {taggedPlans.length === 0 ? (
             <div className="text-center py-8">
-              <p className="font-bold text-gray-600">No plans available</p>
+              <p className="font-bold text-gray-600 dark:text-gray-400">No plans available</p>
               <p className="text-gray-400 text-sm mt-1">
                 We&apos;re working on adding eSIM plans for this destination. Browse our Global plan for worldwide coverage.
               </p>

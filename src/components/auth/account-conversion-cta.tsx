@@ -58,16 +58,12 @@ export function AccountConversionCTA({ email }: AccountConversionCTAProps) {
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-        className="w-full rounded-[10px] p-6 text-center"
-        style={{ backgroundColor: '#E3F0FF' }}
+        className="w-full rounded-[10px] p-6 text-center bg-accent-soft dark:bg-accent-soft-dark"
       >
         <BambuVideo variant="success" size={80} className="mx-auto mb-3" />
         <div className="flex items-center justify-center gap-2 mb-1">
-          <Check size={24} className="text-[#43A047]" />
-          <span
-            className="text-2xl font-bold"
-            style={{ color: '#43A047' }}
-          >
+          <Check size={24} className="text-success dark:text-success-dark" />
+          <span className="text-2xl font-bold text-success dark:text-success-dark">
             {t('convert.success')}
           </span>
         </div>
@@ -78,8 +74,7 @@ export function AccountConversionCTA({ email }: AccountConversionCTAProps) {
   // Form state
   return (
     <div
-      className="w-full rounded-[10px] p-6"
-      style={{ backgroundColor: '#E3F0FF' }}
+      className="w-full rounded-[10px] p-6 bg-accent-soft dark:bg-accent-soft-dark"
     >
       <div className="text-center mb-4">
         <span className="text-3xl" role="img" aria-label="panda">
@@ -95,7 +90,7 @@ export function AccountConversionCTA({ email }: AccountConversionCTAProps) {
         {t('convert.body')}
       </p>
 
-      <p className="text-sm text-gray-600 mb-4 text-center">{email}</p>
+      <p className="text-sm text-gray-600 dark:text-gray-400 mb-4 text-center">{email}</p>
 
       <form action={formAction} className="flex flex-col gap-4">
         <input type="hidden" name="email" value={email} />
@@ -147,7 +142,7 @@ export function AccountConversionCTA({ email }: AccountConversionCTAProps) {
         <button
           type="button"
           onClick={() => setView('dismissed')}
-          className="text-gray-600 hover:underline"
+          className="text-gray-600 dark:text-gray-400 hover:underline"
         >
           {t('convert.skip')}
         </button>

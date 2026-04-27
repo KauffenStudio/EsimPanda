@@ -36,7 +36,7 @@ export default function RootLayout({
       <head>
         <meta name="theme-color" content="#2979FF" />
       </head>
-      <body className="font-sans antialiased">
+      <body className="font-sans antialiased bg-background dark:bg-background-dark text-primary dark:text-gray-100 transition-colors">
         <script dangerouslySetInnerHTML={{ __html: darkModeHydrationScript }} />
         <script dangerouslySetInnerHTML={{ __html: swRegistrationScript }} />
         {children}
