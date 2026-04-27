@@ -66,9 +66,9 @@ export function QuickCheckoutBar() {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 100, opacity: 0 }}
           transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-          className="fixed bottom-0 left-0 right-0 z-50 md:bottom-4 md:left-auto md:right-4 md:w-[420px]"
+          className="fixed bottom-[68px] left-2 right-2 z-[60] md:bottom-4 md:left-auto md:right-4 md:w-[420px]"
         >
-          <div className="bg-white dark:bg-surface-dark border-t md:border border-border dark:border-border-dark md:rounded-[var(--radius-card)] shadow-[0_-4px_24px_rgba(0,0,0,0.12)] dark:shadow-[0_-4px_24px_rgba(0,0,0,0.4)] p-4">
+          <div className="bg-white dark:bg-surface-dark border border-border dark:border-border-dark rounded-2xl md:rounded-[var(--radius-card)] shadow-[0_4px_24px_rgba(0,0,0,0.15)] dark:shadow-[0_4px_24px_rgba(0,0,0,0.5)] p-4">
             {/* Close */}
             <button
               onClick={clear}
