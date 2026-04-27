@@ -1,6 +1,6 @@
 {
   "nav": {
-    "home": "Inicio",
+    "home": "Início",
     "destinations": "Destinos",
     "esims": "Meus eSIMs",
     "profile": "Perfil"
@@ -11,18 +11,21 @@
   },
   "landing": {
     "headline": "Conecte-se em Qualquer Lugar",
+    "eyebrow": "Planos eSIM Mundiais",
+    "subtitle": "Planos eSIM acessíveis para viajantes em todo o mundo. 40+ países.",
+    "subtitle2": "Ativação instantânea, conectado em menos de 2 minutos.",
     "cta_primary": "Conectar Agora",
     "cta_secondary": "Ver Planos"
   },
   "browse": {
     "title": "Destinos",
-    "empty": "Ainda nao ha destinos disponiveis. Volte em breve!",
+    "empty": "Ainda não há destinos disponíveis. Volte em breve!",
     "searchPlaceholder": "Pesquisar destinos...",
-    "europePlan": "Cobertura Europeia",
-    "europeDescription": "Um plano, 30+ paises",
+    "europePlan": "Cobertura Regional",
+    "europeDescription": "Planos multi-país",
     "from": "desde",
-    "noResults": "Ainda nao ha planos para \"{query}\"",
-    "noResultsSuggestion": "Experimente o plano europeu ou veja os destinos populares",
+    "noResults": "Ainda não há planos para \"{query}\"",
+    "noResultsSuggestion": "Experimente um plano regional ou veja os destinos populares",
     "comingSoon": "Em breve",
     "filterAll": "Todos",
     "filter24h": "24h",
@@ -39,89 +42,89 @@
     "selectModel": "Selecionar modelo...",
     "checkButton": "Verificar Compatibilidade",
     "deviceCompatible": "O seu {brand} {model} suporta eSIM!",
-    "deviceIncompatible": "Desculpe, {brand} {model} nao suporta eSIM",
+    "deviceIncompatible": "Desculpe, {brand} {model} não suporta eSIM",
     "browseAnyway": "Ver mesmo assim",
     "resetDevice": "Verificar outro dispositivo"
   },
   "dashboard": {
     "title": "Meus eSIMs",
     "empty_title": "Sem eSIMs ainda",
-    "empty_body": "Ainda nao tem eSIMs? Vamos conecta-lo!",
+    "empty_body": "Ainda não tem eSIMs? Vamos conectá-lo!",
     "empty_cta": "Ver Planos",
     "error_title": "Algo correu mal",
     "error_body": "Algo correu mal ao carregar os seus eSIMs. Tente novamente ou contacte-nos no WhatsApp.",
     "error_retry": "Tentar Novamente",
     "tab_esims": "Meus eSIMs",
-    "tab_history": "Historico de Compras",
-    "usage_fresh": "Ultima atualizacao: agora mesmo",
-    "usage_stale": "Ultima atualizacao: ha {minutes} min",
-    "usage_outdated": "Os dados de utilizacao podem estar desatualizados",
-    "refresh_label": "Atualizar dados de utilizacao",
+    "tab_history": "Histórico de Compras",
+    "usage_fresh": "Última atualização: agora mesmo",
+    "usage_stale": "Última atualização: há {minutes} min",
+    "usage_outdated": "Os dados de utilização podem estar desatualizados",
+    "refresh_label": "Atualizar dados de utilização",
     "expires": "Expira: {date}",
     "data_used": "{used} GB de {total} GB utilizados",
     "gb_left": "GB restantes",
     "status_active": "Ativo",
     "status_expired": "Expirado",
     "status_pending": "Pendente",
-    "low_data_warning": "O eSIM de {destination} esta com poucos dados -- {percent}% restantes",
-    "low_data_critical": "O eSIM de {destination} esta quase sem dados -- {percent}% restantes",
+    "low_data_warning": "O eSIM de {destination} está com poucos dados — {percent}% restantes",
+    "low_data_critical": "O eSIM de {destination} está quase sem dados — {percent}% restantes",
     "top_up": "Recarregar",
     "top_up_title": "Recarregar {destination}",
-    "top_up_pay": "Pagar EUR {amount}",
+    "top_up_pay": "Pagar ${amount}",
     "top_up_processing": "A processar a sua recarga...",
     "top_up_success_toast": "Dados adicionados ao seu eSIM de {destination}!",
-    "top_up_error": "O pagamento falhou. Tente novamente ou use outro metodo de pagamento.",
+    "top_up_error": "O pagamento falhou. Tente novamente ou use outro método de pagamento.",
     "top_up_try_again": "Tentar Novamente",
     "top_up_reactivate_note": "Recarregar vai reativar este eSIM",
     "history_order_id": "Pedido: {orderId}",
     "history_plan": "Plano: {plan}",
     "history_payment": "Pagamento: {method}",
-    "history_coupon": "Cupao: {code} (-{discount}%)",
+    "history_coupon": "Cupão: {code} (-{discount}%)",
     "history_subtotal": "Subtotal: {currency} {amount}",
     "history_vat": "IVA ({rate}%): {currency} {amount}",
     "history_total": "Total: {currency} {amount}",
     "history_iccid": "ICCID: {iccid}",
-    "view_qr": "Ver Codigo QR",
+    "view_qr": "Ver Código QR",
     "resend_email": "Reenviar Email",
     "resend_email_success": "Email de entrega enviado para {email}",
-    "resend_email_error": "Nao foi possivel reenviar o email. Tente novamente.",
+    "resend_email_error": "Não foi possível reenviar o email. Tente novamente.",
     "no_purchases": "Sem compras ainda",
     "data_added": "Dados adicionados!"
   },
   "profile": {
     "title": "Perfil",
-    "empty": "Inicie sessao para gerir os seus eSIMs, ver o historico de compras e acompanhar a utilizacao de dados."
+    "empty": "Inicie sessão para gerir os seus eSIMs, ver o histórico de compras e acompanhar a utilização de dados."
   },
   "errors": {
     "generic": "Algo correu mal. Tente novamente ou contacte-nos no WhatsApp.",
-    "network": "Nao foi possivel conectar. Verifique a sua internet e tente novamente."
+    "network": "Não foi possível conectar. Verifique a sua internet e tente novamente."
   },
   "checkout": {
     "title": "Pagamento",
     "email": {
-      "label": "Endereco de email",
+      "label": "Endereço de email",
       "placeholder": "seu@email.com",
-      "error": "Por favor, introduza um endereco de email valido"
+      "error": "Por favor, introduza um endereço de email válido"
     },
     "device": {
       "label": "O seu dispositivo",
-      "compatible": "{brand} {model} -- compativel com eSIM",
-      "incompatible": "Este dispositivo pode nao suportar eSIM. Pode comprar para outro dispositivo.",
+      "compatible": "{brand} {model} — compatível com eSIM",
+      "incompatible": "Este dispositivo pode não suportar eSIM. Pode comprar para outro dispositivo.",
       "check": "Verificar compatibilidade do dispositivo"
     },
     "coupon": {
-      "trigger": "Tem um codigo?",
-      "placeholder": "Introduza o codigo de desconto",
-      "apply": "Aplicar Codigo",
-      "savings": "Poupa EUR {amount}",
-      "invalid": "Codigo invalido -- verifique a ortografia e tente novamente",
-      "min_order": "Pedido minimo de €9,99 necessario para este cupao",
-      "remove": "Remover codigo"
+      "trigger": "Tem um código?",
+      "placeholder": "Introduza o código de desconto",
+      "apply": "Aplicar Código",
+      "savings": "Poupa ${amount}",
+      "invalid": "Código inválido — verifique a ortografia e tente novamente",
+      "min_order": "Pedido mínimo de $9.99 necessário para este cupão",
+      "remove": "Remover código"
     },
     "express": {
       "title": "Pagamento expresso"
     },
-    "divider": "ou pagar com cartao",
+    "divider": "ou pagar com cartão",
     "summary": {
       "title": "Resumo do pedido",
       "subtotal": "Subtotal",
@@ -130,19 +133,19 @@
       "vatCalculating": "A calcular...",
       "total": "Total"
     },
-    "pay": "Pagar EUR {amount}",
+    "pay": "Pagar ${amount}",
     "success": {
-      "heading": "O seu eSIM esta pronto!",
+      "heading": "O seu eSIM está pronto!",
       "order": "Pedido {id}",
-      "email": "Verifique o seu email para confirmacao e instrucoes de configuracao.",
+      "email": "Verifique o seu email para confirmação e instruções de configuração.",
       "redirect": "A redirecionar em {seconds}s...",
       "dashboard": "Ir para o painel"
     },
     "error": {
       "heading": "Pagamento falhou",
-      "declined": "O seu cartao foi recusado. Tente outro metodo de pagamento.",
+      "declined": "O seu cartão foi recusado. Tente outro método de pagamento.",
       "generic": "Algo correu mal. Tente novamente.",
-      "network": "Nao foi possivel conectar. Verifique a sua internet e tente novamente.",
+      "network": "Não foi possível conectar. Verifique a sua internet e tente novamente.",
       "retry": "Tentar novamente",
       "contact": "Precisa de ajuda? Contacte-nos no WhatsApp"
     }
@@ -151,20 +154,20 @@
     "login": {
       "heading": "Entrar",
       "submit": "Entrar",
-      "noAccount": "Nao tem conta? Crie uma",
+      "noAccount": "Não tem conta? Crie uma",
       "forgotPassword": "Esqueceu a palavra-passe?"
     },
     "signup": {
       "heading": "Criar Conta",
       "submit": "Criar Conta",
-      "hasAccount": "Ja tem conta? Inicie sessao"
+      "hasAccount": "Já tem conta? Inicie sessão"
     },
     "forgot": {
       "heading": "Recuperar Palavra-passe",
       "body": "Introduza o seu email e enviaremos um link para recuperar a sua palavra-passe.",
-      "submit": "Enviar Link de Recuperacao",
+      "submit": "Enviar Link de Recuperação",
       "successHeading": "Verifique o Seu Email",
-      "successBody": "Se existir uma conta com esse email, enviamos um link de recuperacao. Verifique a sua caixa de entrada."
+      "successBody": "Se existir uma conta com esse email, enviámos um link de recuperação. Verifique a sua caixa de entrada."
     },
     "reset": {
       "heading": "Definir Nova Palavra-passe",
@@ -182,7 +185,7 @@
     },
     "menu": {
       "esims": "Meus eSIMs",
-      "settings": "Definicoes",
+      "settings": "Definições",
       "inviteFriends": "Convidar Amigos",
       "logout": "Sair"
     },
@@ -198,62 +201,68 @@
       "resetHeading": "Recuperar a Sua Palavra-passe",
       "resetBody": "Clique abaixo para definir uma nova palavra-passe para a sua conta.",
       "resetCta": "Recuperar Palavra-passe",
-      "resetExpiry": "Este link expira em 1 hora. Se nao solicitou isto, ignore este email."
+      "resetExpiry": "Este link expira em 1 hora. Se não solicitou isto, ignore este email."
     },
     "error": {
       "invalidCredentials": "Email ou palavra-passe incorretos. Tente novamente.",
-      "emailExists": "Este email ja tem uma conta. Iniciar sessao?",
+      "emailExists": "Este email já tem uma conta. Iniciar sessão?",
       "passwordShort": "A palavra-passe deve ter pelo menos 8 caracteres.",
-      "passwordMismatch": "As palavras-passe nao coincidem.",
+      "passwordMismatch": "As palavras-passe não coincidem.",
       "emailRequired": "Por favor, introduza o seu email.",
       "passwordRequired": "Por favor, introduza uma palavra-passe.",
-      "emailInvalid": "Por favor, introduza um endereco de email valido.",
-      "resetExpired": "Este link de recuperacao expirou. Solicite um novo.",
+      "emailInvalid": "Por favor, introduza um endereço de email válido.",
+      "resetExpired": "Este link de recuperação expirou. Solicite um novo.",
       "generic": "Algo correu mal. Tente novamente.",
-      "conversionExists": "Este email ja tem uma conta. Inicie sessao para associar o seu eSIM."
+      "conversionExists": "Este email já tem uma conta. Inicie sessão para associar o seu eSIM."
     }
   },
   "referral": {
-    "title": "Convide Amigos, Ganhe Dados Gratis",
-    "subtitle": "Partilhe o seu link e ambos recebem um passe diario de 1GB gratis",
-    "copyLink": "Copiar Link de Referencia",
+    "title": "Convide Amigos, Ganhe Dados Grátis",
+    "subtitle": "Partilhe o seu link e ambos recebem um passe diário de 1GB grátis",
+    "copyLink": "Copiar Link de Referência",
     "copied": "Copiado!",
     "shareVia": "Partilhar via",
     "shareWhatsapp": "WhatsApp",
     "shareTwitter": "Twitter/X",
     "shareCopy": "Copiar",
-    "shareText": "Obtem um eSIM de 1GB gratis para a tua proxima viagem! Usa o meu link: {url}",
+    "shareText": "Obtém um eSIM de 1GB grátis para a tua próxima viagem! Usa o meu link: {url}",
     "statsInvited": "Amigos Convidados",
-    "statsEarned": "Planos Gratis Ganhos",
-    "statsRemaining": "Planos Gratis Restantes Este Mes",
-    "capReached": "Atingiu o limite mensal de 5 planos gratis. O seu limite reinicia em {date}.",
+    "statsEarned": "Planos Grátis Ganhos",
+    "statsRemaining": "Planos Grátis Restantes Este Mês",
+    "capReached": "Atingiu o limite mensal de 5 planos grátis. O seu limite reinicia em {date}.",
     "postPurchaseTitle": "Partilhar com um Amigo",
-    "postPurchaseSubtitle": "Ambos recebem um passe diario de 1GB gratis",
-    "noAccount": "Crie uma conta para obter o seu link de referencia e ganhar planos de 1GB gratis quando amigos se registam.",
-    "noAccountCta": "Comecar a Ganhar Dados Gratis",
-    "error": "Nao foi possivel gerar o seu link de referencia. Tente novamente ou contacte o suporte."
+    "postPurchaseSubtitle": "Ambos recebem um passe diário de 1GB grátis",
+    "noAccount": "Crie uma conta para obter o seu link de referência e ganhar planos de 1GB grátis quando amigos se registam.",
+    "noAccountCta": "Começar a Ganhar Dados Grátis",
+    "error": "Não foi possível gerar o seu link de referência. Tente novamente ou contacte o suporte."
+  },
+  "incentive": {
+    "heading": "Ganhe 10% no Seu Primeiro eSIM",
+    "body": "Crie uma conta gratuita e desbloqueie 10% de desconto na sua primeira compra. Gira os seus eSIMs, acompanhe a utilização e receba lembretes de recarga.",
+    "signup": "Criar Conta e Poupar 10%",
+    "login": "Já tem conta? Entrar"
   },
   "whatsapp": {
     "ariaLabel": "Contactar suporte no WhatsApp",
-    "browsePage": "Ola! Preciso de ajuda para escolher um plano eSIM",
-    "checkoutPage": "Ola! Preciso de ajuda com o meu pagamento",
-    "deliveryPage": "Ola! Preciso de ajuda com a minha encomenda",
-    "dashboardPage": "Ola! Preciso de ajuda com o meu eSIM",
-    "defaultMessage": "Ola!"
+    "browsePage": "Olá! Preciso de ajuda para escolher um plano eSIM",
+    "checkoutPage": "Olá! Preciso de ajuda com o meu pagamento",
+    "deliveryPage": "Olá! Preciso de ajuda com a minha encomenda",
+    "dashboardPage": "Olá! Preciso de ajuda com o meu eSIM",
+    "defaultMessage": "Olá!"
   },
   "admin": {
     "coupons": {
-      "title": "Cupoes de Influenciadores",
-      "createButton": "Criar Cupao",
-      "emptyTitle": "Sem Cupoes Ainda",
-      "emptyBody": "Crie o seu primeiro cupao de influenciador para comecar a acompanhar o desempenho.",
-      "emptyCta": "Criar Primeiro Cupao",
-      "codeExists": "Este codigo ja esta em uso. Escolha um codigo diferente.",
-      "authFailed": "Nao tem acesso de administrador. Inicie sessao com uma conta de administrador.",
-      "deactivateTitle": "Desativar Cupao",
-      "deactivateBody": "Isto impedira novas utilizacoes do codigo {code}. Descontos ja aplicados nao sao afetados. Desativar?",
-      "statsActive": "Cupoes Ativos",
-      "statsUses": "Total de Utilizacoes",
+      "title": "Cupões de Influenciadores",
+      "createButton": "Criar Cupão",
+      "emptyTitle": "Sem Cupões Ainda",
+      "emptyBody": "Crie o seu primeiro cupão de influenciador para começar a acompanhar o desempenho.",
+      "emptyCta": "Criar Primeiro Cupão",
+      "codeExists": "Este código já está em uso. Escolha um código diferente.",
+      "authFailed": "Não tem acesso de administrador. Inicie sessão com uma conta de administrador.",
+      "deactivateTitle": "Desativar Cupão",
+      "deactivateBody": "Isto impedirá novas utilizações do código {code}. Descontos já aplicados não são afetados. Desativar?",
+      "statsActive": "Cupões Ativos",
+      "statsUses": "Total de Utilizações",
       "statsRevenue": "Receita Total"
     }
   },
@@ -261,26 +270,26 @@
     "provisioning": {
       "heading": "A configurar o seu eSIM...",
       "message1": "A configurar o seu eSIM...",
-      "message2": "Quase la...",
-      "message3": "A preparar a sua conexao..."
+      "message2": "Quase lá...",
+      "message3": "A preparar a sua conexão..."
     },
     "ready": {
-      "heading": "O Seu eSIM Esta Pronto!",
-      "subheading": "Leia o codigo QR ou toque em Instalar para ativar"
+      "heading": "O Seu eSIM Está Pronto!",
+      "subheading": "Leia o código QR ou toque em Instalar para ativar"
     },
     "install": "Instalar eSIM",
     "qr": {
-      "instruction": "Leia este codigo QR com o seu telemovel"
+      "instruction": "Leia este código QR com o seu telemóvel"
     },
     "manual": {
       "trigger": "Introduzir detalhes manualmente",
-      "smdp": "Endereco SM-DP+",
-      "code": "Codigo de Ativacao"
+      "smdp": "Endereço SM-DP+",
+      "code": "Código de Ativação"
     },
     "copy": "Copiar",
-    "copy_success": "Copiado para a area de transferencia",
+    "copy_success": "Copiado para a área de transferência",
     "setup": {
-      "trigger": "Precisa de ajuda na configuracao?",
+      "trigger": "Precisa de ajuda na configuração?",
       "ios": { "heading": "Configurar no iPhone" },
       "samsung": { "heading": "Configurar no Samsung" },
       "pixel": { "heading": "Configurar no Pixel / Android" },
@@ -289,37 +298,37 @@
     },
     "error": {
       "heading": "Algo correu mal",
-      "body": "Nao foi possivel configurar o seu eSIM. Estamos a resolver e ira recebe-lo por email em breve.",
+      "body": "Não foi possível configurar o seu eSIM. Estamos a resolver e irá recebê-lo por email em breve.",
       "retry": "A tentar novamente... ({count}/3)",
-      "final": "Ainda estamos a trabalhar no seu eSIM. Ira recebe-lo por email dentro de poucos minutos.",
+      "final": "Ainda estamos a trabalhar no seu eSIM. Irá recebê-lo por email dentro de poucos minutos.",
       "contact": "Precisa de ajuda? Contacte-nos no WhatsApp"
     },
     "email": {
-      "reminder": "Tambem enviamos tudo para {email}",
-      "subject": "O seu eSIM para {destination} esta pronto!",
-      "preview": "Leia o codigo QR ou toque para instalar o seu eSIM",
-      "heading": "O Seu eSIM Esta Pronto!",
-      "qr": { "instruction": "Leia este codigo QR com a camara do seu telemovel" },
+      "reminder": "Também enviámos tudo para {email}",
+      "subject": "O seu eSIM para {destination} está pronto!",
+      "preview": "Leia o código QR ou toque para instalar o seu eSIM",
+      "heading": "O Seu eSIM Está Pronto!",
+      "qr": { "instruction": "Leia este código QR com a câmara do seu telemóvel" },
       "manual": {
-        "heading": "Configuracao Manual",
-        "instruction": "Se o codigo QR nao funcionar, introduza estes detalhes manualmente nas definicoes do seu telemovel"
+        "heading": "Configuração Manual",
+        "instruction": "Se o código QR não funcionar, introduza estes detalhes manualmente nas definições do seu telemóvel"
       },
       "receipt": { "heading": "Recibo do Pedido" },
-      "setup": { "button": "Ver Guia de Configuracao" },
-      "referral": "Conhece alguem a viajar? Partilhe o eSIM Panda"
+      "setup": { "button": "Ver Guia de Configuração" },
+      "referral": "Conhece alguém a viajar? Partilhe o eSIM Panda"
     }
   },
   "notifications": {
-    "title": "Notificacoes",
-    "expiry_alerts": "Alertas de expiracao",
-    "usage_alerts": "Alertas de utilizacao",
-    "promotions": "Promocoes",
+    "title": "Notificações",
+    "expiry_alerts": "Alertas de expiração",
+    "usage_alerts": "Alertas de utilização",
+    "promotions": "Promoções",
     "permission_heading": "Fique a par de tudo",
     "permission_body": "Receba alertas quando o seu eSIM estiver prestes a expirar ou com poucos dados.",
-    "permission_allow": "Permitir Notificacoes",
-    "permission_dismiss": "Agora nao",
-    "permission_denied": "Notificacoes bloqueadas — ative-as nas definicoes do navegador para receber alertas de expiracao.",
-    "expiry_24h": "O seu eSIM {destination} expira amanha",
+    "permission_allow": "Permitir Notificações",
+    "permission_dismiss": "Agora não",
+    "permission_denied": "Notificações bloqueadas — ative-as nas definições do navegador para receber alertas de expiração.",
+    "expiry_24h": "O seu eSIM {destination} expira amanhã",
     "expiry_1h": "O seu eSIM {destination} expira em 1 hora",
     "low_data_80": "Usou 80% dos dados do plano {plan}",
     "low_data_95": "Quase sem dados no plano {plan}",
@@ -329,12 +338,12 @@
   },
   "pwa": {
     "install_heading": "Aceda aos seus eSIMs offline",
-    "install_body": "Instale o eSIM Panda para acesso instantaneo ao codigo QR — mesmo sem internet.",
+    "install_body": "Instale o eSIM Panda para acesso instantâneo ao código QR — mesmo sem internet.",
     "install_cta": "Instalar App",
-    "install_ios": "Toque no botao Partilhar e depois em 'Adicionar ao Ecra Inicial'",
-    "offline_message": "Esta offline — a mostrar dados em cache",
-    "offline_last_updated": "Ultima atualizacao {time}",
+    "install_ios": "Toque no botão Partilhar e depois em 'Adicionar ao Ecrã Inicial'",
+    "offline_message": "Está offline — a mostrar dados em cache",
+    "offline_last_updated": "Última atualização {time}",
     "sync_complete": "Dados atualizados",
-    "sw_error": "Modo offline indisponivel — tente atualizar a pagina."
+    "sw_error": "Modo offline indisponível — tente atualizar a página."
   }
 }

@@ -2,7 +2,7 @@
 
 import { useRef, useEffect } from 'react';
 
-type BambuVariant = 'splash' | 'loading' | 'success' | 'error' | 'empty' | 'browse' | 'preparing' | 'welcome';
+type BambuVariant = 'splash' | 'loading' | 'success' | 'error' | 'empty' | 'browse' | 'preparing' | 'welcome' | 'hero-intro';
 
 interface BambuVideoProps {
   variant: BambuVariant;
@@ -22,7 +22,10 @@ const videoMap: Record<BambuVariant, string> = {
   browse: '/bambu/browse.mp4',
   preparing: '/bambu/preparing.mp4',
   welcome: '/bambu/welcome.mp4',
+  'hero-intro': '/bambu/hero-intro.webm',
 };
+
+const hasAlpha = (v: BambuVariant) => videoMap[v].endsWith('.webm');
 
 export function BambuVideo({
   variant,
@@ -67,7 +70,7 @@ export function BambuVideo({
         playsInline
         preload={variant === 'splash' ? 'auto' : 'metadata'}
         onEnded={onEnded}
-        className={`object-contain mix-blend-multiply dark:mix-blend-screen ${className}`}
+        className={`object-contain ${hasAlpha(variant) ? '' : 'mix-blend-multiply dark:mix-blend-screen'} ${className}`}
         style={{ width: size, height: size }}
       />
     );

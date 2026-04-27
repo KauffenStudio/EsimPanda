@@ -13,14 +13,12 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-[calc(100dvh-5rem)] flex flex-col items-center justify-center px-4">
-      <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.7, ease: [0.32, 0.72, 0, 1] }}
-        className="flex justify-center"
-      >
-        <BambuVideo variant="splash" size={280} raw className="md:w-[320px] md:h-[320px]" />
-      </motion.div>
+      {/* Walking panda — short centered walk */}
+      <div className="w-full max-w-[1200px] relative overflow-hidden h-[450px] md:h-[500px] flex items-center justify-center">
+        <div className="animate-walk-panda">
+          <BambuVideo variant="hero-intro" size={520} raw className="md:w-[640px] md:h-[360px] w-[520px] h-[293px]" />
+        </div>
+      </div>
 
       <motion.div
         initial={{ opacity: 0, y: 24, filter: 'blur(8px)' }}
@@ -30,7 +28,7 @@ export default function LandingPage() {
       >
         {/* Eyebrow tag */}
         <span className="inline-flex items-center rounded-full px-3 py-1 text-[10px] uppercase tracking-[0.2em] font-semibold bg-accent-soft dark:bg-accent-soft-dark text-accent mb-5">
-          Student eSIM Plans
+          {t('landing.eyebrow')}
         </span>
 
         <h1 className="text-4xl md:text-6xl font-bold text-primary dark:text-gray-100 tracking-tighter leading-[1.05] max-w-[14ch]">
@@ -38,7 +36,9 @@ export default function LandingPage() {
         </h1>
 
         <p className="text-gray-600 dark:text-gray-400 text-lg leading-relaxed mt-5 max-w-[50ch]">
-          Affordable eSIM data plans for students and travelers across Europe. Browse, tap, scan — connected in 2 minutes.
+          {t('landing.subtitle')}
+          <br />
+          {t('landing.subtitle2')}
         </p>
 
         <div className="flex flex-col sm:flex-row gap-3 mt-8">

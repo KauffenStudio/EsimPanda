@@ -4,6 +4,8 @@ import { useTranslations } from 'next-intl';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { useComparisonStore } from '@/stores/comparison';
+import { useQuickCheckoutStore } from '@/stores/quick-checkout';
+import { getOriginalPrice, getDiscountPercent, mockPlans } from '@/lib/mock-data/plans';
 
 interface PlanCardProps {
   id: string;
@@ -35,11 +37,12 @@ export function PlanCard({
   const t = useTranslations();
   const selectedPlanIds = useComparisonStore((state) => state.selectedPlanIds);
   const togglePlan = useComparisonStore((state) => state.togglePlan);
+  const selectPlan = useQuickCheckoutStore((state) => state.selectPlan);
   const isSelected = selectedPlanIds.includes(id);
 
   const handleCardClick = () => {
-    // TODO: navigate to /checkout?plan={id} when checkout page is built
-    console.log(`Navigate to checkout for plan ${id}`);
+    const plan = mockPlans.find((p) => p.id === id);
+    if (plan) selectPlan(plan);
   };
 
   const handleCheckboxClick = (e: React.MouseEvent) => {
@@ -69,9 +72,23 @@ export function PlanCard({
         </div>
 
         <div className="flex items-center gap-3">
-          <span className="text-xl font-bold text-accent">
-            &euro;{formatPrice(retail_price_cents)}
-          </span>
+          <div className="flex flex-col items-end">
+            {data_gb > 1 && (
+              <span className="text-xs text-gray-400 line-through">
+                ${formatPrice(getOriginalPrice(retail_price_cents, data_gb))}
+              </span>
+            )}
+            <div className="flex items-center gap-1.5">
+              {data_gb > 1 && (
+                <span className="text-[10px] font-bold text-white bg-[#E53935] px-1.5 py-0.5 rounded">
+                  -{getDiscountPercent(retail_price_cents, data_gb)}%
+                </span>
+              )}
+              <span className="text-xl font-bold text-accent">
+                ${formatPrice(retail_price_cents)}
+              </span>
+            </div>
+          </div>
           <input
             type="checkbox"
             checked={isSelected}

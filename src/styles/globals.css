@@ -49,3 +49,16 @@
   --shadow-card-dark: 0 2px 8px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.2);
   --shadow-card-hover-dark: 0 8px 24px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.3);
 }
+
+@keyframes walk-panda {
+  0% {
+    transform: translateX(-200px);
+  }
+  100% {
+    transform: translateX(200px);
+  }
+}
+
+@utility animate-walk-panda {
+  animation: walk-panda 3s ease-in-out infinite alternate;
+}

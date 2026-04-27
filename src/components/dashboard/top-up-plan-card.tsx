@@ -29,7 +29,7 @@ export function TopUpPlanCard({ package: pkg, selected, onSelect }: TopUpPlanCar
         <span className="text-sm text-gray-600 dark:text-gray-400">{pkg.duration_days} days</span>
       </div>
       <p className="mt-2 text-base font-bold text-[#2979FF]">
-        EUR {(pkg.price_cents / 100).toFixed(2)}
+        ${(pkg.price_cents / 100).toFixed(2)}
       </p>
     </motion.button>
   );

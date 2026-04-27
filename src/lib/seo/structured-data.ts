@@ -10,7 +10,7 @@ export function buildProductJsonLd(plan: MockPlan, destinationName: string) {
     offers: {
       '@type': 'Offer',
       price: (plan.retail_price_cents / 100).toFixed(2),
-      priceCurrency: 'EUR',
+      priceCurrency: 'USD',
       availability: 'https://schema.org/InStock',
     },
   };

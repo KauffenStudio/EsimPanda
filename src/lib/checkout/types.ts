@@ -7,7 +7,7 @@ export interface CheckoutPricing {
   tax_amount_cents: number;
   tax_rate: number;
   total_cents: number;
-  currency: 'EUR';
+  currency: 'USD';
 }
 
 export interface CouponResult {

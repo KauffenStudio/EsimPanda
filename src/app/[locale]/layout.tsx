@@ -9,6 +9,8 @@ import { WhatsAppButton } from '@/components/layout/whatsapp-button';
 import { PushManager } from '@/components/pwa/push-manager';
 import { OfflineIndicator } from '@/components/pwa/offline-indicator';
 import { SplashScreen } from '@/components/pwa/splash-screen';
+import { SignupIncentiveModal } from '@/components/auth/signup-incentive-modal';
+import { QuickCheckoutBar } from '@/components/checkout/quick-checkout-bar';
 import { routing } from '@/i18n/routing';
 
 export function generateStaticParams() {
@@ -39,6 +41,8 @@ export default async function LocaleLayout({
         <WhatsAppButton />
         <PushManager />
         <SplashScreen />
+        <SignupIncentiveModal />
+        <QuickCheckoutBar />
       </AuthProvider>
     </NextIntlClientProvider>
   );

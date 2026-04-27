@@ -3,20 +3,21 @@
 import { motion } from 'motion/react';
 import { Home, Globe, Smartphone, User } from 'lucide-react';
 import { usePathname } from 'next/navigation';
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { LanguageSwitcher } from '@/components/layout/language-switcher';
 
 const tabs = [
-  { path: '', label: 'Home', icon: Home },
-  { path: '/browse', label: 'Destinations', icon: Globe },
-  { path: '/dashboard', label: 'My eSIMs', icon: Smartphone },
-  { path: '/profile', label: 'Profile', icon: User },
+  { path: '', labelKey: 'nav.home', icon: Home },
+  { path: '/browse', labelKey: 'nav.destinations', icon: Globe },
+  { path: '/dashboard', labelKey: 'nav.esims', icon: Smartphone },
+  { path: '/profile', labelKey: 'nav.profile', icon: User },
 ];
 
 export function BottomNav() {
   const pathname = usePathname();
   const locale = useLocale();
+  const t = useTranslations();
 
   const handleTap = () => {
     if (typeof navigator !== 'undefined' && navigator.vibrate) {
@@ -67,7 +68,7 @@ export function BottomNav() {
                     : 'text-gray-400 dark:text-gray-600'
                 }`}
               >
-                {tab.label}
+                {t(tab.labelKey)}
               </span>
             </Link>
           );

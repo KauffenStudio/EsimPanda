@@ -11,8 +11,8 @@ interface OrderSummaryProps {
   plan: MockPlan;
 }
 
-function formatEur(cents: number): string {
-  return `EUR ${(cents / 100).toFixed(2)}`;
+function formatUsd(cents: number): string {
+  return `$${(cents / 100).toFixed(2)}`;
 }
 
 export function OrderSummary({ plan }: OrderSummaryProps) {
@@ -47,7 +47,7 @@ export function OrderSummary({ plan }: OrderSummaryProps) {
             layout
             transition={{ type: 'spring', stiffness: 300, damping: 25 }}
           >
-            {formatEur(displaySubtotal)}
+            {formatUsd(displaySubtotal)}
           </motion.span>
         </div>
 
@@ -57,7 +57,7 @@ export function OrderSummary({ plan }: OrderSummaryProps) {
             <span>{t('discount')}</span>
             <div className="flex items-center gap-2">
               <span className="text-gray-400 line-through text-sm">
-                {formatEur(displaySubtotal + discount_cents)}
+                {formatUsd(displaySubtotal + discount_cents)}
               </span>
               <motion.span
                 initial={{ opacity: 0, y: -4 }}
@@ -65,7 +65,7 @@ export function OrderSummary({ plan }: OrderSummaryProps) {
                 transition={{ duration: 0.3, ease: 'easeOut' }}
                 className="text-success text-sm"
               >
-                -{formatEur(discount_cents)}
+                -{formatUsd(discount_cents)}
               </motion.span>
             </div>
           </div>
@@ -84,7 +84,7 @@ export function OrderSummary({ plan }: OrderSummaryProps) {
               layout
               transition={{ type: 'spring', stiffness: 300, damping: 25 }}
             >
-              {formatEur(tax_cents)}
+              {formatUsd(tax_cents)}
             </motion.span>
           )}
         </div>
@@ -98,7 +98,7 @@ export function OrderSummary({ plan }: OrderSummaryProps) {
             transition={{ type: 'spring', stiffness: 300, damping: 25 }}
             className="text-2xl font-bold dark:text-gray-100"
           >
-            {formatEur(total_cents || displaySubtotal)}
+            {formatUsd(total_cents || displaySubtotal)}
           </motion.span>
         </div>
       </div>

@@ -16,14 +16,20 @@ export function SignupForm() {
   const t = useTranslations('auth');
   const locale = useLocale();
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
   const [clientError, setClientError] = useState<string | null>(null);
 
   const [state, formAction, pending] = useActionState(
     async (_prev: AuthResult | null, formData: FormData) => {
       const password = formData.get('password') as string;
+      const confirmPassword = formData.get('confirmPassword') as string;
 
       if (password.length < 8) {
         return { error: 'password_short' };
+      }
+
+      if (password !== confirmPassword) {
+        return { error: 'password_mismatch' };
       }
 
       setClientError(null);
@@ -42,6 +48,14 @@ export function SignupForm() {
       return (
         <p className="text-sm text-[#E53935] text-center" role="alert">
           {t('error.passwordShort')}
+        </p>
+      );
+    }
+
+    if (errorMessage === 'password_mismatch') {
+      return (
+        <p className="text-sm text-[#E53935] text-center" role="alert">
+          {t('error.passwordMismatch')}
         </p>
       );
     }
@@ -98,6 +112,27 @@ export function SignupForm() {
             aria-label={showPassword ? 'Hide password' : 'Show password'}
           >
             {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+          </button>
+        </div>
+
+        <div className="relative">
+          <Input
+            name="confirmPassword"
+            type={showConfirm ? 'text' : 'password'}
+            required
+            minLength={8}
+            placeholder={t('field.confirmPassword')}
+            label={t('field.confirmPassword')}
+            autoComplete="new-password"
+            className="pr-10"
+          />
+          <button
+            type="button"
+            onClick={() => setShowConfirm(!showConfirm)}
+            className="absolute right-3 top-[34px] text-gray-400 hover:text-gray-600 transition-colors"
+            aria-label={showConfirm ? 'Hide password' : 'Show password'}
+          >
+            {showConfirm ? <EyeOff size={20} /> : <Eye size={20} />}
           </button>
         </div>
 

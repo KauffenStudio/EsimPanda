@@ -6,20 +6,20 @@ export function buildDestinationMeta(params: {
   countryName: string;
   slug: string;
   locale: string;
-  startingPriceEur: string;
+  startingPrice: string;
   imageUrl: string;
   isRegional?: boolean;
 }) {
-  const { countryName, slug, locale, startingPriceEur, imageUrl, isRegional } = params;
-  const regionSuffix = isRegional ? ' -- 30+ Countries' : '';
+  const { countryName, slug, locale, startingPrice, imageUrl, isRegional } = params;
+  const regionSuffix = isRegional ? ' -- Multi-Country Coverage' : '';
   return {
-    title: `eSIM ${countryName}${regionSuffix} -- Instant Data Plans for Students | eSIM Panda`,
+    title: `eSIM ${countryName}${regionSuffix} -- Instant Data Plans | eSIM Panda`,
     description: isRegional
-      ? `Get an eSIM for ${countryName} covering 30+ countries. Plans from EUR${startingPriceEur}. No SIM swaps, instant activation. Perfect for Erasmus and international students.`
-      : `Get an eSIM for ${countryName} in under 2 minutes. Plans from EUR${startingPriceEur}. No SIM swaps, instant activation. Perfect for Erasmus and international students.`,
+      ? `Get an eSIM for ${countryName} with multi-country coverage. Plans from $${startingPrice}. No SIM swaps, instant activation. Perfect for travelers worldwide.`
+      : `Get an eSIM for ${countryName} in under 2 minutes. Plans from $${startingPrice}. No SIM swaps, instant activation. Perfect for travelers worldwide.`,
     openGraph: {
-      title: `eSIM ${countryName}${regionSuffix} -- Instant Data Plans for Students`,
-      description: `Plans from EUR${startingPriceEur}. Instant activation.`,
+      title: `eSIM ${countryName}${regionSuffix} -- Instant Data Plans`,
+      description: `Plans from $${startingPrice}. Instant activation.`,
       images: [imageUrl],
       type: 'website' as const,
     },

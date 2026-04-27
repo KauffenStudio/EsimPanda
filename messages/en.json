@@ -11,6 +11,9 @@
   },
   "landing": {
     "headline": "Get Connected Anywhere",
+    "eyebrow": "Worldwide eSIM Plans",
+    "subtitle": "Affordable eSIM data plans for travelers worldwide. 40+ countries.",
+    "subtitle2": "Instant activation, connected under 2 minutes.",
     "cta_primary": "Get Connected",
     "cta_secondary": "Browse Plans"
   },
@@ -18,11 +21,11 @@
     "title": "Destinations",
     "empty": "No destinations available yet. Check back soon!",
     "searchPlaceholder": "Search destinations...",
-    "europePlan": "Europe-Wide Coverage",
-    "europeDescription": "One plan, 30+ countries",
+    "europePlan": "Regional Coverage",
+    "europeDescription": "Multi-country plans",
     "from": "from",
     "noResults": "No plans for \"{query}\" yet",
-    "noResultsSuggestion": "Try the Europe-wide plan or browse popular destinations",
+    "noResultsSuggestion": "Try a regional plan or browse popular destinations",
     "comingSoon": "Coming soon",
     "filterAll": "All",
     "filter24h": "24h",
@@ -67,7 +70,7 @@
     "low_data_critical": "{destination} eSIM is almost out of data -- {percent}% remaining",
     "top_up": "Top Up",
     "top_up_title": "Top Up {destination}",
-    "top_up_pay": "Pay EUR {amount}",
+    "top_up_pay": "Pay ${amount}",
     "top_up_processing": "Processing your top-up...",
     "top_up_success_toast": "Data added to your {destination} eSIM!",
     "top_up_error": "Payment failed. Please try again or use a different payment method.",
@@ -113,9 +116,9 @@
       "trigger": "Have a code?",
       "placeholder": "Enter discount code",
       "apply": "Apply Code",
-      "savings": "You save EUR {amount}",
+      "savings": "You save ${amount}",
       "invalid": "Invalid code -- check spelling and try again",
-      "min_order": "Minimum order of €9.99 required for this coupon",
+      "min_order": "Minimum order of $9.99 required for this coupon",
       "remove": "Remove code"
     },
     "express": {
@@ -130,7 +133,7 @@
       "vatCalculating": "Calculating...",
       "total": "Total"
     },
-    "pay": "Pay EUR {amount}",
+    "pay": "Pay ${amount}",
     "success": {
       "heading": "Your eSIM is ready!",
       "order": "Order {id}",
@@ -232,6 +235,12 @@
     "noAccount": "Create an account to get your referral link and earn free 1GB plans when friends sign up.",
     "noAccountCta": "Start Earning Free Data",
     "error": "Could not generate your referral link. Please try again or contact support."
+  },
+  "incentive": {
+    "heading": "Get 10% Off Your First eSIM",
+    "body": "Create a free account and unlock 10% off your first purchase. Manage your eSIMs, track usage, and get top-up reminders.",
+    "signup": "Create Account & Save 10%",
+    "login": "Already have an account? Log in"
   },
   "whatsapp": {
     "ariaLabel": "Contact support on WhatsApp",

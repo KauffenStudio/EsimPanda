@@ -209,7 +209,7 @@ export function TopUpModal() {
                           onClick={handleMockPayment}
                           className="w-full rounded-lg bg-[#2979FF] px-4 py-3 text-white font-bold hover:bg-[#2164d9] transition-colors"
                         >
-                          Simulate Payment - EUR{' '}
+                          Simulate Payment - ${' '}
                           {selectedPackage ? (selectedPackage.price_cents / 100).toFixed(2) : '0.00'}
                         </button>
                       </div>

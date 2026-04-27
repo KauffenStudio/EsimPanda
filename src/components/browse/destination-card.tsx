@@ -4,12 +4,14 @@ import Image from 'next/image';
 import { useTranslations, useLocale } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { Card } from '@/components/ui/card';
+import { getBestDiscount } from '@/lib/mock-data/plans';
 
 interface DestinationCardProps {
   name: string;
   slug: string;
   isoCode: string;
   imageUrl: string;
+  destinationId: string;
   startingPriceCents: number;
 }
 
@@ -26,6 +28,7 @@ export function DestinationCard({
   slug,
   isoCode,
   imageUrl,
+  destinationId,
   startingPriceCents,
 }: DestinationCardProps) {
   const t = useTranslations();
@@ -33,6 +36,7 @@ export function DestinationCard({
   const router = useRouter();
 
   const price = (startingPriceCents / 100).toFixed(2);
+  const bestDiscount = getBestDiscount(destinationId);
   const flag = isoToFlag(isoCode);
 
   return (
@@ -50,12 +54,20 @@ export function DestinationCard({
           sizes="(max-width: 768px) 50vw, 33vw"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+
+        {/* Discount badge — shows best available discount */}
+        {bestDiscount > 0 && (
+          <div className="absolute top-2.5 right-2.5 bg-[#E53935] text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+            up to -{bestDiscount}%
+          </div>
+        )}
+
         <div className="absolute bottom-0 left-0 right-0 p-4">
           <p className="text-white font-semibold text-sm tracking-tight">
             {flag} {name}
           </p>
           <p className="text-white/70 text-xs mt-0.5">
-            {t('browse.from')} &euro;{price}
+            {t('browse.from')} ${price}
           </p>
         </div>
       </div>

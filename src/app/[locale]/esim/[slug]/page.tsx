@@ -12,6 +12,8 @@ import { DestinationHero } from '@/components/seo/destination-hero';
 import { FAQSection } from '@/components/seo/faq-section';
 import { PlanCard } from '@/components/browse/plan-card';
 
+const REGIONAL_TYPES = ['europe-wide', 'asia-wide', 'global'];
+
 type Props = { params: Promise<{ locale: string; slug: string }> };
 
 export function generateStaticParams() {
@@ -26,13 +28,13 @@ export async function generateMetadata({ params }: Props) {
   const { locale, slug } = await params;
   const destination = mockDestinations.find((d) => d.slug === slug);
   if (!destination) return {};
-  const isRegional = destination.region === 'europe-wide';
+  const isRegional = REGIONAL_TYPES.includes(destination.region);
   const startingPrice = (getStartingPrice(destination.id) / 100).toFixed(2);
   return buildDestinationMeta({
     countryName: destination.name,
     slug: destination.slug,
     locale,
-    startingPriceEur: startingPrice,
+    startingPrice,
     imageUrl: destination.image_url,
     isRegional,
   });
@@ -47,7 +49,7 @@ export default async function DestinationPage({ params }: Props) {
   const destination = mockDestinations.find((d) => d.slug === slug && d.is_active);
   if (!destination) notFound();
 
-  const isRegional = destination.region === 'europe-wide';
+  const isRegional = REGIONAL_TYPES.includes(destination.region);
   const plans = getPlansForDestination(destination.id);
   const taggedPlans = tagPlans(plans);
 
@@ -73,13 +75,13 @@ export default async function DestinationPage({ params }: Props) {
         {/* Plan cards section */}
         <section>
           <h2 className="text-2xl font-bold mb-4">
-            {isRegional ? 'Europe-Wide Plans' : 'Available Plans'}
+            {isRegional ? `${destination.name} Plans` : 'Available Plans'}
           </h2>
           {taggedPlans.length === 0 ? (
             <div className="text-center py-8">
               <p className="font-bold text-gray-600">No plans available</p>
               <p className="text-gray-400 text-sm mt-1">
-                We&apos;re working on adding eSIM plans for this destination. Browse our Europe-wide plan for coverage across 30+ countries.
+                We&apos;re working on adding eSIM plans for this destination. Browse our Global plan for worldwide coverage.
               </p>
             </div>
           ) : (
