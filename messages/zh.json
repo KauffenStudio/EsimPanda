@@ -1,0 +1,349 @@
+{
+  "nav": {
+    "home": "首页",
+    "destinations": "目的地",
+    "esims": "我的eSIM",
+    "profile": "个人资料"
+  },
+  "theme": {
+    "dark": "深色模式",
+    "light": "浅色模式"
+  },
+  "landing": {
+    "headline": "随时随地保持连接",
+    "eyebrow": "全球eSIM套餐",
+    "subtitle": "为全球旅行者提供实惠的eSIM数据套餐。覆盖40+国家。",
+    "subtitle2": "即时激活，2分钟内连接。",
+    "cta_primary": "立即连接",
+    "cta_secondary": "浏览套餐"
+  },
+  "browse": {
+    "title": "目的地",
+    "empty": "暂无目的地。请稍后再来！",
+    "searchPlaceholder": "搜索目的地...",
+    "europePlan": "区域覆盖",
+    "europeDescription": "多国套餐",
+    "from": "起",
+    "noResults": "暂无\"{query}\"的套餐",
+    "noResultsSuggestion": "试试区域套餐或浏览热门目的地",
+    "comingSoon": "即将推出",
+    "filterAll": "全部",
+    "filter24h": "24小时",
+    "filter7d": "7天",
+    "filter14d": "14天",
+    "filter30d": "30天",
+    "filterSemester": "90+天",
+    "bestValue": "最超值",
+    "mostPopular": "最受欢迎",
+    "compare": "对比",
+    "selectToCompare": "选择以对比",
+    "deviceCheck": "检查设备兼容性",
+    "selectBrand": "选择品牌...",
+    "selectModel": "选择型号...",
+    "checkButton": "检查兼容性",
+    "deviceCompatible": "您的 {brand} {model} 支持eSIM！",
+    "deviceIncompatible": "抱歉，{brand} {model} 不支持eSIM",
+    "browseAnyway": "仍然浏览",
+    "resetDevice": "检查其他设备"
+  },
+  "dashboard": {
+    "title": "我的eSIM",
+    "empty_title": "暂无eSIM",
+    "empty_body": "还没有eSIM？让我们帮您连接！",
+    "empty_cta": "浏览套餐",
+    "error_title": "出错了",
+    "error_body": "加载eSIM时出错。请重试或通过WhatsApp联系我们。",
+    "error_retry": "重试",
+    "tab_esims": "我的eSIM",
+    "tab_history": "购买记录",
+    "usage_fresh": "最近更新：刚刚",
+    "usage_stale": "最近更新：{minutes}分钟前",
+    "usage_outdated": "使用数据可能已过期",
+    "refresh_label": "刷新使用数据",
+    "expires": "到期：{date}",
+    "data_used": "已使用 {used} GB / {total} GB",
+    "gb_left": "GB剩余",
+    "status_active": "活跃",
+    "status_expired": "已过期",
+    "status_pending": "待处理",
+    "low_data_warning": "{destination} eSIM流量不足——剩余{percent}%",
+    "low_data_critical": "{destination} eSIM流量即将用完——剩余{percent}%",
+    "top_up": "充值",
+    "top_up_title": "充值 {destination}",
+    "top_up_pay": "支付 ${amount}",
+    "top_up_processing": "正在处理充值...",
+    "top_up_success_toast": "已为您的 {destination} eSIM添加流量！",
+    "top_up_error": "支付失败。请重试或使用其他支付方式。",
+    "top_up_try_again": "重试",
+    "top_up_reactivate_note": "充值将重新激活此eSIM",
+    "history_order_id": "订单：{orderId}",
+    "history_plan": "套餐：{plan}",
+    "history_payment": "支付方式：{method}",
+    "history_coupon": "优惠码：{code}（-{discount}%）",
+    "history_subtotal": "小计：{currency} {amount}",
+    "history_vat": "增值税（{rate}%）：{currency} {amount}",
+    "history_total": "总计：{currency} {amount}",
+    "history_iccid": "ICCID：{iccid}",
+    "view_qr": "查看二维码",
+    "resend_email": "重发邮件",
+    "resend_email_success": "已将邮件发送至 {email}",
+    "resend_email_error": "无法重发邮件。请重试。",
+    "no_purchases": "暂无购买记录",
+    "data_added": "流量已添加！"
+  },
+  "profile": {
+    "title": "个人资料",
+    "empty": "登录以管理您的eSIM、查看购买记录和跟踪流量使用情况。"
+  },
+  "errors": {
+    "generic": "出错了。请重试或通过WhatsApp联系我们。",
+    "network": "无法连接。请检查网络后重试。"
+  },
+  "checkout": {
+    "title": "结账",
+    "email": {
+      "label": "邮箱地址",
+      "placeholder": "your@email.com",
+      "error": "请输入有效的邮箱地址"
+    },
+    "device": {
+      "label": "您的设备",
+      "compatible": "{brand} {model}——支持eSIM",
+      "incompatible": "此设备可能不支持eSIM。您仍可以为其他设备购买。",
+      "check": "检查设备兼容性"
+    },
+    "coupon": {
+      "trigger": "有优惠码？",
+      "placeholder": "输入优惠码",
+      "apply": "使用优惠码",
+      "savings": "节省 ${amount}",
+      "invalid": "优惠码无效——请检查后重试",
+      "min_order": "此优惠码需最低消费$9.99",
+      "remove": "移除优惠码"
+    },
+    "express": {
+      "title": "快速结账"
+    },
+    "divider": "或使用银行卡支付",
+    "summary": {
+      "title": "订单摘要",
+      "subtotal": "小计",
+      "discount": "学生折扣（15%）",
+      "vat": "增值税（{rate}%）",
+      "vatCalculating": "计算中...",
+      "total": "总计"
+    },
+    "pay": "支付 ${amount}",
+    "success": {
+      "heading": "您的eSIM已就绪！",
+      "order": "订单 {id}",
+      "email": "请查看邮箱获取确认和设置说明。",
+      "redirect": "{seconds}秒后自动跳转...",
+      "dashboard": "前往控制面板"
+    },
+    "error": {
+      "heading": "支付失败",
+      "declined": "您的银行卡被拒绝。请尝试其他支付方式。",
+      "generic": "出错了。请重试。",
+      "network": "无法连接。请检查网络后重试。",
+      "retry": "重试",
+      "contact": "需要帮助？通过WhatsApp联系我们"
+    }
+  },
+  "auth": {
+    "login": {
+      "heading": "登录",
+      "submit": "登录",
+      "noAccount": "没有账户？创建一个",
+      "forgotPassword": "忘记密码？"
+    },
+    "signup": {
+      "heading": "创建账户",
+      "submit": "创建账户",
+      "hasAccount": "已有账户？登录"
+    },
+    "forgot": {
+      "heading": "重置密码",
+      "body": "输入您的邮箱，我们将发送重置链接。",
+      "submit": "发送重置链接",
+      "successHeading": "请查看邮箱",
+      "successBody": "如果该邮箱已注册，我们已发送重置链接。请查看收件箱。"
+    },
+    "reset": {
+      "heading": "设置新密码",
+      "submit": "设置新密码"
+    },
+    "convert": {
+      "heading": "保存您的eSIM",
+      "body": "创建账户以随时访问eSIM、管理套餐并接收充值提醒。",
+      "submit": "创建账户",
+      "skip": "暂时跳过",
+      "success": "账户已创建！"
+    },
+    "header": {
+      "login": "登录"
+    },
+    "menu": {
+      "esims": "我的eSIM",
+      "settings": "设置",
+      "inviteFriends": "邀请好友",
+      "logout": "退出登录"
+    },
+    "field": {
+      "email": "邮箱",
+      "password": "密码",
+      "newPassword": "新密码",
+      "confirmPassword": "确认密码",
+      "choosePassword": "选择密码"
+    },
+    "email": {
+      "resetSubject": "重置您的eSIM Panda密码",
+      "resetHeading": "重置密码",
+      "resetBody": "点击下方按钮为您的账户设置新密码。",
+      "resetCta": "重置密码",
+      "resetExpiry": "此链接1小时后过期。如非本人操作，请忽略此邮件。"
+    },
+    "error": {
+      "invalidCredentials": "邮箱或密码错误。请重试。",
+      "emailExists": "此邮箱已注册。是否登录？",
+      "passwordShort": "密码至少需要8个字符。",
+      "passwordMismatch": "两次密码不一致。",
+      "emailRequired": "请输入邮箱。",
+      "passwordRequired": "请输入密码。",
+      "emailInvalid": "请输入有效的邮箱地址。",
+      "resetExpired": "重置链接已过期。请重新申请。",
+      "generic": "出错了。请重试。",
+      "conversionExists": "此邮箱已有账户。请登录以关联您的eSIM。"
+    }
+  },
+  "referral": {
+    "title": "邀请好友，获得免费流量",
+    "subtitle": "分享链接，双方均可获得1GB免费日卡",
+    "copyLink": "复制推荐链接",
+    "copied": "已复制！",
+    "shareVia": "分享至",
+    "shareWhatsapp": "WhatsApp",
+    "shareTwitter": "Twitter/X",
+    "shareCopy": "复制",
+    "shareText": "获取免费1GB eSIM，为你的下次旅行做准备！使用我的链接：{url}",
+    "statsInvited": "已邀请好友",
+    "statsEarned": "已获免费套餐",
+    "statsRemaining": "本月剩余免费套餐",
+    "capReached": "您已达到本月5个免费套餐的上限。限额将于{date}重置。",
+    "postPurchaseTitle": "分享给好友",
+    "postPurchaseSubtitle": "双方均可获得1GB免费日卡",
+    "noAccount": "创建账户获取推荐链接，好友注册即可赚取免费1GB套餐。",
+    "noAccountCta": "开始赚取免费流量",
+    "error": "无法生成推荐链接。请重试或联系客服。"
+  },
+  "incentive": {
+    "heading": "首次购买eSIM享9折优惠",
+    "body": "创建免费账户，即可解锁首次购买9折优惠。管理eSIM、跟踪流量、接收充值提醒。",
+    "signup": "创建账户并省10%",
+    "login": "已有账户？登录"
+  },
+  "whatsapp": {
+    "ariaLabel": "通过WhatsApp联系客服",
+    "browsePage": "你好！我需要帮助选择eSIM套餐",
+    "checkoutPage": "你好！我需要帮助完成支付",
+    "deliveryPage": "你好！我需要帮助处理订单",
+    "dashboardPage": "你好！我需要帮助使用eSIM",
+    "defaultMessage": "你好！"
+  },
+  "admin": {
+    "coupons": {
+      "title": "网红优惠码",
+      "createButton": "创建优惠码",
+      "emptyTitle": "暂无优惠码",
+      "emptyBody": "创建第一个网红优惠码，开始追踪效果。",
+      "emptyCta": "创建首个优惠码",
+      "codeExists": "此优惠码已被使用。请选择其他代码。",
+      "authFailed": "您没有管理员权限。请使用管理员账户登录。",
+      "deactivateTitle": "停用优惠码",
+      "deactivateBody": "这将阻止优惠码 {code} 的新使用。已应用的折扣不受影响。确认停用？",
+      "statsActive": "活跃优惠码",
+      "statsUses": "总使用次数",
+      "statsRevenue": "总收入"
+    }
+  },
+  "delivery": {
+    "provisioning": {
+      "heading": "正在设置您的eSIM...",
+      "message1": "正在设置您的eSIM...",
+      "message2": "即将完成...",
+      "message3": "正在准备连接..."
+    },
+    "ready": {
+      "heading": "您的eSIM已就绪！",
+      "subheading": "扫描二维码或点击安装以激活"
+    },
+    "install": "安装eSIM",
+    "qr": {
+      "instruction": "用手机扫描此二维码"
+    },
+    "manual": {
+      "trigger": "手动输入信息",
+      "smdp": "SM-DP+地址",
+      "code": "激活码"
+    },
+    "copy": "复制",
+    "copy_success": "已复制到剪贴板",
+    "setup": {
+      "trigger": "需要设置帮助？",
+      "ios": { "heading": "iPhone设置" },
+      "samsung": { "heading": "三星设置" },
+      "pixel": { "heading": "Pixel/安卓设置" },
+      "android": { "heading": "安卓设置" },
+      "help": "需要帮助？通过WhatsApp联系我们"
+    },
+    "error": {
+      "heading": "出错了",
+      "body": "无法设置您的eSIM。我们正在处理中，稍后将通过邮件发送给您。",
+      "retry": "正在重试...（{count}/3）",
+      "final": "我们仍在处理您的eSIM。几分钟内将通过邮件发送给您。",
+      "contact": "需要帮助？通过WhatsApp联系我们"
+    },
+    "email": {
+      "reminder": "我们也已将所有信息发送至 {email}",
+      "subject": "您的{destination} eSIM已就绪！",
+      "preview": "扫描二维码或点击安装eSIM",
+      "heading": "您的eSIM已就绪！",
+      "qr": { "instruction": "用手机摄像头扫描此二维码" },
+      "manual": {
+        "heading": "手动设置",
+        "instruction": "如果二维码无法使用，请在手机设置中手动输入以下信息"
+      },
+      "receipt": { "heading": "订单收据" },
+      "setup": { "button": "查看设置指南" },
+      "referral": "认识正在旅行的人？分享eSIM Panda"
+    }
+  },
+  "notifications": {
+    "title": "通知",
+    "expiry_alerts": "到期提醒",
+    "usage_alerts": "用量提醒",
+    "promotions": "优惠活动",
+    "permission_heading": "保持了解最新动态",
+    "permission_body": "当eSIM即将到期或流量不足时接收提醒。",
+    "permission_allow": "允许通知",
+    "permission_dismiss": "暂时不要",
+    "permission_denied": "通知已被阻止——请在浏览器设置中启用以接收到期提醒。",
+    "expiry_24h": "您的 {destination} eSIM明天到期",
+    "expiry_1h": "您的 {destination} eSIM将在1小时内到期",
+    "low_data_80": "您已使用{plan}套餐80%的流量",
+    "low_data_95": "您的{plan}套餐流量即将用完",
+    "action_renew": "续费",
+    "action_topup": "立即充值",
+    "action_view": "查看优惠"
+  },
+  "pwa": {
+    "install_heading": "离线访问eSIM",
+    "install_body": "安装eSIM Panda，即使没有网络也能即时访问二维码。",
+    "install_cta": "安装应用",
+    "install_ios": "点击分享按钮，然后选择「添加到主屏幕」",
+    "offline_message": "您当前离线——显示缓存数据",
+    "offline_last_updated": "最近更新 {time}",
+    "sync_complete": "数据已刷新",
+    "sw_error": "离线模式不可用——请尝试刷新页面。"
+  }
+}

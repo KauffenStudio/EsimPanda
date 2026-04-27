@@ -1,0 +1,349 @@
+{
+  "nav": {
+    "home": "ホーム",
+    "destinations": "目的地",
+    "esims": "マイeSIM",
+    "profile": "プロフィール"
+  },
+  "theme": {
+    "dark": "ダークモード",
+    "light": "ライトモード"
+  },
+  "landing": {
+    "headline": "どこでも接続",
+    "eyebrow": "世界のeSIMプラン",
+    "subtitle": "世界中の旅行者のための手頃なeSIMデータプラン。40以上の国で利用可能。",
+    "subtitle2": "即時アクティベーション、2分以内に接続。",
+    "cta_primary": "今すぐ接続",
+    "cta_secondary": "プランを見る"
+  },
+  "browse": {
+    "title": "目的地",
+    "empty": "まだ目的地がありません。後ほどお確かめください！",
+    "searchPlaceholder": "目的地を検索...",
+    "europePlan": "地域カバレッジ",
+    "europeDescription": "複数国プラン",
+    "from": "から",
+    "noResults": "「{query}」のプランはまだありません",
+    "noResultsSuggestion": "地域プランを試すか、人気の目的地をご覧ください",
+    "comingSoon": "近日公開",
+    "filterAll": "すべて",
+    "filter24h": "24時間",
+    "filter7d": "7日間",
+    "filter14d": "14日間",
+    "filter30d": "30日間",
+    "filterSemester": "90日以上",
+    "bestValue": "最もお得",
+    "mostPopular": "最も人気",
+    "compare": "比較",
+    "selectToCompare": "比較するために選択",
+    "deviceCheck": "デバイスの互換性を確認",
+    "selectBrand": "ブランドを選択...",
+    "selectModel": "モデルを選択...",
+    "checkButton": "互換性を確認",
+    "deviceCompatible": "お使いの{brand} {model}はeSIM対応です！",
+    "deviceIncompatible": "申し訳ありません、{brand} {model}はeSIMに対応していません",
+    "browseAnyway": "それでも閲覧する",
+    "resetDevice": "別のデバイスを確認"
+  },
+  "dashboard": {
+    "title": "マイeSIM",
+    "empty_title": "eSIMがありません",
+    "empty_body": "まだeSIMがありませんか？接続しましょう！",
+    "empty_cta": "プランを見る",
+    "error_title": "エラーが発生しました",
+    "error_body": "eSIMの読み込み中にエラーが発生しました。再試行するか、WhatsAppでお問い合わせください。",
+    "error_retry": "再試行",
+    "tab_esims": "マイeSIM",
+    "tab_history": "購入履歴",
+    "usage_fresh": "最終更新：たった今",
+    "usage_stale": "最終更新：{minutes}分前",
+    "usage_outdated": "使用データが古い可能性があります",
+    "refresh_label": "使用データを更新",
+    "expires": "有効期限：{date}",
+    "data_used": "{total} GBのうち{used} GB使用済み",
+    "gb_left": "GB残り",
+    "status_active": "アクティブ",
+    "status_expired": "期限切れ",
+    "status_pending": "保留中",
+    "low_data_warning": "{destination} eSIMのデータが残りわずかです——{percent}%残り",
+    "low_data_critical": "{destination} eSIMのデータがほぼ使い切りました——{percent}%残り",
+    "top_up": "チャージ",
+    "top_up_title": "{destination}をチャージ",
+    "top_up_pay": "${amount}を支払う",
+    "top_up_processing": "チャージを処理中...",
+    "top_up_success_toast": "{destination} eSIMにデータが追加されました！",
+    "top_up_error": "支払いに失敗しました。再試行するか、別の支払い方法をお使いください。",
+    "top_up_try_again": "再試行",
+    "top_up_reactivate_note": "チャージするとこのeSIMが再有効化されます",
+    "history_order_id": "注文：{orderId}",
+    "history_plan": "プラン：{plan}",
+    "history_payment": "支払い：{method}",
+    "history_coupon": "クーポン：{code}（-{discount}%）",
+    "history_subtotal": "小計：{currency} {amount}",
+    "history_vat": "消費税（{rate}%）：{currency} {amount}",
+    "history_total": "合計：{currency} {amount}",
+    "history_iccid": "ICCID：{iccid}",
+    "view_qr": "QRコードを表示",
+    "resend_email": "メールを再送信",
+    "resend_email_success": "{email}に配信メールを送信しました",
+    "resend_email_error": "メールを再送信できませんでした。再試行してください。",
+    "no_purchases": "購入履歴はありません",
+    "data_added": "データが追加されました！"
+  },
+  "profile": {
+    "title": "プロフィール",
+    "empty": "ログインしてeSIMの管理、購入履歴の確認、データ使用量の追跡を行いましょう。"
+  },
+  "errors": {
+    "generic": "エラーが発生しました。再試行するか、WhatsAppでお問い合わせください。",
+    "network": "接続できません。インターネット接続を確認してから再試行してください。"
+  },
+  "checkout": {
+    "title": "お会計",
+    "email": {
+      "label": "メールアドレス",
+      "placeholder": "your@email.com",
+      "error": "有効なメールアドレスを入力してください"
+    },
+    "device": {
+      "label": "お使いのデバイス",
+      "compatible": "{brand} {model}——eSIM対応",
+      "incompatible": "このデバイスはeSIMに対応していない可能性があります。別のデバイス用に購入できます。",
+      "check": "デバイスの互換性を確認"
+    },
+    "coupon": {
+      "trigger": "クーポンコードをお持ちですか？",
+      "placeholder": "割引コードを入力",
+      "apply": "コードを適用",
+      "savings": "${amount}お得",
+      "invalid": "無効なコードです——綴りを確認して再試行してください",
+      "min_order": "このクーポンには最低$9.99の注文が必要です",
+      "remove": "コードを削除"
+    },
+    "express": {
+      "title": "エクスプレスチェックアウト"
+    },
+    "divider": "またはカードで支払う",
+    "summary": {
+      "title": "注文概要",
+      "subtotal": "小計",
+      "discount": "学生割引（15%）",
+      "vat": "消費税（{rate}%）",
+      "vatCalculating": "計算中...",
+      "total": "合計"
+    },
+    "pay": "${amount}を支払う",
+    "success": {
+      "heading": "eSIMの準備ができました！",
+      "order": "注文 {id}",
+      "email": "確認と設定手順についてメールをご確認ください。",
+      "redirect": "{seconds}秒後にリダイレクト...",
+      "dashboard": "ダッシュボードへ"
+    },
+    "error": {
+      "heading": "支払いに失敗しました",
+      "declined": "カードが拒否されました。別の支払い方法をお試しください。",
+      "generic": "エラーが発生しました。再試行してください。",
+      "network": "接続できません。インターネット接続を確認してから再試行してください。",
+      "retry": "再試行",
+      "contact": "お困りですか？WhatsAppでお問い合わせください"
+    }
+  },
+  "auth": {
+    "login": {
+      "heading": "ログイン",
+      "submit": "ログイン",
+      "noAccount": "アカウントをお持ちでないですか？作成する",
+      "forgotPassword": "パスワードをお忘れですか？"
+    },
+    "signup": {
+      "heading": "アカウント作成",
+      "submit": "アカウント作成",
+      "hasAccount": "すでにアカウントをお持ちですか？ログイン"
+    },
+    "forgot": {
+      "heading": "パスワードリセット",
+      "body": "メールアドレスを入力してください。リセットリンクをお送りします。",
+      "submit": "リセットリンクを送信",
+      "successHeading": "メールをご確認ください",
+      "successBody": "該当するアカウントがあれば、リセットリンクを送信しました。受信トレイをご確認ください。"
+    },
+    "reset": {
+      "heading": "新しいパスワードを設定",
+      "submit": "新しいパスワードを設定"
+    },
+    "convert": {
+      "heading": "eSIMを保存",
+      "body": "アカウントを作成して、いつでもeSIMにアクセス、プラン管理、チャージリマインダーを受け取りましょう。",
+      "submit": "アカウント作成",
+      "skip": "今はスキップ",
+      "success": "アカウントが作成されました！"
+    },
+    "header": {
+      "login": "ログイン"
+    },
+    "menu": {
+      "esims": "マイeSIM",
+      "settings": "設定",
+      "inviteFriends": "友達を招待",
+      "logout": "ログアウト"
+    },
+    "field": {
+      "email": "メール",
+      "password": "パスワード",
+      "newPassword": "新しいパスワード",
+      "confirmPassword": "パスワードを確認",
+      "choosePassword": "パスワードを選択"
+    },
+    "email": {
+      "resetSubject": "eSIM Pandaのパスワードをリセット",
+      "resetHeading": "パスワードをリセット",
+      "resetBody": "下のボタンをクリックして、アカウントの新しいパスワードを設定してください。",
+      "resetCta": "パスワードをリセット",
+      "resetExpiry": "このリンクは1時間後に期限切れになります。リクエストしていない場合は、このメールを無視してください。"
+    },
+    "error": {
+      "invalidCredentials": "メールまたはパスワードが正しくありません。再試行してください。",
+      "emailExists": "このメールにはすでにアカウントがあります。ログインしますか？",
+      "passwordShort": "パスワードは8文字以上必要です。",
+      "passwordMismatch": "パスワードが一致しません。",
+      "emailRequired": "メールアドレスを入力してください。",
+      "passwordRequired": "パスワードを入力してください。",
+      "emailInvalid": "有効なメールアドレスを入力してください。",
+      "resetExpired": "このリセットリンクは期限切れです。新しいリンクをリクエストしてください。",
+      "generic": "エラーが発生しました。再試行してください。",
+      "conversionExists": "このメールにはすでにアカウントがあります。eSIMをリンクするにはログインしてください。"
+    }
+  },
+  "referral": {
+    "title": "友達を招待して無料データをゲット",
+    "subtitle": "リンクをシェアして、お互いに1GBの無料デイパスをゲット",
+    "copyLink": "紹介リンクをコピー",
+    "copied": "コピーしました！",
+    "shareVia": "シェアする",
+    "shareWhatsapp": "WhatsApp",
+    "shareTwitter": "Twitter/X",
+    "shareCopy": "コピー",
+    "shareText": "次の旅行に無料の1GB eSIMをゲット！私のリンクを使ってね：{url}",
+    "statsInvited": "招待した友達",
+    "statsEarned": "獲得した無料プラン",
+    "statsRemaining": "今月の残り無料プラン",
+    "capReached": "今月の無料プラン上限（5件）に達しました。{date}にリセットされます。",
+    "postPurchaseTitle": "友達にシェア",
+    "postPurchaseSubtitle": "お互いに1GBの無料デイパスをゲット",
+    "noAccount": "アカウントを作成して紹介リンクを取得し、友達が登録すると無料1GBプランを獲得できます。",
+    "noAccountCta": "無料データを獲得し始める",
+    "error": "紹介リンクを生成できませんでした。再試行するか、サポートにお問い合わせください。"
+  },
+  "incentive": {
+    "heading": "初回eSIM購入10%オフ",
+    "body": "無料アカウントを作成して、初回購入10%オフを解除。eSIM管理、使用量追跡、チャージリマインダーも利用可能。",
+    "signup": "アカウント作成して10%節約",
+    "login": "すでにアカウントをお持ちですか？ログイン"
+  },
+  "whatsapp": {
+    "ariaLabel": "WhatsAppでサポートに連絡",
+    "browsePage": "こんにちは！eSIMプランの選び方を教えてください",
+    "checkoutPage": "こんにちは！お支払いについて助けが必要です",
+    "deliveryPage": "こんにちは！注文について助けが必要です",
+    "dashboardPage": "こんにちは！eSIMについて助けが必要です",
+    "defaultMessage": "こんにちは！"
+  },
+  "admin": {
+    "coupons": {
+      "title": "インフルエンサークーポン",
+      "createButton": "クーポン作成",
+      "emptyTitle": "クーポンはまだありません",
+      "emptyBody": "最初のインフルエンサークーポンを作成して、パフォーマンスの追跡を開始しましょう。",
+      "emptyCta": "最初のクーポンを作成",
+      "codeExists": "このコードはすでに使用されています。別のコードを選択してください。",
+      "authFailed": "管理者アクセス権がありません。管理者アカウントでログインしてください。",
+      "deactivateTitle": "クーポンを無効化",
+      "deactivateBody": "コード{code}の新規使用を防止します。適用済みの割引は影響を受けません。無効化しますか？",
+      "statsActive": "アクティブクーポン",
+      "statsUses": "総使用回数",
+      "statsRevenue": "総収益"
+    }
+  },
+  "delivery": {
+    "provisioning": {
+      "heading": "eSIMを設定中...",
+      "message1": "eSIMを設定中...",
+      "message2": "もうすぐです...",
+      "message3": "接続を準備中..."
+    },
+    "ready": {
+      "heading": "eSIMの準備ができました！",
+      "subheading": "QRコードをスキャンするか、インストールをタップして有効化"
+    },
+    "install": "eSIMをインストール",
+    "qr": {
+      "instruction": "このQRコードをスマートフォンでスキャン"
+    },
+    "manual": {
+      "trigger": "手動で詳細を入力",
+      "smdp": "SM-DP+アドレス",
+      "code": "アクティベーションコード"
+    },
+    "copy": "コピー",
+    "copy_success": "クリップボードにコピーしました",
+    "setup": {
+      "trigger": "設定にお困りですか？",
+      "ios": { "heading": "iPhoneでの設定" },
+      "samsung": { "heading": "Samsungでの設定" },
+      "pixel": { "heading": "Pixel / Androidでの設定" },
+      "android": { "heading": "Androidでの設定" },
+      "help": "お困りですか？WhatsAppでお問い合わせください"
+    },
+    "error": {
+      "heading": "エラーが発生しました",
+      "body": "eSIMを設定できませんでした。対応中です。まもなくメールでお届けします。",
+      "retry": "再試行中...（{count}/3）",
+      "final": "まだeSIMを準備中です。数分以内にメールでお届けします。",
+      "contact": "お困りですか？WhatsAppでお問い合わせください"
+    },
+    "email": {
+      "reminder": "{email}にもすべて送信しました",
+      "subject": "{destination}のeSIMの準備ができました！",
+      "preview": "QRコードをスキャンするか、タップしてeSIMをインストール",
+      "heading": "eSIMの準備ができました！",
+      "qr": { "instruction": "スマートフォンのカメラでこのQRコードをスキャン" },
+      "manual": {
+        "heading": "手動設定",
+        "instruction": "QRコードが機能しない場合は、スマートフォンの設定で以下の情報を手動入力してください"
+      },
+      "receipt": { "heading": "注文レシート" },
+      "setup": { "button": "設定ガイドを見る" },
+      "referral": "旅行する知り合いはいますか？eSIM Pandaをシェア"
+    }
+  },
+  "notifications": {
+    "title": "通知",
+    "expiry_alerts": "期限切れアラート",
+    "usage_alerts": "使用量アラート",
+    "promotions": "キャンペーン",
+    "permission_heading": "最新情報を受け取る",
+    "permission_body": "eSIMの期限切れやデータ不足時にアラートを受け取りましょう。",
+    "permission_allow": "通知を許可",
+    "permission_dismiss": "今はいい",
+    "permission_denied": "通知がブロックされています——ブラウザ設定で有効にして期限切れアラートを受け取りましょう。",
+    "expiry_24h": "{destination} eSIMが明日期限切れです",
+    "expiry_1h": "{destination} eSIMが1時間以内に期限切れです",
+    "low_data_80": "{plan}プランのデータの80%を使用しました",
+    "low_data_95": "{plan}プランのデータがほぼ使い切りです",
+    "action_renew": "更新",
+    "action_topup": "今すぐチャージ",
+    "action_view": "特典を見る"
+  },
+  "pwa": {
+    "install_heading": "オフラインでeSIMにアクセス",
+    "install_body": "eSIM Pandaをインストールして、インターネットなしでもQRコードに即座にアクセス。",
+    "install_cta": "アプリをインストール",
+    "install_ios": "共有ボタンをタップし、「ホーム画面に追加」を選択",
+    "offline_message": "オフラインです——キャッシュデータを表示中",
+    "offline_last_updated": "最終更新 {time}",
+    "sync_complete": "データが更新されました",
+    "sw_error": "オフラインモードは利用できません——ページを更新してみてください。"
+  }
+}

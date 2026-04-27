@@ -7,9 +7,11 @@ import { Globe } from 'lucide-react';
 
 const localeNames: Record<string, string> = {
   en: 'English',
-  pt: 'Portugues',
-  es: 'Espanol',
-  fr: 'Francais',
+  pt: 'Português',
+  es: 'Español',
+  fr: 'Français',
+  zh: '中文',
+  ja: '日本語',
 };
 
 export function LanguageSwitcher() {
