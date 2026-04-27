@@ -9,13 +9,17 @@ import { COUPONS } from '@/lib/checkout/coupons';
 import type { InfluencerCoupon } from '@/lib/referral/types';
 
 async function isAdmin(): Promise<boolean> {
-  if (process.env.NEXT_PUBLIC_STRIPE_MOCK === 'true') return true;
-  const { createClient } = await import('@/lib/supabase/server');
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  return user?.app_metadata?.role === 'admin';
+  try {
+    const { createClient } = await import('@/lib/supabase/server');
+    const supabase = await createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user) return false;
+    return user.app_metadata?.role === 'admin';
+  } catch {
+    return false;
+  }
 }
 
 const createSchema = z.object({

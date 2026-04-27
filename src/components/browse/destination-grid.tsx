@@ -72,13 +72,13 @@ export function DestinationGrid() {
                 {group.items.map((dest, index) => (
                   <motion.div
                     key={dest.slug}
-                    initial={{ opacity: 0, y: 20, filter: 'blur(6px)' }}
-                    whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                    viewport={{ once: true, margin: '-40px' }}
+                    initial={{ opacity: 0, y: 12 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: '0px' }}
                     transition={{
-                      duration: 0.5,
-                      delay: (index % 4) * 0.08,
-                      ease: [0.32, 0.72, 0, 1],
+                      duration: 0.3,
+                      delay: Math.min(index, 3) * 0.05,
+                      ease: 'easeOut',
                     }}
                   >
                     <MemoizedDestinationCard

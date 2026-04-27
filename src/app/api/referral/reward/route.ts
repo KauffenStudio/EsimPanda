@@ -16,13 +16,15 @@ export async function POST(request: Request) {
       );
     }
 
+    // Basic validation — referrer_code must be alphanumeric, email must have @
+    if (!/^[A-Z0-9]{6,10}$/i.test(referrer_code) || !buyer_email.includes('@')) {
+      return NextResponse.json({ error: 'Invalid input' }, { status: 400 });
+    }
+
     const result = await checkAndFulfillReward(referrer_code, buyer_email);
     return NextResponse.json(result);
   } catch (error) {
     console.error('referral/reward error:', error);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 },
-    );
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

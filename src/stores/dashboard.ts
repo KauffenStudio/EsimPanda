@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { useAuthStore } from './auth';
 import type { DashboardEsim, PurchaseRecord } from '@/lib/dashboard/types';
 
 type ActiveTab = 'esims' | 'history';
@@ -41,6 +42,13 @@ export const useDashboardStore = create<DashboardState>((set) => ({
   ...initialState,
 
   initialize: async () => {
+    // Auth gate — never load data without authenticated user
+    const user = useAuthStore.getState().user;
+    if (!user) {
+      set({ loading: false, esims: [], purchases: [] });
+      return;
+    }
+
     if (process.env.NEXT_PUBLIC_STRIPE_MOCK === 'true') {
       const { mockDashboardEsims, mockPurchases } = await import(
         '@/lib/mock-data/dashboard'
@@ -66,6 +74,9 @@ export const useDashboardStore = create<DashboardState>((set) => ({
   setTopUpStatus: (top_up_status) => set({ top_up_status }),
 
   refreshUsage: async () => {
+    const user = useAuthStore.getState().user;
+    if (!user) return;
+
     set({ usage_refreshing: true });
 
     if (process.env.NEXT_PUBLIC_STRIPE_MOCK === 'true') {

@@ -1,11 +1,13 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { AnimatePresence, motion } from 'motion/react';
 import { useDashboardStore } from '@/stores/dashboard';
+import { useAuthStore } from '@/stores/auth';
 import { BambuVideo } from '@/components/bambu/bambu-video';
 import { Button } from '@/components/ui/button';
+import { LogIn, UserPlus } from 'lucide-react';
 import { DashboardSkeleton } from '@/components/dashboard/dashboard-skeleton';
 import { DashboardTabs } from '@/components/dashboard/dashboard-tabs';
 import { LowDataBanner } from '@/components/dashboard/low-data-banner';
@@ -20,6 +22,9 @@ import Link from 'next/link';
 
 export default function DashboardPage() {
   const t = useTranslations();
+  const locale = useLocale();
+  const user = useAuthStore((s) => s.user);
+  const authInitialized = useAuthStore((s) => s.initialized);
   const {
     esims,
     purchases,
@@ -50,6 +55,37 @@ export default function DashboardPage() {
       toast.error(t('dashboard.resend_email_error'));
     }
   };
+
+  // Auth gate — require login
+  if (authInitialized && !user) {
+    return (
+      <div className="flex flex-col items-center px-4 py-8 max-w-5xl mx-auto">
+        <h1 className="text-3xl font-bold tracking-tighter text-primary dark:text-gray-100 mb-8">
+          {t('dashboard.title')}
+        </h1>
+        <div className="flex flex-col items-center justify-center py-12">
+          <BambuVideo variant="empty" size={120} className="mb-4" />
+          <p className="text-gray-600 dark:text-gray-400 text-center max-w-sm">
+            {t('dashboard.empty_body')}
+          </p>
+          <div className="flex flex-col sm:flex-row gap-3 mt-8">
+            <Link href={`/${locale}/login`}>
+              <Button variant="primary" size="lg">
+                <LogIn size={18} className="mr-2" />
+                {t('auth.login.submit')}
+              </Button>
+            </Link>
+            <Link href={`/${locale}/signup`}>
+              <Button variant="secondary" size="lg">
+                <UserPlus size={18} className="mr-2" />
+                {t('auth.signup.submit')}
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   // Loading state
   if (loading) {

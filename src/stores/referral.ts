@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { useAuthStore } from './auth';
 import type { ReferralStats, ReferralReward } from '@/lib/referral/types';
 
 interface ReferralState {
@@ -17,10 +18,13 @@ export const useReferralStore = create<ReferralState>((set, get) => ({
   loading: false,
 
   fetchReferralData: async () => {
+    const user = useAuthStore.getState().user;
+    if (!user) return;
+
     set({ loading: true });
 
     try {
-      // Mock mode: use hardcoded mock values
+      // Mock mode: use hardcoded mock values (only for authenticated users)
       if (process.env.NEXT_PUBLIC_STRIPE_MOCK === 'true') {
         set({
           code: 'ABC123',

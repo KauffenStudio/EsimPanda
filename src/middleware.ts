@@ -21,7 +21,7 @@ export async function middleware(request: NextRequest) {
   // 3. Protect dashboard routes (redirect unauthenticated users to login)
   const { pathname } = request.nextUrl;
 
-  if (isProtectedPath(pathname) && process.env.NEXT_PUBLIC_STRIPE_MOCK !== 'true') {
+  if (isProtectedPath(pathname)) {
     // Check for Supabase auth session cookie
     const hasSession = request.cookies.getAll().some(
       (c) => c.name.includes('auth-token') && c.value
@@ -40,5 +40,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/', '/(en|pt|es|fr)/:path*'],
+  matcher: ['/', '/(en|pt|es|fr|zh|ja)/:path*'],
 };

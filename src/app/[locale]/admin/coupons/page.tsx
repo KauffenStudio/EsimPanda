@@ -26,8 +26,6 @@ export default function AdminCouponsPage() {
   const [loading, setLoading] = useState(true);
   const [authorized, setAuthorized] = useState(false);
 
-  const isMockMode = process.env.NEXT_PUBLIC_STRIPE_MOCK === 'true';
-
   useEffect(() => {
     initialize();
   }, [initialize]);
@@ -35,15 +33,13 @@ export default function AdminCouponsPage() {
   useEffect(() => {
     if (!initialized) return;
 
-    if (isMockMode) {
-      setAuthorized(true);
-    } else if (user?.app_metadata?.role === 'admin') {
+    if (user?.app_metadata?.role === 'admin') {
       setAuthorized(true);
     } else {
       setAuthorized(false);
       setLoading(false);
     }
-  }, [initialized, user, isMockMode]);
+  }, [initialized, user]);
 
   const fetchCoupons = useCallback(async () => {
     try {
