@@ -13,12 +13,24 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-[calc(100dvh-5rem)] flex flex-col items-center justify-center px-4">
-      {/* Walking panda — short centered walk */}
-      <div className="w-full max-w-[1200px] relative overflow-hidden h-[450px] md:h-[500px] flex items-center justify-center">
-        <div className="animate-walk-panda">
-          <BambuVideo variant="hero-intro" size={520} raw className="md:w-[640px] md:h-[360px] w-[520px] h-[293px]" />
-        </div>
-      </div>
+      {/* Panda hero — clean entrance + subtle float */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.6, ease: [0.32, 0.72, 0, 1] }}
+        className="w-full flex items-center justify-center h-[300px] md:h-[380px]"
+      >
+        <motion.div
+          animate={{ y: [0, -8, 0] }}
+          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+        >
+          <BambuVideo
+            variant="hero-intro"
+            raw
+            className="w-[320px] h-[180px] md:w-[480px] md:h-[270px]"
+          />
+        </motion.div>
+      </motion.div>
 
       <motion.div
         initial={{ opacity: 0, y: 24, filter: 'blur(8px)' }}

@@ -71,7 +71,6 @@ export function BambuVideo({
         preload={variant === 'splash' ? 'auto' : 'metadata'}
         onEnded={onEnded}
         className={`object-contain ${hasAlpha(variant) ? '' : 'mix-blend-multiply dark:mix-blend-screen'} ${className}`}
-        style={{ width: size, height: size }}
       />
     );
   }
