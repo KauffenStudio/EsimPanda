@@ -26,7 +26,7 @@ export function BottomNav() {
   };
 
   return (
-    <nav className="fixed bottom-3 left-3 right-3 z-50 md:hidden">
+    <nav className="fixed bottom-[max(12px,env(safe-area-inset-bottom))] left-3 right-3 z-50 md:hidden">
       <div className="flex h-14 rounded-full bg-white/80 dark:bg-surface-dark/80 backdrop-blur-xl border border-border dark:border-border-dark shadow-[0_4px_24px_rgba(0,0,0,0.08)]">
         {tabs.map((tab) => {
           const href = `/${locale}${tab.path}`;

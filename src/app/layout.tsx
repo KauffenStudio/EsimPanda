@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Outfit } from 'next/font/google';
 import '@/styles/globals.css';
 
@@ -8,6 +8,14 @@ const outfit = Outfit({
   display: 'swap',
   variable: '--font-sans',
 });
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  viewportFit: 'cover',
+  themeColor: '#2979FF',
+};
 
 export const metadata: Metadata = {
   title: 'eSIM Panda',
@@ -33,9 +41,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={outfit.variable}>
-      <head>
-        <meta name="theme-color" content="#2979FF" />
-      </head>
+      <head />
       <body className="font-sans antialiased bg-background dark:bg-background-dark text-primary dark:text-gray-100 transition-colors">
         <script dangerouslySetInnerHTML={{ __html: darkModeHydrationScript }} />
         <script dangerouslySetInnerHTML={{ __html: swRegistrationScript }} />

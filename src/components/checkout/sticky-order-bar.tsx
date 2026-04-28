@@ -43,7 +43,7 @@ export function StickyOrderBar({ plan, observeRef }: StickyOrderBarProps) {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: -40, opacity: 0 }}
           transition={{ duration: 0.2, ease: 'easeOut' }}
-          className="fixed top-0 left-0 right-0 z-40 bg-white/95 dark:bg-background-dark/95 backdrop-blur-sm border-b border-gray-100 dark:border-border-dark px-4 py-2 md:hidden"
+          className="fixed top-16 left-0 right-0 z-40 bg-white/95 dark:bg-background-dark/95 backdrop-blur-sm border-b border-gray-100 dark:border-border-dark px-4 py-2 md:hidden"
         >
           <div className="flex items-center justify-between max-w-[480px] mx-auto">
             <span className="text-sm font-medium text-gray-700 dark:text-gray-300 truncate">
