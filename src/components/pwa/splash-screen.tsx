@@ -34,14 +34,22 @@ export function SplashScreen() {
           {/* Background gradient */}
           <div className="absolute inset-0 bg-gradient-to-b from-accent/5 via-transparent to-accent/5 dark:from-accent/10 dark:via-transparent dark:to-accent/10" />
 
-          {/* 3D Panda walking with suitcase */}
+          {/* Panda eating bamboo — circular with faded edges */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, ease: [0.32, 0.72, 0, 1] }}
             className="relative z-10"
           >
-            <BambuVideo variant="splash" size={280} loop={false} />
+            <div
+              className="w-[280px] h-[280px] md:w-[320px] md:h-[320px] rounded-full overflow-hidden"
+              style={{
+                maskImage: 'radial-gradient(circle at center, black 40%, transparent 70%)',
+                WebkitMaskImage: 'radial-gradient(circle at center, black 40%, transparent 70%)',
+              }}
+            >
+              <BambuVideo variant="splash" raw loop={false} className="w-full h-full object-cover mix-blend-multiply dark:mix-blend-screen" />
+            </div>
           </motion.div>
 
           {/* Brand text appears after video starts */}

@@ -2,40 +2,31 @@ import { encrypt } from './encryption';
 import { mockProvision } from '@/lib/mock-data/delivery';
 import { createProvider } from '@/lib/esim/provider';
 import { sendDeliveryEmail } from '@/lib/email/send-delivery';
+import { IS_MOCK } from '@/lib/config/mode';
+import { getOrderByPaymentIntent, updateOrderProvisionData, updateOrderStatus } from '@/lib/db/orders';
 import type { ProvisionResult, DeliveryData } from './types';
 import type { NormalizedPurchase } from '@/lib/esim/types';
 
-const isMockMode = () => process.env.NEXT_PUBLIC_STRIPE_MOCK === 'true';
-
 /**
  * In-memory provisioning state, keyed by payment_intent_id.
- * In production this would be DB reads, but for Phase 4 dev
- * with no Supabase connection we use in-memory state.
+ * Used as fast cache; DB is source of truth in production.
  */
 export const provisioningState = new Map<string, ProvisionResult>();
 
-/**
- * Extracts SMDP address from activation code format LPA:1$smdp$code
- * Falls back to empty string if format doesn't match.
- */
 function extractSmdpAddress(activationCode: string): string {
   const match = activationCode.match(/LPA:1\$([^$]+)\$/);
   return match?.[1] ?? '';
 }
 
-/**
- * Builds DeliveryData from a NormalizedPurchase response.
- */
 function buildDeliveryData(purchase: NormalizedPurchase): DeliveryData & { encrypted_payload: string } {
   const smdpAddress = extractSmdpAddress(purchase.manualActivationCode);
 
-  // Encrypt sensitive activation data for DB persistence
   const encrypted_payload = encrypt(
     JSON.stringify({
       activation_code: purchase.manualActivationCode,
       smdp_address: smdpAddress,
       qr_base64: purchase.activationQrBase64,
-    })
+    }),
   );
 
   return {
@@ -49,22 +40,12 @@ function buildDeliveryData(purchase: NormalizedPurchase): DeliveryData & { encry
   };
 }
 
-/**
- * Generates a deterministic order ID from payment intent ID.
- */
 function generateOrderId(paymentIntentId: string): string {
   return 'ORD-' + paymentIntentId.slice(-8).toUpperCase();
 }
 
-/**
- * Core idempotent provisioning function.
- * - If already provisioned for this payment_intent, returns cached result.
- * - In mock mode, uses simulated 3-5s delay.
- * - In real mode, calls the ESIMProvider.purchase().
- * - Retries up to 3 times on failure.
- */
 export async function provisionEsim(paymentIntentId: string, email?: string): Promise<ProvisionResult> {
-  // Idempotency check: if already provisioned or delivered, return existing
+  // Idempotency: return cached result
   const existing = provisioningState.get(paymentIntentId);
   if (existing && (existing.status === 'ready' || existing.status === 'failed')) {
     return existing;
@@ -76,6 +57,30 @@ export async function provisionEsim(paymentIntentId: string, email?: string): Pr
   const inProgress: ProvisionResult = { status: 'provisioning', order_id: orderId };
   provisioningState.set(paymentIntentId, inProgress);
 
+  // Look up order from DB for real plan data
+  let orderData: { wholesalePlanId: string; planName: string; destination: string; dataGb: string; durationDays: string; orderEmail: string; amountPaid: string } | null = null;
+
+  if (!IS_MOCK) {
+    try {
+      const order = await getOrderByPaymentIntent(paymentIntentId);
+      if (order?.plans) {
+        orderData = {
+          wholesalePlanId: order.plans.wholesale_plan_id,
+          planName: order.plans.name,
+          destination: order.plans.destinations?.name || 'Unknown',
+          dataGb: String(order.plans.data_gb),
+          durationDays: String(order.plans.duration_days),
+          orderEmail: order.email,
+          amountPaid: (order.amount_paid_cents / 100).toFixed(2),
+        };
+        email = email || order.email;
+        await updateOrderStatus(paymentIntentId, 'provisioning');
+      }
+    } catch (err) {
+      console.error('Order lookup failed, continuing with provisioning:', err);
+    }
+  }
+
   let lastError: Error | null = null;
   const MAX_RETRIES = 3;
 
@@ -83,13 +88,12 @@ export async function provisionEsim(paymentIntentId: string, email?: string): Pr
     try {
       let purchase: NormalizedPurchase;
 
-      if (isMockMode()) {
+      if (IS_MOCK) {
         purchase = await mockProvision();
       } else {
-        // Real mode: call wholesale provider
-        // In production, wholesalePlanId comes from order lookup in DB
         const provider = createProvider();
-        purchase = await provider.purchase('placeholder-plan-id', 1);
+        const planId = orderData?.wholesalePlanId || 'placeholder-plan-id';
+        purchase = await provider.purchase(planId, 1);
       }
 
       const { encrypted_payload, ...deliveryData } = buildDeliveryData(purchase);
@@ -103,33 +107,47 @@ export async function provisionEsim(paymentIntentId: string, email?: string): Pr
 
       provisioningState.set(paymentIntentId, result);
 
-      // Send delivery email (non-blocking -- don't fail provisioning if email fails)
+      // Persist to DB
+      if (!IS_MOCK) {
+        try {
+          await updateOrderProvisionData(paymentIntentId, {
+            esim_iccid: purchase.iccid,
+            esim_qr_encrypted: encrypted_payload,
+            esim_activation_code_encrypted: encrypt(purchase.manualActivationCode),
+            esim_smdp_address_encrypted: encrypt(deliveryData.smdp_address),
+            esim_status: 'provisioned',
+            status: 'delivered',
+          });
+        } catch (dbErr) {
+          console.error('DB update failed after provisioning:', dbErr);
+        }
+      }
+
+      // Send delivery email with real data
       if (email) {
         try {
           await sendDeliveryEmail({
             to: email,
-            orderId: orderId,
-            planName: 'eSIM Data Plan', // placeholder -- real value from order/plan lookup
-            destination: 'Europe', // placeholder -- real value from order/plan lookup
-            dataGb: '5', // placeholder
-            durationDays: '30', // placeholder
+            orderId,
+            planName: orderData?.planName || 'eSIM Data Plan',
+            destination: orderData?.destination || 'Your destination',
+            dataGb: orderData?.dataGb || '-',
+            durationDays: orderData?.durationDays || '-',
             smdpAddress: deliveryData.smdp_address,
             activationCode: deliveryData.manual_activation_code,
             iosLink: deliveryData.ios_activation_link,
             androidLink: deliveryData.android_activation_link,
-            amountPaid: '29.99', // placeholder
-            currency: 'EUR', // placeholder
+            amountPaid: orderData?.amountPaid || '-',
+            currency: 'USD',
           });
         } catch (emailError) {
-          console.error('Failed to send delivery email, continuing:', emailError);
-          // Don't throw -- provisioning succeeded, email is best-effort
+          console.error('Failed to send delivery email:', emailError);
         }
       }
 
       return result;
     } catch (error) {
       lastError = error instanceof Error ? error : new Error(String(error));
-      // Wait 2s before retry (skip wait on last attempt)
       if (attempt < MAX_RETRIES - 1) {
         await new Promise((resolve) => setTimeout(resolve, 2000));
       }
@@ -145,5 +163,10 @@ export async function provisionEsim(paymentIntentId: string, email?: string): Pr
   };
 
   provisioningState.set(paymentIntentId, failedResult);
+
+  if (!IS_MOCK) {
+    await updateOrderStatus(paymentIntentId, 'provision_failed').catch(() => {});
+  }
+
   return failedResult;
 }

@@ -14,7 +14,7 @@ interface BambuVideoProps {
 }
 
 const videoMap: Record<BambuVariant, string> = {
-  splash: '/bambu/splash.mp4',
+  splash: '/bambu/panda-splash.mp4',
   loading: '/bambu/loading.mp4',
   success: '/bambu/success.mp4',
   error: '/bambu/error.mp4',
@@ -46,6 +46,9 @@ export function BambuVideo({
     // Eagerly try to play on mount (mobile needs this)
     video.play().catch(() => {});
 
+    // Skip observer for raw mode — raw videos manage their own visibility
+    if (raw) return;
+
     observerRef.current = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -62,7 +65,7 @@ export function BambuVideo({
     return () => {
       observerRef.current?.disconnect();
     };
-  }, []);
+  }, [raw]);
 
   if (raw) {
     return (

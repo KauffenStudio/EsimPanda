@@ -1,6 +1,10 @@
 import { NextResponse } from 'next/server';
 import { mockCreateIntent } from '@/lib/mock-data/checkout';
 import { createIntentRequestSchema } from '@/lib/checkout/schemas';
+import { calculatePrice } from '@/lib/checkout/pricing';
+import { calculateTax } from '@/lib/checkout/tax';
+import { IS_MOCK } from '@/lib/config/mode';
+import { createOrder } from '@/lib/db/orders';
 
 export async function POST(request: Request) {
   try {
@@ -10,78 +14,62 @@ export async function POST(request: Request) {
     if (!parsed.success) {
       return NextResponse.json(
         { error: 'Invalid request', details: parsed.error.issues },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     const { plan_id, email, coupon_code } = parsed.data;
 
-    // --- Development: mock response ---
-    const result = mockCreateIntent(plan_id, coupon_code);
+    // --- Mock mode ---
+    if (IS_MOCK) {
+      const result = mockCreateIntent(plan_id, coupon_code);
+      if (!result) {
+        return NextResponse.json({ error: 'Plan not found' }, { status: 404 });
+      }
+      return NextResponse.json(result);
+    }
 
-    if (!result) {
+    // --- Production: Real Stripe ---
+    const pricing = calculatePrice(plan_id, coupon_code);
+    if (!pricing) {
       return NextResponse.json({ error: 'Plan not found' }, { status: 404 });
     }
 
-    return NextResponse.json(result);
+    const tax = calculateTax(pricing.subtotal_cents, 'PT');
 
-    // --- Production: Stripe Tax + Payment Intent ---
-    // TODO Phase 3 production: replace mock with stripe.tax.calculations.create and stripe.paymentIntents.create -- see RESEARCH.md Pattern 1
-    //
-    // import { getStripeServer } from '@/lib/stripe/server';
-    // const stripe = getStripeServer();
-    //
-    // // 1. Calculate tax via Stripe Tax API
-    // const taxCalc = await stripe.tax.calculations.create({
-    //   currency: 'eur',
-    //   line_items: [
-    //     {
-    //       amount: subtotal_cents,
-    //       reference: plan_id,
-    //       tax_code: 'txcd_10000000', // General - Electronically Supplied Services
-    //     },
-    //   ],
-    //   customer_details: {
-    //     address: {
-    //       country: customer_country_code,
-    //     },
-    //     address_source: 'billing',
-    //   },
-    // });
-    //
-    // // 2. Create Payment Intent with 3D Secure and Stripe Tax
-    // const paymentIntent = await stripe.paymentIntents.create({
-    //   amount: taxCalc.amount_total,
-    //   currency: 'eur',
-    //   automatic_payment_methods: { enabled: true },
-    //   payment_method_options: {
-    //     card: {
-    //       request_three_d_secure: 'any', // SCA/3DS compliance (INF-05)
-    //     },
-    //   },
-    //   metadata: {
-    //     plan_id,
-    //     email,
-    //     coupon_code: coupon_code || '',
-    //     discount_cents: String(discount_cents),
-    //   },
-    //   receipt_email: email,
-    //   hooks: {
-    //     inputs: {
-    //       tax: {
-    //         calculation: taxCalc.id,
-    //       },
-    //     },
-    //   },
-    // });
-    //
-    // return NextResponse.json({
-    //   client_secret: paymentIntent.client_secret,
-    //   amount: paymentIntent.amount,
-    //   tax_amount: taxCalc.tax_amount_exclusive,
-    //   subtotal: subtotal_cents,
-    //   discount: discount_cents,
-    // });
+    const { getStripeServer } = await import('@/lib/stripe/server');
+    const stripe = getStripeServer();
+
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: tax.total_cents,
+      currency: 'usd',
+      automatic_payment_methods: { enabled: true },
+      metadata: {
+        plan_id,
+        email: email || '',
+        coupon_code: coupon_code || '',
+        discount_cents: String(pricing.discount_cents),
+      },
+      receipt_email: email || undefined,
+    });
+
+    // Create order in DB
+    await createOrder({
+      email: email || '',
+      plan_id,
+      stripe_payment_intent_id: paymentIntent.id,
+      amount_paid_cents: tax.total_cents,
+      coupon_code: coupon_code || undefined,
+      discount_cents: pricing.discount_cents,
+    });
+
+    return NextResponse.json({
+      client_secret: paymentIntent.client_secret,
+      amount: tax.total_cents,
+      tax_amount: tax.tax_amount_cents,
+      subtotal: pricing.subtotal_cents,
+      discount: pricing.discount_cents,
+    });
   } catch (error) {
     console.error('create-intent error:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
