@@ -13,23 +13,27 @@ export default function LandingPage() {
 
   return (
     <div className="flex flex-col items-center px-4 pt-2 md:pt-4">
-      {/* Panda hero — compact, close to nav */}
+      {/* Panda hero — video faded into page background */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
+        initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.6, ease: [0.32, 0.72, 0, 1] }}
-        className="w-full flex items-center justify-center h-[180px] md:h-[260px]"
+        transition={{ duration: 0.8, ease: [0.32, 0.72, 0, 1] }}
+        className="w-full flex items-center justify-center h-[220px] md:h-[300px]"
       >
-        <motion.div
-          animate={{ y: [0, -8, 0] }}
-          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+        <div
+          className="w-[300px] h-[300px] md:w-[400px] md:h-[400px] rounded-full overflow-hidden"
+          style={{
+            maskImage: 'radial-gradient(circle at center, black 35%, transparent 65%)',
+            WebkitMaskImage: 'radial-gradient(circle at center, black 35%, transparent 65%)',
+          }}
         >
           <BambuVideo
-            variant="hero-intro"
+            variant="hero-panda"
             raw
-            className="w-[240px] h-[135px] md:w-[400px] md:h-[225px]"
+            loop={false}
+            className="w-full h-full"
           />
-        </motion.div>
+        </div>
       </motion.div>
 
       <motion.div

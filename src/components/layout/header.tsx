@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useLocale, useTranslations } from 'next-intl';
 import { ThemeToggle } from './theme-toggle';
 import { LanguageSwitcher } from '@/components/layout/language-switcher';
@@ -23,10 +24,14 @@ export function Header() {
     <header className="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 pt-4">
       <div className="flex items-center justify-between h-12 w-full max-w-[1200px] px-5 rounded-full bg-white/80 dark:bg-surface-dark/80 backdrop-blur-xl border border-border dark:border-border-dark shadow-[0_2px_16px_rgba(0,0,0,0.06)]">
         {/* Logo */}
-        <Link href={`/${locale}`} className="flex items-center gap-2">
-          <span className="text-lg" role="img" aria-label="panda">
-            🐼
-          </span>
+        <Link href={`/${locale}`} className="flex items-center gap-1.5">
+          <Image
+            src="/bambu/panda-face.png"
+            alt="eSIM Panda"
+            width={28}
+            height={28}
+            className="rounded-full object-cover shrink-0"
+          />
           <span className="font-semibold text-primary dark:text-gray-100 tracking-tight">
             eSIM Panda
           </span>
