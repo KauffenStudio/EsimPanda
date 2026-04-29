@@ -26,13 +26,13 @@ export default function ProfilePage() {
         </div>
       </div>
 
-      <div className="flex flex-col items-center justify-center py-12">
-        <BambuVideo variant="empty" size={120} className="mb-4" />
-        <p className="text-gray-600 dark:text-gray-400 text-center max-w-sm">
+      <div className="flex flex-col items-center justify-center py-6">
+        <BambuVideo variant="empty" size={100} className="mb-3" />
+        <p className="text-gray-600 dark:text-gray-400 text-center max-w-sm text-sm">
           {t('profile.empty')}
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-3 mt-8">
+        <div className="flex flex-row gap-3 mt-6">
           <Link href={`/${locale}/login`}>
             <Button variant="primary" size="lg">
               <LogIn size={18} className="mr-2" />

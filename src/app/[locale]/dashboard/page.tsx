@@ -60,15 +60,15 @@ export default function DashboardPage() {
   if (authInitialized && !user) {
     return (
       <div className="flex flex-col items-center px-4 pt-2 pb-4 max-w-5xl mx-auto">
-        <h1 className="text-2xl font-bold tracking-tighter text-primary dark:text-gray-100 mb-4">
+        <h1 className="text-2xl font-bold tracking-tighter text-primary dark:text-gray-100 mb-2">
           {t('dashboard.title')}
         </h1>
-        <div className="flex flex-col items-center justify-center py-6">
-          <BambuVideo variant="empty" size={100} className="mb-4" />
-          <p className="text-gray-600 dark:text-gray-400 text-center max-w-sm">
+        <div className="flex flex-col items-center justify-center py-4">
+          <BambuVideo variant="empty" size={80} className="mb-3" />
+          <p className="text-gray-600 dark:text-gray-400 text-center max-w-sm text-sm">
             {t('dashboard.empty_body')}
           </p>
-          <div className="flex flex-col sm:flex-row gap-3 mt-8">
+          <div className="flex flex-row gap-3 mt-5">
             <Link href={`/${locale}/login`}>
               <Button variant="primary" size="lg">
                 <LogIn size={18} className="mr-2" />
