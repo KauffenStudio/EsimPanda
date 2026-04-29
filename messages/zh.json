@@ -101,6 +101,19 @@
     "title": "个人资料",
     "empty": "登录以管理您的eSIM、查看购买记录和跟踪流量使用情况。"
   },
+  "cart": {
+    "title": "购物车",
+    "empty": "购物车为空",
+    "subtotal": "小计",
+    "discount": "折扣",
+    "total": "总计",
+    "checkout": "结账",
+    "clear": "清空购物车",
+    "promo_placeholder": "优惠码",
+    "promo_apply": "应用",
+    "promo_remove": "移除",
+    "promo_invalid": "无效的优惠码"
+  },
   "errors": {
     "generic": "出错了。请重试或通过WhatsApp联系我们。",
     "network": "无法连接。请检查网络后重试。"

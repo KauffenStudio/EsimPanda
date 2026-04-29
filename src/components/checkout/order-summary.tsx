@@ -5,20 +5,24 @@ import { motion } from 'motion/react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { useCheckoutStore } from '@/stores/checkout';
+import { useCurrencyStore } from '@/stores/currency';
+import { formatPrice as fmtPrice } from '@/lib/currency/rates';
 import type { MockPlan } from '@/lib/mock-data/plans';
 
 interface OrderSummaryProps {
   plan: MockPlan;
 }
 
-function formatUsd(cents: number): string {
-  return `$${(cents / 100).toFixed(2)}`;
+// formatUsd kept as local alias — currency-aware version used via fmtPrice
+function formatUsd(cents: number, cur: string): string {
+  return fmtPrice(cents, cur as import('@/lib/currency/rates').CurrencyCode);
 }
 
 export function OrderSummary({ plan }: OrderSummaryProps) {
   const t = useTranslations('checkout.summary');
   const { subtotal_cents, discount_cents, tax_cents, total_cents, coupon_code, payment_status } =
     useCheckoutStore();
+  const currency = useCurrencyStore((s) => s.currency);
 
   const displaySubtotal = subtotal_cents || plan.retail_price_cents;
   const taxRate = 23; // Default EU VAT rate, updated by API
@@ -47,7 +51,7 @@ export function OrderSummary({ plan }: OrderSummaryProps) {
             layout
             transition={{ type: 'spring', stiffness: 300, damping: 25 }}
           >
-            {formatUsd(displaySubtotal)}
+            {formatUsd(displaySubtotal, currency)}
           </motion.span>
         </div>
 
@@ -57,7 +61,7 @@ export function OrderSummary({ plan }: OrderSummaryProps) {
             <span>{t('discount')}</span>
             <div className="flex items-center gap-2">
               <span className="text-gray-400 line-through text-sm">
-                {formatUsd(displaySubtotal + discount_cents)}
+                {formatUsd(displaySubtotal + discount_cents, currency)}
               </span>
               <motion.span
                 initial={{ opacity: 0, y: -4 }}
@@ -65,7 +69,7 @@ export function OrderSummary({ plan }: OrderSummaryProps) {
                 transition={{ duration: 0.3, ease: 'easeOut' }}
                 className="text-success text-sm"
               >
-                -{formatUsd(discount_cents)}
+                -{formatUsd(discount_cents, currency)}
               </motion.span>
             </div>
           </div>
@@ -84,7 +88,7 @@ export function OrderSummary({ plan }: OrderSummaryProps) {
               layout
               transition={{ type: 'spring', stiffness: 300, damping: 25 }}
             >
-              {formatUsd(tax_cents)}
+              {formatUsd(tax_cents, currency)}
             </motion.span>
           )}
         </div>
@@ -98,7 +102,7 @@ export function OrderSummary({ plan }: OrderSummaryProps) {
             transition={{ type: 'spring', stiffness: 300, damping: 25 }}
             className="text-2xl font-bold dark:text-gray-100"
           >
-            {formatUsd(total_cents || displaySubtotal)}
+            {formatUsd(total_cents || displaySubtotal, currency)}
           </motion.span>
         </div>
       </div>

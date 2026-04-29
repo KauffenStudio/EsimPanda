@@ -101,6 +101,19 @@
     "title": "プロフィール",
     "empty": "ログインしてeSIMの管理、購入履歴の確認、データ使用量の追跡を行いましょう。"
   },
+  "cart": {
+    "title": "カート",
+    "empty": "カートは空です",
+    "subtotal": "小計",
+    "discount": "割引",
+    "total": "合計",
+    "checkout": "お会計",
+    "clear": "カートを空にする",
+    "promo_placeholder": "プロモコード",
+    "promo_apply": "適用",
+    "promo_remove": "削除",
+    "promo_invalid": "無効なプロモコード"
+  },
   "errors": {
     "generic": "エラーが発生しました。再試行するか、WhatsAppでお問い合わせください。",
     "network": "接続できません。インターネット接続を確認してから再試行してください。"

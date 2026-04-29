@@ -101,6 +101,19 @@
     "title": "Profile",
     "empty": "Sign in to manage your eSIMs, view purchase history, and track your data usage."
   },
+  "cart": {
+    "title": "Your Cart",
+    "empty": "Your cart is empty",
+    "subtotal": "Subtotal",
+    "discount": "Discount",
+    "total": "Total",
+    "checkout": "Checkout",
+    "clear": "Clear cart",
+    "promo_placeholder": "Promo code",
+    "promo_apply": "Apply",
+    "promo_remove": "Remove",
+    "promo_invalid": "Invalid promo code"
+  },
   "errors": {
     "generic": "Something went wrong. Try again or contact us on WhatsApp for help.",
     "network": "Could not connect. Check your internet and try again."

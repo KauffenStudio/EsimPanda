@@ -4,7 +4,9 @@ import Link from 'next/link';
 import { useLocale, useTranslations } from 'next-intl';
 import { ThemeToggle } from './theme-toggle';
 import { LanguageSwitcher } from '@/components/layout/language-switcher';
+import { CurrencySwitcher } from '@/components/layout/currency-switcher';
 import { UserMenu } from '@/components/auth/user-menu';
+import { CartIcon } from '@/components/cart/cart-icon';
 
 const navLinks = [
   { path: '', labelKey: 'nav.home' },
@@ -45,7 +47,9 @@ export function Header() {
 
         {/* User menu + Theme toggle */}
         <div className="flex items-center gap-1.5">
+          <CurrencySwitcher />
           <LanguageSwitcher />
+          <CartIcon />
           <UserMenu />
           <ThemeToggle />
         </div>

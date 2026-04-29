@@ -101,6 +101,19 @@
     "title": "Profil",
     "empty": "Connectez-vous pour gérer vos eSIMs, consulter l'historique d'achats et suivre votre utilisation de données."
   },
+  "cart": {
+    "title": "Votre Panier",
+    "empty": "Votre panier est vide",
+    "subtotal": "Sous-total",
+    "discount": "Remise",
+    "total": "Total",
+    "checkout": "Commander",
+    "clear": "Vider le panier",
+    "promo_placeholder": "Code promo",
+    "promo_apply": "Appliquer",
+    "promo_remove": "Supprimer",
+    "promo_invalid": "Code promo invalide"
+  },
   "errors": {
     "generic": "Une erreur est survenue. Réessayez ou contactez-nous sur WhatsApp.",
     "network": "Impossible de se connecter. Vérifiez votre connexion internet et réessayez."

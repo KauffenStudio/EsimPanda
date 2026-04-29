@@ -4,7 +4,10 @@ import Image from 'next/image';
 import { useTranslations, useLocale } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { Card } from '@/components/ui/card';
-import { getBestDiscount } from '@/lib/mock-data/plans';
+import { getBestDiscount, getPlansForDestination } from '@/lib/mock-data/plans';
+import { useCartStore } from '@/stores/cart';
+import { useCurrencyStore } from '@/stores/currency';
+import { formatPrice } from '@/lib/currency/rates';
 
 interface DestinationCardProps {
   name: string;
@@ -34,16 +37,27 @@ export function DestinationCard({
   const t = useTranslations();
   const locale = useLocale();
   const router = useRouter();
+  const addItem = useCartStore((s) => s.addItem);
+  const currency = useCurrencyStore((s) => s.currency);
 
-  const price = (startingPriceCents / 100).toFixed(2);
   const bestDiscount = getBestDiscount(destinationId);
   const flag = isoToFlag(isoCode);
+
+  const handleClick = () => {
+    // Auto-select the most expensive (highest GB) plan
+    const plans = getPlansForDestination(destinationId);
+    if (plans.length > 0) {
+      const sorted = [...plans].sort((a, b) => b.retail_price_cents - a.retail_price_cents);
+      addItem(sorted[0]);
+    }
+    router.push(`/${locale}/esim/${slug}`);
+  };
 
   return (
     <Card
       variant="elevated"
       className="cursor-pointer overflow-hidden group"
-      onClick={() => router.push(`/${locale}/esim/${slug}`)}
+      onClick={handleClick}
     >
       <div className="aspect-[4/3] relative overflow-hidden rounded-card">
         <Image
@@ -67,7 +81,7 @@ export function DestinationCard({
             {flag} {name}
           </p>
           <p className="text-white/70 text-xs mt-0.5">
-            {t('browse.from')} ${price}
+            {t('browse.from')} {formatPrice(startingPriceCents, currency)}
           </p>
         </div>
       </div>

@@ -101,6 +101,19 @@
     "title": "Perfil",
     "empty": "Inicia sesión para gestionar tus eSIMs, ver el historial de compras y seguir tu uso de datos."
   },
+  "cart": {
+    "title": "Tu Carrito",
+    "empty": "Tu carrito está vacío",
+    "subtotal": "Subtotal",
+    "discount": "Descuento",
+    "total": "Total",
+    "checkout": "Pagar",
+    "clear": "Vaciar carrito",
+    "promo_placeholder": "Código promocional",
+    "promo_apply": "Aplicar",
+    "promo_remove": "Eliminar",
+    "promo_invalid": "Código promocional inválido"
+  },
   "errors": {
     "generic": "Algo salió mal. Inténtalo de nuevo o contáctanos por WhatsApp.",
     "network": "No se pudo conectar. Verifica tu internet e inténtalo de nuevo."

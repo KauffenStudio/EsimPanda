@@ -4,7 +4,9 @@ import { useTranslations } from 'next-intl';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { useComparisonStore } from '@/stores/comparison';
-import { useQuickCheckoutStore } from '@/stores/quick-checkout';
+import { useCartStore } from '@/stores/cart';
+import { useCurrencyStore } from '@/stores/currency';
+import { formatPrice } from '@/lib/currency/rates';
 import { getOriginalPrice, getDiscountPercent, mockPlans } from '@/lib/mock-data/plans';
 
 interface PlanCardProps {
@@ -22,10 +24,6 @@ function formatDuration(days: number): string {
   return `${days} days`;
 }
 
-function formatPrice(cents: number): string {
-  return `${(cents / 100).toFixed(2)}`;
-}
-
 export function PlanCard({
   id,
   data_gb,
@@ -37,12 +35,13 @@ export function PlanCard({
   const t = useTranslations();
   const selectedPlanIds = useComparisonStore((state) => state.selectedPlanIds);
   const togglePlan = useComparisonStore((state) => state.togglePlan);
-  const selectPlan = useQuickCheckoutStore((state) => state.selectPlan);
+  const addItem = useCartStore((state) => state.addItem);
+  const currency = useCurrencyStore((state) => state.currency);
   const isSelected = selectedPlanIds.includes(id);
 
   const handleCardClick = () => {
     const plan = mockPlans.find((p) => p.id === id);
-    if (plan) selectPlan(plan);
+    if (plan) addItem(plan);
   };
 
   const handleCheckboxClick = (e: React.MouseEvent) => {
@@ -75,7 +74,7 @@ export function PlanCard({
           <div className="flex flex-col items-end">
             {data_gb > 1 && (
               <span className="text-xs text-gray-400 line-through">
-                ${formatPrice(getOriginalPrice(retail_price_cents, data_gb))}
+                {formatPrice(getOriginalPrice(retail_price_cents, data_gb), currency)}
               </span>
             )}
             <div className="flex items-center gap-1.5">
@@ -85,7 +84,7 @@ export function PlanCard({
                 </span>
               )}
               <span className="text-xl font-bold text-accent">
-                ${formatPrice(retail_price_cents)}
+                {formatPrice(retail_price_cents, currency)}
               </span>
             </div>
           </div>
