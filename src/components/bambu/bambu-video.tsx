@@ -43,6 +43,9 @@ export function BambuVideo({
     const video = videoRef.current;
     if (!video) return;
 
+    // Eagerly try to play on mount (mobile needs this)
+    video.play().catch(() => {});
+
     observerRef.current = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -51,7 +54,7 @@ export function BambuVideo({
           video.pause();
         }
       },
-      { threshold: 0.3 }
+      { threshold: 0.1 }
     );
 
     observerRef.current.observe(video);
@@ -70,7 +73,7 @@ export function BambuVideo({
         muted
         playsInline
         autoPlay
-        preload={variant === 'splash' || variant === 'hero-panda' ? 'auto' : 'metadata'}
+        preload="auto"
         onEnded={onEnded}
         className={`object-contain ${hasAlpha(variant) ? '' : 'mix-blend-multiply dark:mix-blend-screen'} ${className}`}
       />
