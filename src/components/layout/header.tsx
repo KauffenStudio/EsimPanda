@@ -52,11 +52,11 @@ export function Header() {
 
         {/* Actions */}
         <div className="flex items-center gap-1.5">
+          <LanguageSwitcher />
           <CartIcon />
-          {/* Desktop only: currency, language, user menu, theme */}
+          {/* Desktop only: currency, user menu, theme */}
           <div className="hidden md:flex items-center gap-1.5">
             <CurrencySwitcher />
-            <LanguageSwitcher />
             <UserMenu />
             <ThemeToggle />
           </div>
