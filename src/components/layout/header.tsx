@@ -45,13 +45,16 @@ export function Header() {
           ))}
         </nav>
 
-        {/* User menu + Theme toggle */}
+        {/* Actions */}
         <div className="flex items-center gap-1.5">
-          <CurrencySwitcher />
-          <LanguageSwitcher />
           <CartIcon />
-          <UserMenu />
-          <ThemeToggle />
+          {/* Desktop only: currency, language, user menu, theme */}
+          <div className="hidden md:flex items-center gap-1.5">
+            <CurrencySwitcher />
+            <LanguageSwitcher />
+            <UserMenu />
+            <ThemeToggle />
+          </div>
         </div>
       </div>
     </header>

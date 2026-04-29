@@ -11,6 +11,7 @@ import { Breadcrumb } from '@/components/seo/breadcrumb';
 import { DestinationHero } from '@/components/seo/destination-hero';
 import { FAQSection } from '@/components/seo/faq-section';
 import { PlanCard } from '@/components/browse/plan-card';
+import { PageCurrencyBar } from '@/components/layout/page-currency-bar';
 
 const REGIONAL_TYPES = ['europe-wide', 'asia-wide', 'global'];
 
@@ -74,9 +75,12 @@ export default async function DestinationPage({ params }: Props) {
 
         {/* Plan cards section */}
         <section>
-          <h2 className="text-2xl font-bold mb-4 dark:text-gray-100">
-            {isRegional ? `${destination.name} Plans` : 'Available Plans'}
-          </h2>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-2xl font-bold dark:text-gray-100">
+              {isRegional ? `${destination.name} Plans` : 'Available Plans'}
+            </h2>
+            <PageCurrencyBar />
+          </div>
           {taggedPlans.length === 0 ? (
             <div className="text-center py-8">
               <p className="font-bold text-gray-600 dark:text-gray-400">No plans available</p>

@@ -5,6 +5,9 @@ import { BambuVideo } from '@/components/bambu/bambu-video';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { LogIn, UserPlus } from 'lucide-react';
+import { CurrencySwitcher } from '@/components/layout/currency-switcher';
+import { LanguageSwitcher } from '@/components/layout/language-switcher';
+import { ThemeToggle } from '@/components/layout/theme-toggle';
 
 export default function ProfilePage() {
   const t = useTranslations();
@@ -12,9 +15,16 @@ export default function ProfilePage() {
 
   return (
     <div className="flex flex-col items-center px-4 py-8">
-      <h1 className="text-3xl font-bold tracking-tighter text-primary dark:text-gray-100 mb-8">
-        {t('profile.title')}
-      </h1>
+      <div className="flex items-center justify-between w-full max-w-sm mb-8">
+        <h1 className="text-3xl font-bold tracking-tighter text-primary dark:text-gray-100">
+          {t('profile.title')}
+        </h1>
+        <div className="flex items-center gap-1 md:hidden">
+          <CurrencySwitcher />
+          <LanguageSwitcher />
+          <ThemeToggle />
+        </div>
+      </div>
 
       <div className="flex flex-col items-center justify-center py-12">
         <BambuVideo variant="empty" size={120} className="mb-4" />

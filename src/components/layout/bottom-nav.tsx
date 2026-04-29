@@ -5,9 +5,6 @@ import { Home, Globe, Smartphone, User } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { useLocale, useTranslations } from 'next-intl';
 import Link from 'next/link';
-import { LanguageSwitcher } from '@/components/layout/language-switcher';
-import { CurrencySwitcher } from '@/components/layout/currency-switcher';
-import { CartIcon } from '@/components/cart/cart-icon';
 
 const tabs = [
   { path: '', labelKey: 'nav.home', icon: Home },
@@ -75,11 +72,6 @@ export function BottomNav() {
             </Link>
           );
         })}
-        <div className="flex items-center justify-center gap-1 px-1">
-          <CurrencySwitcher />
-          <CartIcon />
-          <LanguageSwitcher />
-        </div>
       </div>
     </nav>
   );

@@ -59,12 +59,12 @@ export default function DashboardPage() {
   // Auth gate — require login
   if (authInitialized && !user) {
     return (
-      <div className="flex flex-col items-center px-4 py-8 max-w-5xl mx-auto">
-        <h1 className="text-3xl font-bold tracking-tighter text-primary dark:text-gray-100 mb-8">
+      <div className="flex flex-col items-center px-4 pt-2 pb-4 max-w-5xl mx-auto">
+        <h1 className="text-2xl font-bold tracking-tighter text-primary dark:text-gray-100 mb-4">
           {t('dashboard.title')}
         </h1>
-        <div className="flex flex-col items-center justify-center py-12">
-          <BambuVideo variant="empty" size={120} className="mb-4" />
+        <div className="flex flex-col items-center justify-center py-6">
+          <BambuVideo variant="empty" size={100} className="mb-4" />
           <p className="text-gray-600 dark:text-gray-400 text-center max-w-sm">
             {t('dashboard.empty_body')}
           </p>
@@ -90,7 +90,7 @@ export default function DashboardPage() {
   // Loading state
   if (loading) {
     return (
-      <div className="px-4 py-8 max-w-5xl mx-auto">
+      <div className="px-4 pt-2 pb-4 max-w-5xl mx-auto">
         <DashboardSkeleton />
       </div>
     );
@@ -99,7 +99,7 @@ export default function DashboardPage() {
   // Error state
   if (error) {
     return (
-      <div className="flex flex-col items-center px-4 py-8 max-w-5xl mx-auto">
+      <div className="flex flex-col items-center px-4 pt-2 pb-4 max-w-5xl mx-auto">
         <BambuVideo variant="error" size={100} className="mb-4" />
         <h2 className="text-lg font-bold mb-2">
           {t('dashboard.error_title')}
@@ -117,7 +117,7 @@ export default function DashboardPage() {
   // Empty state
   if (esims.length === 0) {
     return (
-      <div className="flex flex-col items-center px-4 py-8 max-w-5xl mx-auto">
+      <div className="flex flex-col items-center px-4 pt-2 pb-4 max-w-5xl mx-auto">
         <BambuVideo variant="empty" size={100} className="mb-4" />
         <h2 className="text-lg font-bold mb-2">
           {t('dashboard.empty_title')}
@@ -134,11 +134,11 @@ export default function DashboardPage() {
 
   // Populated state
   return (
-    <div className="px-4 py-8 max-w-5xl mx-auto">
-      <h1 className="text-3xl font-bold tracking-tighter text-primary dark:text-gray-100 mb-6">{t('dashboard.title')}</h1>
+    <div className="px-4 pt-2 pb-4 max-w-5xl mx-auto">
+      <h1 className="text-2xl font-bold tracking-tighter text-primary dark:text-gray-100 mb-3">{t('dashboard.title')}</h1>
 
       {/* Low data banners */}
-      <div className="mb-4">
+      <div className="mb-3">
         <LowDataBanner esims={esims} onTopUp={handleTopUp} />
       </div>
 
@@ -146,7 +146,7 @@ export default function DashboardPage() {
       <DashboardTabs active_tab={active_tab} onTabChange={setActiveTab} />
 
       {/* Tab content */}
-      <div className="mt-6">
+      <div className="mt-4">
         <AnimatePresence mode="wait">
           {active_tab === 'esims' ? (
             <motion.div
