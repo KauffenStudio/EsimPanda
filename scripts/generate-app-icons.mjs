@@ -11,28 +11,13 @@ const BRAND_BLUE = { r: 41, g: 121, b: 255, alpha: 1 };
 const WHITE = { r: 255, g: 255, b: 255, alpha: 1 };
 
 async function squareCrop(srcPath) {
-  const img = sharp(srcPath);
-  const { width, height } = await img.metadata();
-  // Sample top-left pixel to use as padding color (matches the gray gradient bg).
-  const { data } = await sharp(srcPath)
-    .extract({ left: 0, top: 0, width: 4, height: 4 })
-    .raw()
-    .toBuffer({ resolveWithObject: true });
-  const [r, g, b] = [data[0], data[1], data[2]];
-  const side = Math.max(width, height);
-  const padLeft = Math.floor((side - width) / 2);
-  const padRight = side - width - padLeft;
-  const padTop = Math.floor((side - height) / 2);
-  const padBottom = side - height - padTop;
-  return sharp(srcPath)
-    .extend({
-      top: padTop,
-      bottom: padBottom,
-      left: padLeft,
-      right: padRight,
-      background: { r, g, b, alpha: 1 },
-    })
-    .toBuffer();
+  const { width, height } = await sharp(srcPath).metadata();
+  const side = Math.min(width, height);
+  const left = Math.floor((width - side) / 2);
+  // 1.0 = bottom-aligned crop. Drops the empty space above the panda's head
+  // so the full body (including feet) fits in the square.
+  const top = Math.floor((height - side) * 1.0);
+  return sharp(srcPath).extract({ left, top, width: side, height: side }).toBuffer();
 }
 
 async function makeStandardIcon(squareBuf, size, outPath, bg) {
