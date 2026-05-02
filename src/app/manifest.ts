@@ -2,10 +2,11 @@ import type { MetadataRoute } from 'next';
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
+    id: '/en',
     name: 'eSIM Panda',
     short_name: 'eSIM Panda',
     description: 'Affordable eSIM plans for students and travelers',
-    start_url: '/',
+    start_url: '/en',
     display: 'standalone',
     orientation: 'portrait',
     theme_color: '#2979FF',
@@ -15,9 +16,16 @@ export default function manifest(): MetadataRoute.Manifest {
         src: '/icon-192x192.png',
         sizes: '192x192',
         type: 'image/png',
+        purpose: 'any',
       },
       {
         src: '/icon-512x512.png',
+        sizes: '512x512',
+        type: 'image/png',
+        purpose: 'any',
+      },
+      {
+        src: '/icon-512x512-maskable.png',
         sizes: '512x512',
         type: 'image/png',
         purpose: 'maskable',
