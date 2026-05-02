@@ -25,16 +25,39 @@ export function OAuthButtons({ next }: OAuthButtonsProps) {
     setError(null);
     setPending(provider);
 
-    const supabase = createClient();
-    const redirectTo = `${window.location.origin}/api/auth/callback?next=${encodeURIComponent(next)}`;
+    try {
+      const supabase = createClient();
+      const redirectTo = `${window.location.origin}/api/auth/callback?next=${encodeURIComponent(next)}`;
+      console.log('[oauth] starting', { provider, redirectTo });
 
-    const { error: oauthError } = await supabase.auth.signInWithOAuth({
-      provider,
-      options: { redirectTo },
-    });
+      const { data, error: oauthError } = await supabase.auth.signInWithOAuth({
+        provider,
+        options: {
+          redirectTo,
+          skipBrowserRedirect: true,
+        },
+      });
 
-    if (oauthError) {
-      setError(t('error'));
+      if (oauthError) {
+        console.error('[oauth] signInWithOAuth error:', oauthError);
+        setError(`${t('error')} (${oauthError.message})`);
+        setPending(null);
+        return;
+      }
+
+      if (!data?.url) {
+        console.error('[oauth] no redirect URL returned');
+        setError(`${t('error')} (no redirect URL)`);
+        setPending(null);
+        return;
+      }
+
+      console.log('[oauth] redirecting to', data.url);
+      window.location.assign(data.url);
+    } catch (e) {
+      const message = e instanceof Error ? e.message : 'unknown error';
+      console.error('[oauth] threw:', e);
+      setError(`${t('error')} (${message})`);
       setPending(null);
     }
   }
