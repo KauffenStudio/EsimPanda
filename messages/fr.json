@@ -255,6 +255,11 @@
       "error": "Impossible de se connecter. Veuillez réessayer."
     }
   },
+  "footer": {
+    "privacy": "Confidentialité",
+    "terms": "Conditions",
+    "copyright": "© 2026 Kauffen Studio"
+  },
   "referral": {
     "title": "Invitez des Amis, Obtenez des Données Gratuites",
     "subtitle": "Partagez votre lien et vous obtenez tous les deux un pass journalier de 1Go gratuit",

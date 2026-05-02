@@ -255,6 +255,11 @@
       "error": "无法登录。请重试。"
     }
   },
+  "footer": {
+    "privacy": "隐私",
+    "terms": "条款",
+    "copyright": "© 2026 Kauffen Studio"
+  },
   "referral": {
     "title": "邀请好友，获得免费流量",
     "subtitle": "分享链接，双方均可获得1GB免费日卡",

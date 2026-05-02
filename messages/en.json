@@ -255,6 +255,11 @@
       "error": "Could not sign in. Please try again."
     }
   },
+  "footer": {
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "copyright": "© 2026 Kauffen Studio"
+  },
   "referral": {
     "title": "Invite Friends, Get Free Data",
     "subtitle": "Share your link and you both get a free 1GB day pass",

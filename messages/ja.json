@@ -255,6 +255,11 @@
       "error": "サインインできませんでした。もう一度お試しください。"
     }
   },
+  "footer": {
+    "privacy": "プライバシー",
+    "terms": "利用規約",
+    "copyright": "© 2026 Kauffen Studio"
+  },
   "referral": {
     "title": "友達を招待して無料データをゲット",
     "subtitle": "リンクをシェアして、お互いに1GBの無料デイパスをゲット",

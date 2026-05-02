@@ -255,6 +255,11 @@
       "error": "Não foi possível iniciar sessão. Tente novamente."
     }
   },
+  "footer": {
+    "privacy": "Privacidade",
+    "terms": "Termos",
+    "copyright": "© 2026 Kauffen Studio"
+  },
   "referral": {
     "title": "Convide Amigos, Ganhe Dados Grátis",
     "subtitle": "Partilhe o seu link e ambos recebem um passe diário de 1GB grátis",

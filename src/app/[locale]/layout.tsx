@@ -2,6 +2,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, setRequestLocale } from 'next-intl/server';
 import { Header } from '@/components/layout/header';
 import { BottomNav } from '@/components/layout/bottom-nav';
+import { LegalFooter } from '@/components/layout/legal-footer';
 import { PageTransition } from '@/components/layout/page-transition';
 import { Toaster } from 'sonner';
 import { AuthProvider } from '@/components/auth/auth-provider';
@@ -35,6 +36,7 @@ export default async function LocaleLayout({
         <OfflineIndicator />
         <main className="pt-20 pb-20 md:pb-0 min-h-screen dark:bg-background-dark">
           <PageTransition>{children}</PageTransition>
+          <LegalFooter />
         </main>
         <BottomNav />
         <Toaster />
