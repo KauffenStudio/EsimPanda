@@ -8,6 +8,8 @@ import { BambuLoading } from '@/components/bambu/bambu-loading';
 import { GoogleIcon } from '@/components/auth/icons/google-icon';
 import { AppleIcon } from '@/components/auth/icons/apple-icon';
 
+const APPLE_ENABLED = false;
+
 type Provider = 'google' | 'apple';
 
 interface OAuthButtonsProps {
@@ -18,12 +20,6 @@ export function OAuthButtons({ next }: OAuthButtonsProps) {
   const t = useTranslations('auth.oauth');
   const [pending, setPending] = useState<Provider | null>(null);
   const [error, setError] = useState<string | null>(null);
-
-  if (process.env.NEXT_PUBLIC_STRIPE_MOCK === 'true') {
-    return null;
-  }
-
-  const appleEnabled = process.env.NEXT_PUBLIC_OAUTH_APPLE_ENABLED === 'true';
 
   async function handleProvider(provider: Provider) {
     setError(null);
@@ -41,7 +37,6 @@ export function OAuthButtons({ next }: OAuthButtonsProps) {
       setError(t('error'));
       setPending(null);
     }
-    // On success the browser is navigated away; no cleanup needed.
   }
 
   return (
@@ -63,7 +58,7 @@ export function OAuthButtons({ next }: OAuthButtonsProps) {
         )}
       </Button>
 
-      {appleEnabled && (
+      {APPLE_ENABLED && (
         <Button
           variant="secondary"
           type="button"
