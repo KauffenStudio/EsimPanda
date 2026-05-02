@@ -42,3 +42,16 @@ supabase/.temp/
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Bubblewrap / Android — secrets and build outputs
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+android/*.keystore
+android/app-release-*.aab
+android/app-release-*.apk
+android/app-release-*.idsig
+android/app-release-unsigned-aligned.apk
+android/manifest-checksum.txt
+android/store_icon.png
