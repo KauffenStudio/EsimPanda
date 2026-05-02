@@ -245,7 +245,14 @@
       "emailInvalid": "请输入有效的邮箱地址。",
       "resetExpired": "重置链接已过期。请重新申请。",
       "generic": "出错了。请重试。",
-      "conversionExists": "此邮箱已有账户。请登录以关联您的eSIM。"
+      "conversionExists": "此邮箱已有账户。请登录以关联您的eSIM。",
+      "oauthFailed": "无法完成登录。请重试。"
+    },
+    "oauth": {
+      "continueWithGoogle": "使用 Google 继续",
+      "continueWithApple": "使用 Apple 继续",
+      "dividerOr": "或",
+      "error": "无法登录。请重试。"
     }
   },
   "referral": {

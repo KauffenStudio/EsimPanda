@@ -1,0 +1,100 @@
+'use client';
+
+import { useState } from 'react';
+import { useTranslations } from 'next-intl';
+import { createClient } from '@/lib/supabase/client';
+import { Button } from '@/components/ui/button';
+import { BambuLoading } from '@/components/bambu/bambu-loading';
+import { GoogleIcon } from '@/components/auth/icons/google-icon';
+import { AppleIcon } from '@/components/auth/icons/apple-icon';
+
+type Provider = 'google' | 'apple';
+
+interface OAuthButtonsProps {
+  next: string;
+}
+
+export function OAuthButtons({ next }: OAuthButtonsProps) {
+  const t = useTranslations('auth.oauth');
+  const [pending, setPending] = useState<Provider | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  if (process.env.NEXT_PUBLIC_STRIPE_MOCK === 'true') {
+    return null;
+  }
+
+  const appleEnabled = process.env.NEXT_PUBLIC_OAUTH_APPLE_ENABLED === 'true';
+
+  async function handleProvider(provider: Provider) {
+    setError(null);
+    setPending(provider);
+
+    const supabase = createClient();
+    const redirectTo = `${window.location.origin}/api/auth/callback?next=${encodeURIComponent(next)}`;
+
+    const { error: oauthError } = await supabase.auth.signInWithOAuth({
+      provider,
+      options: { redirectTo },
+    });
+
+    if (oauthError) {
+      setError(t('error'));
+      setPending(null);
+    }
+    // On success the browser is navigated away; no cleanup needed.
+  }
+
+  return (
+    <div className="flex flex-col gap-3 mb-6">
+      <Button
+        variant="secondary"
+        type="button"
+        disabled={pending !== null}
+        onClick={() => handleProvider('google')}
+        className="w-full gap-3"
+      >
+        {pending === 'google' ? (
+          <BambuLoading size={20} />
+        ) : (
+          <>
+            <GoogleIcon size={18} />
+            {t('continueWithGoogle')}
+          </>
+        )}
+      </Button>
+
+      {appleEnabled && (
+        <Button
+          variant="secondary"
+          type="button"
+          disabled={pending !== null}
+          onClick={() => handleProvider('apple')}
+          className="w-full gap-3"
+        >
+          {pending === 'apple' ? (
+            <BambuLoading size={20} />
+          ) : (
+            <>
+              <AppleIcon size={18} />
+              {t('continueWithApple')}
+            </>
+          )}
+        </Button>
+      )}
+
+      {error && (
+        <p className="text-sm text-[#E53935] text-center" role="alert">
+          {error}
+        </p>
+      )}
+
+      <div className="flex items-center gap-3 mt-2">
+        <hr className="flex-1 border-t border-border dark:border-border-dark" />
+        <span className="text-xs uppercase tracking-wider text-gray-500 dark:text-gray-400">
+          {t('dividerOr')}
+        </span>
+        <hr className="flex-1 border-t border-border dark:border-border-dark" />
+      </div>
+    </div>
+  );
+}

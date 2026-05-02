@@ -10,6 +10,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { BambuLoading } from '@/components/bambu/bambu-loading';
+import { OAuthButtons } from '@/components/auth/oauth-buttons';
 import type { AuthResult } from '@/lib/auth/types';
 
 export function SignupForm() {
@@ -83,6 +84,8 @@ export function SignupForm() {
       <h1 className="text-2xl font-bold text-primary dark:text-gray-100 mb-6 text-center">
         {t('signup.heading')}
       </h1>
+
+      <OAuthButtons next={`/${locale}`} />
 
       <form action={formAction} className="flex flex-col gap-4">
         <Input

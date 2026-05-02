@@ -245,7 +245,14 @@
       "emailInvalid": "有効なメールアドレスを入力してください。",
       "resetExpired": "このリセットリンクは期限切れです。新しいリンクをリクエストしてください。",
       "generic": "エラーが発生しました。再試行してください。",
-      "conversionExists": "このメールにはすでにアカウントがあります。eSIMをリンクするにはログインしてください。"
+      "conversionExists": "このメールにはすでにアカウントがあります。eSIMをリンクするにはログインしてください。",
+      "oauthFailed": "サインインを完了できませんでした。もう一度お試しください。"
+    },
+    "oauth": {
+      "continueWithGoogle": "Google で続行",
+      "continueWithApple": "Apple で続行",
+      "dividerOr": "または",
+      "error": "サインインできませんでした。もう一度お試しください。"
     }
   },
   "referral": {

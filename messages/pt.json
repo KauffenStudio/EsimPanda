@@ -245,7 +245,14 @@
       "emailInvalid": "Por favor, introduza um endereço de email válido.",
       "resetExpired": "Este link de recuperação expirou. Solicite um novo.",
       "generic": "Algo correu mal. Tente novamente.",
-      "conversionExists": "Este email já tem uma conta. Inicie sessão para associar o seu eSIM."
+      "conversionExists": "Este email já tem uma conta. Inicie sessão para associar o seu eSIM.",
+      "oauthFailed": "Não foi possível concluir o início de sessão. Tente novamente."
+    },
+    "oauth": {
+      "continueWithGoogle": "Continuar com o Google",
+      "continueWithApple": "Continuar com a Apple",
+      "dividerOr": "ou",
+      "error": "Não foi possível iniciar sessão. Tente novamente."
     }
   },
   "referral": {

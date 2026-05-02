@@ -245,7 +245,14 @@
       "emailInvalid": "Veuillez entrer une adresse email valide.",
       "resetExpired": "Ce lien de réinitialisation a expiré. Demandez-en un nouveau.",
       "generic": "Une erreur est survenue. Réessayez.",
-      "conversionExists": "Cet email a déjà un compte. Connectez-vous pour lier votre eSIM."
+      "conversionExists": "Cet email a déjà un compte. Connectez-vous pour lier votre eSIM.",
+      "oauthFailed": "Impossible de finaliser la connexion. Veuillez réessayer."
+    },
+    "oauth": {
+      "continueWithGoogle": "Continuer avec Google",
+      "continueWithApple": "Continuer avec Apple",
+      "dividerOr": "ou",
+      "error": "Impossible de se connecter. Veuillez réessayer."
     }
   },
   "referral": {
