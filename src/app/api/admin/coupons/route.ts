@@ -6,21 +6,8 @@ import {
   updateMockInfluencerCoupon,
 } from '@/lib/referral/mock';
 import { COUPONS } from '@/lib/checkout/coupons';
+import { requireAdmin } from '@/lib/auth/api-guard';
 import type { InfluencerCoupon } from '@/lib/referral/types';
-
-async function isAdmin(): Promise<boolean> {
-  try {
-    const { createClient } = await import('@/lib/supabase/server');
-    const supabase = await createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    if (!user) return false;
-    return user.app_metadata?.role === 'admin';
-  } catch {
-    return false;
-  }
-}
 
 const createSchema = z.object({
   code: z
@@ -39,9 +26,8 @@ const patchSchema = z.object({
 });
 
 export async function GET() {
-  if (!(await isAdmin())) {
-    return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
-  }
+  const { response } = await requireAdmin();
+  if (response) return response;
 
   const coupons = getMockInfluencerCoupons();
 
@@ -58,9 +44,8 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
-  if (!(await isAdmin())) {
-    return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
-  }
+  const { response } = await requireAdmin();
+  if (response) return response;
 
   let body: unknown;
   try {
@@ -108,9 +93,8 @@ export async function POST(request: Request) {
 }
 
 export async function PATCH(request: Request) {
-  if (!(await isAdmin())) {
-    return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
-  }
+  const { response } = await requireAdmin();
+  if (response) return response;
 
   let body: unknown;
   try {
