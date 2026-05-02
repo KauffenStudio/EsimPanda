@@ -1,9 +1,8 @@
 'use client';
 
-import { useActionState, useState } from 'react';
+import { Suspense, useActionState, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { useLocale } from 'next-intl';
-import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Eye, EyeOff } from 'lucide-react';
 import { login } from '@/lib/auth/actions';
@@ -12,13 +11,12 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { BambuLoading } from '@/components/bambu/bambu-loading';
 import { OAuthButtons } from '@/components/auth/oauth-buttons';
+import { CallbackErrorBanner } from '@/components/auth/callback-error-banner';
 import type { AuthResult } from '@/lib/auth/types';
 
 export function LoginForm() {
   const t = useTranslations('auth');
   const locale = useLocale();
-  const searchParams = useSearchParams();
-  const callbackError = searchParams.get('error');
   const [showPassword, setShowPassword] = useState(false);
 
   const [state, formAction, pending] = useActionState(
@@ -35,14 +33,9 @@ export function LoginForm() {
         {t('login.heading')}
       </h1>
 
-      {callbackError && (
-        <p
-          className="text-sm text-[#E53935] text-center mb-4"
-          role="alert"
-        >
-          {t('error.oauthFailed')}
-        </p>
-      )}
+      <Suspense fallback={null}>
+        <CallbackErrorBanner />
+      </Suspense>
 
       <OAuthButtons next={`/${locale}`} />
 

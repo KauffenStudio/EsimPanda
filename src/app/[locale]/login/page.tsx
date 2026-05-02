@@ -1,6 +1,5 @@
 'use client';
 
-import { Suspense } from 'react';
 import { BambuVideo } from '@/components/bambu/bambu-video';
 import { LoginForm } from '@/components/auth/login-form';
 
@@ -11,9 +10,7 @@ export default function LoginPage() {
       <BambuVideo variant="welcome" size={100} className="md:hidden" />
 
       <div className="mt-12 w-full flex justify-center">
-        <Suspense fallback={null}>
-          <LoginForm />
-        </Suspense>
+        <LoginForm />
       </div>
     </div>
   );
