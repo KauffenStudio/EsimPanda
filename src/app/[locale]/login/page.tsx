@@ -4,9 +4,9 @@ import { LoginForm } from '@/components/auth/login-form';
 export default async function LoginPage({
   searchParams,
 }: {
-  searchParams: Promise<{ error?: string }>;
+  searchParams: Promise<{ error?: string; deleted?: string }>;
 }) {
-  const { error } = await searchParams;
+  const { error, deleted } = await searchParams;
 
   return (
     <div className="flex flex-col items-center px-4 pt-8 pb-20">
@@ -14,7 +14,7 @@ export default async function LoginPage({
       <BambuVideo variant="welcome" size={100} className="md:hidden" />
 
       <div className="mt-12 w-full flex justify-center">
-        <LoginForm initialError={error} />
+        <LoginForm initialError={error} accountDeleted={deleted === '1'} />
       </div>
     </div>
   );

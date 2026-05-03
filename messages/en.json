@@ -104,7 +104,19 @@
     "activity": "Your activity",
     "esimsBought": "eSIMs purchased",
     "totalSpent": "Total spent",
-    "preferences": "Preferences"
+    "preferences": "Preferences",
+    "deleteAccount": {
+      "section": "Delete Account",
+      "description": "Permanently delete your eSIM Panda account. Your personal data will be erased; past orders are kept in anonymised form for tax-law retention.",
+      "button": "Delete Account",
+      "modalTitle": "Delete your account?",
+      "modalBody": "This is permanent and cannot be undone. To confirm, type your email below.",
+      "emailLabel": "Email",
+      "confirm": "Permanently Delete",
+      "cancel": "Cancel",
+      "deleting": "Deleting…",
+      "error": "Could not delete your account. Please try again or contact support."
+    }
   },
   "cart": {
     "title": "Your Cart",
@@ -251,7 +263,8 @@
       "resetExpired": "This reset link has expired. Request a new one.",
       "generic": "Something went wrong. Please try again.",
       "conversionExists": "This email already has an account. Log in to link your eSIM.",
-      "oauthFailed": "Could not complete sign-in. Please try again."
+      "oauthFailed": "Could not complete sign-in. Please try again.",
+      "accountDeleted": "Your account has been permanently deleted."
     },
     "oauth": {
       "continueWithGoogle": "Continue with Google",

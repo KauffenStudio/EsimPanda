@@ -104,7 +104,19 @@
     "activity": "Votre activité",
     "esimsBought": "eSIMs achetés",
     "totalSpent": "Total dépensé",
-    "preferences": "Préférences"
+    "preferences": "Préférences",
+    "deleteAccount": {
+      "section": "Supprimer le compte",
+      "description": "Supprimer définitivement votre compte eSIM Panda. Vos données personnelles seront effacées ; les commandes passées sont conservées sous forme anonymisée pour la rétention fiscale.",
+      "button": "Supprimer le compte",
+      "modalTitle": "Supprimer votre compte ?",
+      "modalBody": "Cette action est définitive et irréversible. Pour confirmer, saisissez votre email ci-dessous.",
+      "emailLabel": "Email",
+      "confirm": "Supprimer Définitivement",
+      "cancel": "Annuler",
+      "deleting": "Suppression…",
+      "error": "Impossible de supprimer votre compte. Veuillez réessayer ou contacter le support."
+    }
   },
   "cart": {
     "title": "Votre Panier",
@@ -251,7 +263,8 @@
       "resetExpired": "Ce lien de réinitialisation a expiré. Demandez-en un nouveau.",
       "generic": "Une erreur est survenue. Réessayez.",
       "conversionExists": "Cet email a déjà un compte. Connectez-vous pour lier votre eSIM.",
-      "oauthFailed": "Impossible de finaliser la connexion. Veuillez réessayer."
+      "oauthFailed": "Impossible de finaliser la connexion. Veuillez réessayer.",
+      "accountDeleted": "Votre compte a été supprimé définitivement."
     },
     "oauth": {
       "continueWithGoogle": "Continuer avec Google",

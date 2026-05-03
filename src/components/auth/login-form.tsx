@@ -15,9 +15,10 @@ import type { AuthResult } from '@/lib/auth/types';
 
 interface LoginFormProps {
   initialError?: string;
+  accountDeleted?: boolean;
 }
 
-export function LoginForm({ initialError }: LoginFormProps = {}) {
+export function LoginForm({ initialError, accountDeleted }: LoginFormProps = {}) {
   const t = useTranslations('auth');
   const locale = useLocale();
   const [showPassword, setShowPassword] = useState(false);
@@ -36,7 +37,17 @@ export function LoginForm({ initialError }: LoginFormProps = {}) {
         {t('login.heading')}
       </h1>
 
-      {initialError && (
+      {accountDeleted && (
+        <p
+          className="text-sm text-[#43A047] text-center mb-4"
+          role="status"
+          aria-live="polite"
+        >
+          {t('error.accountDeleted')}
+        </p>
+      )}
+
+      {initialError && !accountDeleted && (
         <p className="text-sm text-[#E53935] text-center mb-4" role="alert">
           {t('error.oauthFailed')}
         </p>

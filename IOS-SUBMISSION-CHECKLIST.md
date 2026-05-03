@@ -130,10 +130,53 @@ Required metadata before submission:
 - [ ] **Pricing**: Free.
 - [ ] **Availability**: All territories.
 
-App Privacy section (required before review):
+App Privacy section (required before review). Use these exact answers in
+the questionnaire so they match what the code actually does:
 
-- [ ] Declare data types collected: Email Address, User ID, Purchase History.
-- [ ] Mark each as **linked to user identity** and used for **App Functionality**.
+| Data type | Collected? | Linked to identity? | Used for tracking? | Purpose |
+|---|---|---|---|---|
+| Email Address | Yes | Yes | No | App Functionality |
+| Name | Yes (only via Google OAuth metadata) | Yes | No | App Functionality |
+| User ID | Yes (Supabase `auth.uid`) | Yes | No | App Functionality |
+| Purchase History | Yes | Yes | No | App Functionality |
+| Payment Info | **No** (handled entirely by Stripe; we never store card data) | — | — | — |
+| Phone Number | No | — | — | — |
+| Precise Location | No | — | — | — |
+| Coarse Location | No | — | — | — |
+| Photos / Videos | No (the user-uploads bucket exists but no feature surfaces it) | — | — | — |
+| Audio Data | No | — | — | — |
+| Contacts | No | — | — | — |
+| Browsing History | No | — | — | — |
+| Search History | No | — | — | — |
+| Diagnostics / Crash Logs | No (Vercel keeps server logs but we don't ship a crash reporter) | — | — | — |
+| Identifiers / Device ID | No | — | — | — |
+| Advertising | No | — | — | — |
+
+- [ ] Tracking: select **No, this app does not collect data used to track users**.
+- [ ] Sub-processors named in the privacy policy match the disclosure: Stripe,
+      Supabase, Celitech, Resend, Vercel, Google.
+
+## 8a — Why this app survives Guideline 4.2 / 5.1
+
+App Review Notes for the submission should explicitly call out the four
+risk areas reviewers focus on, with one-line evidence each:
+
+- **Guideline 5.1.1 — Privacy Policy**: live at
+  `https://esimpanda.co/en/privacy`, also linked from every page footer
+  inside the app. GDPR-aligned, names every sub-processor, lists user
+  rights including erasure.
+- **Guideline 5.1.1(v) — Account Deletion**: the **Profile** tab has a
+  "Delete Account" section. Confirmation requires typing the account
+  email, then anonymises orders for tax-law retention and hard-deletes
+  the auth row. No "contact support" required.
+- **Guideline 5.1.2 — Data Sharing**: every third party that touches
+  user data (Stripe / Supabase / Celitech / Resend / Vercel / Google) is
+  named in the privacy policy with the data they receive and the legal
+  basis. No analytics or tracking SDK is bundled.
+- **Guideline 4.2 — Minimum Functionality**: the app extends the website
+  with three native features that a browser cannot offer — APNs push
+  notifications for eSIM expiry alerts, Apple Wallet pass for the eSIM
+  QR code, and Universal Links so emailed order links open in the app.
 
 ## 9 — Build & archive in Xcode
 
@@ -186,14 +229,20 @@ App Privacy section (required before review):
 - ✅ `src/lib/native/deep-links.ts` — Universal Link → router bridge.
 - ✅ `public/.well-known/apple-app-site-association` populated with real Team ID `WBU6X584D3`.
 - ✅ `vercel.json` updated to serve the AASA file as `application/json`.
+- ✅ Xcode project scaffolded at `ios/App/App.xcodeproj` (Swift Package Manager).
+- ✅ `attachDeepLinkRouter` and `registerNativePush` wired into the root
+     `<AuthProvider>` so they fire automatically inside the native shell.
+- ✅ **Account deletion** (Guideline 5.1.1(v)) — Profile tab has a self-service
+     "Delete Account" section with typed-email confirmation, anonymises orders
+     for PT tax-law retention, hard-deletes the auth row, sends a confirmation
+     email, and signs the user out.
 
 ## What still needs to be done
 
-- ❌ Run `npx cap add ios` (requires Xcode).
+- ❌ Configure Xcode signing (Team `WBU6X584D3`, automatic profile generation).
+- ❌ Add Push / Associated Domains / Wallet capabilities in Xcode → Signing & Capabilities.
 - ❌ Implement `/api/push/register-device` route (backend).
 - ❌ Implement `/api/wallet/[orderId]/pass` route (backend, requires Pass Type ID).
-- ❌ Wire `attachDeepLinkRouter` into the layout (one `useEffect`).
-- ❌ Wire `registerNativePush` into the layout (one `useEffect`, after auth).
 - ❌ Add an "Add to Apple Wallet" button to the eSIM detail screen.
 - ❌ Generate App Store screenshots and icons.
 - ❌ Submit to App Store Review.

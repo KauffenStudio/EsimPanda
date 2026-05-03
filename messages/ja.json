@@ -104,7 +104,19 @@
     "activity": "アクティビティ",
     "esimsBought": "購入したeSIM",
     "totalSpent": "合計支出",
-    "preferences": "設定"
+    "preferences": "設定",
+    "deleteAccount": {
+      "section": "アカウントを削除",
+      "description": "eSIM Panda アカウントを完全に削除します。個人情報は消去され、過去の注文は税務保管要件のため匿名化された形で保持されます。",
+      "button": "アカウントを削除",
+      "modalTitle": "アカウントを削除しますか？",
+      "modalBody": "この操作は永続的で元に戻せません。確認するには、下にメールアドレスを入力してください。",
+      "emailLabel": "メール",
+      "confirm": "完全に削除",
+      "cancel": "キャンセル",
+      "deleting": "削除中…",
+      "error": "アカウントを削除できませんでした。再試行するかサポートにお問い合わせください。"
+    }
   },
   "cart": {
     "title": "カート",
@@ -251,7 +263,8 @@
       "resetExpired": "このリセットリンクは期限切れです。新しいリンクをリクエストしてください。",
       "generic": "エラーが発生しました。再試行してください。",
       "conversionExists": "このメールにはすでにアカウントがあります。eSIMをリンクするにはログインしてください。",
-      "oauthFailed": "サインインを完了できませんでした。もう一度お試しください。"
+      "oauthFailed": "サインインを完了できませんでした。もう一度お試しください。",
+      "accountDeleted": "アカウントが完全に削除されました。"
     },
     "oauth": {
       "continueWithGoogle": "Google で続行",

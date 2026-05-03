@@ -104,7 +104,19 @@
     "activity": "A sua atividade",
     "esimsBought": "eSIMs comprados",
     "totalSpent": "Total gasto",
-    "preferences": "Preferências"
+    "preferences": "Preferências",
+    "deleteAccount": {
+      "section": "Apagar Conta",
+      "description": "Apagar permanentemente a sua conta eSIM Panda. Os seus dados pessoais serão eliminados; encomendas passadas mantidas em formato anonimizado para retenção fiscal.",
+      "button": "Apagar Conta",
+      "modalTitle": "Apagar a sua conta?",
+      "modalBody": "Esta ação é permanente e não pode ser desfeita. Para confirmar, escreva o seu email abaixo.",
+      "emailLabel": "Email",
+      "confirm": "Apagar Permanentemente",
+      "cancel": "Cancelar",
+      "deleting": "A apagar…",
+      "error": "Não foi possível apagar a sua conta. Tente novamente ou contacte o suporte."
+    }
   },
   "cart": {
     "title": "O Seu Carrinho",
@@ -251,7 +263,8 @@
       "resetExpired": "Este link de recuperação expirou. Solicite um novo.",
       "generic": "Algo correu mal. Tente novamente.",
       "conversionExists": "Este email já tem uma conta. Inicie sessão para associar o seu eSIM.",
-      "oauthFailed": "Não foi possível concluir o início de sessão. Tente novamente."
+      "oauthFailed": "Não foi possível concluir o início de sessão. Tente novamente.",
+      "accountDeleted": "A sua conta foi permanentemente apagada."
     },
     "oauth": {
       "continueWithGoogle": "Continuar com o Google",

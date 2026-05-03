@@ -6,6 +6,7 @@ import { getOrdersByUser } from '@/lib/db/orders';
 import { Button } from '@/components/ui/button';
 import { BambuVideo } from '@/components/bambu/bambu-video';
 import { ProfileSettings } from '@/components/profile/profile-settings';
+import { DeleteAccountSection } from '@/components/profile/delete-account-section';
 
 const PAID_STATUSES = ['delivered', 'active', 'expired', 'payment_confirmed'];
 
@@ -168,6 +169,8 @@ export default async function ProfilePage({
       </section>
 
       <ProfileSettings />
+
+      <DeleteAccountSection email={user.email!} />
     </div>
   );
 }

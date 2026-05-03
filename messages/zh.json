@@ -104,7 +104,19 @@
     "activity": "您的活动",
     "esimsBought": "已购买 eSIM",
     "totalSpent": "总消费",
-    "preferences": "偏好设置"
+    "preferences": "偏好设置",
+    "deleteAccount": {
+      "section": "删除账户",
+      "description": "永久删除您的 eSIM Panda 账户。您的个人数据将被清除；过去的订单将以匿名形式保留以满足税务保留要求。",
+      "button": "删除账户",
+      "modalTitle": "删除您的账户？",
+      "modalBody": "此操作永久且不可撤销。请在下方输入您的邮箱以确认。",
+      "emailLabel": "邮箱",
+      "confirm": "永久删除",
+      "cancel": "取消",
+      "deleting": "正在删除…",
+      "error": "无法删除您的账户。请重试或联系支持。"
+    }
   },
   "cart": {
     "title": "购物车",
@@ -251,7 +263,8 @@
       "resetExpired": "重置链接已过期。请重新申请。",
       "generic": "出错了。请重试。",
       "conversionExists": "此邮箱已有账户。请登录以关联您的eSIM。",
-      "oauthFailed": "无法完成登录。请重试。"
+      "oauthFailed": "无法完成登录。请重试。",
+      "accountDeleted": "您的账户已被永久删除。"
     },
     "oauth": {
       "continueWithGoogle": "使用 Google 继续",

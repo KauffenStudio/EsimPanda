@@ -161,3 +161,26 @@ export async function getOrdersByUser(userId: string): Promise<OrderRow[]> {
   }
   return data || [];
 }
+
+// Strip personal identifiers from every order belonging to a user being
+// permanently deleted. Order amounts/plans/dates remain intact so the
+// 10-year tax-law retention obligation is met (PT Decreto-Lei 28/2019,
+// art. 123 CIVA), but the records are no longer linkable to the person.
+// Caller MUST pass a service-role-backed Supabase client so this
+// bypasses RLS — the anon-key client cannot UPDATE arbitrary user rows.
+export async function anonymizeOrdersForUser(
+  serviceClient: import('@supabase/supabase-js').SupabaseClient,
+  userId: string,
+): Promise<number> {
+  const { data, error } = await serviceClient
+    .from('orders')
+    .update({ user_id: null, email: 'deleted@anon.invalid' })
+    .eq('user_id', userId)
+    .select('id');
+
+  if (error) {
+    console.error('anonymizeOrdersForUser error:', error.message);
+    throw error;
+  }
+  return data?.length ?? 0;
+}
