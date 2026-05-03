@@ -8,7 +8,7 @@ import { BambuLoading } from '@/components/bambu/bambu-loading';
 import { GoogleIcon } from '@/components/auth/icons/google-icon';
 import { AppleIcon } from '@/components/auth/icons/apple-icon';
 
-const APPLE_ENABLED = false;
+const APPLE_ENABLED = true;
 
 type Provider = 'google' | 'apple';
 

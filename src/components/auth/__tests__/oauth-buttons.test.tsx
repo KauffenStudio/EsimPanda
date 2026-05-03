@@ -44,17 +44,21 @@ describe('OAuthButtons', () => {
     mockSignInWithOAuth.mockReset();
   });
 
-  it('renders the Google button and divider', async () => {
+  it('renders both provider buttons and the divider', async () => {
     const { OAuthButtons } = await import('../oauth-buttons');
     render(<OAuthButtons next="/en" />);
     expect(screen.getByRole('button', { name: /Continue with Google/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Continue with Apple/i })).toBeInTheDocument();
     expect(screen.getByText('or')).toBeInTheDocument();
   });
 
-  it('hides the Apple button while APPLE_ENABLED is false', async () => {
+  it('clicking Apple calls signInWithOAuth with provider=apple', async () => {
+    mockSignInWithOAuth.mockResolvedValue({ error: null });
     const { OAuthButtons } = await import('../oauth-buttons');
     render(<OAuthButtons next="/en" />);
-    expect(screen.queryByRole('button', { name: /Continue with Apple/i })).toBeNull();
+    fireEvent.click(screen.getByRole('button', { name: /Continue with Apple/i }));
+    await waitFor(() => expect(mockSignInWithOAuth).toHaveBeenCalledTimes(1));
+    expect(mockSignInWithOAuth.mock.calls[0][0].provider).toBe('apple');
   });
 
   it('clicking Google calls signInWithOAuth with provider=google and encoded next in redirectTo', async () => {
