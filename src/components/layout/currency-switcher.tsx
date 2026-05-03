@@ -2,7 +2,6 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
-import { DollarSign } from 'lucide-react';
 import { useCurrencyStore } from '@/stores/currency';
 import { CURRENCIES } from '@/lib/currency/rates';
 import type { CurrencyCode } from '@/lib/currency/rates';
@@ -12,6 +11,7 @@ export function CurrencySwitcher() {
   const setCurrency = useCurrencyStore((s) => s.setCurrency);
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const activeCurrency = CURRENCIES.find((c) => c.code === currency) ?? CURRENCIES[0];
 
   useEffect(() => {
     function handleClickOutside(e: MouseEvent | TouchEvent) {
@@ -49,7 +49,9 @@ export function CurrencySwitcher() {
         aria-label="Currency"
         aria-expanded={isOpen}
       >
-        <DollarSign size={14} />
+        <span className="text-sm font-semibold w-3.5 text-center" aria-hidden="true">
+          {activeCurrency.symbol}
+        </span>
         <span className="text-xs font-medium">{currency}</span>
       </button>
 
