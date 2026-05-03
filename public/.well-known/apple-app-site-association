@@ -2,7 +2,7 @@
   "applinks": {
     "details": [
       {
-        "appIDs": ["TEAMID.co.esimpanda.app"],
+        "appIDs": ["WBU6X584D3.co.esimpanda.app"],
         "components": [
           {
             "/": "/*",
@@ -13,6 +13,6 @@
     ]
   },
   "webcredentials": {
-    "apps": ["TEAMID.co.esimpanda.app"]
+    "apps": ["WBU6X584D3.co.esimpanda.app"]
   }
 }

@@ -184,13 +184,12 @@ App Privacy section (required before review):
 - ✅ `src/lib/native/platform.ts` — runtime detection of native vs web.
 - ✅ `src/lib/native/push.ts` — APN registration that no-ops in browsers.
 - ✅ `src/lib/native/deep-links.ts` — Universal Link → router bridge.
-- ✅ `public/.well-known/apple-app-site-association` (with TEAMID placeholder).
+- ✅ `public/.well-known/apple-app-site-association` populated with real Team ID `WBU6X584D3`.
 - ✅ `vercel.json` updated to serve the AASA file as `application/json`.
 
 ## What still needs to be done
 
 - ❌ Run `npx cap add ios` (requires Xcode).
-- ❌ Replace `TEAMID` in the AASA file (requires Apple Developer enrolment).
 - ❌ Implement `/api/push/register-device` route (backend).
 - ❌ Implement `/api/wallet/[orderId]/pass` route (backend, requires Pass Type ID).
 - ❌ Wire `attachDeepLinkRouter` into the layout (one `useEffect`).
