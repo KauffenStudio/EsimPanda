@@ -4,7 +4,6 @@ import { getTranslations } from 'next-intl/server';
 import { createClient } from '@/lib/supabase/server';
 import { getOrdersByUser } from '@/lib/db/orders';
 import { Button } from '@/components/ui/button';
-import { BambuVideo } from '@/components/bambu/bambu-video';
 import { ProfileSettings } from '@/components/profile/profile-settings';
 import { DeleteAccountSection } from '@/components/profile/delete-account-section';
 
@@ -46,25 +45,24 @@ export default async function ProfilePage({
 
   if (!user) {
     return (
-      <div className="flex flex-col items-center px-4 py-8">
-        <h1 className="text-3xl font-bold tracking-tighter text-primary dark:text-gray-100 mb-6">
+      <div className="flex flex-col items-center px-4 pt-1 pb-4 max-w-5xl mx-auto">
+        <h1 className="text-3xl font-bold tracking-tighter text-primary dark:text-gray-100 mb-2">
           {t('profile.title')}
         </h1>
-        <BambuVideo variant="empty" size={100} className="mb-3" />
-        <p className="text-gray-600 dark:text-gray-400 text-center max-w-sm text-sm">
+        <p className="text-gray-600 dark:text-gray-400 text-center max-w-sm text-sm mb-4">
           {t('profile.empty')}
         </p>
-        <div className="flex flex-row gap-3 mt-6">
-          <Link href={`/${locale}/login`}>
-            <Button variant="primary" size="lg">
-              <LogIn size={18} className="mr-2" />
-              {t('auth.login.submit')}
+        <div className="flex flex-row gap-2 sm:gap-3 w-full max-w-md">
+          <Link href={`/${locale}/login`} className="flex-1 min-w-0">
+            <Button variant="primary" size="md" className="w-full">
+              <LogIn size={16} className="mr-1.5 shrink-0" />
+              <span className="truncate">{t('auth.login.submit')}</span>
             </Button>
           </Link>
-          <Link href={`/${locale}/signup`}>
-            <Button variant="secondary" size="lg">
-              <UserPlus size={18} className="mr-2" />
-              {t('auth.signup.submit')}
+          <Link href={`/${locale}/signup`} className="flex-1 min-w-0">
+            <Button variant="secondary" size="md" className="w-full">
+              <UserPlus size={16} className="mr-1.5 shrink-0" />
+              <span className="truncate">{t('auth.signup.submit')}</span>
             </Button>
           </Link>
         </div>
