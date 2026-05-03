@@ -18,6 +18,11 @@ vi.mock('next/headers', () => ({
   }),
 }));
 
+// Mock next/cache
+vi.mock('next/cache', () => ({
+  revalidatePath: vi.fn(),
+}));
+
 // Mock resend (needed because sendResetEmail is now a real import)
 const mockResendSend = vi.fn().mockResolvedValue({ data: { id: 'test_id' }, error: null });
 vi.mock('resend', () => ({

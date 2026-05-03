@@ -1,6 +1,7 @@
 'use server';
 
 import { redirect } from 'next/navigation';
+import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 import { createClient } from '@/lib/supabase/server';
 import { isMockMode } from './mock';
@@ -64,6 +65,12 @@ export async function signOut(): Promise<void> {
 
   const supabase = await createClient();
   await supabase.auth.signOut();
+
+  // Invalidate every cached layout so the AuthProvider in the root
+  // [locale] layout re-resolves the user (now null) on the next render.
+  // Without this, a soft navigation after the redirect can serve a
+  // cached layout whose initialUser still points at the old session.
+  revalidatePath('/', 'layout');
 
   const locale = await getLocale();
   redirect(`/${locale}/login`);
