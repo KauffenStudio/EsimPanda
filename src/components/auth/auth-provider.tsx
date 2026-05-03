@@ -1,14 +1,20 @@
 'use client';
 
 import { useEffect } from 'react';
+import type { User } from '@supabase/supabase-js';
 import { useAuthStore } from '@/stores/auth';
 
-export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const initialize = useAuthStore((s) => s.initialize);
+interface AuthProviderProps {
+  initialUser: User | null;
+  children: React.ReactNode;
+}
+
+export function AuthProvider({ initialUser, children }: AuthProviderProps) {
+  const hydrate = useAuthStore((s) => s.hydrate);
 
   useEffect(() => {
-    initialize();
-  }, [initialize]);
+    hydrate(initialUser);
+  }, [hydrate, initialUser]);
 
   return <>{children}</>;
 }
