@@ -6,7 +6,7 @@ import { useLocale } from 'next-intl';
 import Link from 'next/link';
 import { AnimatePresence, motion } from 'motion/react';
 import { useAuthStore } from '@/stores/auth';
-import { signOut } from '@/lib/auth/actions';
+import { performLogout } from '@/lib/auth/client-logout';
 import { Button } from '@/components/ui/button';
 
 export function UserMenu() {
@@ -126,9 +126,9 @@ export function UserMenu() {
             {/* Log out */}
             <button
               type="button"
-              onClick={async () => {
+              onClick={() => {
                 setOpen(false);
-                await signOut();
+                performLogout(locale);
               }}
               className="w-full h-10 px-4 text-left text-sm text-[#E53935] hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
             >
