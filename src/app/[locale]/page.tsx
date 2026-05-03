@@ -12,7 +12,7 @@ export default function LandingPage() {
   const locale = useLocale();
 
   return (
-    <div className="flex flex-col items-center px-4 pt-2 md:pt-4">
+    <div className="flex flex-col items-center px-4 pt-6 md:pt-10">
       {/* Panda hero — video faded into page background */}
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
