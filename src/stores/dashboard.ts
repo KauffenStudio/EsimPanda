@@ -49,20 +49,25 @@ export const useDashboardStore = create<DashboardState>((set) => ({
       return;
     }
 
-    if (process.env.NEXT_PUBLIC_STRIPE_MOCK === 'true') {
-      const { mockDashboardEsims, mockPurchases } = await import(
-        '@/lib/mock-data/dashboard'
-      );
+    // Always go through the API: it decides mock vs real based on the
+    // server-side IS_MOCK flag, which is fresh per request and not
+    // baked into the client bundle.
+    try {
+      const res = await fetch('/api/dashboard/esims', { cache: 'no-store' });
+      if (!res.ok) {
+        set({ loading: false, error: 'Could not load eSIMs', esims: [], purchases: [] });
+        return;
+      }
+      const data = (await res.json()) as { esims?: DashboardEsim[]; purchases?: PurchaseRecord[] };
       set({
-        esims: mockDashboardEsims,
-        purchases: mockPurchases,
+        esims: data.esims ?? [],
+        purchases: data.purchases ?? [],
         loading: false,
+        error: null,
       });
-      return;
+    } catch {
+      set({ loading: false, error: 'Network error', esims: [], purchases: [] });
     }
-
-    // TODO: Production — fetch from /api/dashboard/esims
-    set({ loading: false });
   },
 
   setEsims: (esims) => set({ esims }),
