@@ -29,6 +29,21 @@ const config: CapacitorConfig = {
     PushNotifications: {
       presentationOptions: ['badge', 'sound', 'alert'],
     },
+    SplashScreen: {
+      // Stay visible until the React tree explicitly calls SplashScreen.hide().
+      // Avoids the default 3-second fixed timeout that lingers even after the
+      // page has finished loading.
+      launchAutoHide: false,
+      launchShowDuration: 0,
+      backgroundColor: '#FFFFFF',
+      showSpinner: false,
+      androidSplashResourceName: 'splash',
+      androidScaleType: 'CENTER_CROP',
+      splashImmersive: false,
+      splashFullScreen: false,
+      iosSpinnerStyle: 'small',
+      launchFadeOutDuration: 200,
+    },
   },
 };
 

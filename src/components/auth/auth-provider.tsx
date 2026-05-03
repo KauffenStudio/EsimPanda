@@ -6,6 +6,7 @@ import type { User } from '@supabase/supabase-js';
 import { useAuthStore } from '@/stores/auth';
 import { attachDeepLinkRouter } from '@/lib/native/deep-links';
 import { registerNativePush } from '@/lib/native/push';
+import { hideNativeSplash } from '@/lib/native/splash';
 
 interface AuthProviderProps {
   initialUser: User | null;
@@ -18,6 +19,9 @@ export function AuthProvider({ initialUser, children }: AuthProviderProps) {
 
   useEffect(() => {
     hydrate(initialUser);
+    // Now that we've made the auth state available to the React tree,
+    // it's safe to drop the native splash screen and reveal the app.
+    hideNativeSplash();
   }, [hydrate, initialUser]);
 
   // Universal Links → client navigation. No-op when running in a browser tab.
