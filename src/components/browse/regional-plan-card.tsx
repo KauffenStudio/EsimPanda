@@ -5,6 +5,8 @@ import { useTranslations, useLocale } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { Badge } from '@/components/ui/badge';
 import { useDestinations } from '@/hooks/use-destinations';
+import { useCurrencyStore } from '@/stores/currency';
+import { formatPrice } from '@/lib/currency/rates';
 import { getStartingPrice, getPlansForDestination, getBestDiscount, getOriginalPrice, getDiscountPercent } from '@/lib/mock-data/plans';
 import type { MockDestination } from '@/lib/mock-data/destinations';
 
@@ -18,12 +20,12 @@ function RegionalCard({ plan }: { plan: MockDestination }) {
   const t = useTranslations();
   const locale = useLocale();
   const router = useRouter();
+  const currency = useCurrencyStore((s) => s.currency);
 
   const priceCents = getStartingPrice(plan.id);
-  const price = (priceCents / 100).toFixed(2);
   const cheapestPlan = getPlansForDestination(plan.id).sort((a, b) => a.retail_price_cents - b.retail_price_cents)[0];
   const dataGb = cheapestPlan?.data_gb ?? 5;
-  const originalPrice = (getOriginalPrice(priceCents, dataGb) / 100).toFixed(2);
+  const originalCents = getOriginalPrice(priceCents, dataGb);
   const discount = getDiscountPercent(priceCents, dataGb);
   const meta = regionMeta[plan.region] || { badge: 'Multi-country', countryCount: '' };
 
@@ -47,9 +49,11 @@ function RegionalCard({ plan }: { plan: MockDestination }) {
         <p className="text-white/80 text-sm">One plan, {meta.countryCount} countries</p>
         <div className="flex items-center gap-2 mt-1">
           <Badge variant="accent">{meta.badge}</Badge>
-          <span className="text-white/50 text-sm line-through">${originalPrice}</span>
+          <span className="text-white/50 text-sm line-through">
+            {formatPrice(originalCents, currency)}
+          </span>
           <span className="text-white/90 text-sm font-bold">
-            {t('browse.from')} ${price}
+            {t('browse.from')} {formatPrice(priceCents, currency)}
           </span>
           <span className="text-[10px] font-bold text-white bg-[#E53935] px-1.5 py-0.5 rounded">
             -{discount}%

@@ -4,7 +4,6 @@ import { useTranslations, useLocale } from 'next-intl';
 import { motion } from 'motion/react';
 import { Button } from '@/components/ui/button';
 import { BambuVideo } from '@/components/bambu/bambu-video';
-import { AppStoreBadges } from '@/components/marketing/app-store-badges';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 
@@ -70,10 +69,6 @@ export default function LandingPage() {
               <span className="truncate">{t('landing.cta_secondary')}</span>
             </Button>
           </Link>
-        </div>
-
-        <div className="mt-6 sm:mt-8 w-full">
-          <AppStoreBadges />
         </div>
       </motion.div>
     </div>

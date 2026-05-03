@@ -59,29 +59,26 @@ export default function DashboardPage() {
   // Auth gate — require login
   if (authInitialized && !user) {
     return (
-      <div className="flex flex-col items-center px-4 pt-2 pb-4 max-w-5xl mx-auto">
+      <div className="flex flex-col items-center px-4 pt-1 pb-4 max-w-5xl mx-auto">
         <h1 className="text-2xl font-bold tracking-tighter text-primary dark:text-gray-100 mb-2">
           {t('dashboard.title')}
         </h1>
-        <div className="flex flex-col items-center justify-center py-4">
-          <BambuVideo variant="empty" size={80} className="mb-3" />
-          <p className="text-gray-600 dark:text-gray-400 text-center max-w-sm text-sm">
-            {t('dashboard.empty_body')}
-          </p>
-          <div className="flex flex-row gap-3 mt-5">
-            <Link href={`/${locale}/login`}>
-              <Button variant="primary" size="lg">
-                <LogIn size={18} className="mr-2" />
-                {t('auth.login.submit')}
-              </Button>
-            </Link>
-            <Link href={`/${locale}/signup`}>
-              <Button variant="secondary" size="lg">
-                <UserPlus size={18} className="mr-2" />
-                {t('auth.signup.submit')}
-              </Button>
-            </Link>
-          </div>
+        <p className="text-gray-600 dark:text-gray-400 text-center max-w-sm text-sm mb-4">
+          {t('dashboard.empty_body')}
+        </p>
+        <div className="flex flex-row gap-2 sm:gap-3 w-full max-w-md">
+          <Link href={`/${locale}/login`} className="flex-1 min-w-0">
+            <Button variant="primary" size="md" className="w-full">
+              <LogIn size={16} className="mr-1.5 shrink-0" />
+              <span className="truncate">{t('auth.login.submit')}</span>
+            </Button>
+          </Link>
+          <Link href={`/${locale}/signup`} className="flex-1 min-w-0">
+            <Button variant="secondary" size="md" className="w-full">
+              <UserPlus size={16} className="mr-1.5 shrink-0" />
+              <span className="truncate">{t('auth.signup.submit')}</span>
+            </Button>
+          </Link>
         </div>
       </div>
     );

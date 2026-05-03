@@ -7,16 +7,15 @@ interface BadgeProps {
   alt: string;
   ariaLabel: string;
   comingSoonLabel: string;
+  compact: boolean;
 }
 
-function Badge({ href, src, alt, ariaLabel, comingSoonLabel }: BadgeProps) {
+function Badge({ href, src, alt, ariaLabel, comingSoonLabel, compact }: BadgeProps) {
   const enabled = href.length > 0;
-  // The badge image stays at its natural aspect ratio. flex-1 + max-w
-  // lets the pair share width on narrow phones without squishing the
-  // artwork — the image is height-constrained, width-auto.
-  const wrapperClass =
-    'flex-1 min-w-0 max-w-[180px] inline-flex items-center justify-center';
-  const imgClass = 'h-10 sm:h-11 w-auto';
+  const wrapperClass = compact
+    ? 'flex-1 min-w-0 max-w-[130px] inline-flex items-center justify-center'
+    : 'flex-1 min-w-0 max-w-[180px] inline-flex items-center justify-center';
+  const imgClass = compact ? 'h-7 sm:h-8 w-auto' : 'h-10 sm:h-11 w-auto';
 
   if (enabled) {
     return (
@@ -45,7 +44,13 @@ function Badge({ href, src, alt, ariaLabel, comingSoonLabel }: BadgeProps) {
   );
 }
 
-export function AppStoreBadges() {
+interface AppStoreBadgesProps {
+  /** Render at footer-friendly size (h-7 / h-8). Default false renders the
+      hero-sized variant. */
+  compact?: boolean;
+}
+
+export function AppStoreBadges({ compact = false }: AppStoreBadgesProps = {}) {
   const t = useTranslations('appBadges');
 
   return (
@@ -56,6 +61,7 @@ export function AppStoreBadges() {
         alt="Download on the App Store"
         ariaLabel={t('appStoreAria')}
         comingSoonLabel={t('comingSoon')}
+        compact={compact}
       />
       <Badge
         href={APP_STORE_LINKS.google}
@@ -63,6 +69,7 @@ export function AppStoreBadges() {
         alt="Get it on Google Play"
         ariaLabel={t('googlePlayAria')}
         comingSoonLabel={t('comingSoon')}
+        compact={compact}
       />
     </div>
   );
