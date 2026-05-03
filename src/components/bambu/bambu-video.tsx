@@ -43,11 +43,21 @@ export function BambuVideo({
     const video = videoRef.current;
     if (!video) return;
 
-    // Eagerly try to play on mount (mobile needs this)
-    video.play().catch(() => {});
+    // Eagerly try to play on mount (mobile needs this). HTMLMediaElement.play()
+    // returns a Promise in real browsers but jsdom (and very old engines)
+    // can return undefined — guard before chaining .catch.
+    const playPromise = video.play();
+    if (playPromise && typeof playPromise.catch === 'function') {
+      playPromise.catch(() => {});
+    }
 
     // Skip observer for raw mode — raw videos manage their own visibility
     if (raw) return;
+
+    // jsdom and very old browsers don't ship IntersectionObserver. Skip
+    // visibility-based playback in those environments — the eager play
+    // above is enough to keep tests passing without crashing.
+    if (typeof IntersectionObserver === 'undefined') return;
 
     observerRef.current = new IntersectionObserver(
       ([entry]) => {

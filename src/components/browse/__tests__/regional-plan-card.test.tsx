@@ -12,6 +12,14 @@ vi.mock('next-intl', () => ({
     };
     return messages[key] || key;
   },
+  useLocale: () => 'en',
+}));
+
+// Mock next/navigation
+vi.mock('next/navigation', () => ({
+  useRouter: () => ({ push: vi.fn(), replace: vi.fn(), back: vi.fn() }),
+  usePathname: () => '/en/browse',
+  useSearchParams: () => new URLSearchParams(),
 }));
 
 // Mock next/image
