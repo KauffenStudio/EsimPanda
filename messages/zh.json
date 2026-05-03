@@ -99,7 +99,12 @@
   },
   "profile": {
     "title": "个人资料",
-    "empty": "登录以管理您的eSIM、查看购买记录和跟踪流量使用情况。"
+    "empty": "登录以管理您的eSIM、查看购买记录和跟踪流量使用情况。",
+    "memberSince": "注册于 {date}",
+    "activity": "您的活动",
+    "esimsBought": "已购买 eSIM",
+    "totalSpent": "总消费",
+    "preferences": "偏好设置"
   },
   "cart": {
     "title": "购物车",

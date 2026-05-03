@@ -99,7 +99,12 @@
   },
   "profile": {
     "title": "Perfil",
-    "empty": "Inicie sessão para gerir os seus eSIMs, ver o histórico de compras e acompanhar a utilização de dados."
+    "empty": "Inicie sessão para gerir os seus eSIMs, ver o histórico de compras e acompanhar a utilização de dados.",
+    "memberSince": "Membro desde {date}",
+    "activity": "A sua atividade",
+    "esimsBought": "eSIMs comprados",
+    "totalSpent": "Total gasto",
+    "preferences": "Preferências"
   },
   "cart": {
     "title": "O Seu Carrinho",

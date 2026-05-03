@@ -99,7 +99,12 @@
   },
   "profile": {
     "title": "プロフィール",
-    "empty": "ログインしてeSIMの管理、購入履歴の確認、データ使用量の追跡を行いましょう。"
+    "empty": "ログインしてeSIMの管理、購入履歴の確認、データ使用量の追跡を行いましょう。",
+    "memberSince": "登録日: {date}",
+    "activity": "アクティビティ",
+    "esimsBought": "購入したeSIM",
+    "totalSpent": "合計支出",
+    "preferences": "設定"
   },
   "cart": {
     "title": "カート",

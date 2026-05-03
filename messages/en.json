@@ -99,7 +99,12 @@
   },
   "profile": {
     "title": "Profile",
-    "empty": "Sign in to manage your eSIMs, view purchase history, and track your data usage."
+    "empty": "Sign in to manage your eSIMs, view purchase history, and track your data usage.",
+    "memberSince": "Member since {date}",
+    "activity": "Your activity",
+    "esimsBought": "eSIMs purchased",
+    "totalSpent": "Total spent",
+    "preferences": "Preferences"
   },
   "cart": {
     "title": "Your Cart",
