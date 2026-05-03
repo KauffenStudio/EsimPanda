@@ -11,7 +11,12 @@ interface BadgeProps {
 
 function Badge({ href, src, alt, ariaLabel, comingSoonLabel }: BadgeProps) {
   const enabled = href.length > 0;
-  const className = 'inline-flex items-center justify-center';
+  // The badge image stays at its natural aspect ratio. flex-1 + max-w
+  // lets the pair share width on narrow phones without squishing the
+  // artwork — the image is height-constrained, width-auto.
+  const wrapperClass =
+    'flex-1 min-w-0 max-w-[180px] inline-flex items-center justify-center';
+  const imgClass = 'h-10 sm:h-11 w-auto';
 
   if (enabled) {
     return (
@@ -20,10 +25,10 @@ function Badge({ href, src, alt, ariaLabel, comingSoonLabel }: BadgeProps) {
         target="_blank"
         rel="noopener noreferrer"
         aria-label={ariaLabel}
-        className={`${className} transition-opacity hover:opacity-90`}
+        className={`${wrapperClass} transition-opacity hover:opacity-90`}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={src} alt={alt} className="h-11 w-auto" />
+        <img src={src} alt={alt} className={imgClass} />
       </a>
     );
   }
@@ -32,10 +37,10 @@ function Badge({ href, src, alt, ariaLabel, comingSoonLabel }: BadgeProps) {
     <span
       aria-disabled="true"
       title={comingSoonLabel}
-      className={`${className} opacity-50 cursor-not-allowed`}
+      className={`${wrapperClass} opacity-50 cursor-not-allowed`}
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={src} alt={alt} className="h-11 w-auto" />
+      <img src={src} alt={alt} className={imgClass} />
     </span>
   );
 }
@@ -44,7 +49,7 @@ export function AppStoreBadges() {
   const t = useTranslations('appBadges');
 
   return (
-    <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+    <div className="flex flex-row items-center justify-center gap-2 sm:gap-3 w-full">
       <Badge
         href={APP_STORE_LINKS.apple}
         src="/badges/app-store-badge.svg"

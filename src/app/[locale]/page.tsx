@@ -58,21 +58,21 @@ export default function LandingPage() {
           {t('landing.subtitle2')}
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-3 mt-6">
-          <Link href={`/${locale}/browse`}>
-            <Button variant="primary" size="lg">
-              {t('landing.cta_primary')}
-              <ArrowRight size={18} className="ml-2" />
+        <div className="flex flex-row gap-2 sm:gap-3 mt-6 w-full max-w-md px-2 sm:px-0">
+          <Link href={`/${locale}/browse`} className="flex-1 min-w-0">
+            <Button variant="primary" size="md" className="w-full sm:size-lg sm:px-8 sm:py-3.5 sm:text-lg">
+              <span className="truncate">{t('landing.cta_primary')}</span>
+              <ArrowRight size={16} className="ml-1.5 shrink-0" />
             </Button>
           </Link>
-          <Link href={`/${locale}/browse`}>
-            <Button variant="secondary" size="lg">
-              {t('landing.cta_secondary')}
+          <Link href={`/${locale}/browse`} className="flex-1 min-w-0">
+            <Button variant="secondary" size="md" className="w-full sm:px-8 sm:py-3.5 sm:text-lg">
+              <span className="truncate">{t('landing.cta_secondary')}</span>
             </Button>
           </Link>
         </div>
 
-        <div className="mt-8">
+        <div className="mt-6 sm:mt-8 w-full">
           <AppStoreBadges />
         </div>
       </motion.div>
