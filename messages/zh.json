@@ -265,6 +265,11 @@
     "terms": "条款",
     "copyright": "© 2026 Kauffen Studio"
   },
+  "appBadges": {
+    "googlePlayAria": "在 Google Play 下载 eSIM Panda",
+    "appStoreAria": "在 App Store 下载 eSIM Panda",
+    "comingSoon": "即将推出"
+  },
   "referral": {
     "title": "邀请好友，获得免费流量",
     "subtitle": "分享链接，双方均可获得1GB免费日卡",

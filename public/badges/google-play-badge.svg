@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Placeholder rendition of the "Get it on Google Play" badge.
+  Before going live, replace this file with the official asset
+  downloaded from https://play.google.com/intl/en_us/badges/
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 56" width="180" height="56" role="img" aria-label="Get it on Google Play">
+  <rect x="0" y="0" width="180" height="56" rx="8" ry="8" fill="#000000"/>
+  <g transform="translate(14 13)">
+    <polygon points="0,0 0,30 16,15" fill="#EA4335"/>
+    <polygon points="0,0 16,15 12,18.5 4,12" fill="#FBBC04" opacity="0.85"/>
+    <polygon points="0,30 16,15 19,18 5,32" fill="#34A853" opacity="0.85"/>
+    <polygon points="16,15 24,19.5 24,10.5" fill="#4285F4"/>
+  </g>
+  <g fill="#FFFFFF" font-family="system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif">
+    <text x="48" y="22" font-size="9" letter-spacing="1.2">GET IT ON</text>
+    <text x="48" y="42" font-size="17" font-weight="600">Google Play</text>
+  </g>
+</svg>

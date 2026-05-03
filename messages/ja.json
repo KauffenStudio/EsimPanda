@@ -265,6 +265,11 @@
     "terms": "利用規約",
     "copyright": "© 2026 Kauffen Studio"
   },
+  "appBadges": {
+    "googlePlayAria": "Google Play で eSIM Panda をダウンロード",
+    "appStoreAria": "App Store で eSIM Panda をダウンロード",
+    "comingSoon": "近日公開"
+  },
   "referral": {
     "title": "友達を招待して無料データをゲット",
     "subtitle": "リンクをシェアして、お互いに1GBの無料デイパスをゲット",

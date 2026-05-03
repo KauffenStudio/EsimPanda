@@ -265,6 +265,11 @@
     "terms": "Terms",
     "copyright": "© 2026 Kauffen Studio"
   },
+  "appBadges": {
+    "googlePlayAria": "Download eSIM Panda on Google Play",
+    "appStoreAria": "Download eSIM Panda on the App Store",
+    "comingSoon": "Coming soon"
+  },
   "referral": {
     "title": "Invite Friends, Get Free Data",
     "subtitle": "Share your link and you both get a free 1GB day pass",
