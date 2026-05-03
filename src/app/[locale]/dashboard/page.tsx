@@ -5,7 +5,6 @@ import { useTranslations, useLocale } from 'next-intl';
 import { AnimatePresence, motion } from 'motion/react';
 import { useDashboardStore } from '@/stores/dashboard';
 import { useAuthStore } from '@/stores/auth';
-import { BambuVideo } from '@/components/bambu/bambu-video';
 import { Button } from '@/components/ui/button';
 import { LogIn, UserPlus } from 'lucide-react';
 import { DashboardSkeleton } from '@/components/dashboard/dashboard-skeleton';
@@ -96,12 +95,11 @@ export default function DashboardPage() {
   // Error state
   if (error) {
     return (
-      <div className="flex flex-col items-center px-4 pt-2 pb-4 max-w-5xl mx-auto">
-        <BambuVideo variant="error" size={100} className="mb-4" />
+      <div className="flex flex-col items-center px-4 pt-1 pb-4 max-w-5xl mx-auto">
         <h2 className="text-lg font-bold mb-2">
           {t('dashboard.error_title')}
         </h2>
-        <p className="text-sm text-center mb-6" style={{ color: '#616161' }}>
+        <p className="text-sm text-center mb-4" style={{ color: '#616161' }}>
           {t('dashboard.error_body')}
         </p>
         <Button variant="primary" onClick={() => initialize()}>
@@ -114,15 +112,14 @@ export default function DashboardPage() {
   // Empty state
   if (esims.length === 0) {
     return (
-      <div className="flex flex-col items-center px-4 pt-2 pb-4 max-w-5xl mx-auto">
-        <BambuVideo variant="empty" size={100} className="mb-4" />
+      <div className="flex flex-col items-center px-4 pt-1 pb-4 max-w-5xl mx-auto">
         <h2 className="text-lg font-bold mb-2">
           {t('dashboard.empty_title')}
         </h2>
-        <p className="text-sm mb-6" style={{ color: '#616161' }}>
+        <p className="text-sm text-center mb-4" style={{ color: '#616161' }}>
           {t('dashboard.empty_body')}
         </p>
-        <Link href="/browse">
+        <Link href={`/${locale}/browse`}>
           <Button variant="primary">{t('dashboard.empty_cta')}</Button>
         </Link>
       </div>
