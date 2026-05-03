@@ -63,13 +63,32 @@ export async function signOut(): Promise<void> {
     return;
   }
 
-  const supabase = await createClient();
-  await supabase.auth.signOut();
+  try {
+    const supabase = await createClient();
+    await supabase.auth.signOut();
+  } catch (err) {
+    // supabase.auth.signOut() can fail if the session was already
+    // invalidated server-side; we still want to clear cookies below.
+    console.warn('[signOut] supabase.auth.signOut threw:', err);
+  }
+
+  // Belt-and-suspenders: even if @supabase/ssr missed a cookie (multi-
+  // chunk auth tokens, refresh-token cookie, etc.), brute-force delete
+  // every sb-* cookie we can see. This guarantees the next request
+  // arrives without a session cookie.
+  const cookieStore = await cookies();
+  for (const cookie of cookieStore.getAll()) {
+    if (cookie.name.startsWith('sb-')) {
+      try {
+        cookieStore.delete(cookie.name);
+      } catch {
+        // ignore; will be set to expired below if delete is unavailable
+      }
+    }
+  }
 
   // Invalidate every cached layout so the AuthProvider in the root
   // [locale] layout re-resolves the user (now null) on the next render.
-  // Without this, a soft navigation after the redirect can serve a
-  // cached layout whose initialUser still points at the old session.
   revalidatePath('/', 'layout');
 
   const locale = await getLocale();
