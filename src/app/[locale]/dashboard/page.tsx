@@ -58,7 +58,7 @@ export default function DashboardPage() {
   // Auth gate — require login
   if (authInitialized && !user) {
     return (
-      <div className="flex flex-col items-center px-4 pt-1 pb-4 max-w-5xl mx-auto">
+      <div className="flex flex-col items-center justify-center px-4 pb-4 max-w-5xl mx-auto min-h-[calc(100dvh-10rem)]">
         <h1 className="text-2xl font-bold tracking-tighter text-primary dark:text-gray-100 mb-2">
           {t('dashboard.title')}
         </h1>
@@ -95,7 +95,7 @@ export default function DashboardPage() {
   // Error state
   if (error) {
     return (
-      <div className="flex flex-col items-center px-4 pt-1 pb-4 max-w-5xl mx-auto">
+      <div className="flex flex-col items-center justify-center px-4 pb-4 max-w-5xl mx-auto min-h-[calc(100dvh-10rem)]">
         <h2 className="text-lg font-bold mb-2">
           {t('dashboard.error_title')}
         </h2>
@@ -112,7 +112,7 @@ export default function DashboardPage() {
   // Empty state
   if (esims.length === 0) {
     return (
-      <div className="flex flex-col items-center px-4 pt-1 pb-4 max-w-5xl mx-auto">
+      <div className="flex flex-col items-center justify-center px-4 pb-4 max-w-5xl mx-auto min-h-[calc(100dvh-10rem)]">
         <h2 className="text-lg font-bold mb-2">
           {t('dashboard.empty_title')}
         </h2>
