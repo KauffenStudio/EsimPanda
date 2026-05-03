@@ -51,13 +51,16 @@ function handleCors(request: NextRequest): NextResponse {
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // CORS for /api/* (skip /api/webhooks and /api/auth/callback which receive
-  // server-to-server or navigation traffic without a browser Origin to vet)
-  if (
-    pathname.startsWith('/api/') &&
-    !pathname.startsWith('/api/webhooks/') &&
-    pathname !== '/api/auth/callback'
-  ) {
+  // /api/auth/callback receives navigation redirects from Supabase. It must
+  // bypass both the i18n rewriter (which would prefix it with /en) and the
+  // CORS gate, so it can hit its own route handler unchanged.
+  if (pathname === '/api/auth/callback') {
+    return NextResponse.next();
+  }
+
+  // CORS for /api/* (skip /api/webhooks/* — Stripe sends server-to-server
+  // without a browser Origin to vet)
+  if (pathname.startsWith('/api/') && !pathname.startsWith('/api/webhooks/')) {
     return handleCors(request);
   }
 
