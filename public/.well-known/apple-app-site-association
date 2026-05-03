@@ -5,8 +5,18 @@
         "appIDs": ["WBU6X584D3.co.esimpanda.app"],
         "components": [
           {
+            "/": "/api/*",
+            "exclude": true,
+            "comment": "OAuth callback, webhooks and other API routes must hit the WebView, not Universal Links"
+          },
+          {
+            "/": "/auth/*",
+            "exclude": true,
+            "comment": "Reserved for any /auth/* routes that need WebView-only navigation"
+          },
+          {
             "/": "/*",
-            "comment": "All esimpanda.co paths open in the iOS app once installed"
+            "comment": "All other esimpanda.co paths open in the iOS app once installed"
           }
         ]
       }

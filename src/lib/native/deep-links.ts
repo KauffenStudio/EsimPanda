@@ -8,6 +8,13 @@ import { isNative } from './platform';
  * wires the URL into Next.js client navigation so the user lands on
  * the same page they would have inside the browser. On the web this
  * is a no-op (the OS routes the URL to Safari directly).
+ *
+ * /api/* paths are intentionally skipped: the WebView must handle
+ * those navigations itself (OAuth callbacks, webhooks). If iOS did
+ * intercept them as Universal Links, router.push() of an API route
+ * would silently break the OAuth round trip. AASA also excludes
+ * /api/* but this is defence-in-depth in case the cached AASA still
+ * claims those paths.
  */
 export async function attachDeepLinkRouter(navigate: (path: string) => void): Promise<void> {
   if (!isNative()) return;
@@ -17,8 +24,13 @@ export async function attachDeepLinkRouter(navigate: (path: string) => void): Pr
   await App.addListener('appUrlOpen', ({ url }) => {
     try {
       const parsed = new URL(url);
-      // Both https://esimpanda.co/... and esimpanda://... resolve here.
       const path = `${parsed.pathname}${parsed.search}${parsed.hash}` || '/';
+
+      if (parsed.pathname.startsWith('/api/') || parsed.pathname.startsWith('/auth/')) {
+        // Don't try to client-route API or auth callback paths.
+        return;
+      }
+
       navigate(path);
     } catch {
       // Malformed URL — ignore.
