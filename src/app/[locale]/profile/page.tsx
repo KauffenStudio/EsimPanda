@@ -45,7 +45,7 @@ export default async function ProfilePage({
 
   if (!user) {
     return (
-      <div className="flex flex-col items-center px-4 pt-1 pb-4 max-w-5xl mx-auto">
+      <div className="flex flex-col items-center justify-center px-4 pb-4 max-w-5xl mx-auto min-h-[calc(100dvh-10rem)]">
         <h1 className="text-3xl font-bold tracking-tighter text-primary dark:text-gray-100 mb-2">
           {t('profile.title')}
         </h1>
