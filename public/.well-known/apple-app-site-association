@@ -1,0 +1,18 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["TEAMID.co.esimpanda.app"],
+        "components": [
+          {
+            "/": "/*",
+            "comment": "All esimpanda.co paths open in the iOS app once installed"
+          }
+        ]
+      }
+    ]
+  },
+  "webcredentials": {
+    "apps": ["TEAMID.co.esimpanda.app"]
+  }
+}
