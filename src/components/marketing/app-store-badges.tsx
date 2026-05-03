@@ -23,7 +23,7 @@ function Badge({ href, src, alt, ariaLabel, comingSoonLabel }: BadgeProps) {
         className={`${className} transition-opacity hover:opacity-90`}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={src} alt={alt} className="h-12 w-auto" />
+        <img src={src} alt={alt} className="h-11 w-auto" />
       </a>
     );
   }
@@ -35,7 +35,7 @@ function Badge({ href, src, alt, ariaLabel, comingSoonLabel }: BadgeProps) {
       className={`${className} opacity-50 cursor-not-allowed`}
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={src} alt={alt} className="h-12 w-auto" />
+      <img src={src} alt={alt} className="h-11 w-auto" />
     </span>
   );
 }
