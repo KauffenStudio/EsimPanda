@@ -7,9 +7,8 @@ vi.mock('next-intl', () => ({
   useTranslations: () => (key: string) => {
     const messages: Record<string, string> = {
       'browse.filterAll': 'All',
-      'browse.filter24h': '24h',
-      'browse.filter7d': '7 days',
       'browse.filter14d': '14 days',
+      'browse.filter20d': '20 days',
       'browse.filter30d': '30 days',
       'browse.filterSemester': '90+ days',
     };
@@ -38,19 +37,18 @@ vi.mock('@/stores/browse', () => ({
 }));
 
 describe('DurationFilter', () => {
-  it('renders all 6 duration chips', () => {
+  it('renders all 5 duration chips', () => {
     render(<DurationFilter />);
     expect(screen.getByText('All')).toBeInTheDocument();
-    expect(screen.getByText('24h')).toBeInTheDocument();
-    expect(screen.getByText('7 days')).toBeInTheDocument();
     expect(screen.getByText('14 days')).toBeInTheDocument();
+    expect(screen.getByText('20 days')).toBeInTheDocument();
     expect(screen.getByText('30 days')).toBeInTheDocument();
     expect(screen.getByText('90+ days')).toBeInTheDocument();
   });
 
   it('clicking chip calls setDurationFilter with correct key', () => {
     render(<DurationFilter />);
-    fireEvent.click(screen.getByText('7 days'));
-    expect(mockSetDurationFilter).toHaveBeenCalledWith('7');
+    fireEvent.click(screen.getByText('20 days'));
+    expect(mockSetDurationFilter).toHaveBeenCalledWith('20');
   });
 });

@@ -76,15 +76,19 @@ const TIER_PREMIUM:  PriceTier = [480, 699, 1120, 1599, 1600, 2299, 2240, 3199];
 //   wholesale ref:  Singapore/Korea ($4.80/$11.20/$16.00/$22.40 for 1/3/5/8GB)
 //   margins:        31% / 30% / 30% / 30%
 
-// Plan grid is fixed: 1GB/1d, 3GB/7d, 5GB/14d, 8GB/30d. Celitech does not
-// sell a 10GB SKU, so the 30-day plan ships as 8GB to match wholesale 1:1
-// instead of underdelivering or paying for a 20GB bucket.
+// Plan grid: 1GB/14d, 3GB/20d, 5GB/30d, 8GB/30d. Celitech bills wholesale
+// by data + 0-30 day window (not by specific days), so generous durations
+// cost us nothing while letting customers stay connected longer than the
+// typical 1d/7d competitor SKUs. The four wholesale fields below are
+// labelled w1/w7/w14/w30 for historical reasons; they map 1:1 to the new
+// durations 14/20/30/30 since Celitech's wholesale doesn't change inside
+// the 0-30 day window.
 function plansForDest(seq: number, name: string, tier: PriceTier): MockPlan[] {
   const [w1, r1, w7, r7, w14, r14, w30, r30] = tier;
   return [
-    makePlan(pid(seq, 1), did(seq), `${name} 1GB 1 Day`, 1, 1, w1, r1),
-    makePlan(pid(seq, 2), did(seq), `${name} 3GB 7 Days`, 3, 7, w7, r7),
-    makePlan(pid(seq, 3), did(seq), `${name} 5GB 14 Days`, 5, 14, w14, r14),
+    makePlan(pid(seq, 1), did(seq), `${name} 1GB 14 Days`, 1, 14, w1, r1),
+    makePlan(pid(seq, 2), did(seq), `${name} 3GB 20 Days`, 3, 20, w7, r7),
+    makePlan(pid(seq, 3), did(seq), `${name} 5GB 30 Days`, 5, 30, w14, r14),
     makePlan(pid(seq, 4), did(seq), `${name} 8GB 30 Days`, 8, 30, w30, r30),
   ];
 }
@@ -92,33 +96,66 @@ function plansForDest(seq: number, name: string, tier: PriceTier): MockPlan[] {
 export const mockPlans: MockPlan[] = [
   // ── Regional plans ──────────────────────────────────────────────
   // Europe-wide  (Celitech "Europe" 44-country bundle, 0-30d, 20% off)
-  makePlan(pid(1, 1), did(1), 'Europe 5GB 7 Days',   5,  7, 1200, 1699),  // 29%
-  makePlan(pid(1, 2), did(1), 'Europe 8GB 14 Days',  8, 14, 1760, 2499),  // 30%
+  makePlan(pid(1, 1), did(1), 'Europe 5GB 30 Days',  5, 30, 1200, 1699),  // 29%
+  makePlan(pid(1, 2), did(1), 'Europe 8GB 30 Days',  8, 30, 1760, 2499),  // 30%
   makePlan(pid(1, 3), did(1), 'Europe 20GB 30 Days', 20, 30, 3520, 4999), // 30%
 
   // Asia-wide  (Celitech "Asia" 15-country bundle)
-  makePlan(pid(2, 1), did(2), 'Asia 5GB 7 Days',   5,  7, 1520, 2199),    // 31%
-  makePlan(pid(2, 2), did(2), 'Asia 8GB 14 Days',  8, 14, 2080, 2999),    // 31%
+  makePlan(pid(2, 1), did(2), 'Asia 5GB 30 Days',  5, 30, 1520, 2199),    // 31%
+  makePlan(pid(2, 2), did(2), 'Asia 8GB 30 Days',  8, 30, 2080, 2999),    // 31%
   makePlan(pid(2, 3), did(2), 'Asia 20GB 30 Days', 20, 30, 4160, 5999),   // 31%
 
   // Global  (Celitech "Region-1" 77-country bundle)
-  makePlan(pid(3, 1), did(3), 'Global 3GB 7 Days',   3,  7, 1040, 1499),  // 31%
-  makePlan(pid(3, 2), did(3), 'Global 5GB 14 Days',  5, 14, 1520, 2199),  // 31%
+  makePlan(pid(3, 1), did(3), 'Global 3GB 20 Days',  3, 20, 1040, 1499),  // 31%
+  makePlan(pid(3, 2), did(3), 'Global 5GB 30 Days',  5, 30, 1520, 2199),  // 31%
   makePlan(pid(3, 3), did(3), 'Global 8GB 30 Days',  8, 30, 2160, 3099),  // 30%
 
   // ── Europe ──────────────────────────────────────────────────────
-  ...plansForDest(10, 'France',         TIER_MID),
-  ...plansForDest(11, 'Spain',          TIER_CHEAP),
-  ...plansForDest(12, 'Italy',          TIER_CHEAP),
-  ...plansForDest(13, 'Germany',        TIER_CHEAP),
-  ...plansForDest(14, 'Portugal',       TIER_CHEAP),
-  ...plansForDest(15, 'Netherlands',    TIER_CHEAP),
-  ...plansForDest(16, 'UK',             TIER_CHEAP),
-  ...plansForDest(17, 'Greece',         TIER_CHEAP),
-  ...plansForDest(18, 'Turkey',         TIER_HIGHER),
-  ...plansForDest(19, 'Poland',         TIER_CHEAP),
-  ...plansForDest(20, 'Czech Republic', TIER_CHEAP),
-  ...plansForDest(21, 'Austria',        TIER_MID),
+  ...plansForDest(10, 'France',          TIER_MID),
+  ...plansForDest(11, 'Spain',           TIER_CHEAP),
+  ...plansForDest(12, 'Italy',           TIER_CHEAP),
+  ...plansForDest(13, 'Germany',         TIER_CHEAP),
+  ...plansForDest(14, 'Portugal',        TIER_CHEAP),
+  ...plansForDest(15, 'Netherlands',     TIER_CHEAP),
+  ...plansForDest(16, 'UK',              TIER_CHEAP),
+  ...plansForDest(17, 'Greece',          TIER_CHEAP),
+  ...plansForDest(18, 'Turkey',          TIER_MID),       // moved from HIGHER, was 52% margin → now 40%
+  ...plansForDest(19, 'Poland',          TIER_CHEAP),
+  ...plansForDest(20, 'Czech Republic',  TIER_CHEAP),
+  ...plansForDest(21, 'Austria',         TIER_MID),
+  ...plansForDest(22, 'Albania',         TIER_HIGHER),
+  ...plansForDest(23, 'Andorra',         TIER_PREMIUM),
+  ...plansForDest(24, 'Armenia',         TIER_PREMIUM),
+  ...plansForDest(25, 'Azerbaijan',      TIER_PREMIUM),
+  ...plansForDest(26, 'Belgium',         TIER_MID),
+  ...plansForDest(27, 'Bulgaria',        TIER_MID),
+  ...plansForDest(28, 'Croatia',         TIER_CHEAP),
+  ...plansForDest(29, 'Cyprus',          TIER_CHEAP),
+  ...plansForDest(100, 'Denmark',        TIER_CHEAP),
+  ...plansForDest(101, 'Estonia',        TIER_CHEAP),
+  ...plansForDest(102, 'Finland',        TIER_CHEAP),
+  ...plansForDest(103, 'Georgia',        TIER_MID),
+  ...plansForDest(104, 'Hungary',        TIER_CHEAP),
+  ...plansForDest(105, 'Iceland',        TIER_CHEAP),
+  ...plansForDest(106, 'Ireland',        TIER_CHEAP),
+  ...plansForDest(107, 'Latvia',         TIER_CHEAP),
+  ...plansForDest(108, 'Liechtenstein',  TIER_CHEAP),
+  ...plansForDest(109, 'Lithuania',      TIER_CHEAP),
+  ...plansForDest(110, 'Luxembourg',     TIER_CHEAP),
+  ...plansForDest(111, 'Malta',          TIER_CHEAP),
+  ...plansForDest(112, 'Moldova',        TIER_CHEAP),
+  ...plansForDest(113, 'Montenegro',     TIER_HIGHER),
+  ...plansForDest(114, 'North Macedonia', TIER_PREMIUM),
+  ...plansForDest(115, 'Norway',         TIER_CHEAP),
+  ...plansForDest(116, 'Romania',        TIER_CHEAP),
+  ...plansForDest(117, 'San Marino',     TIER_CHEAP),
+  ...plansForDest(118, 'Serbia',         TIER_PREMIUM),
+  ...plansForDest(119, 'Slovakia',       TIER_CHEAP),
+  ...plansForDest(120, 'Slovenia',       TIER_CHEAP),
+  ...plansForDest(121, 'Sweden',         TIER_CHEAP),
+  ...plansForDest(122, 'Switzerland',    TIER_MID),
+  ...plansForDest(123, 'Ukraine',        TIER_CHEAP),
+  ...plansForDest(124, 'Vatican City',   TIER_CHEAP),
 
   // ── Asia ────────────────────────────────────────────────────────
   ...plansForDest(30, 'Japan',       TIER_CHEAP),

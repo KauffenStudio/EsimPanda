@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-export type DurationFilter = 'all' | '1' | '7' | '14' | '30' | '90';
+export type DurationFilter = 'all' | '14' | '20' | '30' | '90';
 
 interface BrowseState {
   searchQuery: string;

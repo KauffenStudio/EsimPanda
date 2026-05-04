@@ -6,9 +6,8 @@ import { useBrowseStore, type DurationFilter as DurationFilterType } from '@/sto
 
 const chips: { key: DurationFilterType; labelKey: string }[] = [
   { key: 'all', labelKey: 'browse.filterAll' },
-  { key: '1', labelKey: 'browse.filter24h' },
-  { key: '7', labelKey: 'browse.filter7d' },
   { key: '14', labelKey: 'browse.filter14d' },
+  { key: '20', labelKey: 'browse.filter20d' },
   { key: '30', labelKey: 'browse.filter30d' },
   { key: '90', labelKey: 'browse.filterSemester' },
 ];
