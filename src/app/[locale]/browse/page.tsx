@@ -3,6 +3,7 @@
 import { useTranslations } from 'next-intl';
 import { DestinationGrid } from '@/components/browse/destination-grid';
 import { CurrencySwitcher } from '@/components/layout/currency-switcher';
+import { WelcomeDiscountBanner } from '@/components/marketing/welcome-discount-banner';
 
 export default function BrowsePage() {
   const t = useTranslations();
@@ -15,6 +16,7 @@ export default function BrowsePage() {
           <CurrencySwitcher />
         </div>
       </div>
+      <WelcomeDiscountBanner showCta={false} />
       <DestinationGrid />
     </div>
   );

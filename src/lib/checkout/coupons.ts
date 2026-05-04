@@ -5,11 +5,23 @@ import {
   markRewardRedeemed,
 } from '@/lib/referral/mock';
 
+export const WELCOME_COUPON_CODE = 'WELCOME10';
+
 export const COUPONS: Coupon[] = [
   {
     code: 'STUDENT15',
     discount_percent: 15,
     min_order_cents: 999,
+    max_uses: 999999,
+    current_uses: 0,
+    valid_from: '2026-01-01T00:00:00Z',
+    valid_until: null,
+    is_active: true,
+  },
+  {
+    code: WELCOME_COUPON_CODE,
+    discount_percent: 10,
+    min_order_cents: 0,
     max_uses: 999999,
     current_uses: 0,
     valid_from: '2026-01-01T00:00:00Z',

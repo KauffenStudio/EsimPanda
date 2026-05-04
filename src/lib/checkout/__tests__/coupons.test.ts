@@ -16,6 +16,19 @@ describe('validateCoupon', () => {
     expect(result).toBeNull();
   });
 
+  it('validates WELCOME10 at 10% with no minimum order', () => {
+    const result = validateCoupon('WELCOME10', 100);
+    expect(result).not.toBeNull();
+    expect(result!.code).toBe('WELCOME10');
+    expect(result!.discount_percent).toBe(10);
+  });
+
+  it('WELCOME10 is case-insensitive', () => {
+    const result = validateCoupon('welcome10');
+    expect(result).not.toBeNull();
+    expect(result!.code).toBe('WELCOME10');
+  });
+
   it('is case-insensitive', () => {
     const result = validateCoupon('student15');
     expect(result).not.toBeNull();

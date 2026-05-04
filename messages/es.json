@@ -309,6 +309,12 @@
     "signup": "Crear Cuenta y Ahorrar 10%",
     "login": "¿Ya tienes cuenta? Iniciar sesión"
   },
+  "welcomeDiscount": {
+    "heading": "Tu descuento de bienvenida del 10% está listo",
+    "body": "Se aplica automáticamente en el pago — o pega el código tú mismo.",
+    "cta": "Ver planes",
+    "copyAria": "Copiar código de descuento de bienvenida"
+  },
   "whatsapp": {
     "ariaLabel": "Contactar soporte en WhatsApp",
     "browsePage": "¡Hola! Necesito ayuda para elegir un plan eSIM",

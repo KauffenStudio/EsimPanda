@@ -309,6 +309,12 @@
     "signup": "创建账户并省10%",
     "login": "已有账户？登录"
   },
+  "welcomeDiscount": {
+    "heading": "您的10%欢迎折扣已就绪",
+    "body": "结账时自动应用 — 或您可以自行粘贴此代码。",
+    "cta": "浏览套餐",
+    "copyAria": "复制欢迎折扣代码"
+  },
   "whatsapp": {
     "ariaLabel": "通过WhatsApp联系客服",
     "browsePage": "你好！我需要帮助选择eSIM套餐",

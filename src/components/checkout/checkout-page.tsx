@@ -22,10 +22,23 @@ import { TrustSignals } from './trust-signals';
 import { StickyOrderBar } from './sticky-order-bar';
 import { CheckoutProgress } from './checkout-progress';
 import { trackEvent, ANALYTICS_EVENTS } from '@/lib/analytics/events';
+import { WELCOME_COUPON_CODE } from '@/lib/checkout/coupons';
 
 interface CheckoutPageProps {
   plan: MockPlan;
   couponFromUrl?: string;
+}
+
+async function resolveAutoCoupon(explicit?: string): Promise<string | undefined> {
+  if (explicit) return explicit;
+  try {
+    const res = await fetch('/api/user/has-purchased', { cache: 'no-store' });
+    if (!res.ok) return undefined;
+    const data = (await res.json()) as { has_purchased?: boolean };
+    return data.has_purchased === false ? WELCOME_COUPON_CODE : undefined;
+  } catch {
+    return undefined;
+  }
 }
 
 export function CheckoutPage({ plan, couponFromUrl }: CheckoutPageProps) {
@@ -63,13 +76,15 @@ export function CheckoutPage({ plan, couponFromUrl }: CheckoutPageProps) {
         setPricing(data.subtotal, data.tax_amount, data.amount, data.discount);
         setPaymentStatus('idle');
 
-        // Auto-apply coupon from URL
-        if (couponFromUrl) {
+        // Auto-apply coupon: explicit URL coupon wins; otherwise WELCOME10
+        // auto-applies for authed users who have not purchased before.
+        const couponToApply = await resolveAutoCoupon(couponFromUrl);
+        if (couponToApply) {
           try {
             const couponRes = await fetch('/api/checkout/validate-coupon', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ code: couponFromUrl }),
+              body: JSON.stringify({ code: couponToApply }),
             });
             const couponData = await couponRes.json();
 
@@ -77,12 +92,12 @@ export function CheckoutPage({ plan, couponFromUrl }: CheckoutPageProps) {
               const updateRes = await fetch('/api/checkout/update-intent', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ plan_id: plan.id, coupon_code: couponFromUrl }),
+                body: JSON.stringify({ plan_id: plan.id, coupon_code: couponToApply }),
               });
               const updateData = await updateRes.json();
 
               applyCoupon(
-                couponFromUrl,
+                couponToApply,
                 updateData.discount,
                 updateData.subtotal,
                 updateData.tax_amount,

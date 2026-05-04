@@ -15,6 +15,7 @@ import { EsimGrid } from '@/components/dashboard/esim-grid';
 import { TopUpModal } from '@/components/dashboard/top-up-modal';
 import { NotificationPrefs } from '@/components/dashboard/notification-prefs';
 import { PurchaseHistoryList } from '@/components/dashboard/purchase-history-list';
+import { WelcomeDiscountBanner } from '@/components/marketing/welcome-discount-banner';
 import { resendDeliveryEmail } from '@/lib/dashboard/actions';
 import { toast } from 'sonner';
 import Link from 'next/link';
@@ -113,6 +114,9 @@ export default function DashboardPage() {
   if (esims.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center px-4 pb-4 max-w-5xl mx-auto min-h-[calc(100dvh-10rem)]">
+        <div className="w-full max-w-md">
+          <WelcomeDiscountBanner />
+        </div>
         <h2 className="text-lg font-bold mb-2">
           {t('dashboard.empty_title')}
         </h2>
