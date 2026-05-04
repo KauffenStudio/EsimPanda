@@ -1,7 +1,5 @@
 import { NextResponse } from 'next/server';
 import { requireAuth } from '@/lib/auth/api-guard';
-import { IS_MOCK } from '@/lib/config/mode';
-import { mockDashboardEsims, mockPurchases } from '@/lib/mock-data/dashboard';
 import { getOrdersByUser, type OrderRow } from '@/lib/db/orders';
 import type { DashboardEsim, PurchaseRecord } from '@/lib/dashboard/types';
 
@@ -62,14 +60,10 @@ export async function GET() {
   const { user, response } = await requireAuth();
   if (response) return response;
 
+  // Always read the authenticated user's real orders. Mock fixtures are
+  // shared across all users and would leak into real accounts whenever
+  // NEXT_PUBLIC_STRIPE_MOCK is on (e.g. mock checkout in production).
   try {
-    if (IS_MOCK) {
-      return NextResponse.json({
-        esims: mockDashboardEsims,
-        purchases: mockPurchases,
-      });
-    }
-
     const orders = await getOrdersByUser(user!.id);
     const esims = orders
       .map(orderToEsim)

@@ -1,14 +1,11 @@
 import { NextResponse } from 'next/server';
-import { IS_MOCK } from '@/lib/config/mode';
-import { mockPurchases } from '@/lib/mock-data/dashboard';
 import { requireAuth } from '@/lib/auth/api-guard';
 import { getOrdersByUser } from '@/lib/db/orders';
 
+// Always read real orders for the authenticated user. Returning a value
+// from shared mock fixtures (under NEXT_PUBLIC_STRIPE_MOCK) would gate
+// every real account by the mock fixture's purchase count.
 export async function GET() {
-  if (IS_MOCK) {
-    return NextResponse.json({ has_purchased: mockPurchases.length > 0 });
-  }
-
   const { user, response } = await requireAuth();
   if (response) return NextResponse.json({ has_purchased: false });
 
