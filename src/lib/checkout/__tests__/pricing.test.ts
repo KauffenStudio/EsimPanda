@@ -2,9 +2,9 @@ import { describe, it, expect } from 'vitest';
 import { calculatePrice } from '../pricing';
 
 // Plan IDs match mockPlans in src/lib/mock-data/plans.ts.
-const VALID_PLAN_ID = 'p001-0001-4000-8000-000000000000'; // Europe 5GB 7 Days, retail: 1599
-const VALID_RETAIL_CENTS = 1599;
-const SMALL_PLAN_ID = 'p010-0001-4000-8000-000000000000'; // France 1GB 1 Day, retail: 499
+const VALID_PLAN_ID = 'p001-0001-4000-8000-000000000000'; // Europe 5GB 7 Days, retail: 1699
+const VALID_RETAIL_CENTS = 1699;
+const SMALL_PLAN_ID = 'p010-0001-4000-8000-000000000000'; // France 1GB 1 Day, retail: 449
 
 describe('calculatePrice', () => {
   it('returns pricing for a valid plan', () => {
@@ -28,7 +28,7 @@ describe('calculatePrice', () => {
     const result = calculatePrice(SMALL_PLAN_ID, 'STUDENT15');
     expect(result).not.toBeNull();
     expect(result!.discount_cents).toBe(0);
-    expect(result!.subtotal_cents).toBe(499);
+    expect(result!.subtotal_cents).toBe(449);
   });
 
   it('returns full price for invalid coupon', () => {

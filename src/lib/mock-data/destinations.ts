@@ -77,11 +77,9 @@ export const mockDestinations: MockDestination[] = [
 
   // ── South America ──────────────────────────────────────────────
   dest(53, 'Brazil', 'brazil', 'BR', 'south-america', 'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=600&h=450&fit=crop', 1),
-  dest(54, 'Colombia', 'colombia', 'CO', 'south-america', 'https://images.unsplash.com/photo-1533050487297-09b450131914?w=600&h=450&fit=crop', 2),
   dest(55, 'Argentina', 'argentina', 'AR', 'south-america', 'https://images.unsplash.com/photo-1589909202802-8f4aadce1849?w=600&h=450&fit=crop', 3),
 
   // ── Middle East ─────────────────────────────────────────────────
-  dest(60, 'United Arab Emirates', 'uae', 'AE', 'middle-east', 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=600&h=450&fit=crop', 1),
   dest(61, 'Saudi Arabia', 'saudi-arabia', 'SA', 'middle-east', 'https://images.unsplash.com/photo-1586724237569-f3d0c1dee8c6?w=600&h=450&fit=crop', 2),
   dest(62, 'Qatar', 'qatar', 'QA', 'middle-east', 'https://images.unsplash.com/photo-1577717903315-1691ae25ab3f?w=600&h=450&fit=crop', 3),
   dest(63, 'Egypt', 'egypt', 'EG', 'middle-east', 'https://images.unsplash.com/photo-1553913861-c0fddf2619ee?w=600&h=450&fit=crop', 4),
@@ -91,7 +89,5 @@ export const mockDestinations: MockDestination[] = [
   dest(71, 'New Zealand', 'new-zealand', 'NZ', 'oceania', 'https://images.unsplash.com/photo-1469521669194-babb45599def?w=600&h=450&fit=crop', 2),
 
   // ── Africa ──────────────────────────────────────────────────────
-  dest(80, 'South Africa', 'south-africa', 'ZA', 'africa', 'https://images.unsplash.com/photo-1580060839134-75a5edca2e99?w=600&h=450&fit=crop', 1),
   dest(81, 'Morocco', 'morocco', 'MA', 'africa', 'https://images.unsplash.com/photo-1489749798305-4fea3ae63d43?w=600&h=450&fit=crop', 2),
-  dest(82, 'Kenya', 'kenya', 'KE', 'africa', 'https://images.unsplash.com/photo-1489392191049-fc10c97e64b6?w=600&h=450&fit=crop', 3),
 ];
