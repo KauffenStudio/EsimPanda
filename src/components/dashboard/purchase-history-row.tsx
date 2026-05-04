@@ -35,7 +35,7 @@ export function PurchaseHistoryRow({ purchase, onResendEmail }: PurchaseHistoryR
     year: 'numeric',
   }).format(new Date(purchase.date));
 
-  const formattedAmount = `$${(purchase.amount_paid_cents / 100).toFixed(2)}`;
+  const formattedAmount = `${purchase.currency} ${(purchase.amount_paid_cents / 100).toFixed(2)}`;
 
   const vatRate =
     purchase.subtotal_cents - purchase.discount_cents > 0

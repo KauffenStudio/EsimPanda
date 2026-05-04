@@ -1,13 +1,36 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { mockDashboardEsims, mockPurchases } from '@/lib/mock-data/dashboard';
+
+const mockFetch = vi.fn();
 
 describe('Dashboard Store', () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     vi.clearAllMocks();
     process.env.NEXT_PUBLIC_STRIPE_MOCK = 'true';
+
+    // The dashboard store gates on an authenticated user before loading
+    // esims. Inject a fake user so initialize() proceeds past the gate.
+    const { useAuthStore } = await import('@/stores/auth');
+    useAuthStore.setState({
+      user: { id: 'test-user-id' } as never,
+      initialized: true,
+      loading: false,
+    });
+
+    // initialize() calls fetch('/api/dashboard/esims'). jsdom has no
+    // server; stub fetch to return the mock dashboard payload.
+    mockFetch.mockResolvedValue({
+      ok: true,
+      json: async () => ({ esims: mockDashboardEsims, purchases: mockPurchases }),
+    });
+    vi.stubGlobal('fetch', mockFetch);
   });
 
-  afterEach(() => {
+  afterEach(async () => {
     delete process.env.NEXT_PUBLIC_STRIPE_MOCK;
+    vi.unstubAllGlobals();
+    const { useAuthStore } = await import('@/stores/auth');
+    useAuthStore.setState({ user: null, initialized: false, loading: true });
     vi.resetModules();
   });
 

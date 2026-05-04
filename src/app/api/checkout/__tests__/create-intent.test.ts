@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { POST } from '../create-intent/route';
 
-const VALID_PLAN_ID = 'p001-0001-4000-8000-000000000001';
+const VALID_PLAN_ID = 'p001-0001-4000-8000-000000000000';
 
 function makeRequest(body: Record<string, unknown>) {
   return new Request('http://localhost:3000/api/checkout/create-intent', {

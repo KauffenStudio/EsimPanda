@@ -8,6 +8,9 @@ export default defineConfig({
     environment: 'jsdom',
     globals: true,
     setupFiles: ['./src/test-setup.ts'],
+    env: {
+      NEXT_PUBLIC_STRIPE_MOCK: 'true',
+    },
   },
   resolve: {
     alias: {

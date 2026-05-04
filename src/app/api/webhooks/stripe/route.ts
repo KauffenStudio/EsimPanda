@@ -1,16 +1,19 @@
 import { NextResponse } from 'next/server';
 import type Stripe from 'stripe';
 import { provisionEsim } from '@/lib/delivery/provision';
-import { IS_MOCK } from '@/lib/config/mode';
 import { updateOrderStatus } from '@/lib/db/orders';
 
-const IS_PROD = process.env.NODE_ENV === 'production';
-const ALLOW_MOCK = IS_MOCK && !IS_PROD;
+function allowMock() {
+  const isMock = process.env.NEXT_PUBLIC_STRIPE_MOCK === 'true';
+  const isProd = process.env.NODE_ENV === 'production';
+  return isMock && !isProd;
+}
 
 export async function POST(request: Request) {
   try {
     const body = await request.text();
     const signature = request.headers.get('stripe-signature');
+    const ALLOW_MOCK = allowMock();
 
     let event: Stripe.Event;
 

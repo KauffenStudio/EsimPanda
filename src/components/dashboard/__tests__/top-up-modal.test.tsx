@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { TopUpModal } from '../top-up-modal';
+import { mockTopUpPackages } from '@/lib/mock-data/dashboard';
 import type { DashboardEsim } from '@/lib/dashboard/types';
 
 // Mock motion/react
@@ -111,6 +112,16 @@ vi.mock('@/stores/dashboard', () => ({
 describe('TopUpModal', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    // The modal fires `fetch('/api/dashboard/top-up/packages?...')` on
+    // mount and shows a loading spinner until it resolves. Stub fetch
+    // so the spinner clears synchronously and the plan cards render.
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async () => ({
+        ok: true,
+        json: async () => ({ packages: mockTopUpPackages }),
+      })),
+    );
     storeState = {
       top_up_esim: mockActiveEsim,
       top_up_status: 'plan-select',
@@ -126,16 +137,16 @@ describe('TopUpModal', () => {
     expect(screen.getByText(/Top Up Portugal/)).toBeTruthy();
   });
 
-  it('renders top-up plan cards in plan-select state', () => {
+  it('renders top-up plan cards in plan-select state', async () => {
     render(<TopUpModal />);
-    expect(screen.getByText('1GB / 7 days')).toBeTruthy();
+    expect(await screen.findByText('1GB / 7 days')).toBeTruthy();
     expect(screen.getByText('3GB / 15 days')).toBeTruthy();
     expect(screen.getByText('5GB / 30 days')).toBeTruthy();
   });
 
-  it('clicking a plan card updates top_up_status to payment', () => {
+  it('clicking a plan card updates top_up_status to payment', async () => {
     render(<TopUpModal />);
-    fireEvent.click(screen.getByText('1GB / 7 days'));
+    fireEvent.click(await screen.findByText('1GB / 7 days'));
     expect(mockSetTopUpStatus).toHaveBeenCalledWith('payment');
   });
 
