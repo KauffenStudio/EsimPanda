@@ -20,6 +20,14 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   title: 'eSIM Panda',
   description: 'Get connected with mobile data anywhere in the world',
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/icon.png?v=2', type: 'image/png', sizes: '192x192' },
+    ],
+    apple: [{ url: '/apple-icon.png?v=2', type: 'image/png', sizes: '180x180' }],
+    shortcut: ['/favicon.ico'],
+  },
 };
 
 const swRegistrationScript = `if ('serviceWorker' in navigator) {
