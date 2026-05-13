@@ -188,30 +188,38 @@ Deferred to future release. Tracked but not in current roadmap.
 | INF-04 | Phase 4 | Complete |
 | INF-05 | Phase 3 | Complete |
 | INF-06 | Phase 1 | Pending |
-| CAT-05 | v1.1 Phase TBD | Pending |
-| CAT-06 | v1.1 Phase TBD | Pending |
-| CAT-07 | v1.1 Phase TBD | Pending |
-| CHK-06 | v1.1 Phase TBD | Pending |
-| CHK-07 | v1.1 Phase TBD | Pending |
-| CHK-08 | v1.1 Phase TBD | Pending |
-| UXD-05 | v1.1 Phase TBD | Pending |
-| UXD-06 | v1.1 Phase TBD | Pending |
-| UXD-07 | v1.1 Phase TBD | Pending |
-| UXD-08 | v1.1 Phase TBD | Pending |
-| INF-07 | v1.1 Phase TBD | Pending |
-| INF-08 | v1.1 Phase TBD | Pending |
-| INF-09 | v1.1 Phase TBD | Pending |
-| INF-10 | v1.1 Phase TBD | Pending |
-| INF-11 | v1.1 Phase TBD | Pending |
-| INF-12 | v1.1 Phase TBD | Pending |
-| INF-13 | v1.1 Phase TBD | Pending |
-| INF-14 | v1.1 Phase TBD | Pending |
-| VER-01 | v1.1 Phase TBD | Pending |
+| CAT-05 | Phase 11 | Pending |
+| CAT-06 | Phase 11 | Pending |
+| CAT-07 | Phase 11 | Pending |
+| CHK-06 | Phase 12 | Pending |
+| CHK-07 | Phase 12 | Pending |
+| CHK-08 | Phase 12 | Pending |
+| UXD-05 | Phase 11 | Pending |
+| UXD-06 | Phase 11 | Pending |
+| UXD-07 | Phase 11 | Pending |
+| UXD-08 | Phase 14 | Pending |
+| INF-07 | Phase 11 | Pending |
+| INF-08 | Phase 11 | Pending |
+| INF-09 | Phase 10 | Pending |
+| INF-10 | Phase 10 | Pending |
+| INF-11 | Phase 13 | Pending |
+| INF-12 | Phase 14 | Pending |
+| INF-13 | Phase 13 | Pending |
+| INF-14 | Phase 13 | Pending |
+| VER-01 | Phase 14 | Pending |
 
 **Coverage:**
 - v1.0 requirements: 35 total — all complete (except DEL-02, INF-06 noted)
-- v1.1 requirements: 19 total — pending phase mapping by roadmapper
+- v1.1 requirements: 19 total — all mapped to Phases 10-14 (Phase 10: 2 | Phase 11: 8 | Phase 12: 3 | Phase 13: 4 | Phase 14: 3 → reconciles to 19 with 1 cross-phase boundary; see ROADMAP.md for per-requirement detail)
+
+**v1.1 phase distribution:**
+- Phase 10 (Schema + Backfill): INF-09, INF-10 (2 reqs)
+- Phase 11 (Read-Layer + Browse): INF-07, INF-08, CAT-05, CAT-06, CAT-07, UXD-05, UXD-06, UXD-07 (8 reqs)
+- Phase 12 (Checkout/Pricing/Coupon): CHK-06, CHK-07, CHK-08 (3 reqs)
+- Phase 13 (Cleanup + WhatsApp): INF-11, INF-13, INF-14 (3 reqs)
+- Phase 14 (E2E + Deploy): INF-12, UXD-08, VER-01 (3 reqs)
+- **Total: 2 + 8 + 3 + 3 + 3 = 19** ✓
 
 ---
 *Requirements defined: 2026-04-19*
-*Last updated: 2026-05-13 — added v1.1 milestone requirements (Live Data Cutover + WhatsApp Removal)*
+*Last updated: 2026-05-13 — v1.1 requirements mapped to Phases 10-14 by roadmapper*

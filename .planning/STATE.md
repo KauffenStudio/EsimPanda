@@ -2,11 +2,11 @@
 gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: live-data-cutover
-status: defining-requirements
-stopped_at: Milestone v1.1 started
-last_updated: "2026-05-13T23:30:00.000Z"
+status: discussing-phase
+stopped_at: Phase 10 (Schema and Curation Backfill) — discussing
+last_updated: "2026-05-13T23:55:00.000Z"
 progress:
-  total_phases: 0
+  total_phases: 5
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -19,33 +19,41 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-13)
 
 **Core value:** A student arriving in a new country gets connected with mobile data in under 2 minutes
-**Current focus:** Milestone v1.1 — Live Data Cutover (defining requirements)
+**Current focus:** Milestone v1.1 — Live Data Cutover (Phase 10 — Schema and Curation Backfill, discussing)
 
 ## Current Position
 
-Phase: Not started (defining requirements)
-Plan: —
-Status: Defining requirements
-Last activity: 2026-05-13 — Milestone v1.1 started
+Phase: 10 — Schema and Curation Backfill
+Plan: — (planning not started)
+Status: Discussing phase (roadmap drafted, ready for `/gsd:plan-phase 10`)
+Last activity: 2026-05-13 — v1.1 roadmap created (Phases 10-14 mapped from 19 requirements)
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 0
-- Average duration: -
-- Total execution time: 0 hours
+- Total plans completed: 27 (across v1.0)
+- Average duration: ~5min/plan
+- Total execution time: ~135 minutes across v1.0
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| - | - | - | - |
+| 01 | 2 | 13min | 6.5min |
+| 02 | 3 | 10min | 3.3min |
+| 03 | 2 | 43min | 21.5min |
+| 04 | 3 | 11min | 3.7min |
+| 05 | 3 | 15min | 5min |
+| 06 | 2 | 8min | 4min |
+| 07 | 4 | 8min | 2min |
+| 08 | 3 | 12min | 4min |
+| 09 | 3 | 20min | 6.7min |
 
 **Recent Trend:**
 
-- Last 5 plans: -
-- Trend: -
+- Last 5 plans: 09-01 (5min), 09-02 (10min), 09-03 (5min), 05-13 v1.1 research, 05-13 v1.1 roadmap
+- Trend: Roadmap planning for v1.1 underway
 
 *Updated after each plan completion*
 | Phase 01 P01 | 8min | 2 tasks | 23 files |
@@ -81,6 +89,14 @@ Last activity: 2026-05-13 — Milestone v1.1 started
 Decisions are logged in PROJECT.md Key Decisions table.
 Recent decisions affecting current work:
 
+**v1.1 Roadmap (2026-05-13):**
+- Roadmap: 5 v1.1 phases (10-14) derived from 19 requirements at fine granularity, mapping 1:1 to the research's 5-wave structure (Schema+Backfill / Read-Layer+Browse / Checkout+Pricing / Cleanup+WhatsApp / E2E+Deploy)
+- Roadmap: Phases execute strictly sequentially (10→11→12→13→14) — each has a hard dependency on its predecessor (schema before code, read-layer before consumers, browse before checkout, type rename before deletion, E2E after all code)
+- Roadmap: Service worker cache bump (INF-12) and update prompt (UXD-08) bundled in final deploy phase to ship in the same release as the code cutover — prevents "stale cache" window for returning users
+- Roadmap: WhatsApp removal (INF-13/14) bundled with mock-data cleanup (INF-11) in Phase 13 — independent of data cutover, prevents merge-conflict noise during Phases 11-12
+- Roadmap: `MockPlan` → `Plan` type rename happens in Phase 12 (before deletion in Phase 13) to avoid TypeScript red-wall
+
+**v1.0 Decisions:**
 - Roadmap: 9 phases derived from 29 requirements at fine granularity
 - Roadmap: Wholesale API integration front-loaded in Phase 1 to validate highest-risk dependency early
 - Roadmap: Guest checkout before accounts (Phase 3 before Phase 5) per research recommendation
@@ -135,16 +151,20 @@ Recent decisions affecting current work:
 
 ### Pending Todos
 
-None yet.
+**For Phase 10 plan-phase (Schema and Curation Backfill):**
+- Decide policy for the 146 Celitech destinations without curation metadata: hide until manually curated (default), or show in an "Other" region bucket, or seed `region_bucket` from Celitech's `region` field
+- Confirm Celitech regional bundle ISO codes in live Supabase before Wave 0 backfill maps EU/AS/GL
+- Spot-check Celitech plan currencies — research assumed all USD; query for any `currency != 'USD'` before Phase 12 cutover
 
 ### Blockers/Concerns
 
-- Wholesale provider (CELITECH) API access needs verification before Phase 1 development begins
-- EU telecom reseller licensing status needs legal clarification
-- VAT OSS registration process and timeline needed before Phase 3
+- **Uncurated destinations decision**: 146 of 226 Celitech destinations have no `region_bucket`. Product owner must decide visibility before Phase 10 backfill runs (default assumption in research: hide until curated)
+- **Celitech regional SKU mapping**: synthetic ISO codes EU/AS/GL in mock data have no Celitech equivalent — backfill must explicitly UPSERT the 3 regional rows before the country loop (Pitfall 3)
+- **Service-role key discipline**: `import 'server-only'` directive must be added to `src/lib/db/destinations.ts` and any service-role-using script in Phase 10 to prevent client-bundle leakage (Pitfall 2)
+- **iOS Capacitor SW behavior**: WKWebView's interaction with service workers differs in edge cases; Pitfall 5 prevention requires TestFlight verification post Phase 14 deploy
 
 ## Session Continuity
 
-Last session: 2026-04-25T12:46:40.330Z
-Stopped at: Completed 09-03-PLAN.md
-Resume file: None
+Last session: 2026-05-13T23:55:00.000Z
+Stopped at: v1.1 roadmap created — ready for `/gsd:plan-phase 10`
+Resume file: .planning/ROADMAP.md (Phase 10 details)

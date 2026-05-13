@@ -4,6 +4,8 @@
 
 This roadmap delivers a mobile-first eSIM reseller platform targeting international students and young travelers in Europe. The journey moves from infrastructure and catalog (getting plan data flowing) through the revenue-critical checkout and delivery pipeline, then builds retention features (accounts, eSIM management), and finishes with growth levers (SEO, referrals) and polish (PWA, dark mode, push notifications). The architecture validates the wholesale API integration early (highest-risk dependency) and reaches first sale by end of Phase 4.
 
+Milestone v1.1 (Phases 10-14) closes the live-data gap discovered after v1.0: the backend syncs 226 destinations / 2,812 plans from Celitech, but the UI still reads from `src/lib/mock-data/`. v1.1 cuts the UI over to Supabase and removes the WhatsApp support integration.
+
 ## Phases
 
 **Phase Numbering:**
@@ -11,6 +13,8 @@ This roadmap delivers a mobile-first eSIM reseller platform targeting internatio
 - Decimal phases (2.1, 2.2): Urgent insertions (marked with INSERTED)
 
 Decimal phases appear between their surrounding integers in numeric order.
+
+### Milestone v1.0 — Initial Release
 
 - [ ] **Phase 1: Foundation and Design System** - Project skeleton, database schema, provider abstraction layer, i18n framework, and premium design system
 - [x] **Phase 2: Catalog and Browsing** - Wholesale API sync, destination pages, plan browsing with filters, comparison, and device compatibility check (completed 2026-04-20)
@@ -21,6 +25,14 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 7: SEO and Internationalization** - SEO-optimized destination landing pages with structured data, multi-language support (EN, PT, ES, FR)
 - [x] **Phase 8: Growth and Acquisition** - Referral program with credit system, WhatsApp support integration (completed 2026-04-25)
 - [x] **Phase 9: PWA and Polish** - Installable PWA, dark mode, push notifications for expiry and promotions (completed 2026-04-25)
+
+### Milestone v1.1 — Live Data Cutover
+
+- [ ] **Phase 10: Schema and Curation Backfill** - Additive Supabase migration (`popularity_rank`, `region_bucket`); idempotent backfill of curation metadata from `mock-data/destinations.ts` by ISO code; explicit seed of EU/AS/GL regional rows
+- [ ] **Phase 11: Read-Layer Module and Browse Cutover** - Typed `server-only` read module at `src/lib/db/destinations.ts`; browse page becomes async RSC + `<BrowseClient>`; destination grid, search filter, comparison sheet, regional plans, plan cards consume live Supabase data with skeletons, flag fallback, and Bambu error retry
+- [ ] **Phase 12: Checkout, Pricing and Coupon Cutover** - `lib/checkout/pricing.ts`, `api/checkout/validate-coupon`, and checkout server component query Supabase by real plan ID; `MockPlan` renamed to `Plan` across cart and checkout stores; Zustand persist `version: 2` migration purges dead v1.0 plan IDs; coupon min-order copy shows `$9.99`
+- [ ] **Phase 13: Cleanup, Mock Deletion and WhatsApp Removal** - Delete `mock-data/{destinations,plans,tag-plans}.ts` after pure-compute helpers extracted to `src/lib/plans/pricing-display.ts`; CI grep gate blocks new `mock-data/` imports; delete WhatsApp button + `support.ts` + 6 locale `whatsapp.*` namespaces + 4 error-state strings; ship `/help` route (FAQ + mailto)
+- [ ] **Phase 14: E2E Verification and Deploy** - Service worker `CACHE_NAME` bumped to `esim-panda-v2` with update prompt; end-to-end test: real Stripe test-card buys a real Celitech plan, real eSIM ICCID provisioned, real Resend email; env vars cleaned in Vercel
 
 ## Phase Details
 
@@ -169,12 +181,89 @@ Plans:
 - [ ] 09-02-PLAN.md — Dark mode completion: CSS tokens, hydration fix, dark: classes across all 60 components
 - [ ] 09-03-PLAN.md — Push notifications: web-push, VAPID, server actions, notification store, permission modal, prefs UI, offline QR caching
 
+## Milestone v1.1 — Live Data Cutover
+
+The v1.0 backend (Celitech sync, Stripe, webhooks, eSIM delivery) works end-to-end against real data, but every UI read path still imports from `src/lib/mock-data/`. v1.1 is a surgical, dependency-ordered cutover from mock to live Supabase reads, plus the complete removal of the WhatsApp support integration that was already commented out of the layout but left half-wired across translation files and error copy.
+
+**Five phases, dependency-driven:**
+
+1. Schema before code — any consumer reading `popularity_rank` crashes without the column
+2. Read-layer before consumers — `src/lib/db/destinations.ts` is shared by browse and checkout, build once
+3. Browse before checkout — browse dogfoods the RSC/client hybrid pattern before the payment path uses it
+4. Type rename before deletion — `MockPlan` to `Plan` must propagate across all stores before mock files can be deleted
+5. SW cache bump in the same deploy as the cutover — different deploys create a window where code is new but cache is old
+6. E2E last — partial-cutover verification gives false confidence
+
+### Phase 10: Schema and Curation Backfill
+**Goal**: Supabase `destinations` table holds the curation metadata Celitech does not return (`popularity_rank`, `region_bucket`), populated for the 80 curated destinations and explicitly seeded for the 3 regional hero rows (EU, AS, GL), so the UI's planned reads will return data instead of empty arrays
+**Depends on**: Phase 9 (v1.0 complete) — no v1.1 phase precedes this
+**Requirements**: INF-09, INF-10
+**Success Criteria** (what must be TRUE):
+  1. Migration `00003_destinations_curation_metadata.sql` is applied to production Supabase, adding `popularity_rank INTEGER NOT NULL DEFAULT 9999` and `region_bucket TEXT` plus their two partial indexes; existing RLS policy `"Public can read active destinations"` is unchanged
+  2. `select count(*) from destinations where popularity_rank < 9999` returns at least 80 (curated set populated from `src/lib/mock-data/destinations.ts`)
+  3. `select count(*) from destinations where iso_code in ('EU','AS','GL')` returns exactly 3 with `popularity_rank = 0` and `region_bucket` set to `europe-wide` / `asia-wide` / `global` (regional hero rows seeded by explicit UPSERT before the country-level loop)
+  4. `scripts/backfill-curation.mjs` is idempotent: a second invocation against an already-populated DB reports zero updates (uses `WHERE col IS NULL OR col = ''` guards) and never overwrites operator edits
+  5. An anon-key Supabase client query (`select * from destinations where is_active = true limit 1`) returns at least one row — proving RLS does not silently swallow the new columns
+**Plans**: TBD
+
+### Phase 11: Read-Layer Module and Browse Cutover
+**Goal**: Browse page and all its child components render real Supabase destinations and plans through a shared, typed, `server-only` read module, with skeletons during fetch, country-flag fallbacks for missing images, and a Bambu error state with a working Retry button — no `mock-data/` imports remain in any browse-path component
+**Depends on**: Phase 10
+**Requirements**: INF-07, INF-08, CAT-05, CAT-06, CAT-07, UXD-05, UXD-06, UXD-07
+**Success Criteria** (what must be TRUE):
+  1. `src/lib/db/destinations.ts` exists with `import 'server-only'` at the top and exports typed `listActiveDestinations`, `listPlansForDestination`, `getDestinationBySlug`, `getPlanById`, `getCatalog`; mirrors the style of `src/lib/db/orders.ts`
+  2. `app/[locale]/browse/page.tsx` is an async RSC with `export const revalidate = 3600` that calls `getCatalog()` via the anon-key client and passes `{ destinations, regionalPlans }` as props to a `<BrowseClient>` client child — `grep -n "use client" src/app/\[locale\]/browse/page.tsx` returns 0
+  3. User browsing the destination grid sees only curated rows (rows with `popularity_rank < 9999` or `region_bucket IS NOT NULL`); uncurated Celitech destinations are hidden until manually curated (CAT-05)
+  4. User typing in the destination search filters the already-fetched catalog in-memory with no network round-trip per keystroke; `grep -n "ilike\|textSearch" src/components/browse/` returns 0 (CAT-06)
+  5. User viewing a destination card whose `image_url` is null sees a country-flag SVG in a brand-gradient card (not a generic stock photo or broken image icon); the photo, when present, blur-cross-fades in over the flag using a `motion.img` opacity transition (CAT-07, UXD-07)
+  6. User waiting for the first paint of a catalog refetch sees a destination-card skeleton grid that matches the real card height, and on Supabase error sees the existing Bambu `error` pose with a Retry button that re-triggers the fetch (UXD-05, UXD-06)
+  7. `useComparisonStore` stores full `Plan[]` objects instead of `string[]` plan IDs; comparison sheet renders selected plans without any `mock-data` lookup
+**Plans**: TBD
+
+### Phase 12: Checkout, Pricing and Coupon Cutover
+**Goal**: The payment path — pricing computation, coupon validation, and the checkout server component — reads from Supabase by real plan ID, the `MockPlan` type is renamed to `Plan` across all cart and checkout stores, and persisted Zustand cart state from v1.0 is purged on first load via a versioned migration
+**Depends on**: Phase 11 (reuses `getPlanById` from the read-layer module; `MockPlan` rename depends on the canonical `Plan` type from `db/destinations.ts`)
+**Requirements**: CHK-06, CHK-07, CHK-08
+**Success Criteria** (what must be TRUE):
+  1. User completing checkout against a real Celitech plan ID (UUID from Supabase) gets a Stripe PaymentIntent created at the `retail_price_cents` stored in Supabase for that exact plan; `grep -rn "mockPlans\|MockPlan" src/lib/checkout/ src/app/api/checkout/ src/app/\[locale\]/checkout/` returns 0 (CHK-06)
+  2. `src/lib/checkout/pricing.ts` and `src/app/api/checkout/validate-coupon/route.ts` query Supabase via `getPlanById` (no mock-data imports) and reject any plan ID not present in Supabase with a clear error code
+  3. User applying STUDENT15 to a plan under the min-order threshold sees the threshold rendered as `$9.99` (USD, the actual currency of `retail_price_cents`) instead of the misleading `€9.99` copy v1.0 used (CHK-07)
+  4. User with a persisted cart from before the v1.1 deploy starts with a clean cart on first load: `useCartStore` and `useQuickCheckoutStore` use `persist({ version: 2, migrate: ... })` that drops items whose `plan_id` is not a valid UUID matching a Supabase row (CHK-08)
+  5. `MockPlan` is renamed to `Plan` (re-exported from `src/lib/db/destinations.ts`) across `src/stores/cart.ts`, `src/stores/quick-checkout.ts`, and the 5 checkout components that imported the type; `tsc --noEmit` passes with zero errors
+**Plans**: TBD
+
+### Phase 13: Cleanup, Mock Deletion and WhatsApp Removal
+**Goal**: The mock-data layer is gone, pure-compute pricing helpers survive in a real module, WhatsApp is fully removed from the codebase (component, config, env vars, 6 locales, 4 error-state strings, 1 test file), and a static `/help` route ships as the support entry point — both deletions in one cleanup commit because they are independent of the data cutover and bundling them prevents merge-conflict noise during Phases 11-12
+**Depends on**: Phase 12 (last `MockPlan` import gone before files can be deleted; TypeScript would red-wall otherwise)
+**Requirements**: INF-11, INF-13, INF-14
+**Success Criteria** (what must be TRUE):
+  1. `src/lib/mock-data/destinations.ts`, `src/lib/mock-data/plans.ts`, `src/lib/mock-data/tag-plans.ts` and their `__tests__/` files are deleted; `scripts/backfill-curation.mjs` is also deleted (its job is done); `grep -rn "mock-data/destinations\|mock-data/plans\|mock-data/tag-plans" src/` returns 0 (INF-11)
+  2. Pure-compute helpers (`getOriginalPrice`, `getDiscountPercent`, `getBestDiscount`, `tagPlans`) live in `src/lib/plans/pricing-display.ts` with unit tests; no Supabase imports, no I/O
+  3. ESLint `no-restricted-imports` rule blocks any new import from `@/lib/mock-data/destinations`, `@/lib/mock-data/plans`, or `@/lib/mock-data/tag-plans`; CI fails on regression
+  4. WhatsApp removal is complete: `src/components/layout/whatsapp-button.tsx`, its test, and `src/lib/config/support.ts` are deleted; the commented import in `src/app/[locale]/layout.tsx` is removed; the `whatsapp.*` namespace is gone from all 6 locale files (`messages/{en,pt,es,fr,ja,zh}.json`); the 4 "contact us on WhatsApp" error-copy strings in `payment-error.tsx`, `provisioning-error.tsx`, `setup-guide.tsx`, and dashboard error states are replaced with "Contact support" linking to `/help`; `NEXT_PUBLIC_WHATSAPP_NUMBER` is removed from `.env.example` (INF-13)
+  5. `src/app/[locale]/help/page.tsx` ships as a static route with 6-10 FAQ entries plus a `mailto:` contact link; footer in `src/app/[locale]/layout.tsx` links to `/help`; user can navigate from any error state to `/help` (INF-14)
+  6. CI grep gate: `grep -rn "whatsapp\|wa.me\|WhatsApp\|WHATSAPP" src/ messages/` returns zero hits outside `src/components/referral/share-buttons.tsx` (intentional keep — user-initiated referral share, not support)
+**Plans**: TBD
+
+### Phase 14: E2E Verification and Deploy
+**Goal**: A real Stripe test-card purchase against a real Celitech plan UUID in Supabase completes the entire pipeline end-to-end (checkout → webhook → provisioning → encrypted activation data → Resend email with QR), the service worker cache is bumped in the same deploy as the code cutover with an update prompt for returning users, and Vercel env vars are cleaned
+**Depends on**: Phase 13 (no point E2E-testing a partially-cutover system)
+**Requirements**: INF-12, UXD-08, VER-01
+**Success Criteria** (what must be TRUE):
+  1. `public/sw.js` has `CACHE_NAME = 'esim-panda-v2'` (bumped from `v1`); the activate handler deletes the old `esim-panda-v1` cache entries; this change ships in the SAME deploy as the data cutover (INF-12)
+  2. User who had v1.0 cached in their service worker (returning user OR iOS Capacitor app) loads the v1.1 site and sees a "New version available" prompt that calls `window.location.reload()` on tap — verified by manual test with a pre-seeded SW cache (UXD-08)
+  3. E2E test executes against staging: a Stripe test-card payment for a real Celitech plan UUID from Supabase creates an `orders` row, triggers the webhook, provisions a real eSIM via Celitech `createPurchase`, persists encrypted activation data (AES-256-GCM) in the `esims` table, and sends a real Resend email containing the activation QR code (VER-01)
+  4. `NEXT_PUBLIC_WHATSAPP_NUMBER` is removed from Vercel production env vars; total test count in `npm test --reporter=verbose` is at or above the pre-cutover baseline (no silently-skipped tests)
+  5. Sitemap (`src/app/sitemap.ts`) reflects the 226 live Supabase destinations (not the 67 mock ones); structured data on `/esim/[slug]` renders from live data; Lighthouse LCP on `/browse` is within target (P95 < 2.5s)
+**Plans**: TBD
+
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9
-Note: Phase 7 depends on Phase 2 (not Phase 6), so it could run in parallel with Phases 3-6 if desired.
-Note: Phase 8 depends on Phase 5 (not Phase 7), so it could run in parallel with Phase 6-7.
+- v1.0 phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9
+  - Note: Phase 7 depends on Phase 2 (not Phase 6), so it could run in parallel with Phases 3-6 if desired.
+  - Note: Phase 8 depends on Phase 5 (not Phase 7), so it could run in parallel with Phase 6-7.
+- v1.1 phases execute strictly sequentially: 10 → 11 → 12 → 13 → 14 (each phase has a hard dependency on its predecessor — see "Phase Ordering Rationale" in research/v1.1/SUMMARY.md)
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
@@ -187,3 +276,8 @@ Note: Phase 8 depends on Phase 5 (not Phase 7), so it could run in parallel with
 | 7. SEO and Internationalization | 3/4 | In Progress|  |
 | 8. Growth and Acquisition | 3/3 | Complete   | 2026-04-25 |
 | 9. PWA and Polish | 3/3 | Complete   | 2026-04-25 |
+| 10. Schema and Curation Backfill | 0/0 | Not started | - |
+| 11. Read-Layer Module and Browse Cutover | 0/0 | Not started | - |
+| 12. Checkout, Pricing and Coupon Cutover | 0/0 | Not started | - |
+| 13. Cleanup, Mock Deletion and WhatsApp Removal | 0/0 | Not started | - |
+| 14. E2E Verification and Deploy | 0/0 | Not started | - |
