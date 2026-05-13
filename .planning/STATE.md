@@ -1,30 +1,32 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.0
-milestone_name: milestone
-status: unknown
-stopped_at: Completed 09-03-PLAN.md
-last_updated: "2026-04-25T12:51:37.337Z"
+milestone: v1.1
+milestone_name: live-data-cutover
+status: defining-requirements
+stopped_at: Milestone v1.1 started
+last_updated: "2026-05-13T23:30:00.000Z"
 progress:
-  total_phases: 9
-  completed_phases: 9
-  total_plans: 28
-  completed_plans: 28
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
 ---
 
 # Project State
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-04-19)
+See: .planning/PROJECT.md (updated 2026-05-13)
 
 **Core value:** A student arriving in a new country gets connected with mobile data in under 2 minutes
-**Current focus:** Phase 09 — pwa-and-polish
+**Current focus:** Milestone v1.1 — Live Data Cutover (defining requirements)
 
 ## Current Position
 
-Phase: 09 (pwa-and-polish) — EXECUTING
-Plan: 3 of 3
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-05-13 — Milestone v1.1 started
 
 ## Performance Metrics
 

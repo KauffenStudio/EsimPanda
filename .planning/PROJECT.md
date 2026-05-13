@@ -23,6 +23,21 @@ The panda creates emotional connection with the young audience, makes the brand 
 
 A student arriving in a new country gets connected with mobile data in under 2 minutes — browse, tap, pay, scan QR, done.
 
+## Current Milestone: v1.1 Live Data Cutover
+
+**Goal:** Replace the mock-data layer with live Supabase reads so the catalog and checkout actually serve the 226 destinations / 2,812 plans synced from Celitech, and remove the WhatsApp integration from the product.
+
+**Trigger:** During v1.1 kickoff (2026-05-13) the Celitech API was wired up and a real catalog sync populated Supabase. We discovered the entire UI (browse, plan-card, comparison-sheet, pricing.ts, validate-coupon, checkout server component) reads from `src/lib/mock-data/` instead of Supabase. The backend works end-to-end against real Celitech + Stripe, but the UI still shows mock plans and checkout 404s on real plan IDs — v1.0's phase verification missed this.
+
+**Target features:**
+- Schema additions: `popularity_rank`, `image_url`, `region_bucket` columns on `destinations` (curation metadata Celitech doesn't return)
+- Backfill script: copy curation values from `src/lib/mock-data/destinations.ts` into Supabase for matching ISO codes
+- Async data hooks: rewrite `use-destinations` and `use-plans` to fetch from Supabase with proper loading states
+- UI refactor: `plan-card`, `destination-card`, `regional-plan-card`, `comparison-sheet` consume real plan shape
+- Pricing/checkout: rewrite `lib/checkout/pricing.ts`, `api/checkout/validate-coupon`, and the checkout server component to query Supabase
+- E2E verification: real Stripe test-card purchase of a real Celitech plan delivers a real eSIM via the existing webhook pipeline
+- WhatsApp removal: delete the WhatsApp support button and related components from all pages
+
 ## Requirements
 
 ### Validated
@@ -49,7 +64,6 @@ A student arriving in a new country gets connected with mobile data in under 2 m
 *All v1 requirements validated.*
 
 ### Recently Validated
-- [x] WhatsApp support integration — Validated in Phase 8: Growth and Acquisition
 - [x] Referral program (share link, earn free 1GB plan) — Validated in Phase 8
 - [x] Installable PWA with offline QR code access — Validated in Phase 9: PWA and Polish
 - [x] Dark mode with manual toggle across all components — Validated in Phase 9
@@ -58,7 +72,8 @@ A student arriving in a new country gets connected with mobile data in under 2 m
 ### Out of Scope
 
 - Native mobile app (iOS/Android) — PWA covers mobile use case
-- Real-time chat support — WhatsApp handles this
+- WhatsApp support integration — dropped from product in v1.1; async email/contact form covers support
+- Real-time chat support — out of scope; async support channels sufficient
 - eSIM for IoT/enterprise — consumer focus only
 - Building own MVNO infrastructure — pure reseller model
 - Non-European destinations at launch — expand after traction
@@ -92,4 +107,4 @@ A student arriving in a new country gets connected with mobile data in under 2 m
 | Brand: eSIM Panda | Panda mascot with interactive animations throughout UX — emotional connection with young audience | — Pending |
 
 ---
-*Last updated: 2026-04-25 — Phase 9 (PWA and Polish) complete — ALL v1 PHASES COMPLETE*
+*Last updated: 2026-05-13 — Milestone v1.1 started (Live Data Cutover; WhatsApp dropped)*
