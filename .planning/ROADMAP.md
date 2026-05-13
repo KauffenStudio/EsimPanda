@@ -206,7 +206,11 @@ The v1.0 backend (Celitech sync, Stripe, webhooks, eSIM delivery) works end-to-e
   3. `select count(*) from destinations where iso_code in ('EU','AS','GL')` returns exactly 3 with `popularity_rank = 0` and `region_bucket` set to `europe-wide` / `asia-wide` / `global` (regional hero rows seeded by explicit UPSERT before the country-level loop)
   4. `scripts/backfill-curation.mjs` is idempotent: a second invocation against an already-populated DB reports zero updates (uses `WHERE col IS NULL OR col = ''` guards) and never overwrites operator edits
   5. An anon-key Supabase client query (`select * from destinations where is_active = true limit 1`) returns at least one row — proving RLS does not silently swallow the new columns
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+- [ ] 10-01-PLAN.md — Schema migration: create `supabase/migrations/00003_destinations_curation_metadata.sql` (ALTER TABLE + 2 partial indexes), apply via `supabase db push`, verify columns + indexes via SQL
+- [ ] 10-02-PLAN.md — Backfill curation metadata: defensive sync.ts allowlist patch, `scripts/backfill-curation.mjs` (regional UPSERT + guarded country UPDATE), `scripts/verify-anon-read.mjs` probe, run + verify idempotency + RLS
 
 ### Phase 11: Read-Layer Module and Browse Cutover
 **Goal**: Browse page and all its child components render real Supabase destinations and plans through a shared, typed, `server-only` read module, with skeletons during fetch, country-flag fallbacks for missing images, and a Bambu error state with a working Retry button — no `mock-data/` imports remain in any browse-path component
@@ -278,7 +282,7 @@ The v1.0 backend (Celitech sync, Stripe, webhooks, eSIM delivery) works end-to-e
 | 7. SEO and Internationalization | 3/4 | In Progress|  |
 | 8. Growth and Acquisition | 3/3 | Complete   | 2026-04-25 |
 | 9. PWA and Polish | 3/3 | Complete   | 2026-04-25 |
-| 10. Schema and Curation Backfill | 0/0 | Not started | - |
+| 10. Schema and Curation Backfill | 0/2 | Planning complete | - |
 | 11. Read-Layer Module and Browse Cutover | 0/0 | Not started | - |
 | 12. Checkout, Pricing and Coupon Cutover | 0/0 | Not started | - |
 | 13. Cleanup, Mock Deletion and WhatsApp Removal | 0/0 | Not started | - |
