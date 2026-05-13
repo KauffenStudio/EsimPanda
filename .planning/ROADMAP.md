@@ -181,7 +181,9 @@ Plans:
 - [ ] 09-02-PLAN.md — Dark mode completion: CSS tokens, hydration fix, dark: classes across all 60 components
 - [ ] 09-03-PLAN.md — Push notifications: web-push, VAPID, server actions, notification store, permission modal, prefs UI, offline QR caching
 
-## Milestone v1.1 — Live Data Cutover
+---
+
+**Milestone v1.1 — Live Data Cutover** (Phases 10-14)
 
 The v1.0 backend (Celitech sync, Stripe, webhooks, eSIM delivery) works end-to-end against real data, but every UI read path still imports from `src/lib/mock-data/`. v1.1 is a surgical, dependency-ordered cutover from mock to live Supabase reads, plus the complete removal of the WhatsApp support integration that was already commented out of the layout but left half-wired across translation files and error copy.
 
