@@ -20,5 +20,13 @@ export interface NormalizedPurchase {
   manualActivationCode: string;
   iosActivationLink?: string;
   androidActivationLink?: string;
-  status: 'pending' | 'active' | 'expired';
+  status: 'pending' | 'active' | 'expired' | 'deactivated';
+}
+
+export interface PurchaseInput {
+  destination: string;
+  dataLimitInGb: number;
+  durationDays: number;
+  email?: string;
+  referenceId?: string;
 }

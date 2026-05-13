@@ -58,7 +58,16 @@ export async function provisionEsim(paymentIntentId: string, email?: string): Pr
   provisioningState.set(paymentIntentId, inProgress);
 
   // Look up order from DB for real plan data
-  let orderData: { wholesalePlanId: string; planName: string; destination: string; dataGb: string; durationDays: string; orderEmail: string; amountPaid: string } | null = null;
+  let orderData: {
+    wholesalePlanId: string;
+    planName: string;
+    destination: string;
+    destinationIso: string;
+    dataGb: string;
+    durationDays: string;
+    orderEmail: string;
+    amountPaid: string;
+  } | null = null;
 
   if (!IS_MOCK) {
     try {
@@ -68,6 +77,7 @@ export async function provisionEsim(paymentIntentId: string, email?: string): Pr
           wholesalePlanId: order.plans.wholesale_plan_id,
           planName: order.plans.name,
           destination: order.plans.destinations?.name || 'Unknown',
+          destinationIso: order.plans.destinations?.iso_code || '',
           dataGb: String(order.plans.data_gb),
           durationDays: String(order.plans.duration_days),
           orderEmail: order.email,
@@ -91,9 +101,17 @@ export async function provisionEsim(paymentIntentId: string, email?: string): Pr
       if (IS_MOCK) {
         purchase = await mockProvision();
       } else {
+        if (!orderData?.destinationIso || !orderData.dataGb || !orderData.durationDays) {
+          throw new Error('Missing plan data needed for Celitech purchase (destinationIso/dataGb/durationDays)');
+        }
         const provider = createProvider();
-        const planId = orderData?.wholesalePlanId || 'placeholder-plan-id';
-        purchase = await provider.purchase(planId, 1);
+        purchase = await provider.purchase({
+          destination: orderData.destinationIso,
+          dataLimitInGb: Number(orderData.dataGb),
+          durationDays: Number(orderData.durationDays),
+          email: orderData.orderEmail,
+          referenceId: orderId,
+        });
       }
 
       const { encrypted_payload, ...deliveryData } = buildDeliveryData(purchase);

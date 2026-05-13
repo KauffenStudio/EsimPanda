@@ -1,13 +1,31 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Celitech } from 'celitech-sdk';
-import type {
-  ESIMProvider,
-} from './provider';
+import QRCode from 'qrcode';
+import type { ESIMProvider } from './provider';
 import type {
   NormalizedDestination,
   NormalizedPackage,
   NormalizedPurchase,
+  PurchaseInput,
 } from './types';
+
+function unwrap<T = any>(response: any): T {
+  return (response?.data ?? response) as T;
+}
+
+function mapStatus(raw: string | undefined): NormalizedPurchase['status'] {
+  if (!raw) return 'pending';
+  const v = raw.toLowerCase();
+  if (v.includes('activ')) return 'active';
+  if (v.includes('expir')) return 'expired';
+  if (v.includes('deactiv') || v.includes('cancel') || v.includes('disabl')) return 'deactivated';
+  return 'pending';
+}
+
+async function buildQrDataUrl(manualActivationCode: string): Promise<string> {
+  if (!manualActivationCode) return '';
+  return QRCode.toDataURL(manualActivationCode, { errorCorrectionLevel: 'M', margin: 1, width: 320 });
+}
 
 export class CelitechAdapter implements ESIMProvider {
   private client: InstanceType<typeof Celitech>;
@@ -21,68 +39,86 @@ export class CelitechAdapter implements ESIMProvider {
 
   async listDestinations(): Promise<NormalizedDestination[]> {
     const response = await this.client.destinations.listDestinations();
-    return (response as any).destinations.map((d: any) => ({
+    const data = unwrap<{ destinations: any[] }>(response);
+    return (data.destinations ?? []).map((d: any) => ({
       name: d.name,
-      iso: d.isoCode,
-      region: d.region ?? 'unknown',
+      iso: d.destinationIso2 ?? d.isoCode ?? d.destination,
+      region: typeof d.supportedCountries !== 'undefined' && d.supportedCountries.length > 1
+        ? 'region'
+        : (d.region ?? 'country'),
     }));
   }
 
   async listPackages(destinationIso: string): Promise<NormalizedPackage[]> {
     const response = await this.client.packages.listPackages({ destination: destinationIso } as any);
-    return (response as any).packages.map((p: any) => ({
+    const data = unwrap<{ packages: any[] }>(response);
+    return (data.packages ?? []).map((p: any) => ({
       id: p.id,
       wholesaleId: p.id,
-      destination: p.destination,
-      dataGB: p.dataInGb,
-      durationDays: p.duration,
-      wholesalePriceCents: Math.round(p.price * 100),
-      currency: p.currency,
+      destination: p.destinationIso2 ?? p.destination,
+      dataGB: p.dataLimitInGb ?? p.dataInGb,
+      durationDays: p.maxDays ?? p.duration ?? 0,
+      wholesalePriceCents: typeof p.priceInCents === 'number'
+        ? p.priceInCents
+        : Math.round((p.price ?? 0) * 100),
+      currency: p.currency ?? 'USD',
     }));
   }
 
-  async purchase(packageId: string, quantity: number): Promise<NormalizedPurchase> {
-    const response = await this.client.purchases.createPurchase({
-      packageId,
-      quantity,
+  async purchase(input: PurchaseInput): Promise<NormalizedPurchase> {
+    const response = await this.client.purchases.createPurchaseV2({
+      destination: input.destination,
+      dataLimitInGb: input.dataLimitInGb,
+      duration: input.durationDays,
+      quantity: 1,
+      email: input.email,
+      referenceId: input.referenceId,
     } as any);
-    const p = (response as any).purchase;
+    const data = unwrap<any>(response);
+    const first = Array.isArray(data) ? data[0] : data;
+    const profile = first?.profile ?? first;
+    const manualActivationCode: string = profile?.manualActivationCode ?? profile?.activationCode ?? '';
+    const activationQrBase64 = await buildQrDataUrl(manualActivationCode);
+
     return {
-      iccid: p.iccid,
-      activationQrBase64: p.qrCode,
-      manualActivationCode: p.manualActivationCode,
-      iosActivationLink: p.iosActivationLink,
-      androidActivationLink: p.androidActivationLink,
-      status: p.status,
+      iccid: profile?.iccid ?? '',
+      activationQrBase64,
+      manualActivationCode,
+      iosActivationLink: profile?.iosActivationLink,
+      androidActivationLink: profile?.androidActivationLink,
+      status: 'pending',
     };
   }
 
   async getStatus(iccid: string): Promise<NormalizedPurchase> {
     const response = await this.client.eSim.getEsim({ iccid } as any);
-    const e = (response as any).esim;
+    const data = unwrap<{ esim: any }>(response);
+    const e = data.esim ?? data;
+    const manualActivationCode: string = e?.manualActivationCode ?? '';
+    const activationQrBase64 = manualActivationCode ? await buildQrDataUrl(manualActivationCode) : '';
     return {
-      iccid: e.iccid,
-      activationQrBase64: e.qrCode ?? '',
-      manualActivationCode: e.manualActivationCode ?? '',
-      iosActivationLink: e.iosActivationLink,
-      androidActivationLink: e.androidActivationLink,
-      status: e.status,
+      iccid: e?.iccid ?? iccid,
+      activationQrBase64,
+      manualActivationCode,
+      iosActivationLink: e?.iosActivationLink,
+      androidActivationLink: e?.androidActivationLink,
+      status: mapStatus(e?.status),
     };
   }
 
-  async topUp(iccid: string, packageId: string): Promise<NormalizedPurchase> {
+  async topUp(iccid: string, dataLimitInGb: number, durationDays: number): Promise<NormalizedPurchase> {
     const response = await this.client.purchases.topUpEsim({
       iccid,
-      packageId,
+      dataLimitInGb,
+      duration: durationDays,
     } as any);
-    const p = (response as any).purchase;
+    const data = unwrap<any>(response);
+    const profile = data?.profile ?? {};
     return {
-      iccid: p.iccid,
-      activationQrBase64: p.qrCode ?? '',
-      manualActivationCode: p.manualActivationCode ?? '',
-      iosActivationLink: p.iosActivationLink,
-      androidActivationLink: p.androidActivationLink,
-      status: p.status,
+      iccid: profile?.iccid ?? iccid,
+      activationQrBase64: '',
+      manualActivationCode: '',
+      status: 'pending',
     };
   }
 }
