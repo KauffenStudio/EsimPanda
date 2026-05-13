@@ -1,9 +1,48 @@
 # Requirements: eSIM Reseller Platform
 
 **Defined:** 2026-04-19
+**Last milestone added:** 2026-05-13 — v1.1 Live Data Cutover
 **Core Value:** A student arriving in a new country gets connected with mobile data in under 2 minutes
 
-## v1 Requirements
+## v1.1 Milestone — Live Data Cutover + WhatsApp Removal
+
+The v1.0 backend (Celitech sync, Stripe, webhooks, eSIM delivery) works end-to-end against real data, but every UI read path (browse, plan-card, comparison-sheet, pricing, validate-coupon, checkout server component) still imports from `src/lib/mock-data/`. v1.1 cuts the UI over to Supabase and removes the WhatsApp support integration entirely.
+
+### Catalog (live-data cutover)
+
+- [ ] **CAT-05**: User browsing the destination grid sees real Supabase destinations from the curated set only (uncurated destinations are hidden until manually curated)
+- [ ] **CAT-06**: User typing in the destination search sees instant client-side filtering across the live catalog (no server-side debounce)
+- [ ] **CAT-07**: User viewing a destination with no `image_url` set sees a country-flag fallback (not a generic placeholder)
+
+### Checkout (live-data cutover)
+
+- [ ] **CHK-06**: User completing checkout is charged the retail price stored in Supabase for the real plan ID they selected (no mock plan IDs accepted)
+- [ ] **CHK-07**: User applying a coupon sees the minimum-order amount labelled in the correct currency (`$9.99` instead of `€9.99`)
+- [ ] **CHK-08**: User with a saved cart from before the v1.1 deploy starts with a clean cart on first load (Zustand persist migration purges dead plan IDs)
+
+### UX / Design
+
+- [ ] **UXD-05**: User waiting for the catalog fetch sees a skeleton grid (not a blank screen or FOUC)
+- [ ] **UXD-06**: User encountering a fetch error sees a Bambu error pose with a Retry button that actually retries the fetch
+- [ ] **UXD-07**: User watching a destination card image load sees a smooth blurred cross-fade from the country-flag fallback to the real photo
+- [ ] **UXD-08**: User returning after the v1.1 deploy sees a "New version available" prompt and loads fresh content (service worker cache bumped)
+
+### Infrastructure
+
+- [ ] **INF-07**: Catalog reads from the UI go through a shared, typed, `server-only` read module at `src/lib/db/destinations.ts` (no direct Supabase calls inside components)
+- [ ] **INF-08**: Browse page renders via an async RSC that fetches the catalog server-side using the anon key + existing RLS policy, passing data to a `<BrowseClient>` for filter/animation
+- [ ] **INF-09**: Supabase migration adds `popularity_rank INTEGER` and `region_bucket TEXT` columns to `destinations` (additive, no RLS change)
+- [ ] **INF-10**: A one-off backfill script copies curation metadata (`popularity_rank`, `image_url`, `region_bucket`) from `src/lib/mock-data/destinations.ts` into Supabase by `iso_code`, idempotently
+- [ ] **INF-11**: `src/lib/mock-data/destinations.ts`, `plans.ts`, and `tag-plans.ts` are deleted; pure-compute helpers extracted to `src/lib/plans/pricing-display.ts`; CI grep gate blocks new `mock-data/` imports
+- [ ] **INF-12**: Service worker `CACHE_NAME` is bumped to `esim-panda-v2` and the cutover deploy is gated on this change (returning users + iOS Capacitor app see fresh content)
+- [ ] **INF-13**: WhatsApp integration is fully removed: `whatsapp-button.tsx`, `support.ts`, layout imports, env vars, all 6 locale `whatsapp.*` namespaces, and all 4 error-state copy strings referencing WhatsApp
+- [ ] **INF-14**: `/help` static route ships as the new support entry point (FAQ + `mailto:` contact), linked from the footer
+
+### Verification
+
+- [ ] **VER-01**: End-to-end test executes: a Stripe test-card purchase against a real Supabase plan ID delivers a real eSIM ICCID via Celitech, persists encrypted activation data, and sends a real Resend email
+
+## v1.0 Requirements (shipped)
 
 Requirements for initial release. Each maps to roadmap phases.
 
@@ -48,7 +87,7 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **GRW-01**: User can share referral link and earn credit when friends purchase
 - [x] **GRW-02**: Destination pages are SEO-optimized with structured data
 - [x] **GRW-03**: Platform supports multiple languages (EN, PT, ES, FR minimum)
-- [x] **GRW-04**: User can contact support via WhatsApp button
+- ~~**GRW-04**: User can contact support via WhatsApp button~~ — **removed in v1.1, superseded by INF-13 + INF-14**
 
 ### UX/Design
 
@@ -84,6 +123,15 @@ Deferred to future release. Tracked but not in current roadmap.
 - **ADV-03**: A/B testing framework for pricing and conversion
 - **ADV-04**: Affiliate program for travel bloggers/influencers
 
+### Polish (deferred from v1.1)
+
+- **POL-01**: Bambu loading pose triggers when catalog fetch exceeds 300 ms (wait for production p50 telemetry first)
+- **POL-02**: ISR hard-pin for the top-12 destinations via `generateStaticParams` (depends on popularity telemetry)
+- **POL-03**: Optimistic destination-card render from URL slug before Supabase fetch resolves
+- **POL-04**: Refetch-on-tab-focus for catalog freshness (wait for telemetry showing staleness matters)
+- **POL-05**: Notify-me email capture on "plans coming soon" empty state (needs new table + double-opt-in)
+- **POL-06**: Dynamic EUR conversion of the coupon minimum-order threshold (v1.1 fixes only the copy)
+
 ## Out of Scope
 
 | Feature | Reason |
@@ -91,10 +139,15 @@ Deferred to future release. Tracked but not in current roadmap.
 | Native mobile app | Web-first PWA covers mobile; native adds cost and app store friction |
 | Unlimited data plans | Margin-killer, hard to sustain at wholesale level |
 | Cryptocurrency payments | Adds complexity, negligible demand from student audience |
-| Live chat support | WhatsApp handles this more naturally for the target audience |
+| WhatsApp support integration | Dropped in v1.1 — async `/help` route + `mailto:` covers support; reduces external dependency |
+| Live chat support | Out of scope — async email/contact form sufficient |
 | IoT/enterprise eSIMs | Consumer focus only — different market entirely |
 | Own MVNO infrastructure | Pure reseller model — zero telecom infrastructure investment |
 | Real-time chat between users | Not a social platform |
+| Per-card Suspense streaming on the catalog | Anti-feature — worse TTFB and pop-in than a bulk skeleton swap |
+| Server-side debounced destination search | Anti-feature — 226 rows / ~25 KB client filter strictly beats round-trip per keystroke |
+| Generic stock-photo placeholder for missing destination images | Anti-feature — country flag is the honest, recognizable fallback |
+| Mock data as silent fallback when Supabase is down | Anti-feature — creates two-source-of-truth drift bugs |
 
 ## Traceability
 
@@ -135,12 +188,30 @@ Deferred to future release. Tracked but not in current roadmap.
 | INF-04 | Phase 4 | Complete |
 | INF-05 | Phase 3 | Complete |
 | INF-06 | Phase 1 | Pending |
+| CAT-05 | v1.1 Phase TBD | Pending |
+| CAT-06 | v1.1 Phase TBD | Pending |
+| CAT-07 | v1.1 Phase TBD | Pending |
+| CHK-06 | v1.1 Phase TBD | Pending |
+| CHK-07 | v1.1 Phase TBD | Pending |
+| CHK-08 | v1.1 Phase TBD | Pending |
+| UXD-05 | v1.1 Phase TBD | Pending |
+| UXD-06 | v1.1 Phase TBD | Pending |
+| UXD-07 | v1.1 Phase TBD | Pending |
+| UXD-08 | v1.1 Phase TBD | Pending |
+| INF-07 | v1.1 Phase TBD | Pending |
+| INF-08 | v1.1 Phase TBD | Pending |
+| INF-09 | v1.1 Phase TBD | Pending |
+| INF-10 | v1.1 Phase TBD | Pending |
+| INF-11 | v1.1 Phase TBD | Pending |
+| INF-12 | v1.1 Phase TBD | Pending |
+| INF-13 | v1.1 Phase TBD | Pending |
+| INF-14 | v1.1 Phase TBD | Pending |
+| VER-01 | v1.1 Phase TBD | Pending |
 
 **Coverage:**
-- v1 requirements: 35 total
-- Mapped to phases: 35
-- Unmapped: 0
+- v1.0 requirements: 35 total — all complete (except DEL-02, INF-06 noted)
+- v1.1 requirements: 19 total — pending phase mapping by roadmapper
 
 ---
 *Requirements defined: 2026-04-19*
-*Last updated: 2026-04-19 after roadmap creation*
+*Last updated: 2026-05-13 — added v1.1 milestone requirements (Live Data Cutover + WhatsApp Removal)*
