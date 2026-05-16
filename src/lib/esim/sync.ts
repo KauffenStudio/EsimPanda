@@ -1,6 +1,19 @@
 import { createProvider } from './provider';
 import { createClient } from '@supabase/supabase-js';
 
+/**
+ * Columns the daily Celitech sync is allowed to write to `destinations`.
+ * Curation fields (the popularity-rank, region-bucket and image-URL columns)
+ * are managed exclusively by `scripts/backfill-curation.mjs` and operator
+ * edits via Supabase Studio. The sync MUST NOT touch them or the 3 a.m. cron
+ * will erase manual curation. See .planning/phases/10-schema-and-curation-backfill/
+ *
+ * The `satisfies` clause on the upsert below turns this allowlist into a
+ * compile-time guard: adding a curation field to the upsert object literal
+ * raises a TypeScript error.
+ */
+const DESTINATION_SYNC_COLUMNS = ['name', 'slug', 'iso_code', 'region', 'is_active', 'synced_at'] as const;
+
 export async function syncCatalog() {
   const provider = createProvider();
 
@@ -28,7 +41,7 @@ export async function syncCatalog() {
         region: dest.region,
         is_active: true,
         synced_at: new Date().toISOString(),
-      },
+      } satisfies Record<typeof DESTINATION_SYNC_COLUMNS[number], unknown>,
       { onConflict: 'iso_code' },
     );
   }
