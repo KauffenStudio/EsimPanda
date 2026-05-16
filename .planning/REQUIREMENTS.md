@@ -12,7 +12,7 @@ The v1.0 backend (Celitech sync, Stripe, webhooks, eSIM delivery) works end-to-e
 
 - [ ] **CAT-05**: User browsing the destination grid sees real Supabase destinations from the curated set only (uncurated destinations are hidden until manually curated)
 - [ ] **CAT-06**: User typing in the destination search sees instant client-side filtering across the live catalog (no server-side debounce)
-- [ ] **CAT-07**: User viewing a destination with no `image_url` set sees a country-flag fallback (not a generic placeholder)
+- [ ] **CAT-07**: User viewing a destination with no `image_url` set sees a typographic name card (destination name in bold type on a brand gradient — not a flag, not a generic placeholder)
 
 ### Checkout (live-data cutover)
 
