@@ -34,14 +34,13 @@ created: 2026-05-16
 
 ## Spacing Scale
 
-Declared values (all multiples of 4 — sourced from existing browse components):
+Declared spacing scale — every value is a multiple of 4 and in the standard set {4, 8, 16, 24, 32, 64}:
 
 | Token | Value | Tailwind | Usage in this phase |
 |-------|-------|----------|---------------------|
-| xs | 4px | `gap-1`, `p-1` | Sub-label gap inside cards (`mt-0.5` = 2px is an existing v1.0 exception, see below) |
+| xs | 4px | `gap-1`, `p-1` | Sub-label gap inside cards |
 | sm | 8px | `gap-2`, `py-2` | Region-pill gaps, error-banner internal gaps, button vertical padding |
 | md | 16px | `gap-4`, `p-4`, `px-4` | Default grid gap, card padding, page horizontal padding, banner padding |
-| lg | 20px | `gap-5`, `md:gap-5` | Grid gap at `md+` breakpoint (existing) |
 | xl | 24px | `gap-6`, `pt-6` | Vertical rhythm between browse sections, page top padding |
 | 2xl | 32px | `mb-8` | (available; not required this phase) |
 | 3xl | 64px | `py-16` | Empty-state vertical padding (search-miss block) |
@@ -51,11 +50,13 @@ Declared values (all multiples of 4 — sourced from existing browse components)
 - Regional grid: `grid grid-cols-1 md:grid-cols-3 gap-4`
 - Page container: `px-4 pt-6 pb-20 max-w-[1200px] mx-auto`
 
+The `md:gap-5` (20px) on the country grid is an existing Tailwind utility carried over verbatim from the v1.0 grid — it is part of the fixed grid contract above, not a named spacing token. The skeleton grid reuses this exact class string so loading and loaded states align pixel-for-pixel.
+
 Exceptions:
-- `mt-0.5` (2px) sub-label nudge inside `DestinationCard` — pre-existing v1.0 micro-spacing, kept as-is. New code should not introduce sub-4px spacing.
 - `pb-20` (80px) bottom padding — clears the fixed mobile bottom-nav; pre-existing layout constant.
-- `py-0.5` / `px-2` on the discount badge — pre-existing v1.0 badge sizing, kept unchanged.
 - Touch targets: region pills and Retry/Clear-search buttons MUST be ≥40px tall (`min-h-[40px]` or `py-2` on `text-sm`). Existing pills already use `min-h-[40px]`.
+
+**Implementation note — inherited micro-spacing:** Some pre-existing v1.0 components use sub-4px micro-spacing (e.g. `mt-0.5` on a `DestinationCard` sub-label, `py-0.5` on the discount badge). These are inherited and frozen — no new Phase 11 code introduces sub-4px spacing.
 
 ---
 
@@ -67,10 +68,10 @@ Font: `Outfit`. Phase 11 uses 4 sizes and 2 weights — no new type tokens.
 |------|------|--------|-------------|---------------------|
 | Display | 30px → 36px (`text-3xl md:text-4xl`) | bold (700) | 1.2 (`tracking-tighter`) | Browse page `<h1>` — unchanged from v1.0 |
 | Heading | 18px (`text-lg`) — 20px (`text-xl`) on the typographic fallback card | bold (700) | 1.2 | Typographic fallback card destination name; regional card title |
-| Body | 14px (`text-sm`) | regular (400) / semibold (600) | 1.5 | Error-banner message; search-miss message; Retry/Clear-search button labels (`font-medium` 500 — see note) |
-| Label | 12px (`text-xs`) | semibold (600) / bold (700) | 1.4 | Card price sub-label, discount badge, region-pill count |
+| Body | 14px (`text-sm`) | regular (400) | 1.5 | Error-banner message; search-miss message; Retry/Clear-search button labels |
+| Label | 12px (`text-xs`) | bold (700) | 1.4 | Card price sub-label, discount badge, region-pill count |
 
-**Weight contract:** the two primary weights are **regular (400)** and **bold (700)**. `font-medium` (500) and `font-semibold` (600) appear in pre-existing v1.0 code (button labels, card name) — they are kept where already used to avoid churn, but **no new component in this phase introduces additional weights**. New error-banner / skeleton / typographic-card / search-miss code uses only 400 and 700, except button labels which match the existing `font-medium` button convention.
+**Weight contract:** the effective Phase 11 weight contract is exactly **two weights — regular (400) and bold (700)**. Every new Phase 11 surface (error banner, skeleton, typographic fallback card, search-miss block, Retry/Clear-search buttons) uses only 400 or 700. `font-medium` (500) and `font-semibold` (600) are v1.0-inherited values frozen in pre-existing components — they are not declared tokens here and no new Phase 11 component uses them.
 
 **Typographic fallback card name:** `text-lg md:text-xl font-bold tracking-tight`, `text-white`, `text-center`. Long destination names wrap; clamp to 2 lines (`line-clamp-2`) so the name never overflows the `aspect-[4/3]` tile.
 
@@ -150,7 +151,7 @@ All strings go through `next-intl`. New keys MUST be added to all 6 locale files
 
 | Element | i18n key | EN copy | Status |
 |---------|----------|---------|--------|
-| Primary CTA — error recovery | `browse.error.retry` | `Try again` | NEW key |
+| Primary CTA — error recovery | `browse.error.retry` | `Try loading again` | NEW key |
 | Error state message | `browse.error.message` | `We couldn't load destinations right now. Check your connection and try again.` | NEW key |
 | Primary CTA — search recovery | `browse.clearSearch` | `Clear search` | NEW key |
 | Search-miss message | `browse.noResults` | `No destinations match "{query}"` | EXISTS — reword from `No plans for "{query}" yet` to `No destinations match "{query}"` |
@@ -171,7 +172,7 @@ All strings go through `next-intl`. New keys MUST be added to all 6 locale files
 | Surface | Requirement |
 |---------|-------------|
 | Skeleton grid | Skeleton container `aria-hidden="true"` (decorative); the page is in a loading route — screen readers get the route transition. No fake content announced. |
-| Error banner | `role="alert"` on the banner so it is announced when it appears after a failed retry. Retry button is a real `<button>`, keyboard-focusable, label `Try again`. |
+| Error banner | `role="alert"` on the banner so it is announced when it appears after a failed retry. Retry button is a real `<button>`, keyboard-focusable, label `Try loading again`. |
 | Search-miss block | The message is a real `<p>`; Clear-search is a real `<button>`. After Clear-search resets the filter, focus returns to the search input. |
 | Typographic fallback card | The destination name in the gradient is visible text (not `aria-hidden`); the card root keeps `role="button"` + `tabIndex={0}` (existing `Card` behavior). When the photo cross-fades in, the `motion.img` carries `alt={name}`. |
 | Photo cross-fade | `motion.img` respects `prefers-reduced-motion` — when reduced motion is set, the photo appears at `opacity: 1` with no blur transition (gate the `motion` props or use `useReducedMotion()`). |
