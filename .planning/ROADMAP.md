@@ -26,7 +26,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 8: Growth and Acquisition** - Referral program with credit system, WhatsApp support integration (completed 2026-04-25)
 - [x] **Phase 9: PWA and Polish** - Installable PWA, dark mode, push notifications for expiry and promotions (completed 2026-04-25)
 
-### Milestone v1.1 — Live Data Cutover
+### 🚧 **v1.1 Live Data Cutover** — Milestone in progress
 
 - [x] **Phase 10: Schema and Curation Backfill** - Additive Supabase migration (`popularity_rank`, `region_bucket`); idempotent backfill of curation metadata from `mock-data/destinations.ts` by ISO code; explicit seed of EU/AS/GL regional rows (completed 2026-05-16)
 - [ ] **Phase 11: Read-Layer Module and Browse Cutover** - Typed `server-only` read module at `src/lib/db/destinations.ts`; browse page becomes async RSC + `<BrowseClient>`; destination grid, search filter, comparison sheet, regional plans, plan cards consume live Supabase data with shimmer skeletons, typographic image fallback, and a plain inline error banner with retry (no Bambu poses)

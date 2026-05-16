@@ -2,9 +2,9 @@
 gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: live-data-cutover
-status: phase-complete
-stopped_at: Completed 10-02-PLAN.md
-last_updated: "2026-05-16T12:49:34.475Z"
+status: ui-spec-approved
+stopped_at: Phase 11 UI-SPEC approved
+last_updated: "2026-05-16T15:08:44.197Z"
 progress:
   total_phases: 6
   completed_phases: 1
@@ -19,14 +19,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-13)
 
 **Core value:** A student arriving in a new country gets connected with mobile data in under 2 minutes
-**Current focus:** Phase 10 — schema-and-curation-backfill
+**Current focus:** Phase 11 — read-layer-module-and-browse-cutover (UI-SPEC approved, ready to plan)
 
 ## Current Position
 
-Phase: 10 (schema-and-curation-backfill) — COMPLETE
-Plan: 2 of 2 (all plans complete)
+Phase: 11 (read-layer-module-and-browse-cutover) — RESEARCH + UI-SPEC complete, ready for /gsd:plan-phase 11
+Plan: not yet planned
 
-10-01 complete (migration applied to production). 10-02 complete (backfill ran: 69 curated rows incl. 3 regional heroes; sync.ts allowlist guard added; idempotency proven). Phase 11 (read-layer + browse cutover) is unblocked.
+Phase 10 complete (migration + backfill, 69 curated rows). Phase 11 has 11-RESEARCH.md, 11-VALIDATION.md, and an approved 11-UI-SPEC.md. Re-run /gsd:plan-phase 11 to generate plans.
 
 ## Performance Metrics
 
@@ -178,6 +178,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-05-16T12:44:34.568Z
-Stopped at: Completed 10-02-PLAN.md
-Resume file: None
+Last session: 2026-05-16T15:08:44.188Z
+Stopped at: Phase 11 UI-SPEC approved
+Resume file: .planning/phases/11-read-layer-module-and-browse-cutover/11-UI-SPEC.md
