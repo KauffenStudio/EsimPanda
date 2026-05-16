@@ -22,10 +22,11 @@ The v1.0 backend (Celitech sync, Stripe, webhooks, eSIM delivery) works end-to-e
 
 ### UX / Design
 
-- [ ] **UXD-05**: User waiting for the catalog fetch sees a skeleton grid (not a blank screen or FOUC)
-- [ ] **UXD-06**: User encountering a fetch error sees a Bambu error pose with a Retry button that actually retries the fetch
-- [ ] **UXD-07**: User watching a destination card image load sees a smooth blurred cross-fade from the country-flag fallback to the real photo
+- [ ] **UXD-05**: User waiting for the catalog fetch sees a shimmer skeleton grid (not a blank screen or FOUC)
+- [ ] **UXD-06**: User encountering a fetch error sees a plain inline error banner with a Retry button that re-runs the full catalog fetch (no mascot)
+- [ ] **UXD-07**: User watching a destination card image load sees a smooth blurred cross-fade from the typographic fallback card to the real photo
 - [ ] **UXD-08**: User returning after the v1.1 deploy sees a "New version available" prompt and loads fresh content (service worker cache bumped)
+- [ ] **UXD-09**: The Bambu mascot pose system is removed from the codebase — the 8 pose components and all their usages are gone; only the panda hello video (`bambu-video.tsx`) remains
 
 ### Infrastructure
 
@@ -198,6 +199,7 @@ Deferred to future release. Tracked but not in current roadmap.
 | UXD-06 | Phase 11 | Pending |
 | UXD-07 | Phase 11 | Pending |
 | UXD-08 | Phase 14 | Pending |
+| UXD-09 | Phase 13.1 | Pending |
 | INF-07 | Phase 11 | Pending |
 | INF-08 | Phase 11 | Pending |
 | INF-09 | Phase 10 | Complete |
@@ -210,15 +212,16 @@ Deferred to future release. Tracked but not in current roadmap.
 
 **Coverage:**
 - v1.0 requirements: 35 total — all complete (except DEL-02, INF-06 noted)
-- v1.1 requirements: 19 total — all mapped to Phases 10-14 (Phase 10: 2 | Phase 11: 8 | Phase 12: 3 | Phase 13: 4 | Phase 14: 3 → reconciles to 19 with 1 cross-phase boundary; see ROADMAP.md for per-requirement detail)
+- v1.1 requirements: 20 total — all mapped to Phases 10-14 (incl. inserted Phase 13.1)
 
 **v1.1 phase distribution:**
 - Phase 10 (Schema + Backfill): INF-09, INF-10 (2 reqs)
 - Phase 11 (Read-Layer + Browse): INF-07, INF-08, CAT-05, CAT-06, CAT-07, UXD-05, UXD-06, UXD-07 (8 reqs)
 - Phase 12 (Checkout/Pricing/Coupon): CHK-06, CHK-07, CHK-08 (3 reqs)
 - Phase 13 (Cleanup + WhatsApp): INF-11, INF-13, INF-14 (3 reqs)
+- Phase 13.1 (Bambu pose removal — INSERTED): UXD-09 (1 req)
 - Phase 14 (E2E + Deploy): INF-12, UXD-08, VER-01 (3 reqs)
-- **Total: 2 + 8 + 3 + 3 + 3 = 19** ✓
+- **Total: 2 + 8 + 3 + 3 + 1 + 3 = 20** ✓
 
 ---
 *Requirements defined: 2026-04-19*

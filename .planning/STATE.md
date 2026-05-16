@@ -6,7 +6,7 @@ status: phase-complete
 stopped_at: Completed 10-02-PLAN.md
 last_updated: "2026-05-16T12:49:34.475Z"
 progress:
-  total_phases: 5
+  total_phases: 6
   completed_phases: 1
   total_plans: 2
   completed_plans: 2
@@ -85,6 +85,10 @@ Plan: 2 of 2 (all plans complete)
 | Phase 10 P02 | 6min | 5 tasks | 4 files |
 
 ## Accumulated Context
+
+### Roadmap Evolution
+
+- Phase 13.1 inserted after Phase 13 (2026-05-16): Remove Bambu mascot pose system app-wide — placed before Phase 14 so E2E tests the final poseless UI. Owns new requirement UXD-09.
 
 ### Decisions
 

@@ -32,6 +32,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 11: Read-Layer Module and Browse Cutover** - Typed `server-only` read module at `src/lib/db/destinations.ts`; browse page becomes async RSC + `<BrowseClient>`; destination grid, search filter, comparison sheet, regional plans, plan cards consume live Supabase data with shimmer skeletons, typographic image fallback, and a plain inline error banner with retry (no Bambu poses)
 - [ ] **Phase 12: Checkout, Pricing and Coupon Cutover** - `lib/checkout/pricing.ts`, `api/checkout/validate-coupon`, and checkout server component query Supabase by real plan ID; `MockPlan` renamed to `Plan` across cart and checkout stores; Zustand persist `version: 2` migration purges dead v1.0 plan IDs; coupon min-order copy shows `$9.99`
 - [ ] **Phase 13: Cleanup, Mock Deletion and WhatsApp Removal** - Delete `mock-data/{destinations,plans,tag-plans}.ts` after pure-compute helpers extracted to `src/lib/plans/pricing-display.ts`; CI grep gate blocks new `mock-data/` imports; delete WhatsApp button + `support.ts` + 6 locale `whatsapp.*` namespaces + 4 error-state strings; ship `/help` route (FAQ + mailto)
+- [ ] **Phase 13.1: Remove Bambu mascot pose system app-wide** (INSERTED) - Remove the 8 Bambu *pose* components and their usages across 22 files (auth, checkout, dashboard, PWA, delivery, browse), replacing each with plain text or existing UI primitives; keep `bambu-video.tsx` (the panda hello video) untouched
 - [ ] **Phase 14: E2E Verification and Deploy** - Service worker `CACHE_NAME` bumped to `esim-panda-v2` with update prompt; end-to-end test: real Stripe test-card buys a real Celitech plan, real eSIM ICCID provisioned, real Resend email; env vars cleaned in Vercel
 
 ## Phase Details
@@ -250,6 +251,21 @@ Plans:
   5. `src/app/[locale]/help/page.tsx` ships as a static route with 6-10 FAQ entries plus a `mailto:` contact link; footer in `src/app/[locale]/layout.tsx` links to `/help`; user can navigate from any error state to `/help` (INF-14)
   6. CI grep gate: `grep -rn "whatsapp\|wa.me\|WhatsApp\|WHATSAPP" src/ messages/` returns zero hits outside `src/components/referral/share-buttons.tsx` (intentional keep — user-initiated referral share, not support)
 **Plans**: TBD
+
+### Phase 13.1: Remove Bambu mascot pose system app-wide (INSERTED)
+**Goal**: The Bambu mascot *pose* system is fully removed from the codebase — the 8 pose components (`bambu-base`, `bambu-empty`, `bambu-error`, `bambu-loading`, `bambu-preparing`, `bambu-success`, `bambu-travel`, `bambu-welcome`) are deleted and their usages across 22 files (auth, checkout, dashboard, PWA, delivery, browse) are replaced with plain text or existing UI primitives. The panda hello video (`bambu-video.tsx`) is kept and untouched. Inserted before Phase 14 so the E2E + deploy phase tests the final poseless UI.
+**Depends on**: Phase 13
+**Requirements**: UXD-09
+**Success Criteria** (what must be TRUE):
+  1. The 8 Bambu pose component files under `src/components/bambu/` are deleted; `bambu-video.tsx` remains
+  2. `grep -rn "bambu-base\|bambu-empty\|bambu-error\|bambu-loading\|bambu-preparing\|bambu-success\|bambu-travel\|bambu-welcome\|BambuEmpty\|BambuError\|BambuLoading\|BambuPreparing\|BambuSuccess\|BambuTravel\|BambuWelcome" src/ --include=*.tsx --include=*.ts` returns 0 hits
+  3. Every one of the 22 consuming files renders correctly with the pose replaced by plain text or an existing primitive — no broken imports, no empty render holes
+  4. `bambu-video.tsx` and its usages are unchanged — the panda hello video still plays where it did before
+  5. `npm test` passes with no regression; `tsc --noEmit` is clean
+**Plans**: TBD
+
+Plans:
+- [ ] TBD (run /gsd:plan-phase 13.1 to break down)
 
 ### Phase 14: E2E Verification and Deploy
 **Goal**: A real Stripe test-card purchase against a real Celitech plan UUID in Supabase completes the entire pipeline end-to-end (checkout → webhook → provisioning → encrypted activation data → Resend email with QR), the service worker cache is bumped in the same deploy as the code cutover with an update prompt for returning users, and Vercel env vars are cleaned
