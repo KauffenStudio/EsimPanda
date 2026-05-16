@@ -1,15 +1,15 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.1
-milestone_name: live-data-cutover
-status: discussing-phase
-stopped_at: Phase 10 (Schema and Curation Backfill) — discussing
-last_updated: "2026-05-13T23:55:00.000Z"
+milestone: v1.0
+milestone_name: — Initial Release
+status: unknown
+stopped_at: Completed 10-01-PLAN.md
+last_updated: "2026-05-16T12:35:46.542Z"
 progress:
-  total_phases: 5
-  completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
+  total_phases: 10
+  completed_phases: 9
+  total_plans: 30
+  completed_plans: 29
 ---
 
 # Project State
@@ -19,14 +19,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-13)
 
 **Core value:** A student arriving in a new country gets connected with mobile data in under 2 minutes
-**Current focus:** Milestone v1.1 — Live Data Cutover (Phase 10 — Schema and Curation Backfill, discussing)
+**Current focus:** Phase 10 — schema-and-curation-backfill
 
 ## Current Position
 
-Phase: 10 — Schema and Curation Backfill
-Plan: — (planning not started)
-Status: Discussing phase (roadmap drafted, ready for `/gsd:plan-phase 10`)
-Last activity: 2026-05-13 — v1.1 roadmap created (Phases 10-14 mapped from 19 requirements)
+Phase: 10 (schema-and-curation-backfill) — EXECUTING
+Plan: 2 of 2
+
+10-01 complete (migration applied to production). Next: 10-02 (backfill script + sync.ts patch).
 
 ## Performance Metrics
 
@@ -81,6 +81,7 @@ Last activity: 2026-05-13 — v1.1 roadmap created (Phases 10-14 mapped from 19 
 | Phase 09 P01 | 5min | 2 tasks | 17 files |
 | Phase 09 P02 | 10min | 4 tasks | 58 files |
 | Phase 09 P03 | 5min | 2 tasks | 21 files |
+| Phase 10 P01 | 2min | 3 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -90,6 +91,7 @@ Decisions are logged in PROJECT.md Key Decisions table.
 Recent decisions affecting current work:
 
 **v1.1 Roadmap (2026-05-13):**
+
 - Roadmap: 5 v1.1 phases (10-14) derived from 19 requirements at fine granularity, mapping 1:1 to the research's 5-wave structure (Schema+Backfill / Read-Layer+Browse / Checkout+Pricing / Cleanup+WhatsApp / E2E+Deploy)
 - Roadmap: Phases execute strictly sequentially (10→11→12→13→14) — each has a hard dependency on its predecessor (schema before code, read-layer before consumers, browse before checkout, type rename before deletion, E2E after all code)
 - Roadmap: Service worker cache bump (INF-12) and update prompt (UXD-08) bundled in final deploy phase to ship in the same release as the code cutover — prevents "stale cache" window for returning users
@@ -97,6 +99,7 @@ Recent decisions affecting current work:
 - Roadmap: `MockPlan` → `Plan` type rename happens in Phase 12 (before deletion in Phase 13) to avoid TypeScript red-wall
 
 **v1.0 Decisions:**
+
 - Roadmap: 9 phases derived from 29 requirements at fine granularity
 - Roadmap: Wholesale API integration front-loaded in Phase 1 to validate highest-risk dependency early
 - Roadmap: Guest checkout before accounts (Phase 3 before Phase 5) per research recommendation
@@ -148,10 +151,13 @@ Recent decisions affecting current work:
 - [Phase 09]: Replaced inline color styles with Tailwind classes in dashboard/referral components for dark mode support
 - [Phase 09]: In-memory Map for push subscriptions in mock mode; production migrates to Supabase push_subscriptions table
 - [Phase 09]: QR offline caching uses activation_qr_base64 + manual fields from DeliveryData (not plan's qr_data/setup_guide)
+- [Phase 10]: [Phase 10-01]: Applied out-of-order 00003_ migration via 'supabase db push --include-all' (locked sequential prefix sorts before existing timestamped remote migrations)
+- [Phase 10]: [Phase 10-01]: Schema verification run via Supabase Management API /database/query endpoint (psql + local Docker unavailable)
 
 ### Pending Todos
 
 **For Phase 10 plan-phase (Schema and Curation Backfill):**
+
 - Decide policy for the 146 Celitech destinations without curation metadata: hide until manually curated (default), or show in an "Other" region bucket, or seed `region_bucket` from Celitech's `region` field
 - Confirm Celitech regional bundle ISO codes in live Supabase before Wave 0 backfill maps EU/AS/GL
 - Spot-check Celitech plan currencies — research assumed all USD; query for any `currency != 'USD'` before Phase 12 cutover
@@ -165,6 +171,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-05-13T23:55:00.000Z
-Stopped at: v1.1 roadmap created — ready for `/gsd:plan-phase 10`
-Resume file: .planning/ROADMAP.md (Phase 10 details)
+Last session: 2026-05-16T12:35:31.426Z
+Stopped at: Completed 10-01-PLAN.md
+Resume file: None

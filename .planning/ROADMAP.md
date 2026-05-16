@@ -282,7 +282,7 @@ Plans:
 | 7. SEO and Internationalization | 3/4 | In Progress|  |
 | 8. Growth and Acquisition | 3/3 | Complete   | 2026-04-25 |
 | 9. PWA and Polish | 3/3 | Complete   | 2026-04-25 |
-| 10. Schema and Curation Backfill | 0/2 | Planning complete | - |
+| 10. Schema and Curation Backfill | 1/2 | In Progress|  |
 | 11. Read-Layer Module and Browse Cutover | 0/0 | Not started | - |
 | 12. Checkout, Pricing and Coupon Cutover | 0/0 | Not started | - |
 | 13. Cleanup, Mock Deletion and WhatsApp Removal | 0/0 | Not started | - |
