@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: — Initial Release
 status: unknown
-stopped_at: Completed 10-01-PLAN.md
-last_updated: "2026-05-16T12:35:46.542Z"
+stopped_at: Completed 10-02-PLAN.md
+last_updated: "2026-05-16T12:44:53.368Z"
 progress:
   total_phases: 10
-  completed_phases: 9
+  completed_phases: 10
   total_plans: 30
-  completed_plans: 29
+  completed_plans: 30
 ---
 
 # Project State
@@ -23,10 +23,10 @@ See: .planning/PROJECT.md (updated 2026-05-13)
 
 ## Current Position
 
-Phase: 10 (schema-and-curation-backfill) — EXECUTING
-Plan: 2 of 2
+Phase: 10 (schema-and-curation-backfill) — COMPLETE
+Plan: 2 of 2 (all plans complete)
 
-10-01 complete (migration applied to production). Next: 10-02 (backfill script + sync.ts patch).
+10-01 complete (migration applied to production). 10-02 complete (backfill ran: 69 curated rows incl. 3 regional heroes; sync.ts allowlist guard added; idempotency proven). Phase 11 (read-layer + browse cutover) is unblocked.
 
 ## Performance Metrics
 
@@ -82,6 +82,7 @@ Plan: 2 of 2
 | Phase 09 P02 | 10min | 4 tasks | 58 files |
 | Phase 09 P03 | 5min | 2 tasks | 21 files |
 | Phase 10 P01 | 2min | 3 tasks | 1 files |
+| Phase 10 P02 | 6min | 5 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -153,6 +154,8 @@ Recent decisions affecting current work:
 - [Phase 09]: QR offline caching uses activation_qr_base64 + manual fields from DeliveryData (not plan's qr_data/setup_guide)
 - [Phase 10]: [Phase 10-01]: Applied out-of-order 00003_ migration via 'supabase db push --include-all' (locked sequential prefix sorts before existing timestamped remote migrations)
 - [Phase 10]: [Phase 10-01]: Schema verification run via Supabase Management API /database/query endpoint (psql + local Docker unavailable)
+- [Phase 10]: [Phase 10-02]: Curated-row threshold corrected to 69 (actual mock-data row count: 3 hero + 66 country) — RESEARCH.md region table miscounted as 78
+- [Phase 10]: [Phase 10-02]: sync.ts guarded with DESTINATION_SYNC_COLUMNS allowlist + satisfies clause — curation columns can never be added to the daily Celitech UPSERT (compile-time error)
 
 ### Pending Todos
 
@@ -171,6 +174,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-05-16T12:35:31.426Z
-Stopped at: Completed 10-01-PLAN.md
+Last session: 2026-05-16T12:44:34.568Z
+Stopped at: Completed 10-02-PLAN.md
 Resume file: None

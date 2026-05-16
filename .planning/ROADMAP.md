@@ -28,7 +28,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 ### Milestone v1.1 — Live Data Cutover
 
-- [ ] **Phase 10: Schema and Curation Backfill** - Additive Supabase migration (`popularity_rank`, `region_bucket`); idempotent backfill of curation metadata from `mock-data/destinations.ts` by ISO code; explicit seed of EU/AS/GL regional rows
+- [x] **Phase 10: Schema and Curation Backfill** - Additive Supabase migration (`popularity_rank`, `region_bucket`); idempotent backfill of curation metadata from `mock-data/destinations.ts` by ISO code; explicit seed of EU/AS/GL regional rows (completed 2026-05-16)
 - [ ] **Phase 11: Read-Layer Module and Browse Cutover** - Typed `server-only` read module at `src/lib/db/destinations.ts`; browse page becomes async RSC + `<BrowseClient>`; destination grid, search filter, comparison sheet, regional plans, plan cards consume live Supabase data with skeletons, flag fallback, and Bambu error retry
 - [ ] **Phase 12: Checkout, Pricing and Coupon Cutover** - `lib/checkout/pricing.ts`, `api/checkout/validate-coupon`, and checkout server component query Supabase by real plan ID; `MockPlan` renamed to `Plan` across cart and checkout stores; Zustand persist `version: 2` migration purges dead v1.0 plan IDs; coupon min-order copy shows `$9.99`
 - [ ] **Phase 13: Cleanup, Mock Deletion and WhatsApp Removal** - Delete `mock-data/{destinations,plans,tag-plans}.ts` after pure-compute helpers extracted to `src/lib/plans/pricing-display.ts`; CI grep gate blocks new `mock-data/` imports; delete WhatsApp button + `support.ts` + 6 locale `whatsapp.*` namespaces + 4 error-state strings; ship `/help` route (FAQ + mailto)
@@ -282,7 +282,7 @@ Plans:
 | 7. SEO and Internationalization | 3/4 | In Progress|  |
 | 8. Growth and Acquisition | 3/3 | Complete   | 2026-04-25 |
 | 9. PWA and Polish | 3/3 | Complete   | 2026-04-25 |
-| 10. Schema and Curation Backfill | 1/2 | In Progress|  |
+| 10. Schema and Curation Backfill | 2/2 | Complete   | 2026-05-16 |
 | 11. Read-Layer Module and Browse Cutover | 0/0 | Not started | - |
 | 12. Checkout, Pricing and Coupon Cutover | 0/0 | Not started | - |
 | 13. Cleanup, Mock Deletion and WhatsApp Removal | 0/0 | Not started | - |
