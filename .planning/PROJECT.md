@@ -29,9 +29,11 @@ A student arriving in a new country gets connected with mobile data in under 2 m
 
 **Trigger:** During v1.1 kickoff (2026-05-13) the Celitech API was wired up and a real catalog sync populated Supabase. We discovered the entire UI (browse, plan-card, comparison-sheet, pricing.ts, validate-coupon, checkout server component) reads from `src/lib/mock-data/` instead of Supabase. The backend works end-to-end against real Celitech + Stripe, but the UI still shows mock plans and checkout 404s on real plan IDs — v1.0's phase verification missed this.
 
+**Progress:** Phase 10 complete (2026-05-16) — schema columns added + 69 curated destinations backfilled into Supabase. Phases 11-14 remaining.
+
 **Target features:**
-- Schema additions: `popularity_rank`, `image_url`, `region_bucket` columns on `destinations` (curation metadata Celitech doesn't return)
-- Backfill script: copy curation values from `src/lib/mock-data/destinations.ts` into Supabase for matching ISO codes
+- ✅ Schema additions: `popularity_rank`, `region_bucket` columns on `destinations` (`image_url` already existed) — Phase 10
+- ✅ Backfill script: curation values copied from `src/lib/mock-data/destinations.ts` into Supabase by ISO code (69 rows) — Phase 10
 - Async data hooks: rewrite `use-destinations` and `use-plans` to fetch from Supabase with proper loading states
 - UI refactor: `plan-card`, `destination-card`, `regional-plan-card`, `comparison-sheet` consume real plan shape
 - Pricing/checkout: rewrite `lib/checkout/pricing.ts`, `api/checkout/validate-coupon`, and the checkout server component to query Supabase
@@ -107,4 +109,4 @@ A student arriving in a new country gets connected with mobile data in under 2 m
 | Brand: eSIM Panda | Panda mascot with interactive animations throughout UX — emotional connection with young audience | — Pending |
 
 ---
-*Last updated: 2026-05-13 — Milestone v1.1 started (Live Data Cutover; WhatsApp dropped)*
+*Last updated: 2026-05-16 — Phase 10 (Schema and Curation Backfill) complete*
