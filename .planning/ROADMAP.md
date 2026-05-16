@@ -214,7 +214,7 @@ Plans:
 - [ ] 10-02-PLAN.md — Backfill curation metadata: defensive sync.ts allowlist patch, `scripts/backfill-curation.mjs` (regional UPSERT + guarded country UPDATE), `scripts/verify-anon-read.mjs` probe, run + verify idempotency + RLS
 
 ### Phase 11: Read-Layer Module and Browse Cutover
-**Goal**: Browse page and all its child components render real Supabase destinations and plans through a shared, typed, `server-only` read module, with skeletons during fetch, country-flag fallbacks for missing images, and a Bambu error state with a working Retry button — no `mock-data/` imports remain in any browse-path component
+**Goal**: Browse page and all its child components render real Supabase destinations and plans through a shared, typed, `server-only` read module, with shimmer skeletons during fetch, typographic name-card fallbacks for missing images, and a plain inline error banner with a working Retry button (no Bambu mascot poses) — no `mock-data/` imports remain in any browse-path component
 **Depends on**: Phase 10
 **Requirements**: INF-07, INF-08, CAT-05, CAT-06, CAT-07, UXD-05, UXD-06, UXD-07
 **Success Criteria** (what must be TRUE):
@@ -225,7 +225,12 @@ Plans:
   5. User viewing a destination card whose `image_url` is null sees a typographic name card (destination name in bold type on a brand-gradient — not a flag, not a generic stock photo, not a broken image icon); the photo, when present, blur-cross-fades in over the typographic card using a `motion.img` opacity transition (CAT-07, UXD-07)
   6. User waiting for the first paint of a catalog refetch sees a shimmer destination-card skeleton grid that matches the real card height, and on Supabase error sees a plain inline error banner with a Retry button that re-runs the full catalog fetch — no Bambu mascot poses (UXD-05, UXD-06)
   7. `useComparisonStore` stores full `Plan[]` objects instead of `string[]` plan IDs; comparison sheet renders selected plans without any `mock-data` lookup
-**Plans**: TBD
+**Plans**: 3 plans
+
+Plans:
+- [ ] 11-01-PLAN.md — Server-only catalog read module (`src/lib/db/destinations.ts`) + browse page as async RSC + `<BrowseClient>` boundary
+- [ ] 11-02-PLAN.md — Card components + four browse-grid states: shimmer skeleton, inline error banner with Retry, search-miss empty state, typographic image-fallback card with photo cross-fade
+- [ ] 11-03-PLAN.md — Comparison store migration (`string[]` → `Plan[]`); comparison-sheet/bar/plan-card consume stored `Plan` objects
 
 ### Phase 12: Checkout, Pricing and Coupon Cutover
 **Goal**: The payment path — pricing computation, coupon validation, and the checkout server component — reads from Supabase by real plan ID, the `MockPlan` type is renamed to `Plan` across all cart and checkout stores, and persisted Zustand cart state from v1.0 is purged on first load via a versioned migration
@@ -299,7 +304,7 @@ Plans:
 | 8. Growth and Acquisition | 3/3 | Complete   | 2026-04-25 |
 | 9. PWA and Polish | 3/3 | Complete   | 2026-04-25 |
 | 10. Schema and Curation Backfill | 2/2 | Complete    | 2026-05-16 |
-| 11. Read-Layer Module and Browse Cutover | 0/0 | Not started | - |
+| 11. Read-Layer Module and Browse Cutover | 0/3 | Planning complete | - |
 | 12. Checkout, Pricing and Coupon Cutover | 0/0 | Not started | - |
 | 13. Cleanup, Mock Deletion and WhatsApp Removal | 0/0 | Not started | - |
 | 14. E2E Verification and Deploy | 0/0 | Not started | - |
