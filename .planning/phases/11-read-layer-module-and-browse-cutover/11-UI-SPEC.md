@@ -1,10 +1,11 @@
 ---
 phase: 11
 slug: read-layer-module-and-browse-cutover
-status: draft
+status: approved
 shadcn_initialized: false
 preset: none
 created: 2026-05-16
+reviewed_at: 2026-05-16
 ---
 
 # Phase 11 — UI Design Contract
