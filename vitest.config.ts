@@ -15,6 +15,9 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
+      // `server-only` is a Next.js build-time guard package not resolvable by
+      // Vite — alias it to an empty stub so server-only modules can be unit-tested.
+      'server-only': path.resolve(__dirname, './src/test-stubs/server-only.ts'),
     },
   },
 });
