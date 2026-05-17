@@ -259,7 +259,11 @@ Plans:
   4. WhatsApp removal is complete: `src/components/layout/whatsapp-button.tsx`, its test, and `src/lib/config/support.ts` are deleted; the commented import in `src/app/[locale]/layout.tsx` is removed; the `whatsapp.*` namespace is gone from all 6 locale files (`messages/{en,pt,es,fr,ja,zh}.json`); the 4 "contact us on WhatsApp" error-copy strings in `payment-error.tsx`, `provisioning-error.tsx`, `setup-guide.tsx`, and dashboard error states are replaced with "Contact support" linking to `/help`; `NEXT_PUBLIC_WHATSAPP_NUMBER` is removed from `.env.example` (INF-13)
   5. `src/app/[locale]/help/page.tsx` ships as a static route with 6-10 FAQ entries plus a `mailto:` contact link; footer in `src/app/[locale]/layout.tsx` links to `/help`; user can navigate from any error state to `/help` (INF-14)
   6. One-time phase-end verification: `grep -rn "whatsapp\|wa.me\|WhatsApp\|WHATSAPP" src/ messages/` returns zero hits outside `src/components/referral/share-buttons.tsx` (intentional keep — user-initiated referral share, not support). No permanent WhatsApp CI guard is added (user decision 2026-05-17) — only the ESLint `no-restricted-imports` mock-data gate is permanent.
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+- [ ] 13-01-PLAN.md — Mock-data deletion: extract pure helpers to `src/lib/plans/pricing-display.ts`, repoint all 8 importers (incl. cutting `sitemap.ts` + `esim/[slug]` to Supabase), delete the 3 mock files, add the ESLint `no-restricted-imports` gate (INF-11)
+- [ ] 13-02-PLAN.md — WhatsApp removal + `/help` route: delete button/test/`support.ts`, strip the `whatsapp.*` namespace + rewrite 5 error strings × 6 locales, ship the static localized `/help` FAQ page, link it from the footer + 3 error states (INF-13, INF-14)
 
 ### Phase 13.1: Remove Bambu mascot pose system app-wide (INSERTED)
 **Goal**: The Bambu mascot *pose* system is fully removed from the codebase — the 8 pose components (`bambu-base`, `bambu-empty`, `bambu-error`, `bambu-loading`, `bambu-preparing`, `bambu-success`, `bambu-travel`, `bambu-welcome`) are deleted and their usages across 22 files (auth, checkout, dashboard, PWA, delivery, browse) are replaced with plain text or existing UI primitives. The panda hello video (`bambu-video.tsx`) is kept and untouched. Inserted before Phase 14 so the E2E + deploy phase tests the final poseless UI.
@@ -310,5 +314,5 @@ Plans:
 | 10. Schema and Curation Backfill | 2/2 | Complete    | 2026-05-16 |
 | 11. Read-Layer Module and Browse Cutover | 3/3 | Complete    | 2026-05-17 |
 | 12. Checkout, Pricing and Coupon Cutover | 2/2 | Complete    | 2026-05-17 |
-| 13. Cleanup, Mock Deletion and WhatsApp Removal | 0/0 | Not started | - |
+| 13. Cleanup, Mock Deletion and WhatsApp Removal | 0/2 | Planning complete | - |
 | 14. E2E Verification and Deploy | 0/0 | Not started | - |
