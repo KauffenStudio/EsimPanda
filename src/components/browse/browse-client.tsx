@@ -2,21 +2,26 @@
 
 // Client boundary for the browse grid. Receives the catalog as props from the
 // browse RSC (server fetch via getCatalog) and owns all interactivity: search
-// filter, region pills, Framer Motion, comparison store.
+// filter, region pills, Framer Motion, comparison store, and the four-state
+// grid contract (loading / error / search-miss / populated).
 //
 // Search is intentionally in-memory (.includes() over the props array) — at
 // ~226 rows a server round-trip per keystroke is an anti-feature (Pitfall 13).
 // Do NOT add a useEffect fetch or a Supabase call here: data arrives entirely
 // as props so the first client render matches the server render (Pitfall 4).
+// Retry re-runs the full getCatalog() via the refetchCatalogAction server
+// action — never router.refresh() (CONTEXT-locked).
 
-import { memo, useMemo, useState } from 'react';
+import { memo, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useTranslations } from 'next-intl';
 import { useBrowseStore } from '@/stores/browse';
 import type { CatalogDestination } from '@/lib/db/destinations';
+import { refetchCatalogAction } from '@/app/[locale]/browse/actions';
 import { DestinationSearch } from './destination-search';
 import { DestinationCard } from './destination-card';
 import { RegionalPlanCard } from './regional-plan-card';
+import { BrowseErrorBanner } from './browse-error-banner';
 import { ComparisonBar } from './comparison-bar';
 import { ComparisonSheet } from './comparison-sheet';
 
@@ -82,6 +87,7 @@ function CountryGrid({ items }: { items: CatalogDestination[] }) {
             imageUrl={dest.image_url}
             destinationId={dest.id}
             startingPriceCents={dest.startingPriceCents}
+            bestDiscountPercent={dest.bestDiscountPercent}
           />
         </motion.div>
       ))}
@@ -98,15 +104,31 @@ interface BrowseClientProps {
 export function BrowseClient({ destinations, regionalPlans, error }: BrowseClientProps) {
   const t = useTranslations();
   const searchQuery = useBrowseStore((state) => state.searchQuery);
+  const setSearch = useBrowseStore((state) => state.setSearch);
   const isSearching = searchQuery.trim().length > 0;
+  const searchInputRef = useRef<HTMLInputElement>(null);
+
+  // Hold the catalog in local state so Retry can swap in a fresh fetch (UXD-06).
+  const [catalog, setCatalog] = useState({ destinations, regionalPlans, error });
+
+  const handleRetry = async () => {
+    const fresh = await refetchCatalogAction();
+    setCatalog(fresh);
+  };
+
+  const handleClearSearch = () => {
+    setSearch('');
+    // Accessibility: return focus to the search input after clearing.
+    searchInputRef.current?.focus();
+  };
 
   // In-memory search filter — synchronous, hydration-safe, no network round-trip.
   const filtered = useMemo(
     () =>
-      destinations.filter((d) =>
+      catalog.destinations.filter((d) =>
         d.name.toLowerCase().includes(searchQuery.toLowerCase()),
       ),
-    [destinations, searchQuery],
+    [catalog.destinations, searchQuery],
   );
 
   const groups = useMemo(() => groupByRegion(filtered), [filtered]);
@@ -118,20 +140,25 @@ export function BrowseClient({ destinations, regionalPlans, error }: BrowseClien
 
   return (
     <div className="flex flex-col gap-6">
-      {/* 11-02: error banner renders here when error === true */}
-      {error ? null : null}
+      {/* Error state — banner renders above the grid; chrome stays mounted (UXD-06). */}
+      {catalog.error && <BrowseErrorBanner onRetry={handleRetry} />}
 
-      <DestinationSearch />
-      <RegionalPlanCard regionalPlans={regionalPlans} />
+      <DestinationSearch ref={searchInputRef} />
+      <RegionalPlanCard regionalPlans={catalog.regionalPlans} />
 
       {filtered.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-16">
-          <p className="text-gray-600 dark:text-gray-400 text-center font-semibold">
+        // Search-miss state — plain message + a Clear-search button (CAT-06).
+        <div className="flex flex-col items-center justify-center py-16 gap-3">
+          <p className="text-gray-600 dark:text-gray-400 font-semibold text-center">
             {t('browse.noResults', { query: searchQuery })}
           </p>
-          <p className="text-gray-400 text-center text-sm mt-1">
-            {t('browse.noResultsSuggestion')}
-          </p>
+          <button
+            type="button"
+            onClick={handleClearSearch}
+            className="rounded-button bg-accent text-white text-sm font-medium px-4 py-2 min-h-[40px]"
+          >
+            {t('browse.clearSearch')}
+          </button>
         </div>
       ) : isSearching ? (
         // While the user is typing, ignore the region tabs and show a flat

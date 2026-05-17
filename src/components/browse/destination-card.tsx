@@ -1,22 +1,22 @@
 'use client';
 
-import Image from 'next/image';
+import { motion, useReducedMotion } from 'motion/react';
 import { useTranslations, useLocale } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { Card } from '@/components/ui/card';
-import { getBestDiscount, getPlansForDestination } from '@/lib/mock-data/plans';
-import { useCartStore } from '@/stores/cart';
 import { useCurrencyStore } from '@/stores/currency';
 import { formatPrice } from '@/lib/currency/rates';
+import { TypographicFallbackCard } from './typographic-fallback-card';
 
 interface DestinationCardProps {
   name: string;
   slug: string;
   isoCode: string;
-  // null for uncurated rows / curated gaps — 11-02 adds the typographic fallback card.
+  // null for uncurated rows / curated gaps — renders the typographic fallback.
   imageUrl: string | null;
   destinationId: string;
   startingPriceCents: number;
+  bestDiscountPercent: number;
 }
 
 function isoToFlag(isoCode: string): string {
@@ -32,25 +32,19 @@ export function DestinationCard({
   slug,
   isoCode,
   imageUrl,
-  destinationId,
   startingPriceCents,
+  bestDiscountPercent,
 }: DestinationCardProps) {
   const t = useTranslations();
   const locale = useLocale();
   const router = useRouter();
-  const addItem = useCartStore((s) => s.addItem);
   const currency = useCurrencyStore((s) => s.currency);
+  const reduceMotion = useReducedMotion();
 
-  const bestDiscount = getBestDiscount(destinationId);
   const flag = isoToFlag(isoCode);
 
+  // Navigation-only (RESEARCH Open Question 2 — auto-add-to-cart dropped).
   const handleClick = () => {
-    // Auto-select the most expensive (highest GB) plan
-    const plans = getPlansForDestination(destinationId);
-    if (plans.length > 0) {
-      const sorted = [...plans].sort((a, b) => b.retail_price_cents - a.retail_price_cents);
-      addItem(sorted[0]);
-    }
     router.push(`/${locale}/esim/${slug}`);
   };
 
@@ -61,22 +55,32 @@ export function DestinationCard({
       onClick={handleClick}
     >
       <div className="aspect-[4/3] relative overflow-hidden rounded-card">
-        {/* 11-02 replaces the null-imageUrl path with the shared typographic fallback card. */}
+        {/* Typographic fallback is ALWAYS the base layer — the photo cross-fades
+            in OVER it so there is no flicker if the photo 404s (CAT-07). */}
+        <TypographicFallbackCard name={name} />
+
         {imageUrl && (
-          <Image
+          <motion.img
             src={imageUrl}
             alt={name}
-            fill
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
-            sizes="(max-width: 768px) 50vw, 33vw"
+            className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            initial={
+              reduceMotion
+                ? { opacity: 1, filter: 'blur(0px)' }
+                : { opacity: 0, filter: 'blur(12px)' }
+            }
+            animate={{ opacity: 1, filter: 'blur(0px)' }}
+            transition={reduceMotion ? { duration: 0 } : { duration: 0.4, ease: 'easeOut' }}
           />
         )}
+
+        {/* Bottom scrim — keeps the name/price chip legible over photo OR gradient. */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
 
         {/* Discount badge — shows best available discount */}
-        {bestDiscount > 0 && (
+        {bestDiscountPercent > 0 && (
           <div className="absolute top-2.5 right-2.5 bg-[#E53935] text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
-            up to -{bestDiscount}%
+            up to -{bestDiscountPercent}%
           </div>
         )}
 
@@ -85,7 +89,9 @@ export function DestinationCard({
             {flag} {name}
           </p>
           <p className="text-white/70 text-xs mt-0.5">
-            {t('browse.from')} {formatPrice(startingPriceCents, currency)}
+            {startingPriceCents === 0
+              ? t('browse.noPlans')
+              : `${t('browse.from')} ${formatPrice(startingPriceCents, currency)}`}
           </p>
         </div>
       </div>
