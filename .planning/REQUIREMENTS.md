@@ -34,7 +34,7 @@ The v1.0 backend (Celitech sync, Stripe, webhooks, eSIM delivery) works end-to-e
 - [x] **INF-08**: Browse page renders via an async RSC that fetches the catalog server-side using the anon key + existing RLS policy, passing data to a `<BrowseClient>` for filter/animation
 - [x] **INF-09**: Supabase migration adds `popularity_rank INTEGER` and `region_bucket TEXT` columns to `destinations` (additive, no RLS change)
 - [x] **INF-10**: A one-off backfill script copies curation metadata (`popularity_rank`, `image_url`, `region_bucket`) from `src/lib/mock-data/destinations.ts` into Supabase by `iso_code`, idempotently
-- [ ] **INF-11**: `src/lib/mock-data/destinations.ts`, `plans.ts`, and `tag-plans.ts` are deleted; pure-compute helpers extracted to `src/lib/plans/pricing-display.ts`; CI grep gate blocks new `mock-data/` imports
+- [x] **INF-11**: `src/lib/mock-data/destinations.ts`, `plans.ts`, and `tag-plans.ts` are deleted; pure-compute helpers extracted to `src/lib/plans/pricing-display.ts`; CI grep gate blocks new `mock-data/` imports
 - [ ] **INF-12**: Service worker `CACHE_NAME` is bumped to `esim-panda-v2` and the cutover deploy is gated on this change (returning users + iOS Capacitor app see fresh content)
 - [ ] **INF-13**: WhatsApp integration is fully removed: `whatsapp-button.tsx`, `support.ts`, layout imports, env vars, all 6 locale `whatsapp.*` namespaces, and all 4 error-state copy strings referencing WhatsApp
 - [ ] **INF-14**: `/help` static route ships as the new support entry point (FAQ + `mailto:` contact), linked from the footer
@@ -204,7 +204,7 @@ Deferred to future release. Tracked but not in current roadmap.
 | INF-08 | Phase 11 | Complete |
 | INF-09 | Phase 10 | Complete |
 | INF-10 | Phase 10 | Complete |
-| INF-11 | Phase 13 | Pending |
+| INF-11 | Phase 13 | Complete |
 | INF-12 | Phase 14 | Pending |
 | INF-13 | Phase 13 | Pending |
 | INF-14 | Phase 13 | Pending |

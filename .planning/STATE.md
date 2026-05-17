@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Live Data Cutover
 status: unknown
-stopped_at: Completed 12-02-PLAN.md
-last_updated: "2026-05-17T11:27:45.353Z"
+stopped_at: Completed 13-01-PLAN.md
+last_updated: "2026-05-17T13:17:40.674Z"
 progress:
   total_phases: 15
   completed_phases: 12
-  total_plans: 35
-  completed_plans: 35
+  total_plans: 37
+  completed_plans: 36
 ---
 
 # Project State
@@ -19,12 +19,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-13)
 
 **Core value:** A student arriving in a new country gets connected with mobile data in under 2 minutes
-**Current focus:** Phase 12 — checkout-pricing-and-coupon-cutover
+**Current focus:** Phase 13 — cleanup-mock-deletion-and-whatsapp-removal
 
 ## Current Position
 
-Phase: 12 (checkout-pricing-and-coupon-cutover) — COMPLETE
-Plan: 2 of 2 — both plans complete
+Phase: 13 (cleanup-mock-deletion-and-whatsapp-removal) — EXECUTING
+Plan: 2 of 2
 
 ## Performance Metrics
 
@@ -86,6 +86,7 @@ Plan: 2 of 2 — both plans complete
 | Phase 11 P03 | 4min | 2 tasks | 5 files |
 | Phase 12 P01 | 18min | 4 tasks | 11 files |
 | Phase 12 P02 | 4min | 3 tasks | 20 files |
+| Phase 13 P01 | 6min | 4 tasks | 11 files |
 
 ## Accumulated Context
 
@@ -175,6 +176,8 @@ Recent decisions affecting current work:
 - [Phase 12]: [12-01]: getRate() accessor added to rates.ts; RATES stays module-private
 - [Phase 12]: [12-02]: migrateCart exported as a named function so the persist migrate is directly unit-testable
 - [Phase 12]: [12-02]: plan-unavailable notice uses browse.planUnavailableNotice key + a neutral-tinted role=status banner (not destructive)
+- [Phase 13]: [13-01]: getBestDiscount dropped not migrated — reads mockPlans global, zero live importers, db/destinations.ts computes bestDiscountPercent inline
+- [Phase 13]: [13-01]: ESLint no-restricted-imports gate permanently bans the 3 deleted mock-data modules (both @/ alias and **/ glob forms)
 
 ### Pending Todos
 
@@ -193,6 +196,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-05-17T11:23:13.765Z
-Stopped at: Completed 12-02-PLAN.md
+Last session: 2026-05-17T13:17:24.795Z
+Stopped at: Completed 13-01-PLAN.md
 Resume file: None
