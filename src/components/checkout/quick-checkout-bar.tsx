@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import { X, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useQuickCheckoutStore } from '@/stores/quick-checkout';
-import { getOriginalPrice, getDiscountPercent } from '@/lib/mock-data/plans';
+import { getOriginalPrice, getDiscountPercent } from '@/lib/plans/pricing-display';
 
 function formatDuration(days: number): string {
   if (days === 1) return '24h';

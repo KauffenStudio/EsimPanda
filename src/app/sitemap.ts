@@ -1,11 +1,11 @@
 import type { MetadataRoute } from 'next';
 import { routing } from '@/i18n/routing';
-import { mockDestinations } from '@/lib/mock-data/destinations';
+import { listActiveDestinations } from '@/lib/db/destinations';
 
 const host = process.env.NEXT_PUBLIC_SITE_URL || 'https://esimpanda.com';
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const destinations = mockDestinations.filter((d) => d.is_active);
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const destinations = await listActiveDestinations();
   const locales = routing.locales;
 
   const destinationEntries: MetadataRoute.Sitemap = destinations.map((dest) => ({

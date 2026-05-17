@@ -7,10 +7,7 @@ import { useComparisonStore } from '@/stores/comparison';
 import { useCartStore } from '@/stores/cart';
 import { useCurrencyStore } from '@/stores/currency';
 import { formatPrice } from '@/lib/currency/rates';
-// Pure pricing-display compute helpers — no I/O, no global array lookup.
-// Extraction to src/lib/plans/pricing-display.ts is Phase 13 (INF-11), per the
-// same boundary note in src/lib/db/destinations.ts — do not extract here.
-import { getOriginalPrice, getDiscountPercent } from '@/lib/mock-data/plans';
+import { getOriginalPrice, getDiscountPercent } from '@/lib/plans/pricing-display';
 import type { Plan } from '@/lib/db/destinations';
 
 interface PlanCardProps {

@@ -1,7 +1,6 @@
 import 'server-only'; // build-time guard: a client component importing this fails the build
 import { createClient } from '@/lib/supabase/server';
-// pure compute helper — no I/O; extraction to src/lib/plans/pricing-display.ts is Phase 13 (INF-11), do not extract here
-import { getDiscountPercent } from '@/lib/mock-data/plans';
+import { getDiscountPercent } from '@/lib/plans/pricing-display';
 
 // ── Row shapes ──────────────────────────────────────────────────────────────
 // Match the destinations / plans tables after Phase 10 migration 00003.

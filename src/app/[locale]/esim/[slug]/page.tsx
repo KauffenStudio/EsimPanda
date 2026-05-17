@@ -1,9 +1,8 @@
 import { setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
-import { mockDestinations } from '@/lib/mock-data/destinations';
-import { getPlansForDestination, getStartingPrice } from '@/lib/mock-data/plans';
-import { tagPlans } from '@/lib/mock-data/tag-plans';
+import { getDestinationBySlug, listActiveDestinations, listPlansForDestination } from '@/lib/db/destinations';
+import { tagPlans } from '@/lib/plans/pricing-display';
 import { buildProductJsonLd, buildBreadcrumbJsonLd } from '@/lib/seo/structured-data';
 import { buildDestinationMeta } from '@/lib/seo/meta-templates';
 import { JsonLd } from '@/components/seo/json-ld';
@@ -17,26 +16,29 @@ const REGIONAL_TYPES = ['europe-wide', 'asia-wide', 'global'];
 
 type Props = { params: Promise<{ locale: string; slug: string }> };
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const destinations = await listActiveDestinations();
   return routing.locales.flatMap((locale) =>
-    mockDestinations
-      .filter((d) => d.is_active)
-      .map((d) => ({ locale, slug: d.slug }))
+    destinations.map((d) => ({ locale, slug: d.slug }))
   );
 }
 
 export async function generateMetadata({ params }: Props) {
   const { locale, slug } = await params;
-  const destination = mockDestinations.find((d) => d.slug === slug);
+  const destination = await getDestinationBySlug(slug);
   if (!destination) return {};
-  const isRegional = REGIONAL_TYPES.includes(destination.region);
-  const startingPrice = (getStartingPrice(destination.id) / 100).toFixed(2);
+  const isRegional = REGIONAL_TYPES.includes(destination.region ?? '');
+  const plans = await listPlansForDestination(destination.id);
+  const startingPriceCents = plans.length
+    ? Math.min(...plans.map((p) => p.retail_price_cents))
+    : 0;
+  const startingPrice = (startingPriceCents / 100).toFixed(2);
   return buildDestinationMeta({
     countryName: destination.name,
     slug: destination.slug,
     locale,
     startingPrice,
-    imageUrl: destination.image_url,
+    imageUrl: destination.image_url ?? '',
     isRegional,
   });
 }
@@ -47,11 +49,11 @@ export default async function DestinationPage({ params }: Props) {
   const { locale, slug } = await params;
   setRequestLocale(locale);
 
-  const destination = mockDestinations.find((d) => d.slug === slug && d.is_active);
+  const destination = await getDestinationBySlug(slug);
   if (!destination) notFound();
 
-  const isRegional = REGIONAL_TYPES.includes(destination.region);
-  const plans = getPlansForDestination(destination.id);
+  const isRegional = REGIONAL_TYPES.includes(destination.region ?? '');
+  const plans = await listPlansForDestination(destination.id);
   const taggedPlans = tagPlans(plans);
 
   return (
