@@ -11,6 +11,9 @@ export default defineConfig({
     env: {
       NEXT_PUBLIC_STRIPE_MOCK: 'true',
     },
+    // Quarantine the Playwright VER-01 spec — it spends real money / sends
+    // real email and must never run under jsdom via `npm test`.
+    exclude: ['e2e/**', 'node_modules/**', 'dist/**', '.next/**'],
   },
   resolve: {
     alias: {
