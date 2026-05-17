@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { createClient } from '@/lib/supabase/client';
 import { Button } from '@/components/ui/button';
-import { BambuLoading } from '@/components/bambu/bambu-loading';
 import { GoogleIcon } from '@/components/auth/icons/google-icon';
 import { AppleIcon } from '@/components/auth/icons/apple-icon';
 
@@ -70,9 +69,10 @@ export function OAuthButtons({ next }: OAuthButtonsProps) {
         disabled={pending !== null}
         onClick={() => handleProvider('google')}
         className="w-full gap-3"
+        aria-label={t('continueWithGoogle')}
       >
         {pending === 'google' ? (
-          <BambuLoading size={20} />
+          <span className="inline-block w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
         ) : (
           <>
             <GoogleIcon size={18} />
@@ -88,9 +88,10 @@ export function OAuthButtons({ next }: OAuthButtonsProps) {
           disabled={pending !== null}
           onClick={() => handleProvider('apple')}
           className="w-full gap-3"
+          aria-label={t('continueWithApple')}
         >
           {pending === 'apple' ? (
-            <BambuLoading size={20} />
+            <span className="inline-block w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
           ) : (
             <>
               <AppleIcon size={18} />

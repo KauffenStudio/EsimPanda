@@ -8,7 +8,6 @@ import { resetPassword } from '@/lib/auth/actions';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { BambuLoading } from '@/components/bambu/bambu-loading';
 import { BambuVideo } from '@/components/bambu/bambu-video';
 import type { AuthResult } from '@/lib/auth/types';
 
@@ -69,8 +68,17 @@ export function ForgotPasswordForm() {
           autoComplete="email"
         />
 
-        <Button type="submit" disabled={pending} className="w-full">
-          {pending ? <BambuLoading size={24} /> : t('forgot.submit')}
+        <Button
+          type="submit"
+          disabled={pending}
+          className="w-full"
+          aria-label={t('forgot.submit')}
+        >
+          {pending ? (
+            <span className="inline-block w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+          ) : (
+            t('forgot.submit')
+          )}
         </Button>
 
         {state?.error && (

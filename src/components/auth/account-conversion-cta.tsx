@@ -10,7 +10,6 @@ import { convertGuestToAccount } from '@/lib/auth/actions';
 import { useAuthStore } from '@/stores/auth';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { BambuLoading } from '@/components/bambu/bambu-loading';
 import { BambuVideo } from '@/components/bambu/bambu-video';
 import type { AuthResult } from '@/lib/auth/types';
 
@@ -116,8 +115,17 @@ export function AccountConversionCTA({ email }: AccountConversionCTAProps) {
           </button>
         </div>
 
-        <Button type="submit" disabled={pending} className="w-full">
-          {pending ? <BambuLoading size={24} /> : t('convert.submit')}
+        <Button
+          type="submit"
+          disabled={pending}
+          className="w-full"
+          aria-label={t('convert.submit')}
+        >
+          {pending ? (
+            <span className="inline-block w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+          ) : (
+            t('convert.submit')
+          )}
         </Button>
 
         {(clientError || state?.error) && (

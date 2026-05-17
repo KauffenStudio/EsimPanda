@@ -9,7 +9,6 @@ import { login } from '@/lib/auth/actions';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { BambuLoading } from '@/components/bambu/bambu-loading';
 import { OAuthButtons } from '@/components/auth/oauth-buttons';
 import type { AuthResult } from '@/lib/auth/types';
 
@@ -95,8 +94,17 @@ export function LoginForm({ initialError, accountDeleted }: LoginFormProps = {})
           </Link>
         </div>
 
-        <Button type="submit" disabled={pending} className="w-full">
-          {pending ? <BambuLoading size={24} /> : t('login.submit')}
+        <Button
+          type="submit"
+          disabled={pending}
+          className="w-full"
+          aria-label={t('login.submit')}
+        >
+          {pending ? (
+            <span className="inline-block w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+          ) : (
+            t('login.submit')
+          )}
         </Button>
 
         {state?.error && (
