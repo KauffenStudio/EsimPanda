@@ -31,8 +31,10 @@ const mockFrom = vi.fn((table: string) => {
   return makeBuilder(result);
 });
 
-vi.mock('@/lib/supabase/server', () => ({
-  createClient: vi.fn().mockResolvedValue({ from: mockFrom }),
+// db/destinations.ts uses a cookieless anon client from `@supabase/supabase-js`
+// (catalog is public-read; required for build-time `generateStaticParams`).
+vi.mock('@supabase/supabase-js', () => ({
+  createClient: vi.fn(() => ({ from: mockFrom })),
 }));
 
 function setQueryResults(...results: QueryResult[]) {

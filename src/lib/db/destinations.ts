@@ -1,6 +1,17 @@
 import 'server-only'; // build-time guard: a client component importing this fails the build
-import { createClient } from '@/lib/supabase/server';
+import { createClient as createSupabaseClient } from '@supabase/supabase-js';
 import { getDiscountPercent } from '@/lib/plans/pricing-display';
+
+// Cookieless anon client for public catalog reads. The destinations/plans
+// tables are public-readable under RLS, so no auth cookie is needed — and a
+// cookieless client is the ONLY option that works in `generateStaticParams`
+// (build-time, no request scope; `cookies()` throws there).
+function catalogClient() {
+  return createSupabaseClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+  );
+}
 
 // ── Row shapes ──────────────────────────────────────────────────────────────
 // Match the destinations / plans tables after Phase 10 migration 00003.
@@ -66,7 +77,7 @@ const DESTINATION_COLUMNS =
  * it can surface the error precisely — see getCatalog).
  */
 export async function listActiveDestinations(): Promise<Destination[]> {
-  const supabase = await createClient();
+  const supabase = catalogClient();
   const { data, error } = await supabase
     .from('destinations')
     .select(DESTINATION_COLUMNS)
@@ -81,7 +92,7 @@ export async function listActiveDestinations(): Promise<Destination[]> {
 
 /** Active plans for a single destination, cheapest first. [] on error. */
 export async function listPlansForDestination(destinationId: string): Promise<Plan[]> {
-  const supabase = await createClient();
+  const supabase = catalogClient();
   const { data, error } = await supabase
     .from('plans')
     .select('*')
@@ -97,7 +108,7 @@ export async function listPlansForDestination(destinationId: string): Promise<Pl
 
 /** Single active destination by slug. null (not throw) when 0 rows. */
 export async function getDestinationBySlug(slug: string): Promise<Destination | null> {
-  const supabase = await createClient();
+  const supabase = catalogClient();
   const { data, error } = await supabase
     .from('destinations')
     .select(DESTINATION_COLUMNS)
@@ -113,7 +124,7 @@ export async function getDestinationBySlug(slug: string): Promise<Destination | 
 
 /** Single plan by id. null (not throw) when 0 rows. Reused by Phase 12. */
 export async function getPlanById(planId: string): Promise<Plan | null> {
-  const supabase = await createClient();
+  const supabase = catalogClient();
   const { data, error } = await supabase
     .from('plans')
     .select('*')
@@ -137,7 +148,7 @@ export async function getPlanById(planId: string): Promise<Plan | null> {
  * listActiveDestinations) so the query's `error` can be read precisely.
  */
 export async function getCatalog(): Promise<Catalog> {
-  const supabase = await createClient();
+  const supabase = catalogClient();
 
   const { data: destinationRows, error: destinationsError } = await supabase
     .from('destinations')
