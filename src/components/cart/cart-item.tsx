@@ -4,10 +4,10 @@ import { Trash2 } from 'lucide-react';
 import { useCartStore } from '@/stores/cart';
 import { useCurrencyStore } from '@/stores/currency';
 import { formatPrice } from '@/lib/currency/rates';
-import type { MockPlan } from '@/lib/mock-data/plans';
+import type { Plan } from '@/lib/db/destinations';
 
 interface CartItemProps {
-  plan: MockPlan;
+  plan: Plan;
 }
 
 function formatDuration(days: number): string {

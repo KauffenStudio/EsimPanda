@@ -7,10 +7,10 @@ import { Badge } from '@/components/ui/badge';
 import { useCheckoutStore } from '@/stores/checkout';
 import { useCurrencyStore } from '@/stores/currency';
 import { formatPrice as fmtPrice } from '@/lib/currency/rates';
-import type { MockPlan } from '@/lib/mock-data/plans';
+import type { Plan } from '@/lib/db/destinations';
 
 interface OrderSummaryProps {
-  plan: MockPlan;
+  plan: Plan;
 }
 
 // formatUsd kept as local alias — currency-aware version used via fmtPrice

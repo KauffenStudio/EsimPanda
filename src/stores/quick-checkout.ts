@@ -1,9 +1,9 @@
 import { create } from 'zustand';
-import type { MockPlan } from '@/lib/mock-data/plans';
+import type { Plan } from '@/lib/db/destinations';
 
 interface QuickCheckoutState {
-  selectedPlan: MockPlan | null;
-  selectPlan: (plan: MockPlan) => void;
+  selectedPlan: Plan | null;
+  selectPlan: (plan: Plan) => void;
   clear: () => void;
 }
 

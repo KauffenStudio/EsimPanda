@@ -1,9 +1,10 @@
 import { useMemo } from 'react';
-import { getPlansForDestination, type MockPlan } from '@/lib/mock-data/plans';
+import { getPlansForDestination } from '@/lib/mock-data/plans';
+import type { Plan } from '@/lib/db/destinations';
 import { useBrowseStore } from '@/stores/browse';
 
 interface UsePlansResult {
-  plans: MockPlan[];
+  plans: Plan[];
   isLoading: boolean;
 }
 

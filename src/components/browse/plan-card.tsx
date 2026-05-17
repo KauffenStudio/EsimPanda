@@ -63,14 +63,9 @@ export function PlanCard({
   };
 
   const handleCardClick = () => {
-    // Cart store is MockPlan-typed (Phase 12/13 cutover); construct a MockPlan
-    // from the flat props instead of a global-array lookup.
-    addItem({
-      ...plan,
-      synced_at: '',
-      created_at: '',
-      updated_at: '',
-    });
+    // Cart store is Plan-typed (canonical Plan from db/destinations); the flat
+    // props already satisfy it — the timestamp fields are optional.
+    addItem(plan);
   };
 
   const handleCheckboxClick = (e: React.MouseEvent) => {

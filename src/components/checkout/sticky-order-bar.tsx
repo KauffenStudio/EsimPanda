@@ -3,10 +3,10 @@
 import { useEffect, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useCheckoutStore } from '@/stores/checkout';
-import type { MockPlan } from '@/lib/mock-data/plans';
+import type { Plan } from '@/lib/db/destinations';
 
 interface StickyOrderBarProps {
-  plan: MockPlan;
+  plan: Plan;
   observeRef: React.RefObject<HTMLDivElement | null>;
 }
 

@@ -1,8 +1,8 @@
-import type { MockPlan } from '@/lib/mock-data/plans';
+import type { Plan } from '@/lib/db/destinations';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://esimpanda.com';
 
-export function buildProductJsonLd(plan: MockPlan, destinationName: string) {
+export function buildProductJsonLd(plan: Plan, destinationName: string) {
   return {
     '@context': 'https://schema.org',
     '@type': 'Product',

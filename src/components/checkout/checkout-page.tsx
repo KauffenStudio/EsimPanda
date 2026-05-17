@@ -5,7 +5,7 @@ import { Elements } from '@stripe/react-stripe-js';
 import { getStripe, STRIPE_MOCK_MODE } from '@/lib/stripe/client';
 import { stripeAppearance } from '@/lib/stripe/config';
 import { useCheckoutStore } from '@/stores/checkout';
-import type { MockPlan } from '@/lib/mock-data/plans';
+import type { Plan } from '@/lib/db/destinations';
 
 import { OrderSummary } from './order-summary';
 import { EmailField } from './email-field';
@@ -25,7 +25,7 @@ import { trackEvent, ANALYTICS_EVENTS } from '@/lib/analytics/events';
 import { WELCOME_COUPON_CODE } from '@/lib/checkout/coupons';
 
 interface CheckoutPageProps {
-  plan: MockPlan;
+  plan: Plan;
   couponFromUrl?: string;
 }
 

@@ -1,9 +1,9 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { MockPlan } from '@/lib/mock-data/plans';
+import type { Plan } from '@/lib/db/destinations';
 
 export interface CartItem {
-  plan: MockPlan;
+  plan: Plan;
 }
 
 interface CartState {
@@ -11,7 +11,7 @@ interface CartState {
   isOpen: boolean;
   coupon_code: string | null;
   discount_percent: number;
-  addItem: (plan: MockPlan) => void;
+  addItem: (plan: Plan) => void;
   removeItem: (planId: string) => void;
   clear: () => void;
   openCart: () => void;
