@@ -26,7 +26,7 @@ The v1.0 backend (Celitech sync, Stripe, webhooks, eSIM delivery) works end-to-e
 - [x] **UXD-06**: User encountering a fetch error sees a plain inline error banner with a Retry button that re-runs the full catalog fetch (no mascot)
 - [x] **UXD-07**: User watching a destination card image load sees a smooth blurred cross-fade from the typographic fallback card to the real photo
 - [ ] **UXD-08**: User returning after the v1.1 deploy sees a "New version available" prompt and loads fresh content (service worker cache bumped)
-- [ ] **UXD-09**: The Bambu mascot pose system is removed from the codebase — the 8 pose components and all their usages are gone; only the panda hello video (`bambu-video.tsx`) remains
+- [x] **UXD-09**: The Bambu mascot pose system is removed from the codebase — the 8 pose components and all their usages are gone; only the panda hello video (`bambu-video.tsx`) remains
 
 ### Infrastructure
 
@@ -199,7 +199,7 @@ Deferred to future release. Tracked but not in current roadmap.
 | UXD-06 | Phase 11 | Complete |
 | UXD-07 | Phase 11 | Complete |
 | UXD-08 | Phase 14 | Pending |
-| UXD-09 | Phase 13.1 | Pending |
+| UXD-09 | Phase 13.1 | Complete |
 | INF-07 | Phase 11 | Complete |
 | INF-08 | Phase 11 | Complete |
 | INF-09 | Phase 10 | Complete |
