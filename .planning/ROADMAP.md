@@ -258,7 +258,7 @@ Plans:
   3. ESLint `no-restricted-imports` rule blocks any new import from `@/lib/mock-data/destinations`, `@/lib/mock-data/plans`, or `@/lib/mock-data/tag-plans`; CI fails on regression
   4. WhatsApp removal is complete: `src/components/layout/whatsapp-button.tsx`, its test, and `src/lib/config/support.ts` are deleted; the commented import in `src/app/[locale]/layout.tsx` is removed; the `whatsapp.*` namespace is gone from all 6 locale files (`messages/{en,pt,es,fr,ja,zh}.json`); the 4 "contact us on WhatsApp" error-copy strings in `payment-error.tsx`, `provisioning-error.tsx`, `setup-guide.tsx`, and dashboard error states are replaced with "Contact support" linking to `/help`; `NEXT_PUBLIC_WHATSAPP_NUMBER` is removed from `.env.example` (INF-13)
   5. `src/app/[locale]/help/page.tsx` ships as a static route with 6-10 FAQ entries plus a `mailto:` contact link; footer in `src/app/[locale]/layout.tsx` links to `/help`; user can navigate from any error state to `/help` (INF-14)
-  6. CI grep gate: `grep -rn "whatsapp\|wa.me\|WhatsApp\|WHATSAPP" src/ messages/` returns zero hits outside `src/components/referral/share-buttons.tsx` (intentional keep — user-initiated referral share, not support)
+  6. One-time phase-end verification: `grep -rn "whatsapp\|wa.me\|WhatsApp\|WHATSAPP" src/ messages/` returns zero hits outside `src/components/referral/share-buttons.tsx` (intentional keep — user-initiated referral share, not support). No permanent WhatsApp CI guard is added (user decision 2026-05-17) — only the ESLint `no-restricted-imports` mock-data gate is permanent.
 **Plans**: TBD
 
 ### Phase 13.1: Remove Bambu mascot pose system app-wide (INSERTED)
