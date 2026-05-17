@@ -242,7 +242,11 @@ Plans:
   3. User applying STUDENT15 to a plan under the min-order threshold sees the threshold rendered as `$9.99` (USD, the actual currency of `retail_price_cents`) instead of the misleading `€9.99` copy v1.0 used (CHK-07)
   4. User with a persisted cart from before the v1.1 deploy starts with a clean cart on first load: `useCartStore` and `useQuickCheckoutStore` use `persist({ version: 2, migrate: ... })` that drops items whose `plan_id` is not a valid UUID matching a Supabase row (CHK-08)
   5. `MockPlan` is renamed to `Plan` (re-exported from `src/lib/db/destinations.ts`) across `src/stores/cart.ts`, `src/stores/quick-checkout.ts`, and the 5 checkout components that imported the type; `tsc --noEmit` passes with zero errors
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+- [ ] 12-01-PLAN.md — Pricing + coupon data layer: async/currency-aware `calculatePrice`, `getCouponMinOrderCents`, `formatPrice` JPY fix, three `api/checkout` routes cut to `getPlanById`
+- [ ] 12-02-PLAN.md — Checkout page Supabase lookup + browse notice banner, cart `persist` `version: 2` migration, `MockPlan`→`Plan` rename
 
 ### Phase 13: Cleanup, Mock Deletion and WhatsApp Removal
 **Goal**: The mock-data layer is gone, pure-compute pricing helpers survive in a real module, WhatsApp is fully removed from the codebase (component, config, env vars, 6 locales, 4 error-state strings, 1 test file), and a static `/help` route ships as the support entry point — both deletions in one cleanup commit because they are independent of the data cutover and bundling them prevents merge-conflict noise during Phases 11-12
