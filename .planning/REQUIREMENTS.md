@@ -12,7 +12,7 @@ The v1.0 backend (Celitech sync, Stripe, webhooks, eSIM delivery) works end-to-e
 
 - [x] **CAT-05**: User browsing the destination grid sees real Supabase destinations from the curated set only (uncurated destinations are hidden until manually curated)
 - [x] **CAT-06**: User typing in the destination search sees instant client-side filtering across the live catalog (no server-side debounce)
-- [ ] **CAT-07**: User viewing a destination with no `image_url` set sees a typographic name card (destination name in bold type on a brand gradient — not a flag, not a generic placeholder)
+- [x] **CAT-07**: User viewing a destination with no `image_url` set sees a typographic name card (destination name in bold type on a brand gradient — not a flag, not a generic placeholder)
 
 ### Checkout (live-data cutover)
 
@@ -22,9 +22,9 @@ The v1.0 backend (Celitech sync, Stripe, webhooks, eSIM delivery) works end-to-e
 
 ### UX / Design
 
-- [ ] **UXD-05**: User waiting for the catalog fetch sees a shimmer skeleton grid (not a blank screen or FOUC)
-- [ ] **UXD-06**: User encountering a fetch error sees a plain inline error banner with a Retry button that re-runs the full catalog fetch (no mascot)
-- [ ] **UXD-07**: User watching a destination card image load sees a smooth blurred cross-fade from the typographic fallback card to the real photo
+- [x] **UXD-05**: User waiting for the catalog fetch sees a shimmer skeleton grid (not a blank screen or FOUC)
+- [x] **UXD-06**: User encountering a fetch error sees a plain inline error banner with a Retry button that re-runs the full catalog fetch (no mascot)
+- [x] **UXD-07**: User watching a destination card image load sees a smooth blurred cross-fade from the typographic fallback card to the real photo
 - [ ] **UXD-08**: User returning after the v1.1 deploy sees a "New version available" prompt and loads fresh content (service worker cache bumped)
 - [ ] **UXD-09**: The Bambu mascot pose system is removed from the codebase — the 8 pose components and all their usages are gone; only the panda hello video (`bambu-video.tsx`) remains
 
@@ -191,13 +191,13 @@ Deferred to future release. Tracked but not in current roadmap.
 | INF-06 | Phase 1 | Pending |
 | CAT-05 | Phase 11 | Complete |
 | CAT-06 | Phase 11 | Complete |
-| CAT-07 | Phase 11 | Pending |
+| CAT-07 | Phase 11 | Complete |
 | CHK-06 | Phase 12 | Pending |
 | CHK-07 | Phase 12 | Pending |
 | CHK-08 | Phase 12 | Pending |
-| UXD-05 | Phase 11 | Pending |
-| UXD-06 | Phase 11 | Pending |
-| UXD-07 | Phase 11 | Pending |
+| UXD-05 | Phase 11 | Complete |
+| UXD-06 | Phase 11 | Complete |
+| UXD-07 | Phase 11 | Complete |
 | UXD-08 | Phase 14 | Pending |
 | UXD-09 | Phase 13.1 | Pending |
 | INF-07 | Phase 11 | Complete |

@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Live Data Cutover
 status: unknown
-stopped_at: Completed 11-01-PLAN.md
-last_updated: "2026-05-17T08:54:49.824Z"
+stopped_at: Completed 11-02-PLAN.md
+last_updated: "2026-05-17T09:33:44.111Z"
 progress:
   total_phases: 15
   completed_phases: 10
   total_plans: 33
-  completed_plans: 31
+  completed_plans: 32
 ---
 
 # Project State
@@ -24,7 +24,7 @@ See: .planning/PROJECT.md (updated 2026-05-13)
 ## Current Position
 
 Phase: 11 (read-layer-module-and-browse-cutover) — EXECUTING
-Plan: 2 of 3
+Plan: 3 of 3
 
 ## Performance Metrics
 
@@ -82,6 +82,7 @@ Plan: 2 of 3
 | Phase 10 P01 | 2min | 3 tasks | 1 files |
 | Phase 10 P02 | 6min | 5 tasks | 4 files |
 | Phase 11 P01 | 6min | 2 tasks | 9 files |
+| Phase 11 P02 | 30min | 2 tasks | 19 files |
 
 ## Accumulated Context
 
@@ -162,6 +163,8 @@ Recent decisions affecting current work:
 - [Phase 11]: [Phase 11-01]: getCatalog runs its destinations query inline (not via listActiveDestinations) so Catalog.error reflects a precise destinations-query failure for the UXD-06 banner
 - [Phase 11]: [Phase 11-01]: server-only package aliased to a test stub in vitest.config.ts — Vite cannot resolve Next's bundled server-only package; real build-time guard unaffected
 - [Phase 11]: [Phase 11-01]: Hybrid RSC + BrowseClient — browse/page.tsx is async, fetches getCatalog(), passes data as props to a use-client child; in-memory search, no per-keystroke Supabase call
+- [Phase 11]: [Phase 11-02]: Typographic image-fallback built as a shared component consumed by both DestinationCard and RegionalPlanCard — UI-SPEC 'build it once' mandate, no duplicated gradient JSX
+- [Phase 11]: [Phase 11-02]: Typographic card is the always-mounted base layer; motion.img photo cross-fades over it — no flicker if a photo URL 404s
 
 ### Pending Todos
 
@@ -180,6 +183,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-05-17T08:54:30.054Z
-Stopped at: Completed 11-01-PLAN.md
+Last session: 2026-05-17T09:33:28.518Z
+Stopped at: Completed 11-02-PLAN.md
 Resume file: None
