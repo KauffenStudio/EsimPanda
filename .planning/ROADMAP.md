@@ -290,7 +290,11 @@ Plans:
   3. E2E test executes against staging: a Stripe test-card payment for a real Celitech plan UUID from Supabase creates an `orders` row, triggers the webhook, provisions a real eSIM via Celitech `createPurchase`, persists encrypted activation data (AES-256-GCM) in the `esims` table, and sends a real Resend email containing the activation QR code (VER-01)
   4. `NEXT_PUBLIC_WHATSAPP_NUMBER` is removed from Vercel production env vars; total test count in `npm test --reporter=verbose` is at or above the pre-cutover baseline (no silently-skipped tests)
   5. Sitemap (`src/app/sitemap.ts`) reflects the 226 live Supabase destinations (not the 67 mock ones); structured data on `/esim/[slug]` renders from live data; Lighthouse LCP on `/browse` is within target (P95 < 2.5s)
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+- [ ] 14-01-PLAN.md — Deploy-readiness: SW `CACHE_NAME` bump to `esim-panda-v2` + `skipWaiting` reconciliation, the user-controlled "New version available" update banner (UXD-08) + i18n ×6, and the deploy runbook (INF-12, UXD-08)
+- [ ] 14-02-PLAN.md — E2E verification: install `@playwright/test`, scaffold `playwright.config.ts` + `e2e/purchase.spec.ts` (the VER-01 real-purchase test) + `test:e2e` script, exclude `e2e/**` from `npm test` (VER-01)
 
 ## Progress
 
