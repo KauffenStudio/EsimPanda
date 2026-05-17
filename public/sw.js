@@ -1,6 +1,6 @@
 // eSIM Panda Service Worker
-const CACHE_NAME = 'esim-panda-v1';
-const QR_CACHE_NAME = 'esim-qr-data';
+const CACHE_NAME = 'esim-panda-v2'; // INF-12: bump — activate handler auto-evicts the v1 cache on next activation
+const QR_CACHE_NAME = 'esim-qr-data'; // UNCHANGED — offline QR codes survive the cache bump
 
 const APP_SHELL_URLS = [
   '/',
@@ -16,7 +16,7 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL_URLS))
   );
-  self.skipWaiting();
+  // No skipWaiting() — UXD-08: the new SW enters `waiting`; the user controls activation via the update banner.
 });
 
 // --------------------------------------------------
@@ -136,6 +136,10 @@ self.addEventListener('notificationclick', (event) => {
 // Message: CACHE_QR — store QR data for offline access
 // --------------------------------------------------
 self.addEventListener('message', (event) => {
+  if (event.data?.type === 'SKIP_WAITING') {
+    self.skipWaiting(); // UXD-08: activate on explicit user request from the update banner
+  }
+
   if (event.data?.type === 'CACHE_QR') {
     const { orderId, qrData, setupGuide } = event.data;
 
