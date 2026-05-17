@@ -10,8 +10,8 @@ The v1.0 backend (Celitech sync, Stripe, webhooks, eSIM delivery) works end-to-e
 
 ### Catalog (live-data cutover)
 
-- [ ] **CAT-05**: User browsing the destination grid sees real Supabase destinations from the curated set only (uncurated destinations are hidden until manually curated)
-- [ ] **CAT-06**: User typing in the destination search sees instant client-side filtering across the live catalog (no server-side debounce)
+- [x] **CAT-05**: User browsing the destination grid sees real Supabase destinations from the curated set only (uncurated destinations are hidden until manually curated)
+- [x] **CAT-06**: User typing in the destination search sees instant client-side filtering across the live catalog (no server-side debounce)
 - [ ] **CAT-07**: User viewing a destination with no `image_url` set sees a typographic name card (destination name in bold type on a brand gradient — not a flag, not a generic placeholder)
 
 ### Checkout (live-data cutover)
@@ -30,8 +30,8 @@ The v1.0 backend (Celitech sync, Stripe, webhooks, eSIM delivery) works end-to-e
 
 ### Infrastructure
 
-- [ ] **INF-07**: Catalog reads from the UI go through a shared, typed, `server-only` read module at `src/lib/db/destinations.ts` (no direct Supabase calls inside components)
-- [ ] **INF-08**: Browse page renders via an async RSC that fetches the catalog server-side using the anon key + existing RLS policy, passing data to a `<BrowseClient>` for filter/animation
+- [x] **INF-07**: Catalog reads from the UI go through a shared, typed, `server-only` read module at `src/lib/db/destinations.ts` (no direct Supabase calls inside components)
+- [x] **INF-08**: Browse page renders via an async RSC that fetches the catalog server-side using the anon key + existing RLS policy, passing data to a `<BrowseClient>` for filter/animation
 - [x] **INF-09**: Supabase migration adds `popularity_rank INTEGER` and `region_bucket TEXT` columns to `destinations` (additive, no RLS change)
 - [x] **INF-10**: A one-off backfill script copies curation metadata (`popularity_rank`, `image_url`, `region_bucket`) from `src/lib/mock-data/destinations.ts` into Supabase by `iso_code`, idempotently
 - [ ] **INF-11**: `src/lib/mock-data/destinations.ts`, `plans.ts`, and `tag-plans.ts` are deleted; pure-compute helpers extracted to `src/lib/plans/pricing-display.ts`; CI grep gate blocks new `mock-data/` imports
@@ -189,8 +189,8 @@ Deferred to future release. Tracked but not in current roadmap.
 | INF-04 | Phase 4 | Complete |
 | INF-05 | Phase 3 | Complete |
 | INF-06 | Phase 1 | Pending |
-| CAT-05 | Phase 11 | Pending |
-| CAT-06 | Phase 11 | Pending |
+| CAT-05 | Phase 11 | Complete |
+| CAT-06 | Phase 11 | Complete |
 | CAT-07 | Phase 11 | Pending |
 | CHK-06 | Phase 12 | Pending |
 | CHK-07 | Phase 12 | Pending |
@@ -200,8 +200,8 @@ Deferred to future release. Tracked but not in current roadmap.
 | UXD-07 | Phase 11 | Pending |
 | UXD-08 | Phase 14 | Pending |
 | UXD-09 | Phase 13.1 | Pending |
-| INF-07 | Phase 11 | Pending |
-| INF-08 | Phase 11 | Pending |
+| INF-07 | Phase 11 | Complete |
+| INF-08 | Phase 11 | Complete |
 | INF-09 | Phase 10 | Complete |
 | INF-10 | Phase 10 | Complete |
 | INF-11 | Phase 13 | Pending |

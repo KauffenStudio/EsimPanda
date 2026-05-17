@@ -1,15 +1,15 @@
 ---
 gsd_state_version: 1.0
 milestone: v1.1
-milestone_name: live-data-cutover
-status: ui-spec-approved
-stopped_at: Phase 11 UI-SPEC approved
-last_updated: "2026-05-16T15:08:44.197Z"
+milestone_name: Live Data Cutover
+status: unknown
+stopped_at: Completed 11-01-PLAN.md
+last_updated: "2026-05-17T08:54:49.824Z"
 progress:
-  total_phases: 6
-  completed_phases: 1
-  total_plans: 2
-  completed_plans: 2
+  total_phases: 15
+  completed_phases: 10
+  total_plans: 33
+  completed_plans: 31
 ---
 
 # Project State
@@ -19,14 +19,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-13)
 
 **Core value:** A student arriving in a new country gets connected with mobile data in under 2 minutes
-**Current focus:** Phase 11 — read-layer-module-and-browse-cutover (UI-SPEC approved, ready to plan)
+**Current focus:** Phase 11 — read-layer-module-and-browse-cutover
 
 ## Current Position
 
-Phase: 11 (read-layer-module-and-browse-cutover) — RESEARCH + UI-SPEC complete, ready for /gsd:plan-phase 11
-Plan: not yet planned
-
-Phase 10 complete (migration + backfill, 69 curated rows). Phase 11 has 11-RESEARCH.md, 11-VALIDATION.md, and an approved 11-UI-SPEC.md. Re-run /gsd:plan-phase 11 to generate plans.
+Phase: 11 (read-layer-module-and-browse-cutover) — EXECUTING
+Plan: 2 of 3
 
 ## Performance Metrics
 
@@ -83,6 +81,7 @@ Phase 10 complete (migration + backfill, 69 curated rows). Phase 11 has 11-RESEA
 | Phase 09 P03 | 5min | 2 tasks | 21 files |
 | Phase 10 P01 | 2min | 3 tasks | 1 files |
 | Phase 10 P02 | 6min | 5 tasks | 4 files |
+| Phase 11 P01 | 6min | 2 tasks | 9 files |
 
 ## Accumulated Context
 
@@ -160,6 +159,9 @@ Recent decisions affecting current work:
 - [Phase 10]: [Phase 10-01]: Schema verification run via Supabase Management API /database/query endpoint (psql + local Docker unavailable)
 - [Phase 10]: [Phase 10-02]: Curated-row threshold corrected to 69 (actual mock-data row count: 3 hero + 66 country) — RESEARCH.md region table miscounted as 78
 - [Phase 10]: [Phase 10-02]: sync.ts guarded with DESTINATION_SYNC_COLUMNS allowlist + satisfies clause — curation columns can never be added to the daily Celitech UPSERT (compile-time error)
+- [Phase 11]: [Phase 11-01]: getCatalog runs its destinations query inline (not via listActiveDestinations) so Catalog.error reflects a precise destinations-query failure for the UXD-06 banner
+- [Phase 11]: [Phase 11-01]: server-only package aliased to a test stub in vitest.config.ts — Vite cannot resolve Next's bundled server-only package; real build-time guard unaffected
+- [Phase 11]: [Phase 11-01]: Hybrid RSC + BrowseClient — browse/page.tsx is async, fetches getCatalog(), passes data as props to a use-client child; in-memory search, no per-keystroke Supabase call
 
 ### Pending Todos
 
@@ -178,6 +180,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-05-16T15:08:44.188Z
-Stopped at: Phase 11 UI-SPEC approved
-Resume file: .planning/phases/11-read-layer-module-and-browse-cutover/11-UI-SPEC.md
+Last session: 2026-05-17T08:54:30.054Z
+Stopped at: Completed 11-01-PLAN.md
+Resume file: None
