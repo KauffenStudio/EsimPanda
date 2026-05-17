@@ -61,7 +61,7 @@
     "empty_body": "还没有eSIM？让我们帮您连接！",
     "empty_cta": "浏览套餐",
     "error_title": "出错了",
-    "error_body": "加载eSIM时出错。请重试或通过WhatsApp联系我们。",
+    "error_body": "加载eSIM时出错。请重试或访问我们的帮助页面。",
     "error_retry": "重试",
     "tab_esims": "我的eSIM",
     "tab_history": "购买记录",
@@ -141,7 +141,7 @@
     "promo_invalid": "无效的优惠码"
   },
   "errors": {
-    "generic": "出错了。请重试或通过WhatsApp联系我们。",
+    "generic": "出错了。请重试或访问我们的帮助页面。",
     "network": "无法连接。请检查网络后重试。"
   },
   "checkout": {
@@ -205,7 +205,7 @@
       "generic": "出错了。请重试。",
       "network": "无法连接。请检查网络后重试。",
       "retry": "重试",
-      "contact": "需要帮助？通过WhatsApp联系我们"
+      "contact": "需要帮助？访问我们的帮助页面"
     }
   },
   "auth": {
@@ -367,14 +367,6 @@
     "cta": "浏览套餐",
     "copyAria": "复制欢迎折扣代码"
   },
-  "whatsapp": {
-    "ariaLabel": "通过WhatsApp联系客服",
-    "browsePage": "你好！我需要帮助选择eSIM套餐",
-    "checkoutPage": "你好！我需要帮助完成支付",
-    "deliveryPage": "你好！我需要帮助处理订单",
-    "dashboardPage": "你好！我需要帮助使用eSIM",
-    "defaultMessage": "你好！"
-  },
   "admin": {
     "coupons": {
       "title": "网红优惠码",
@@ -421,7 +413,7 @@
       "samsung": { "heading": "三星设置" },
       "pixel": { "heading": "Pixel/安卓设置" },
       "android": { "heading": "安卓设置" },
-      "help": "需要帮助？通过WhatsApp联系我们"
+      "help": "需要安装帮助？访问我们的帮助页面"
     },
     "steps": {
       "install": "安装您的eSIM",
@@ -438,7 +430,7 @@
       "body": "无法设置您的eSIM。我们正在处理中，稍后将通过邮件发送给您。",
       "retry": "正在重试...（{count}/3）",
       "final": "我们仍在处理您的eSIM。几分钟内将通过邮件发送给您。",
-      "contact": "需要帮助？通过WhatsApp联系我们"
+      "contact": "需要帮助？访问我们的帮助页面"
     },
     "email": {
       "reminder": "我们也已将所有信息发送至 {email}",

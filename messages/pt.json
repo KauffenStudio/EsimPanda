@@ -61,7 +61,7 @@
     "empty_body": "Ainda não tem eSIMs? Vamos conectá-lo!",
     "empty_cta": "Ver Planos",
     "error_title": "Algo correu mal",
-    "error_body": "Algo correu mal ao carregar os seus eSIMs. Tente novamente ou contacte-nos no WhatsApp.",
+    "error_body": "Algo correu mal ao carregar os seus eSIMs. Tente novamente ou visite a nossa página de Ajuda.",
     "error_retry": "Tentar Novamente",
     "tab_esims": "Meus eSIMs",
     "tab_history": "Histórico de Compras",
@@ -141,7 +141,7 @@
     "promo_invalid": "Código promocional inválido"
   },
   "errors": {
-    "generic": "Algo correu mal. Tente novamente ou contacte-nos no WhatsApp.",
+    "generic": "Algo correu mal. Tente novamente ou visite a nossa página de Ajuda.",
     "network": "Não foi possível conectar. Verifique a sua internet e tente novamente."
   },
   "checkout": {
@@ -205,7 +205,7 @@
       "generic": "Algo correu mal. Tente novamente.",
       "network": "Não foi possível conectar. Verifique a sua internet e tente novamente.",
       "retry": "Tentar novamente",
-      "contact": "Precisa de ajuda? Contacte-nos no WhatsApp"
+      "contact": "Precisa de ajuda? Visite a nossa página de Ajuda"
     }
   },
   "auth": {
@@ -367,14 +367,6 @@
     "cta": "Ver planos",
     "copyAria": "Copiar código de desconto de boas-vindas"
   },
-  "whatsapp": {
-    "ariaLabel": "Contactar suporte no WhatsApp",
-    "browsePage": "Olá! Preciso de ajuda para escolher um plano eSIM",
-    "checkoutPage": "Olá! Preciso de ajuda com o meu pagamento",
-    "deliveryPage": "Olá! Preciso de ajuda com a minha encomenda",
-    "dashboardPage": "Olá! Preciso de ajuda com o meu eSIM",
-    "defaultMessage": "Olá!"
-  },
   "admin": {
     "coupons": {
       "title": "Cupões de Influenciadores",
@@ -421,7 +413,7 @@
       "samsung": { "heading": "Configurar no Samsung" },
       "pixel": { "heading": "Configurar no Pixel / Android" },
       "android": { "heading": "Configurar no Android" },
-      "help": "Precisa de ajuda? Fale connosco no WhatsApp"
+      "help": "Precisa de ajuda na configuração? Visite a nossa página de Ajuda"
     },
     "steps": {
       "install": "Instalar o seu eSIM",
@@ -438,7 +430,7 @@
       "body": "Não foi possível configurar o seu eSIM. Estamos a resolver e irá recebê-lo por email em breve.",
       "retry": "A tentar novamente... ({count}/3)",
       "final": "Ainda estamos a trabalhar no seu eSIM. Irá recebê-lo por email dentro de poucos minutos.",
-      "contact": "Precisa de ajuda? Contacte-nos no WhatsApp"
+      "contact": "Precisa de ajuda? Visite a nossa página de Ajuda"
     },
     "email": {
       "reminder": "Também enviámos tudo para {email}",

@@ -61,7 +61,7 @@
     "empty_body": "No eSIMs yet? Let's get you connected!",
     "empty_cta": "Browse Plans",
     "error_title": "Something went wrong",
-    "error_body": "Something went wrong loading your eSIMs. Try again or contact us on WhatsApp for help.",
+    "error_body": "Something went wrong loading your eSIMs. Try again or visit our Help page.",
     "error_retry": "Try Again",
     "tab_esims": "My eSIMs",
     "tab_history": "Purchase History",
@@ -141,7 +141,7 @@
     "promo_invalid": "Invalid promo code"
   },
   "errors": {
-    "generic": "Something went wrong. Try again or contact us on WhatsApp for help.",
+    "generic": "Something went wrong. Try again or visit our Help page.",
     "network": "Could not connect. Check your internet and try again."
   },
   "checkout": {
@@ -205,7 +205,7 @@
       "generic": "Something went wrong. Please try again.",
       "network": "Could not connect. Check your internet and try again.",
       "retry": "Try again",
-      "contact": "Need help? Contact us on WhatsApp"
+      "contact": "Need help? Visit our Help page"
     }
   },
   "auth": {
@@ -367,14 +367,6 @@
     "cta": "Browse plans",
     "copyAria": "Copy welcome discount code"
   },
-  "whatsapp": {
-    "ariaLabel": "Contact support on WhatsApp",
-    "browsePage": "Hi! I need help choosing an eSIM plan",
-    "checkoutPage": "Hi! I need help with my checkout",
-    "deliveryPage": "Hi! I need help with my order",
-    "dashboardPage": "Hi! I need help with my eSIM",
-    "defaultMessage": "Hi!"
-  },
   "admin": {
     "coupons": {
       "title": "Influencer Coupons",
@@ -421,7 +413,7 @@
       "samsung": { "heading": "Setup on Samsung" },
       "pixel": { "heading": "Setup on Pixel / Android" },
       "android": { "heading": "Setup on Android" },
-      "help": "Need help? Chat with us on WhatsApp"
+      "help": "Need help setting up? Visit our Help page"
     },
     "steps": {
       "install": "Install your eSIM",
@@ -438,7 +430,7 @@
       "body": "We could not set up your eSIM. We are working on it and you will receive it by email shortly.",
       "retry": "Retrying... ({count}/3)",
       "final": "We are still working on your eSIM. You will receive it by email within a few minutes.",
-      "contact": "Need help? Contact us on WhatsApp"
+      "contact": "Need help? Visit our Help page"
     },
     "email": {
       "reminder": "We also sent everything to {email}",
