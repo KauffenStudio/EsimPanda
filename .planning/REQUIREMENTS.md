@@ -16,8 +16,8 @@ The v1.0 backend (Celitech sync, Stripe, webhooks, eSIM delivery) works end-to-e
 
 ### Checkout (live-data cutover)
 
-- [ ] **CHK-06**: User completing checkout is charged the retail price stored in Supabase for the real plan ID they selected (no mock plan IDs accepted)
-- [ ] **CHK-07**: User applying a coupon sees a currency-aware minimum-order requirement — a flat `9.99` in the selected currency for USD/EUR/GBP, and a converted (from €9.99) amount for BRL/JPY/CNY — with eligibility checked against the order total in that same currency
+- [x] **CHK-06**: User completing checkout is charged the retail price stored in Supabase for the real plan ID they selected (no mock plan IDs accepted)
+- [x] **CHK-07**: User applying a coupon sees a currency-aware minimum-order requirement — a flat `9.99` in the selected currency for USD/EUR/GBP, and a converted (from €9.99) amount for BRL/JPY/CNY — with eligibility checked against the order total in that same currency
 - [ ] **CHK-08**: User with a saved cart from before the v1.1 deploy starts with a clean cart on first load (Zustand persist migration purges dead plan IDs)
 
 ### UX / Design
@@ -192,8 +192,8 @@ Deferred to future release. Tracked but not in current roadmap.
 | CAT-05 | Phase 11 | Complete |
 | CAT-06 | Phase 11 | Complete |
 | CAT-07 | Phase 11 | Complete |
-| CHK-06 | Phase 12 | Pending |
-| CHK-07 | Phase 12 | Pending |
+| CHK-06 | Phase 12 | Complete |
+| CHK-07 | Phase 12 | Complete |
 | CHK-08 | Phase 12 | Pending |
 | UXD-05 | Phase 11 | Complete |
 | UXD-06 | Phase 11 | Complete |

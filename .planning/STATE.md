@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Live Data Cutover
 status: unknown
-stopped_at: Completed 11-03-PLAN.md
-last_updated: "2026-05-17T09:45:50.629Z"
+stopped_at: Completed 12-01-PLAN.md
+last_updated: "2026-05-17T11:16:44.417Z"
 progress:
   total_phases: 15
   completed_phases: 11
-  total_plans: 33
-  completed_plans: 33
+  total_plans: 35
+  completed_plans: 34
 ---
 
 # Project State
@@ -19,12 +19,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-13)
 
 **Core value:** A student arriving in a new country gets connected with mobile data in under 2 minutes
-**Current focus:** Phase 11 — read-layer-module-and-browse-cutover
+**Current focus:** Phase 12 — checkout-pricing-and-coupon-cutover
 
 ## Current Position
 
-Phase: 11 (read-layer-module-and-browse-cutover) — COMPLETE
-Plan: 3 of 3 — all plans complete
+Phase: 12 (checkout-pricing-and-coupon-cutover) — EXECUTING
+Plan: 2 of 2
 
 ## Performance Metrics
 
@@ -84,6 +84,7 @@ Plan: 3 of 3 — all plans complete
 | Phase 11 P01 | 6min | 2 tasks | 9 files |
 | Phase 11 P02 | 30min | 2 tasks | 19 files |
 | Phase 11 P03 | 4min | 2 tasks | 5 files |
+| Phase 12 P01 | 18min | 4 tasks | 11 files |
 
 ## Accumulated Context
 
@@ -168,6 +169,9 @@ Recent decisions affecting current work:
 - [Phase 11]: [Phase 11-02]: Typographic card is the always-mounted base layer; motion.img photo cross-fades over it — no flicker if a photo URL 404s
 - [Phase 11]: [11-03]: comparison.ts stays plain create() — no storage middleware; comparison selections are intentionally in-memory so no version/migrate is needed
 - [Phase 11]: [11-03]: PlanCard keeps its flat-props API and reconstructs a minimal Plan inline for togglePlan — avoids rippling a prop-shape change into esim/[slug] (Phase 12 territory)
+- [Phase 12]: [12-01]: calculatePrice discount math stays in USD cents; only the coupon eligibility gate is currency-aware
+- [Phase 12]: [12-01]: minOrderOverride applies only to coupons with min_order_cents > 0 — WELCOME10 stays no-minimum
+- [Phase 12]: [12-01]: getRate() accessor added to rates.ts; RATES stays module-private
 
 ### Pending Todos
 
@@ -186,6 +190,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-05-17T09:39:45.601Z
-Stopped at: Completed 11-03-PLAN.md
+Last session: 2026-05-17T11:16:23.595Z
+Stopped at: Completed 12-01-PLAN.md
 Resume file: None
