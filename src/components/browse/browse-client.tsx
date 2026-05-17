@@ -99,9 +99,17 @@ interface BrowseClientProps {
   destinations: CatalogDestination[];
   regionalPlans: CatalogDestination[];
   error: boolean;
+  // ?notice= query param forwarded from the browse RSC. 'plan-unavailable'
+  // shows a dismissable banner after a stale checkout link redirect (CHK-06).
+  notice?: string;
 }
 
-export function BrowseClient({ destinations, regionalPlans, error }: BrowseClientProps) {
+export function BrowseClient({
+  destinations,
+  regionalPlans,
+  error,
+  notice,
+}: BrowseClientProps) {
   const t = useTranslations();
   const searchQuery = useBrowseStore((state) => state.searchQuery);
   const setSearch = useBrowseStore((state) => state.setSearch);
@@ -134,12 +142,38 @@ export function BrowseClient({ destinations, regionalPlans, error }: BrowseClien
   const groups = useMemo(() => groupByRegion(filtered), [filtered]);
   const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
 
+  // Dismissable plan-unavailable notice — shown when a stale checkout link
+  // redirected here with ?notice=plan-unavailable.
+  const [noticeDismissed, setNoticeDismissed] = useState(false);
+  const showPlanUnavailableNotice = notice === 'plan-unavailable' && !noticeDismissed;
+
   // Derive the active region from state directly (no useEffect) so the first
   // render already lands on the right region.
   const activeGroup = groups.find((g) => g.region === selectedRegion) ?? groups[0];
 
   return (
     <div className="flex flex-col gap-6">
+      {/* Plan-unavailable notice — dismissable; lands here after a stale
+          checkout link redirect. Mirrors the BrowseErrorBanner layout. */}
+      {showPlanUnavailableNotice && (
+        <div
+          role="status"
+          className="rounded-card border border-border dark:border-border-dark bg-surface dark:bg-surface-dark px-4 py-3 flex items-center justify-between gap-3"
+        >
+          <p className="text-sm text-gray-700 dark:text-gray-300">
+            {t('browse.planUnavailableNotice.message')}
+          </p>
+          <button
+            type="button"
+            onClick={() => setNoticeDismissed(true)}
+            aria-label={t('browse.planUnavailableNotice.dismiss')}
+            className="shrink-0 rounded-button text-gray-500 dark:text-gray-400 text-sm font-medium px-3 py-2 min-h-[40px] hover:bg-gray-50 dark:hover:bg-gray-800"
+          >
+            {t('browse.planUnavailableNotice.dismiss')}
+          </button>
+        </div>
+      )}
+
       {/* Error state — banner renders above the grid; chrome stays mounted (UXD-06). */}
       {catalog.error && <BrowseErrorBanner onRetry={handleRetry} />}
 

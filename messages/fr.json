@@ -49,7 +49,11 @@
     "deviceCompatible": "Votre {brand} {model} est compatible eSIM !",
     "deviceIncompatible": "Désolé, {brand} {model} n'est pas compatible eSIM",
     "browseAnyway": "Parcourir quand même",
-    "resetDevice": "Vérifier un autre appareil"
+    "resetDevice": "Vérifier un autre appareil",
+    "planUnavailableNotice": {
+      "message": "Ce forfait n’est plus disponible — voici le catalogue actuel.",
+      "dismiss": "Fermer"
+    }
   },
   "dashboard": {
     "title": "Mes eSIMs",

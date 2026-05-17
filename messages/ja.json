@@ -49,7 +49,11 @@
     "deviceCompatible": "お使いの{brand} {model}はeSIM対応です！",
     "deviceIncompatible": "申し訳ありません、{brand} {model}はeSIMに対応していません",
     "browseAnyway": "それでも閲覧する",
-    "resetDevice": "別のデバイスを確認"
+    "resetDevice": "別のデバイスを確認",
+    "planUnavailableNotice": {
+      "message": "そのプランは現在ご利用いただけません。最新のカタログをご覧ください。",
+      "dismiss": "閉じる"
+    }
   },
   "dashboard": {
     "title": "マイeSIM",

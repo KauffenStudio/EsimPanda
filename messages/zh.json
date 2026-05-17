@@ -49,7 +49,11 @@
     "deviceCompatible": "您的 {brand} {model} 支持eSIM！",
     "deviceIncompatible": "抱歉，{brand} {model} 不支持eSIM",
     "browseAnyway": "仍然浏览",
-    "resetDevice": "检查其他设备"
+    "resetDevice": "检查其他设备",
+    "planUnavailableNotice": {
+      "message": "该套餐已不再提供，以下是当前的可选套餐。",
+      "dismiss": "关闭"
+    }
   },
   "dashboard": {
     "title": "我的eSIM",

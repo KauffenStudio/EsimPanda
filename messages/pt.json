@@ -49,7 +49,11 @@
     "deviceCompatible": "O seu {brand} {model} suporta eSIM!",
     "deviceIncompatible": "Desculpe, {brand} {model} não suporta eSIM",
     "browseAnyway": "Ver mesmo assim",
-    "resetDevice": "Verificar outro dispositivo"
+    "resetDevice": "Verificar outro dispositivo",
+    "planUnavailableNotice": {
+      "message": "Esse plano já não está disponível — aqui está o catálogo atual.",
+      "dismiss": "Dispensar"
+    }
   },
   "dashboard": {
     "title": "Meus eSIMs",

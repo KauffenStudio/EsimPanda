@@ -6,13 +6,17 @@ import { WelcomeDiscountBanner } from '@/components/marketing/welcome-discount-b
 
 export const revalidate = 3600; // ISR — 1 hour; matches esim/[slug]/page.tsx
 
-type Props = { params: Promise<{ locale: string }> };
+type Props = {
+  params: Promise<{ locale: string }>;
+  searchParams: Promise<{ notice?: string }>;
+};
 
-export default async function BrowsePage({ params }: Props) {
+export default async function BrowsePage({ params, searchParams }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations();
 
+  const { notice } = await searchParams;
   const { destinations, regionalPlans, error } = await getCatalog();
 
   return (
@@ -27,7 +31,12 @@ export default async function BrowsePage({ params }: Props) {
         </div>
       </div>
       <WelcomeDiscountBanner showCta={false} />
-      <BrowseClient destinations={destinations} regionalPlans={regionalPlans} error={error} />
+      <BrowseClient
+        destinations={destinations}
+        regionalPlans={regionalPlans}
+        error={error}
+        notice={notice}
+      />
     </div>
   );
 }
