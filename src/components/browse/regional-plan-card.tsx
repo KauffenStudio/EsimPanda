@@ -4,11 +4,10 @@ import Image from 'next/image';
 import { useTranslations, useLocale } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { Badge } from '@/components/ui/badge';
-import { useDestinations } from '@/hooks/use-destinations';
 import { useCurrencyStore } from '@/stores/currency';
 import { formatPrice } from '@/lib/currency/rates';
-import { getStartingPrice, getPlansForDestination, getBestDiscount, getOriginalPrice, getDiscountPercent } from '@/lib/mock-data/plans';
-import type { MockDestination } from '@/lib/mock-data/destinations';
+import { getStartingPrice, getPlansForDestination, getOriginalPrice, getDiscountPercent } from '@/lib/mock-data/plans';
+import type { CatalogDestination } from '@/lib/db/destinations';
 
 const regionMeta: Record<string, { badge: string; countryCount: string }> = {
   'europe-wide': { badge: '30+ countries', countryCount: '30+' },
@@ -16,7 +15,7 @@ const regionMeta: Record<string, { badge: string; countryCount: string }> = {
   global: { badge: '100+ countries', countryCount: '100+' },
 };
 
-function RegionalCard({ plan }: { plan: MockDestination }) {
+function RegionalCard({ plan }: { plan: CatalogDestination }) {
   const t = useTranslations();
   const locale = useLocale();
   const router = useRouter();
@@ -27,7 +26,7 @@ function RegionalCard({ plan }: { plan: MockDestination }) {
   const dataGb = cheapestPlan?.data_gb ?? 5;
   const originalCents = getOriginalPrice(priceCents, dataGb);
   const discount = getDiscountPercent(priceCents, dataGb);
-  const meta = regionMeta[plan.region] || { badge: 'Multi-country', countryCount: '' };
+  const meta = regionMeta[plan.region_bucket ?? ''] || { badge: 'Multi-country', countryCount: '' };
 
   return (
     <div
@@ -36,13 +35,16 @@ function RegionalCard({ plan }: { plan: MockDestination }) {
       role="button"
       tabIndex={0}
     >
-      <Image
-        src={plan.image_url}
-        alt={`${plan.name} Coverage`}
-        fill
-        className="object-cover"
-        sizes="(min-width: 768px) 33vw, 100vw"
-      />
+      {/* 11-02 replaces the null-image_url path with the shared typographic fallback card. */}
+      {plan.image_url && (
+        <Image
+          src={plan.image_url}
+          alt={`${plan.name} Coverage`}
+          fill
+          className="object-cover"
+          sizes="(min-width: 768px) 33vw, 100vw"
+        />
+      )}
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
       <div className="absolute bottom-0 left-0 right-0 p-4 flex flex-col gap-1">
         <h3 className="text-white font-bold text-lg">{plan.name}-Wide Coverage</h3>
@@ -64,9 +66,11 @@ function RegionalCard({ plan }: { plan: MockDestination }) {
   );
 }
 
-export function RegionalPlanCard() {
-  const { regionalPlans } = useDestinations();
+interface RegionalPlanCardProps {
+  regionalPlans: CatalogDestination[];
+}
 
+export function RegionalPlanCard({ regionalPlans }: RegionalPlanCardProps) {
   if (regionalPlans.length === 0) return null;
 
   return (
