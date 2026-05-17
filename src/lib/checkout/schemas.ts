@@ -10,6 +10,9 @@ export const createIntentRequestSchema = z.object({
   plan_id: z.string().min(1),
   email: z.string().email().optional().or(z.literal('')),
   coupon_code: z.string().optional(),
+  // Selected currency for the currency-aware coupon minimum-order gate.
+  // Without this field zod strips it from the parsed body (Pitfall 6).
+  currency: z.enum(['USD', 'EUR', 'GBP', 'BRL', 'JPY', 'CNY']).optional(),
 });
 
 export const createIntentResponseSchema = z.object({

@@ -18,11 +18,11 @@ export async function POST(request: Request) {
       );
     }
 
-    const { plan_id, email, coupon_code } = parsed.data;
+    const { plan_id, email, coupon_code, currency } = parsed.data;
 
     // --- Mock mode ---
     if (IS_MOCK) {
-      const result = mockCreateIntent(plan_id, coupon_code);
+      const result = await mockCreateIntent(plan_id, coupon_code, 'PT', currency ?? 'USD');
       if (!result) {
         return NextResponse.json({ error: 'Plan not found' }, { status: 404 });
       }
@@ -30,7 +30,7 @@ export async function POST(request: Request) {
     }
 
     // --- Production: Real Stripe ---
-    const pricing = calculatePrice(plan_id, coupon_code);
+    const pricing = await calculatePrice(plan_id, coupon_code, currency ?? 'USD');
     if (!pricing) {
       return NextResponse.json({ error: 'Plan not found' }, { status: 404 });
     }

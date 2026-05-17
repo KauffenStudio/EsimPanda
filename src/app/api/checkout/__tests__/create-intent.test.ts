@@ -1,7 +1,19 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
+import { fixturePlans } from '@/lib/__test-fixtures__/catalog';
+
+// The create-intent route resolves plans via getPlanById (Supabase) since the
+// Phase 12 cutover — mock the read module with the stable catalog fixtures
+// instead of relying on dead mock plan IDs.
+vi.mock('@/lib/db/destinations', () => ({
+  getPlanById: vi.fn(async (planId: string) =>
+    fixturePlans.find((p) => p.id === planId) ?? null,
+  ),
+}));
+
 import { POST } from '../create-intent/route';
 
-const VALID_PLAN_ID = 'p001-0001-4000-8000-000000000000';
+// plan-france-5gb → retail 1199 (≥ 999 coupon minimum).
+const VALID_PLAN_ID = 'plan-france-5gb';
 
 function makeRequest(body: Record<string, unknown>) {
   return new Request('http://localhost:3000/api/checkout/create-intent', {
@@ -31,7 +43,7 @@ describe('POST /api/checkout/create-intent', () => {
 
   it('returns 404 for invalid plan_id', async () => {
     const res = await POST(makeRequest({
-      plan_id: 'nonexistent-plan-id',
+      plan_id: '00000000-0000-0000-0000-000000000000',
       email: 'test@example.com',
     }));
 

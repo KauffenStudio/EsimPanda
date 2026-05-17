@@ -1,24 +1,26 @@
-import { mockPlans } from './plans';
+import { getPlanById } from '@/lib/db/destinations';
 import { calculatePrice } from '@/lib/checkout/pricing';
 import { calculateTax } from '@/lib/checkout/tax';
+import { type CurrencyCode } from '@/lib/currency/rates';
 
 export const MOCK_CLIENT_SECRET = 'pi_mock_secret_test123';
 
-export function mockCreateIntent(
+export async function mockCreateIntent(
   planId: string,
   couponCode?: string,
-  countryCode = 'PT'
-): {
+  countryCode = 'PT',
+  currency: CurrencyCode = 'USD',
+): Promise<{
   client_secret: string;
   amount: number;
   tax_amount: number;
   subtotal: number;
   discount: number;
-} | null {
-  const plan = mockPlans.find((p) => p.id === planId);
+} | null> {
+  const plan = await getPlanById(planId);
   if (!plan) return null;
 
-  const pricing = calculatePrice(planId, couponCode);
+  const pricing = await calculatePrice(planId, couponCode, currency);
   if (!pricing) return null;
 
   const tax = calculateTax(pricing.subtotal_cents, countryCode);
