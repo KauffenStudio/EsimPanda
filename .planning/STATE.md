@@ -4,7 +4,7 @@ milestone: v1.1
 milestone_name: Live Data Cutover
 status: unknown
 stopped_at: Completed 14-02-PLAN.md
-last_updated: "2026-05-17T21:33:57.934Z"
+last_updated: "2026-05-17T21:34:04.347Z"
 progress:
   total_phases: 15
   completed_phases: 15
@@ -185,6 +185,8 @@ Recent decisions affecting current work:
 - [Phase 13]: [13-02]: referral share-buttons wa.me link + shareWhatsapp key kept — referral share, not support
 - [Phase 14]: [14-01]: SW update flow uses the canonical waiting-worker + SKIP_WAITING message + controllerchange-reload handshake; install-time skipWaiting removed
 - [Phase 14]: [14-01]: SW registration promoted from an inline <script> in root layout.tsx to a 'use client' SwRegister component mounted in [locale]/layout.tsx
+- [Phase 14]: [14-02]: VER-01 E2E quarantined from npm test via a separate test:e2e script + vitest exclude e2e/** — the spec spends real money / sends real email
+- [Phase 14]: [14-02]: purchase.spec.ts picks the cheapest plan by parsing rendered card prices at runtime — no hard-coded plan ID, resilient to catalog changes
 
 ### Pending Todos
 

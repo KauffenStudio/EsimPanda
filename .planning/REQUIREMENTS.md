@@ -41,7 +41,7 @@ The v1.0 backend (Celitech sync, Stripe, webhooks, eSIM delivery) works end-to-e
 
 ### Verification
 
-- [ ] **VER-01**: End-to-end test executes: a Stripe test-card purchase against a real Supabase plan ID delivers a real eSIM ICCID via Celitech, persists encrypted activation data, and sends a real Resend email
+- [x] **VER-01**: End-to-end test executes: a Stripe test-card purchase against a real Supabase plan ID delivers a real eSIM ICCID via Celitech, persists encrypted activation data, and sends a real Resend email
 
 ## v1.0 Requirements (shipped)
 
@@ -208,7 +208,7 @@ Deferred to future release. Tracked but not in current roadmap.
 | INF-12 | Phase 14 | Complete |
 | INF-13 | Phase 13 | Complete |
 | INF-14 | Phase 13 | Complete |
-| VER-01 | Phase 14 | Pending |
+| VER-01 | Phase 14 | Complete |
 
 **Coverage:**
 - v1.0 requirements: 35 total — all complete (except DEL-02, INF-06 noted)
