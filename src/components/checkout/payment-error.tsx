@@ -1,10 +1,10 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useTranslations } from 'next-intl';
+import Link from 'next/link';
+import { useLocale, useTranslations } from 'next-intl';
 import { BambuVideo } from '@/components/bambu/bambu-video';
 import { Button } from '@/components/ui/button';
-import { WHATSAPP_SUPPORT_URL } from '@/lib/config/support';
 
 interface PaymentErrorProps {
   errorType: 'declined' | 'generic' | 'network';
@@ -13,6 +13,7 @@ interface PaymentErrorProps {
 
 export function PaymentError({ errorType, onRetry }: PaymentErrorProps) {
   const t = useTranslations('checkout.error');
+  const locale = useLocale();
 
   // Haptic warning on mount
   useEffect(() => {
@@ -44,14 +45,12 @@ export function PaymentError({ errorType, onRetry }: PaymentErrorProps) {
         {t('retry')}
       </Button>
 
-      <a
-        href={WHATSAPP_SUPPORT_URL}
-        target="_blank"
-        rel="noopener noreferrer"
+      <Link
+        href={`/${locale}/help`}
         className="text-sm text-gray-600 dark:text-gray-400 underline mt-4 hover:text-accent"
       >
         {t('contact')}
-      </a>
+      </Link>
     </div>
   );
 }

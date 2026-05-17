@@ -1,9 +1,9 @@
 'use client';
 
+import Link from 'next/link';
 import { motion } from 'motion/react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { BambuVideo } from '@/components/bambu/bambu-video';
-import { WHATSAPP_SUPPORT_URL } from '@/lib/config/support';
 
 interface ProvisioningErrorProps {
   retryCount: number;
@@ -12,6 +12,7 @@ interface ProvisioningErrorProps {
 
 export function ProvisioningError({ retryCount }: ProvisioningErrorProps) {
   const t = useTranslations('delivery');
+  const locale = useLocale();
 
   return (
     <motion.div
@@ -43,14 +44,12 @@ export function ProvisioningError({ retryCount }: ProvisioningErrorProps) {
         </div>
       )}
 
-      <a
-        href={WHATSAPP_SUPPORT_URL}
-        target="_blank"
-        rel="noopener noreferrer"
+      <Link
+        href={`/${locale}/help`}
         className="text-base text-accent underline transition-colors duration-150 hover:text-accent-hover"
       >
         {t('error.contact')}
-      </a>
+      </Link>
     </motion.div>
   );
 }

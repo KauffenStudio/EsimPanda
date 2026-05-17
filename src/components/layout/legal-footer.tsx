@@ -17,6 +17,10 @@ export function LegalFooter() {
           {t('terms')}
         </Link>
         <span aria-hidden="true">·</span>
+        <Link href={`/${locale}/help`} className="hover:underline">
+          {t('help')}
+        </Link>
+        <span aria-hidden="true">·</span>
         <span>{t('copyright')}</span>
       </nav>
       <div className="w-full max-w-[280px]">

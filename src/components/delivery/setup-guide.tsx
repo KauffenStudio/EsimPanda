@@ -1,13 +1,13 @@
 'use client';
 
 import { useState, useMemo } from 'react';
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'motion/react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import type { DeviceFamily } from './device-detection';
 import { isMobile } from './device-detection';
 import { SetupSteps } from './setup-steps';
-import { WHATSAPP_SUPPORT_URL } from '@/lib/config/support';
 
 interface SetupGuideProps {
   deviceFamily: DeviceFamily;
@@ -22,6 +22,7 @@ const TABS: { key: string; label: string }[] = [
 
 export function SetupGuide({ deviceFamily }: SetupGuideProps) {
   const t = useTranslations('delivery');
+  const locale = useLocale();
   const [expanded, setExpanded] = useState(true);
 
   const mobile = useMemo(
@@ -79,14 +80,12 @@ export function SetupGuide({ deviceFamily }: SetupGuideProps) {
               <SetupSteps deviceFamily={selectedTab} />
 
               <p className="mt-4 text-center">
-                <a
-                  href={WHATSAPP_SUPPORT_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  href={`/${locale}/help`}
                   className="text-base text-accent underline transition-colors duration-150 hover:text-accent-hover"
                 >
                   {t('setup.help')}
-                </a>
+                </Link>
               </p>
             </div>
           </motion.div>
