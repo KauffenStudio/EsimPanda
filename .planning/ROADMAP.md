@@ -275,10 +275,10 @@ Plans:
   3. Every one of the 22 consuming files renders correctly with the pose replaced by plain text or an existing primitive — no broken imports, no empty render holes
   4. `bambu-video.tsx` and its usages are unchanged — the panda hello video still plays where it did before
   5. `npm test` passes with no regression; `tsc --noEmit` is clean
-**Plans**: TBD
+**Plans**: 1 plan
 
 Plans:
-- [ ] TBD (run /gsd:plan-phase 13.1 to break down)
+- [ ] 13.1-01-PLAN.md — Swap the 6 auth `BambuLoading` usages to the existing inline CSS spinner, then delete the 8 Bambu pose component files (keep `bambu-video.tsx`)
 
 ### Phase 14: E2E Verification and Deploy
 **Goal**: A real Stripe test-card purchase against a real Celitech plan UUID in Supabase completes the entire pipeline end-to-end (checkout → webhook → provisioning → encrypted activation data → Resend email with QR), the service worker cache is bumped in the same deploy as the code cutover with an update prompt for returning users, and Vercel env vars are cleaned
