@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Live Data Cutover
 status: unknown
-stopped_at: Completed 11-02-PLAN.md
-last_updated: "2026-05-17T09:33:44.111Z"
+stopped_at: Completed 11-03-PLAN.md
+last_updated: "2026-05-17T09:40:02.839Z"
 progress:
   total_phases: 15
-  completed_phases: 10
+  completed_phases: 11
   total_plans: 33
-  completed_plans: 32
+  completed_plans: 33
 ---
 
 # Project State
@@ -23,8 +23,8 @@ See: .planning/PROJECT.md (updated 2026-05-13)
 
 ## Current Position
 
-Phase: 11 (read-layer-module-and-browse-cutover) — EXECUTING
-Plan: 3 of 3
+Phase: 11 (read-layer-module-and-browse-cutover) — COMPLETE
+Plan: 3 of 3 — all plans complete
 
 ## Performance Metrics
 
@@ -83,6 +83,7 @@ Plan: 3 of 3
 | Phase 10 P02 | 6min | 5 tasks | 4 files |
 | Phase 11 P01 | 6min | 2 tasks | 9 files |
 | Phase 11 P02 | 30min | 2 tasks | 19 files |
+| Phase 11 P03 | 4min | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -165,6 +166,8 @@ Recent decisions affecting current work:
 - [Phase 11]: [Phase 11-01]: Hybrid RSC + BrowseClient — browse/page.tsx is async, fetches getCatalog(), passes data as props to a use-client child; in-memory search, no per-keystroke Supabase call
 - [Phase 11]: [Phase 11-02]: Typographic image-fallback built as a shared component consumed by both DestinationCard and RegionalPlanCard — UI-SPEC 'build it once' mandate, no duplicated gradient JSX
 - [Phase 11]: [Phase 11-02]: Typographic card is the always-mounted base layer; motion.img photo cross-fades over it — no flicker if a photo URL 404s
+- [Phase 11]: [11-03]: comparison.ts stays plain create() — no storage middleware; comparison selections are intentionally in-memory so no version/migrate is needed
+- [Phase 11]: [11-03]: PlanCard keeps its flat-props API and reconstructs a minimal Plan inline for togglePlan — avoids rippling a prop-shape change into esim/[slug] (Phase 12 territory)
 
 ### Pending Todos
 
@@ -183,6 +186,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-05-17T09:33:28.518Z
-Stopped at: Completed 11-02-PLAN.md
+Last session: 2026-05-17T09:39:45.601Z
+Stopped at: Completed 11-03-PLAN.md
 Resume file: None
