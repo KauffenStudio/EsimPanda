@@ -1,10 +1,11 @@
 ---
 phase: 13
 slug: cleanup-mock-deletion-and-whatsapp-removal
-status: draft
+status: approved
 shadcn_initialized: false
 preset: none
 created: 2026-05-17
+reviewed_at: 2026-05-17
 ---
 
 # Phase 13 — UI Design Contract
