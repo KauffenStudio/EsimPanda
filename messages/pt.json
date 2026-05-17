@@ -24,8 +24,14 @@
     "europePlan": "Cobertura Regional",
     "europeDescription": "Planos multi-país",
     "from": "desde",
-    "noResults": "Ainda não há planos para \"{query}\"",
+    "noResults": "Nenhum destino corresponde a \"{query}\"",
     "noResultsSuggestion": "Experimente um plano regional ou veja os destinos populares",
+    "noPlans": "Sem planos disponíveis",
+    "clearSearch": "Limpar pesquisa",
+    "error": {
+      "retry": "Tentar carregar novamente",
+      "message": "Não foi possível carregar os destinos agora. Verifique a sua ligação e tente novamente."
+    },
     "comingSoon": "Em breve",
     "filterAll": "Todos",
     "filter14d": "14 dias",

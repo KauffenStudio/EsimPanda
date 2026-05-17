@@ -24,8 +24,14 @@
     "europePlan": "地域カバレッジ",
     "europeDescription": "複数国プラン",
     "from": "から",
-    "noResults": "「{query}」のプランはまだありません",
+    "noResults": "「{query}」に一致する目的地はありません",
     "noResultsSuggestion": "地域プランを試すか、人気の目的地をご覧ください",
+    "noPlans": "利用可能なプランがありません",
+    "clearSearch": "検索をクリア",
+    "error": {
+      "retry": "もう一度読み込む",
+      "message": "現在、目的地を読み込めませんでした。接続を確認してもう一度お試しください。"
+    },
     "comingSoon": "近日公開",
     "filterAll": "すべて",
     "filter14d": "14日間",
