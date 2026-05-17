@@ -6,13 +6,13 @@ import { useComparisonStore } from '@/stores/comparison';
 
 export function ComparisonBar() {
   const t = useTranslations();
-  const selectedPlanIds = useComparisonStore((state) => state.selectedPlanIds);
+  const selectedPlans = useComparisonStore((state) => state.selectedPlans);
   const openSheet = useComparisonStore((state) => state.openSheet);
   const clearSelection = useComparisonStore((state) => state.clearSelection);
 
   return (
     <AnimatePresence>
-      {selectedPlanIds.length >= 2 && (
+      {selectedPlans.length >= 2 && (
         <motion.div
           initial={{ y: 100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -22,7 +22,7 @@ export function ComparisonBar() {
         >
           <div className="mx-4 p-3 bg-accent rounded-[var(--radius-card)] shadow-lg dark:shadow-card-dark flex items-center justify-between">
             <span className="text-white font-bold">
-              {t('browse.compare')} ({selectedPlanIds.length})
+              {t('browse.compare')} ({selectedPlans.length})
             </span>
             <div className="flex items-center gap-2">
               <button

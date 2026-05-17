@@ -7,7 +7,11 @@ import { useComparisonStore } from '@/stores/comparison';
 import { useCartStore } from '@/stores/cart';
 import { useCurrencyStore } from '@/stores/currency';
 import { formatPrice } from '@/lib/currency/rates';
-import { getOriginalPrice, getDiscountPercent, mockPlans } from '@/lib/mock-data/plans';
+// Pure pricing-display compute helpers — no I/O, no global array lookup.
+// Extraction to src/lib/plans/pricing-display.ts is Phase 13 (INF-11), per the
+// same boundary note in src/lib/db/destinations.ts — do not extract here.
+import { getOriginalPrice, getDiscountPercent } from '@/lib/mock-data/plans';
+import type { Plan } from '@/lib/db/destinations';
 
 interface PlanCardProps {
   id: string;
@@ -33,20 +37,45 @@ export function PlanCard({
   isMostPopular,
 }: PlanCardProps) {
   const t = useTranslations();
-  const selectedPlanIds = useComparisonStore((state) => state.selectedPlanIds);
+  const selectedPlans = useComparisonStore((state) => state.selectedPlans);
   const togglePlan = useComparisonStore((state) => state.togglePlan);
   const addItem = useCartStore((state) => state.addItem);
   const currency = useCurrencyStore((state) => state.currency);
-  const isSelected = selectedPlanIds.includes(id);
+  const isSelected = selectedPlans.some((p) => p.id === id);
+
+  // Phase-11 bridge: PlanCard keeps its flat-props API (RESEARCH Open Question 3)
+  // because esim/[slug] also renders it and stays on mock data until Phase 12.
+  // We reconstruct a minimal Plan object here from the flat props. Comparison
+  // only reads name/data_gb/duration_days/retail_price_cents; the remaining
+  // Plan fields are filled with safe defaults sufficient for comparison display.
+  const plan: Plan = {
+    id,
+    destination_id: '',
+    wholesale_plan_id: '',
+    provider: 'celitech',
+    name: `${data_gb}GB · ${formatDuration(duration_days)}`,
+    data_gb,
+    duration_days,
+    wholesale_price_cents: 0,
+    retail_price_cents,
+    currency: 'USD',
+    is_active: true,
+  };
 
   const handleCardClick = () => {
-    const plan = mockPlans.find((p) => p.id === id);
-    if (plan) addItem(plan);
+    // Cart store is MockPlan-typed (Phase 12/13 cutover); construct a MockPlan
+    // from the flat props instead of a global-array lookup.
+    addItem({
+      ...plan,
+      synced_at: '',
+      created_at: '',
+      updated_at: '',
+    });
   };
 
   const handleCheckboxClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    togglePlan(id);
+    togglePlan(plan);
   };
 
   return (

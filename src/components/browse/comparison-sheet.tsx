@@ -4,12 +4,11 @@ import { useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { motion, AnimatePresence } from 'motion/react';
 import { useComparisonStore } from '@/stores/comparison';
-import { mockPlans } from '@/lib/mock-data/plans';
 
 export function ComparisonSheet() {
   const t = useTranslations();
   const isSheetOpen = useComparisonStore((state) => state.isSheetOpen);
-  const selectedPlanIds = useComparisonStore((state) => state.selectedPlanIds);
+  const selectedPlans = useComparisonStore((state) => state.selectedPlans);
   const closeSheet = useComparisonStore((state) => state.closeSheet);
 
   // Lock body scroll when open
@@ -22,9 +21,7 @@ export function ComparisonSheet() {
     }
   }, [isSheetOpen]);
 
-  const selectedPlans = selectedPlanIds
-    .map((id) => mockPlans.find((p) => p.id === id))
-    .filter(Boolean);
+  // selectedPlans are full Plan objects carried in the store — no mock-data lookup.
 
   return (
     <AnimatePresence>
@@ -84,10 +81,10 @@ export function ComparisonSheet() {
               >
                 {selectedPlans.map((plan) => (
                   <div
-                    key={plan!.id}
+                    key={plan.id}
                     className="text-center font-bold text-sm"
                   >
-                    {plan!.name}
+                    {plan.name}
                   </div>
                 ))}
               </div>
@@ -97,24 +94,26 @@ export function ComparisonSheet() {
                 {
                   label: 'Data',
                   getValue: (p: (typeof selectedPlans)[0]) =>
-                    `${p!.data_gb} GB`,
+                    `${p.data_gb} GB`,
                 },
                 {
                   label: 'Duration',
                   getValue: (p: (typeof selectedPlans)[0]) =>
-                    p!.duration_days === 1
+                    p.duration_days === 1
                       ? '24h'
-                      : `${p!.duration_days} days`,
+                      : `${p.duration_days} days`,
                 },
                 {
+                  // SCOPE: the hardcoded \u20AC symbol is a known currency bug \u2014
+                  // correction is Phase 12 (CHK-07), explicitly out of scope here.
                   label: 'Price',
                   getValue: (p: (typeof selectedPlans)[0]) =>
-                    `\u20AC${(p!.retail_price_cents / 100).toFixed(2)}`,
+                    `\u20AC${(p.retail_price_cents / 100).toFixed(2)}`,
                 },
                 {
                   label: 'Price/GB',
                   getValue: (p: (typeof selectedPlans)[0]) =>
-                    `\u20AC${(p!.retail_price_cents / 100 / p!.data_gb).toFixed(2)}/GB`,
+                    `\u20AC${(p.retail_price_cents / 100 / p.data_gb).toFixed(2)}/GB`,
                 },
               ].map((attr) => (
                 <div
@@ -125,7 +124,7 @@ export function ComparisonSheet() {
                   }}
                 >
                   {selectedPlans.map((plan) => (
-                    <div key={plan!.id} className="text-center text-sm">
+                    <div key={plan.id} className="text-center text-sm">
                       <div className="text-gray-400 text-xs mb-0.5">
                         {attr.label}
                       </div>
