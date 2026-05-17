@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Live Data Cutover
 status: unknown
-stopped_at: Completed 12-01-PLAN.md
-last_updated: "2026-05-17T11:16:44.417Z"
+stopped_at: Completed 12-02-PLAN.md
+last_updated: "2026-05-17T11:23:29.814Z"
 progress:
   total_phases: 15
-  completed_phases: 11
+  completed_phases: 12
   total_plans: 35
-  completed_plans: 34
+  completed_plans: 35
 ---
 
 # Project State
@@ -23,8 +23,8 @@ See: .planning/PROJECT.md (updated 2026-05-13)
 
 ## Current Position
 
-Phase: 12 (checkout-pricing-and-coupon-cutover) — EXECUTING
-Plan: 2 of 2
+Phase: 12 (checkout-pricing-and-coupon-cutover) — COMPLETE
+Plan: 2 of 2 — both plans complete
 
 ## Performance Metrics
 
@@ -85,6 +85,7 @@ Plan: 2 of 2
 | Phase 11 P02 | 30min | 2 tasks | 19 files |
 | Phase 11 P03 | 4min | 2 tasks | 5 files |
 | Phase 12 P01 | 18min | 4 tasks | 11 files |
+| Phase 12 P02 | 4min | 3 tasks | 20 files |
 
 ## Accumulated Context
 
@@ -172,6 +173,8 @@ Recent decisions affecting current work:
 - [Phase 12]: [12-01]: calculatePrice discount math stays in USD cents; only the coupon eligibility gate is currency-aware
 - [Phase 12]: [12-01]: minOrderOverride applies only to coupons with min_order_cents > 0 — WELCOME10 stays no-minimum
 - [Phase 12]: [12-01]: getRate() accessor added to rates.ts; RATES stays module-private
+- [Phase 12]: [12-02]: migrateCart exported as a named function so the persist migrate is directly unit-testable
+- [Phase 12]: [12-02]: plan-unavailable notice uses browse.planUnavailableNotice key + a neutral-tinted role=status banner (not destructive)
 
 ### Pending Todos
 
@@ -190,6 +193,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-05-17T11:16:23.595Z
-Stopped at: Completed 12-01-PLAN.md
+Last session: 2026-05-17T11:23:13.765Z
+Stopped at: Completed 12-02-PLAN.md
 Resume file: None
