@@ -29,7 +29,7 @@ A student arriving in a new country gets connected with mobile data in under 2 m
 
 **Trigger:** During v1.1 kickoff (2026-05-13) the Celitech API was wired up and a real catalog sync populated Supabase. We discovered the entire UI (browse, plan-card, comparison-sheet, pricing.ts, validate-coupon, checkout server component) reads from `src/lib/mock-data/` instead of Supabase. The backend works end-to-end against real Celitech + Stripe, but the UI still shows mock plans and checkout 404s on real plan IDs — v1.0's phase verification missed this.
 
-**Progress:** Phases 10–13.1 complete (2026-05-17). The app runs entirely on real Supabase data; mock-data and WhatsApp are gone; the Bambu mascot pose system is removed (panda hello video kept). Only Phase 14 (E2E + deploy) remains.
+**Progress:** v1.1 CODE-COMPLETE (2026-05-17) — all 6 phases (10, 11, 12, 13, 13.1, 14) done. The app runs entirely on real Supabase data; mock-data and WhatsApp are gone; the Bambu pose system is removed; the SW cache is bumped with an update banner; the Playwright E2E harness is built. Pending manual operator steps (per `DEPLOY-RUNBOOK.md`): the real `npm run test:e2e` VER-01 run, the production `vercel --prod` push, and post-deploy banner + iOS TestFlight checks.
 
 **Target features:**
 - ✅ Schema additions: `popularity_rank`, `region_bucket` columns on `destinations` (`image_url` already existed) — Phase 10
@@ -39,7 +39,7 @@ A student arriving in a new country gets connected with mobile data in under 2 m
 - ✅ Checkout cutover: `pricing.ts`, the checkout API routes, and the checkout server component resolve plans from Supabase by real plan ID; currency-aware coupon minimum; `MockPlan`→`Plan` rename; cart `version: 2` migration — Phase 12
 - ✅ Cleanup: `mock-data/{destinations,plans,tag-plans}.ts` deleted (pure helpers in `src/lib/plans/pricing-display.ts`, ESLint import gate); WhatsApp fully removed; static `/help` FAQ route shipped — Phase 13
 - ✅ Bambu mascot pose system removed app-wide; 6 auth buttons use the existing inline spinner; panda hello video kept — Phase 13.1
-- E2E verification: real Stripe test-card purchase of a real Celitech plan delivers a real eSIM via the existing webhook pipeline — Phase 14
+- ✅ E2E + deploy prep: SW `CACHE_NAME`→`esim-panda-v2` + dismissable update banner; Playwright `e2e/purchase.spec.ts` real-purchase test; `DEPLOY-RUNBOOK.md` — Phase 14
 
 ## Requirements
 
@@ -110,4 +110,4 @@ A student arriving in a new country gets connected with mobile data in under 2 m
 | Brand: eSIM Panda | Panda mascot with interactive animations throughout UX — emotional connection with young audience | — Pending |
 
 ---
-*Last updated: 2026-05-17 — Phase 13.1 (Bambu mascot pose removal) complete*
+*Last updated: 2026-05-17 — v1.1 Live Data Cutover CODE-COMPLETE (Phases 10-14)*
