@@ -30,10 +30,6 @@ export const metadata: Metadata = {
   },
 };
 
-const swRegistrationScript = `if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js', { scope: '/' });
-}`;
-
 const darkModeHydrationScript = `try {
   var stored = JSON.parse(localStorage.getItem('esim-panda-theme') || '{}');
   if (stored.state && stored.state.isDark) {
@@ -52,7 +48,6 @@ export default function RootLayout({
       <head />
       <body className="font-sans antialiased bg-background dark:bg-background-dark text-primary dark:text-gray-100 transition-colors">
         <script dangerouslySetInnerHTML={{ __html: darkModeHydrationScript }} />
-        <script dangerouslySetInnerHTML={{ __html: swRegistrationScript }} />
         {children}
       </body>
     </html>

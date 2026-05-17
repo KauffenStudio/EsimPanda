@@ -8,6 +8,7 @@ import { Toaster } from 'sonner';
 import { AuthProvider } from '@/components/auth/auth-provider';
 import { PushManager } from '@/components/pwa/push-manager';
 import { OfflineIndicator } from '@/components/pwa/offline-indicator';
+import { SwRegister } from '@/components/pwa/sw-register';
 import { SplashScreen } from '@/components/pwa/splash-screen';
 import { SignupIncentiveModal } from '@/components/auth/signup-incentive-modal';
 import { CartDrawer } from '@/components/cart/cart-drawer';
@@ -39,6 +40,7 @@ export default async function LocaleLayout({
       <AuthProvider initialUser={user}>
         <Header />
         <OfflineIndicator />
+        <SwRegister />
         <main className="pt-20 pb-20 md:pb-0 min-h-screen dark:bg-background-dark">
           <PageTransition>{children}</PageTransition>
           <LegalFooter />
