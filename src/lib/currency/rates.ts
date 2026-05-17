@@ -25,14 +25,19 @@ export function convertPrice(usdCents: number, to: CurrencyCode): number {
   return Math.round(usdCents * rate);
 }
 
+/** Read the static USD-base exchange rate for a currency. RATES stays module-private. */
+export function getRate(code: CurrencyCode): number {
+  return RATES[code] ?? 1;
+}
+
 /** Format cents in the given currency for display */
 export function formatPrice(usdCents: number, currency: CurrencyCode = 'USD'): string {
   const converted = convertPrice(usdCents, currency);
   const info = CURRENCIES.find((c) => c.code === currency) ?? CURRENCIES[0];
 
-  // JPY has no decimal places
+  // JPY has no decimal places. `converted` is in cents — divide by 100 and round.
   if (currency === 'JPY') {
-    return `${info.symbol}${converted}`;
+    return `${info.symbol}${Math.round(converted / 100)}`;
   }
 
   return `${info.symbol}${(converted / 100).toFixed(2)}`;
