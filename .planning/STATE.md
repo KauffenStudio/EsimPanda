@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Live Data Cutover
 status: unknown
-stopped_at: Completed 13-01-PLAN.md
-last_updated: "2026-05-17T13:17:40.674Z"
+stopped_at: Completed 13-02-PLAN.md
+last_updated: "2026-05-17T13:22:22.549Z"
 progress:
   total_phases: 15
-  completed_phases: 12
+  completed_phases: 13
   total_plans: 37
-  completed_plans: 36
+  completed_plans: 37
 ---
 
 # Project State
@@ -24,7 +24,7 @@ See: .planning/PROJECT.md (updated 2026-05-13)
 ## Current Position
 
 Phase: 13 (cleanup-mock-deletion-and-whatsapp-removal) — EXECUTING
-Plan: 2 of 2
+Plan: 2 of 2 (both plans complete — phase-merge build gate pending 13-01 esim/[slug] fix)
 
 ## Performance Metrics
 
@@ -87,6 +87,7 @@ Plan: 2 of 2
 | Phase 12 P01 | 18min | 4 tasks | 11 files |
 | Phase 12 P02 | 4min | 3 tasks | 20 files |
 | Phase 13 P01 | 6min | 4 tasks | 11 files |
+| Phase 13 P02 | 22min | 4 tasks | 11 files |
 
 ## Accumulated Context
 
@@ -178,6 +179,8 @@ Recent decisions affecting current work:
 - [Phase 12]: [12-02]: plan-unavailable notice uses browse.planUnavailableNotice key + a neutral-tinted role=status banner (not destructive)
 - [Phase 13]: [13-01]: getBestDiscount dropped not migrated — reads mockPlans global, zero live importers, db/destinations.ts computes bestDiscountPercent inline
 - [Phase 13]: [13-01]: ESLint no-restricted-imports gate permanently bans the 3 deleted mock-data modules (both @/ alias and **/ glob forms)
+- [Phase 13]: [13-02]: /help FAQ uses native <details>/<summary> — zero-JS, keeps it a pure server component
+- [Phase 13]: [13-02]: referral share-buttons wa.me link + shareWhatsapp key kept — referral share, not support
 
 ### Pending Todos
 
@@ -193,9 +196,10 @@ Recent decisions affecting current work:
 - **Celitech regional SKU mapping**: synthetic ISO codes EU/AS/GL in mock data have no Celitech equivalent — backfill must explicitly UPSERT the 3 regional rows before the country loop (Pitfall 3)
 - **Service-role key discipline**: `import 'server-only'` directive must be added to `src/lib/db/destinations.ts` and any service-role-using script in Phase 10 to prevent client-bundle leakage (Pitfall 2)
 - **iOS Capacitor SW behavior**: WKWebView's interaction with service workers differs in edge cases; Pitfall 5 prevention requires TestFlight verification post Phase 14 deploy
+- Phase 13 build gate: 13-01's esim/[slug] generateStaticParams calls request-scoped cookies() — npm run build fails until 13-01 switches to a non-request-scoped Supabase client
 
 ## Session Continuity
 
-Last session: 2026-05-17T13:17:24.795Z
-Stopped at: Completed 13-01-PLAN.md
+Last session: 2026-05-17T13:21:53.237Z
+Stopped at: Completed 13-02-PLAN.md
 Resume file: None
