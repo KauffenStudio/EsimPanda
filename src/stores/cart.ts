@@ -20,6 +20,21 @@ interface CartState {
   removeCoupon: () => void;
 }
 
+/**
+ * Persist `migrate` function for the cart store. Exported (rather than inlined
+ * in the persist config) so it is directly unit-testable.
+ *
+ * CHK-08: any persisted state from a version < 2 was written before the v1.1
+ * Supabase cutover and holds dead v1.0 mock plan IDs. Nothing is safely
+ * recoverable → return a clean empty cart. Silent — no toast, no notice.
+ */
+export function migrateCart(persistedState: unknown, version: number) {
+  if (version < 2) {
+    return { items: [], coupon_code: null, discount_percent: 0 };
+  }
+  return persistedState as CartState;
+}
+
 export const useCartStore = create<CartState>()(
   persist(
     (set, get) => ({
@@ -57,6 +72,8 @@ export const useCartStore = create<CartState>()(
     }),
     {
       name: 'esim-panda-cart',
+      version: 2,
+      migrate: migrateCart,
       partialize: (state) => ({
         items: state.items,
         coupon_code: state.coupon_code,

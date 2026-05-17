@@ -32,6 +32,13 @@ export interface Plan {
   retail_price_cents: number;
   currency: string; // assume 'USD'; Phase 12 verifies
   is_active: boolean;
+  // Optional timestamp columns — present on synced rows, absent on the
+  // `getPlanById` projection. Optional so MockPlan importers (which carry
+  // these as required fields) compile against the canonical Plan after the
+  // Phase 12 MockPlan→Plan rename.
+  synced_at?: string;
+  created_at?: string;
+  updated_at?: string;
 }
 
 // Browse-grid destination enriched with per-destination pricing computed
