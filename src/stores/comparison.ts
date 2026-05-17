@@ -1,28 +1,29 @@
 import { create } from 'zustand';
+import type { Plan } from '@/lib/db/destinations';
 
+// NOTE: plain create() — no storage middleware. Comparison selections are
+// intentionally in-memory and reset on reload, so no version/migrate is needed.
 interface ComparisonState {
-  selectedPlanIds: string[];
+  selectedPlans: Plan[];
   isSheetOpen: boolean;
-  togglePlan: (id: string) => void;
+  togglePlan: (plan: Plan) => void;
   clearSelection: () => void;
   openSheet: () => void;
   closeSheet: () => void;
 }
 
 export const useComparisonStore = create<ComparisonState>((set) => ({
-  selectedPlanIds: [],
+  selectedPlans: [],
   isSheetOpen: false,
-  togglePlan: (id) =>
+  togglePlan: (plan) =>
     set((state) => {
-      if (state.selectedPlanIds.includes(id)) {
-        return {
-          selectedPlanIds: state.selectedPlanIds.filter((p) => p !== id),
-        };
+      if (state.selectedPlans.some((p) => p.id === plan.id)) {
+        return { selectedPlans: state.selectedPlans.filter((p) => p.id !== plan.id) };
       }
-      if (state.selectedPlanIds.length >= 3) return state;
-      return { selectedPlanIds: [...state.selectedPlanIds, id] };
+      if (state.selectedPlans.length >= 3) return state;
+      return { selectedPlans: [...state.selectedPlans, plan] };
     }),
-  clearSelection: () => set({ selectedPlanIds: [], isSheetOpen: false }),
+  clearSelection: () => set({ selectedPlans: [], isSheetOpen: false }),
   openSheet: () => set({ isSheetOpen: true }),
   closeSheet: () => set({ isSheetOpen: false }),
 }));
