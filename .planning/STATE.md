@@ -4,11 +4,11 @@ milestone: v1.1
 milestone_name: Live Data Cutover
 status: unknown
 stopped_at: Completed 13-02-PLAN.md
-last_updated: "2026-05-17T13:32:18.379Z"
+last_updated: "2026-05-17T13:51:13.798Z"
 progress:
   total_phases: 15
   completed_phases: 13
-  total_plans: 37
+  total_plans: 38
   completed_plans: 37
 ---
 
@@ -19,12 +19,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-13)
 
 **Core value:** A student arriving in a new country gets connected with mobile data in under 2 minutes
-**Current focus:** Phase 13 — cleanup-mock-deletion-and-whatsapp-removal
+**Current focus:** Phase 13.1 — remove-bambu-mascot-pose-system-app-wide
 
 ## Current Position
 
-Phase: 13 (cleanup-mock-deletion-and-whatsapp-removal) — EXECUTING
-Plan: 2 of 2 (both plans complete — phase-merge build gate pending 13-01 esim/[slug] fix)
+Phase: 13.1 (remove-bambu-mascot-pose-system-app-wide) — EXECUTING
+Plan: 1 of 1
 
 ## Performance Metrics
 
