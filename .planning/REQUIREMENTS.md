@@ -25,7 +25,7 @@ The v1.0 backend (Celitech sync, Stripe, webhooks, eSIM delivery) works end-to-e
 - [x] **UXD-05**: User waiting for the catalog fetch sees a shimmer skeleton grid (not a blank screen or FOUC)
 - [x] **UXD-06**: User encountering a fetch error sees a plain inline error banner with a Retry button that re-runs the full catalog fetch (no mascot)
 - [x] **UXD-07**: User watching a destination card image load sees a smooth blurred cross-fade from the typographic fallback card to the real photo
-- [ ] **UXD-08**: User returning after the v1.1 deploy sees a "New version available" prompt and loads fresh content (service worker cache bumped)
+- [x] **UXD-08**: User returning after the v1.1 deploy sees a "New version available" prompt and loads fresh content (service worker cache bumped)
 - [x] **UXD-09**: The Bambu mascot pose system is removed from the codebase — the 8 pose components and all their usages are gone; only the panda hello video (`bambu-video.tsx`) remains
 
 ### Infrastructure
@@ -35,7 +35,7 @@ The v1.0 backend (Celitech sync, Stripe, webhooks, eSIM delivery) works end-to-e
 - [x] **INF-09**: Supabase migration adds `popularity_rank INTEGER` and `region_bucket TEXT` columns to `destinations` (additive, no RLS change)
 - [x] **INF-10**: A one-off backfill script copies curation metadata (`popularity_rank`, `image_url`, `region_bucket`) from `src/lib/mock-data/destinations.ts` into Supabase by `iso_code`, idempotently
 - [x] **INF-11**: `src/lib/mock-data/destinations.ts`, `plans.ts`, and `tag-plans.ts` are deleted; pure-compute helpers extracted to `src/lib/plans/pricing-display.ts`; CI grep gate blocks new `mock-data/` imports
-- [ ] **INF-12**: Service worker `CACHE_NAME` is bumped to `esim-panda-v2` and the cutover deploy is gated on this change (returning users + iOS Capacitor app see fresh content)
+- [x] **INF-12**: Service worker `CACHE_NAME` is bumped to `esim-panda-v2` and the cutover deploy is gated on this change (returning users + iOS Capacitor app see fresh content)
 - [x] **INF-13**: WhatsApp integration is fully removed: `whatsapp-button.tsx`, `support.ts`, layout imports, env vars, all 6 locale `whatsapp.*` namespaces, and all 4 error-state copy strings referencing WhatsApp
 - [x] **INF-14**: `/help` static route ships as the new support entry point (FAQ + `mailto:` contact), linked from the footer
 
@@ -198,14 +198,14 @@ Deferred to future release. Tracked but not in current roadmap.
 | UXD-05 | Phase 11 | Complete |
 | UXD-06 | Phase 11 | Complete |
 | UXD-07 | Phase 11 | Complete |
-| UXD-08 | Phase 14 | Pending |
+| UXD-08 | Phase 14 | Complete |
 | UXD-09 | Phase 13.1 | Complete |
 | INF-07 | Phase 11 | Complete |
 | INF-08 | Phase 11 | Complete |
 | INF-09 | Phase 10 | Complete |
 | INF-10 | Phase 10 | Complete |
 | INF-11 | Phase 13 | Complete |
-| INF-12 | Phase 14 | Pending |
+| INF-12 | Phase 14 | Complete |
 | INF-13 | Phase 13 | Complete |
 | INF-14 | Phase 13 | Complete |
 | VER-01 | Phase 14 | Pending |

@@ -33,7 +33,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 12: Checkout, Pricing and Coupon Cutover** - `lib/checkout/pricing.ts`, `api/checkout/validate-coupon`, and checkout server component query Supabase by real plan ID; `MockPlan` renamed to `Plan` across cart and checkout stores; Zustand persist `version: 2` migration purges dead v1.0 plan IDs; coupon min-order copy shows `$9.99` (completed 2026-05-17)
 - [x] **Phase 13: Cleanup, Mock Deletion and WhatsApp Removal** - Delete `mock-data/{destinations,plans,tag-plans}.ts` after pure-compute helpers extracted to `src/lib/plans/pricing-display.ts`; CI grep gate blocks new `mock-data/` imports; delete WhatsApp button + `support.ts` + 6 locale `whatsapp.*` namespaces + 4 error-state strings; ship `/help` route (FAQ + mailto) (completed 2026-05-17)
 - [x] **Phase 13.1: Remove Bambu mascot pose system app-wide** (INSERTED) - Remove the 8 Bambu *pose* components and their usages across 22 files (auth, checkout, dashboard, PWA, delivery, browse), replacing each with plain text or existing UI primitives; keep `bambu-video.tsx` (the panda hello video) untouched (completed 2026-05-17)
-- [ ] **Phase 14: E2E Verification and Deploy** - Service worker `CACHE_NAME` bumped to `esim-panda-v2` with update prompt; end-to-end test: real Stripe test-card buys a real Celitech plan, real eSIM ICCID provisioned, real Resend email; env vars cleaned in Vercel
+- [x] **Phase 14: E2E Verification and Deploy** - Service worker `CACHE_NAME` bumped to `esim-panda-v2` with update prompt; end-to-end test: real Stripe test-card buys a real Celitech plan, real eSIM ICCID provisioned, real Resend email; env vars cleaned in Vercel (completed 2026-05-17)
 
 ## Phase Details
 
@@ -319,4 +319,4 @@ Plans:
 | 11. Read-Layer Module and Browse Cutover | 3/3 | Complete    | 2026-05-17 |
 | 12. Checkout, Pricing and Coupon Cutover | 2/2 | Complete    | 2026-05-17 |
 | 13. Cleanup, Mock Deletion and WhatsApp Removal | 2/2 | Complete    | 2026-05-17 |
-| 14. E2E Verification and Deploy | 0/0 | Not started | - |
+| 14. E2E Verification and Deploy | 2/2 | Complete   | 2026-05-17 |
