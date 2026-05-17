@@ -285,7 +285,50 @@
   "footer": {
     "privacy": "Privacidade",
     "terms": "Termos",
+    "help": "Ajuda",
     "copyright": "© 2026 Kauffen Studio"
+  },
+  "help": {
+    "metaTitle": "Ajuda e FAQ — eSIM Panda",
+    "metaDescription": "Respostas às perguntas frequentes sobre eSIMs, instalação, ativação, recargas e suporte.",
+    "title": "Ajuda e FAQ",
+    "contactHeading": "Ainda precisa de ajuda?",
+    "contactBody": "Envie-nos um email e responderemos assim que pudermos.",
+    "contactCta": "geral@kauffen.com",
+    "faq": {
+      "q1": {
+        "question": "O que é um eSIM?",
+        "answer": "Um eSIM é um cartão SIM digital integrado no seu telemóvel. Em vez de um cartão de plástico, basta digitalizar um código QR para se ligar — sem envios, sem trocas."
+      },
+      "q2": {
+        "question": "O meu dispositivo é compatível com eSIM?",
+        "answer": "A maioria dos telemóveis a partir de 2019 suporta eSIM — iPhones recentes, modelos Samsung Galaxy e Google Pixel. Consulte a nossa lista de compatibilidade de dispositivos antes de comprar."
+      },
+      "q3": {
+        "question": "Como instalo o meu eSIM?",
+        "answer": "Após a compra, recebe um código QR no ecrã e por email. Abra as definições de dados móveis do seu telemóvel, escolha adicionar um eSIM e digitalize o código. O guia de instalação acompanha-o em cada passo para o seu dispositivo."
+      },
+      "q4": {
+        "question": "Quando começam os meus dados?",
+        "answer": "O seu plano ativa-se quando instala o eSIM e se liga a uma rede no seu destino. Instale-o pouco antes de viajar, ou assim que chegar — os seus dias de dados começam a contar a partir da ativação, não da compra."
+      },
+      "q5": {
+        "question": "Como recarrego os meus dados?",
+        "answer": "Abra o seu painel, escolha o eSIM que pretende prolongar e selecione um plano de recarga. Os dados extra são adicionados ao seu eSIM existente — sem novo código QR para digitalizar."
+      },
+      "q6": {
+        "question": "Posso pedir reembolso?",
+        "answer": "Se o seu eSIM ainda não foi ativado, envie-nos um email e tratamos do reembolso. Depois de um plano ser ativado já não pode ser reembolsado, pois a quantidade de dados já está ativa. Contacte-nos e tentaremos sempre ajudar."
+      },
+      "q7": {
+        "question": "O meu eSIM não tem ligação — o que devo fazer?",
+        "answer": "Primeiro, verifique se o roaming de dados está ativado para o eSIM e se está definido como a sua linha de dados. Reinicie o telemóvel e certifique-se de que está dentro da área de cobertura do seu plano. Se mesmo assim não ligar, envie-nos um email com o número da encomenda."
+      },
+      "q8": {
+        "question": "Como contacto o suporte?",
+        "answer": "Envie-nos um email para geral@kauffen.com com o número da encomenda e uma breve descrição do problema. Lemos todas as mensagens e respondemos o mais rápido possível."
+      }
+    }
   },
   "appBadges": {
     "googlePlayAria": "Descarregar eSIM Panda na Google Play",

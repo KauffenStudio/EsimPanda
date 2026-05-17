@@ -285,7 +285,50 @@
   "footer": {
     "privacy": "Confidentialité",
     "terms": "Conditions",
+    "help": "Aide",
     "copyright": "© 2026 Kauffen Studio"
+  },
+  "help": {
+    "metaTitle": "Aide et FAQ — eSIM Panda",
+    "metaDescription": "Réponses aux questions fréquentes sur les eSIMs, l'installation, l'activation, les recharges et l'assistance.",
+    "title": "Aide et FAQ",
+    "contactHeading": "Besoin d'aide supplémentaire ?",
+    "contactBody": "Écrivez-nous un email et nous vous répondrons dès que possible.",
+    "contactCta": "geral@kauffen.com",
+    "faq": {
+      "q1": {
+        "question": "Qu'est-ce qu'un eSIM ?",
+        "answer": "Un eSIM est une carte SIM numérique intégrée à votre téléphone. Au lieu d'une carte en plastique, vous scannez un code QR pour vous connecter — sans envoi, sans échange."
+      },
+      "q2": {
+        "question": "Mon appareil est-il compatible eSIM ?",
+        "answer": "La plupart des téléphones depuis 2019 prennent en charge l'eSIM — iPhones récents, modèles Samsung Galaxy et Google Pixel. Consultez notre liste de compatibilité des appareils avant d'acheter."
+      },
+      "q3": {
+        "question": "Comment installer mon eSIM ?",
+        "answer": "Après l'achat, vous recevez un code QR à l'écran et par email. Ouvrez les paramètres de données mobiles de votre téléphone, choisissez d'ajouter un eSIM et scannez le code. Le guide d'installation vous accompagne à chaque étape selon votre appareil."
+      },
+      "q4": {
+        "question": "Quand mes données démarrent-elles ?",
+        "answer": "Votre forfait s'active lorsque vous installez l'eSIM et vous connectez à un réseau dans votre destination. Installez-le juste avant de partir, ou à votre arrivée — vos jours de données sont décomptés à partir de l'activation, pas de l'achat."
+      },
+      "q5": {
+        "question": "Comment recharger mes données ?",
+        "answer": "Ouvrez votre tableau de bord, choisissez l'eSIM que vous souhaitez prolonger et sélectionnez un forfait de recharge. Les données supplémentaires sont ajoutées à votre eSIM existant — aucun nouveau code QR à scanner."
+      },
+      "q6": {
+        "question": "Puis-je obtenir un remboursement ?",
+        "answer": "Si votre eSIM n'a pas encore été activé, écrivez-nous et nous organiserons le remboursement. Une fois un forfait activé, il ne peut être remboursé, car le volume de données est déjà disponible. Contactez-nous et nous essaierons toujours d'aider."
+      },
+      "q7": {
+        "question": "Mon eSIM n'a pas de connexion — que faire ?",
+        "answer": "D'abord, vérifiez que l'itinérance des données est activée pour l'eSIM et qu'il est défini comme votre ligne de données. Redémarrez votre téléphone et assurez-vous d'être dans la zone de couverture de votre forfait. S'il ne se connecte toujours pas, écrivez-nous avec votre numéro de commande."
+      },
+      "q8": {
+        "question": "Comment contacter l'assistance ?",
+        "answer": "Écrivez-nous à geral@kauffen.com avec votre numéro de commande et une brève description du problème. Nous lisons chaque message et répondons aussi vite que possible."
+      }
+    }
   },
   "appBadges": {
     "googlePlayAria": "Télécharger eSIM Panda sur Google Play",

@@ -285,7 +285,50 @@
   "footer": {
     "privacy": "Privacy",
     "terms": "Terms",
+    "help": "Help",
     "copyright": "© 2026 Kauffen Studio"
+  },
+  "help": {
+    "metaTitle": "Help & FAQ — eSIM Panda",
+    "metaDescription": "Answers to common questions about eSIMs, installation, activation, top-ups and support.",
+    "title": "Help & FAQ",
+    "contactHeading": "Still need help?",
+    "contactBody": "Email us and we'll get back to you as soon as we can.",
+    "contactCta": "geral@kauffen.com",
+    "faq": {
+      "q1": {
+        "question": "What is an eSIM?",
+        "answer": "An eSIM is a digital SIM card built into your phone. Instead of a plastic card, you scan a QR code to get connected — no shipping, no swapping."
+      },
+      "q2": {
+        "question": "Is my device eSIM-compatible?",
+        "answer": "Most phones from 2019 onward support eSIM — recent iPhones, Samsung Galaxy and Google Pixel models. Check our device compatibility list before you buy."
+      },
+      "q3": {
+        "question": "How do I install my eSIM?",
+        "answer": "After checkout you get a QR code on screen and by email. Open your phone's mobile data settings, choose to add an eSIM, and scan the code. The setup guide walks you through every step for your device."
+      },
+      "q4": {
+        "question": "When does my data start?",
+        "answer": "Your plan activates when you install the eSIM and connect to a network in your destination. Install it just before you travel, or once you land — your data days start counting from activation, not from purchase."
+      },
+      "q5": {
+        "question": "How do I top up my data?",
+        "answer": "Open your dashboard, pick the eSIM you want to extend, and choose a top-up plan. The extra data is added to your existing eSIM — no new QR code to scan."
+      },
+      "q6": {
+        "question": "Can I get a refund?",
+        "answer": "If your eSIM hasn't been activated, email us and we'll arrange a refund. Once a plan is activated it can't be refunded, since the data allowance is already live. Reach out and we'll always try to help."
+      },
+      "q7": {
+        "question": "My eSIM has no connection — what should I do?",
+        "answer": "First, check that data roaming is turned on for the eSIM and that it's set as your data line. Restart your phone, and make sure you're inside your plan's coverage area. If it still won't connect, email us with your order number."
+      },
+      "q8": {
+        "question": "How do I contact support?",
+        "answer": "Email us at geral@kauffen.com with your order number and a short description of the issue. We read every message and reply as quickly as we can."
+      }
+    }
   },
   "appBadges": {
     "googlePlayAria": "Download eSIM Panda on Google Play",

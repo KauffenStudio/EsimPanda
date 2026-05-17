@@ -285,7 +285,50 @@
   "footer": {
     "privacy": "隐私",
     "terms": "条款",
+    "help": "帮助",
     "copyright": "© 2026 Kauffen Studio"
+  },
+  "help": {
+    "metaTitle": "帮助与常见问题 — eSIM Panda",
+    "metaDescription": "关于 eSIM、安装、激活、充值和支持的常见问题解答。",
+    "title": "帮助与常见问题",
+    "contactHeading": "仍需帮助？",
+    "contactBody": "给我们发送邮件，我们会尽快回复您。",
+    "contactCta": "geral@kauffen.com",
+    "faq": {
+      "q1": {
+        "question": "什么是 eSIM？",
+        "answer": "eSIM 是内置于手机中的数字 SIM 卡。无需塑料卡片，只需扫描二维码即可连接网络——无需邮寄，无需更换。"
+      },
+      "q2": {
+        "question": "我的设备支持 eSIM 吗？",
+        "answer": "2019 年以后的大多数手机都支持 eSIM——包括较新的 iPhone、三星 Galaxy 和 Google Pixel 机型。购买前请查看我们的设备兼容性列表。"
+      },
+      "q3": {
+        "question": "如何安装我的 eSIM？",
+        "answer": "结账后，您会在屏幕上和邮件中收到二维码。打开手机的移动数据设置，选择添加 eSIM 并扫描二维码。安装指南会针对您的设备引导您完成每一步。"
+      },
+      "q4": {
+        "question": "我的数据何时开始计算？",
+        "answer": "当您安装 eSIM 并在目的地连接到网络时，套餐即被激活。可在出行前或抵达后安装——数据使用天数从激活时开始计算，而非从购买时计算。"
+      },
+      "q5": {
+        "question": "如何为我的数据充值？",
+        "answer": "打开您的控制面板，选择要延长的 eSIM，然后选择充值套餐。额外数据会添加到您现有的 eSIM 上——无需扫描新的二维码。"
+      },
+      "q6": {
+        "question": "我可以退款吗？",
+        "answer": "如果您的 eSIM 尚未激活，请给我们发送邮件，我们将为您安排退款。套餐一旦激活便无法退款，因为数据额度已经生效。请联系我们，我们会尽力提供帮助。"
+      },
+      "q7": {
+        "question": "我的 eSIM 无法连接——该怎么办？",
+        "answer": "首先，请检查 eSIM 的数据漫游是否已开启，并已设为您的数据线路。重启手机，并确保您处于套餐的覆盖范围内。如果仍无法连接，请发送邮件并附上您的订单号。"
+      },
+      "q8": {
+        "question": "如何联系客服？",
+        "answer": "请发送邮件至 geral@kauffen.com，附上您的订单号和问题的简要说明。我们会阅读每一条消息并尽快回复。"
+      }
+    }
   },
   "appBadges": {
     "googlePlayAria": "在 Google Play 下载 eSIM Panda",
