@@ -17,7 +17,7 @@ The v1.0 backend (Celitech sync, Stripe, webhooks, eSIM delivery) works end-to-e
 ### Checkout (live-data cutover)
 
 - [ ] **CHK-06**: User completing checkout is charged the retail price stored in Supabase for the real plan ID they selected (no mock plan IDs accepted)
-- [ ] **CHK-07**: User applying a coupon sees the minimum-order amount labelled in the correct currency (`$9.99` instead of `€9.99`)
+- [ ] **CHK-07**: User applying a coupon sees a currency-aware minimum-order requirement — a flat `9.99` in the selected currency for USD/EUR/GBP, and a converted (from €9.99) amount for BRL/JPY/CNY — with eligibility checked against the order total in that same currency
 - [ ] **CHK-08**: User with a saved cart from before the v1.1 deploy starts with a clean cart on first load (Zustand persist migration purges dead plan IDs)
 
 ### UX / Design
@@ -131,7 +131,7 @@ Deferred to future release. Tracked but not in current roadmap.
 - **POL-03**: Optimistic destination-card render from URL slug before Supabase fetch resolves
 - **POL-04**: Refetch-on-tab-focus for catalog freshness (wait for telemetry showing staleness matters)
 - **POL-05**: Notify-me email capture on "plans coming soon" empty state (needs new table + double-opt-in)
-- **POL-06**: Dynamic EUR conversion of the coupon minimum-order threshold (v1.1 fixes only the copy)
+- ~~**POL-06**: Dynamic EUR conversion of the coupon minimum-order threshold~~ — **pulled into v1.1 Phase 12** as the currency-aware minimum-order rule (CHK-07)
 
 ## Out of Scope
 

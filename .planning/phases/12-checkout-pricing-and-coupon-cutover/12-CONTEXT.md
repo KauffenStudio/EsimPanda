@@ -21,10 +21,25 @@ Out of scope (later phases): deletion of `src/lib/mock-data/` files and extracti
 - Any plan ID not present in Supabase is rejected with a clear error response (the route returns a 4xx with an error code; the existing 404/"Plan not found" path is reused)
 - The retail price charged is the Supabase `retail_price_cents` for that exact plan ID (CHK-06)
 
-### Coupon behavior
-- Coupon math is UNCHANGED — percentage discount + minimum-order threshold logic already operates on whatever price is passed in; real Celitech prices flow through it untouched
-- ONLY the copy changes: the minimum-order label renders `$9.99` (USD — the actual currency of `retail_price_cents`) instead of the misleading `€9.99` (CHK-07)
-- The min-order threshold value stays `999` cents; no threshold/percentage re-audit in this phase (that would be a pricing-strategy task, not a cutover)
+### Coupon behavior — currency-aware minimum order (CHK-07, expanded 2026-05-17)
+The coupon minimum-order is now **currency-aware**, decided in the currency the user has selected in the currency switcher (`useCurrencyStore`). This supersedes the earlier "copy-only `$9.99` fix" and pulls forward what was deferred item POL-06.
+
+- **Per-currency minimum order:**
+  - `USD` → `$9.99` (999 USD cents)
+  - `EUR` → `€9.99` (999 EUR cents)
+  - `GBP` → `£9.99` (999 GBP cents)
+  - `BRL`, `JPY`, `CNY` → **converted from a €9.99 base** via the cross-rates in `src/lib/currency/rates.ts` (RATES base is USD, so: `999 EUR-cents → USD → target` = `999 / RATES.EUR * RATES[target]`)
+- **Eligibility = true per-currency threshold:** the order total, converted into the user's selected currency, must be ≥ that currency's minimum. **Accepted consequence:** a borderline-priced plan may be coupon-eligible in USD but not in EUR/GBP, because €9.99 and £9.99 are higher real values than $9.99. This is intended behavior, not a bug.
+- The displayed minimum-order label shows `9.99` + the selected currency's symbol for USD/EUR/GBP, and the converted amount for BRL/JPY/CNY.
+- The percentage-discount math itself is unchanged — only the **minimum-order gate** becomes currency-aware.
+- The min-order threshold base value stays `9.99`; no percentage re-audit.
+
+**Wiring implications (this is bigger than a copy fix):**
+- The user's selected currency must flow from the client into coupon validation. `api/checkout/validate-coupon/route.ts` accepts a `currency` field in its request; `lib/checkout/pricing.ts` `calculatePrice` accepts a `currency` argument (it is currency-unaware today).
+- Add a per-currency minimum helper — e.g. `getCouponMinOrderCents(currency)` — in the coupon or currency module: returns `999` for USD/EUR/GBP, and the €9.99-base conversion for BRL/JPY/CNY.
+- The coupon eligibility comparison converts the order total to the selected currency (via `convertPrice`) before comparing to `getCouponMinOrderCents`.
+
+**Discovered bug — fix as part of this work:** `formatPrice` in `src/lib/currency/rates.ts` appears to mis-format `JPY` — the JPY branch returns `${symbol}${converted}` without the `/100` divide that the other currencies apply, so `$9.99` would render as `¥155344` instead of `¥1553`. The currency-aware coupon minimum display for JPY depends on correct conversion/formatting — verify this bug and fix it (it is squarely in the coupon-display path). Confirm CNY/BRL format correctly too.
 
 ### Stale-cart migration
 - The cart Zustand store (`src/stores/cart.ts`) uses `persist` middleware — bump its config to `version: 2` with a `migrate` function
@@ -46,9 +61,10 @@ Out of scope (later phases): deletion of `src/lib/mock-data/` files and extracti
 - `tsc --noEmit` must be clean after the rename — this is the gate that proves the rename propagated fully
 
 ### Plan file granularity — 2 plans
-- `12-01-PLAN.md` — Pricing + coupon data layer: `pricing.ts`, `validate-coupon` route, `create-intent`/`update-intent` routes query Supabase via `getPlanById`; reject unknown plan IDs; coupon `$9.99` copy fix. Requirements: CHK-06, CHK-07.
+- `12-01-PLAN.md` — Pricing + coupon data layer: `pricing.ts`, `validate-coupon` route, `create-intent`/`update-intent` routes query Supabase via `getPlanById`; reject unknown plan IDs; **currency-aware coupon minimum** (`getCouponMinOrderCents`, `currency` threaded through `calculatePrice` + `validate-coupon`); fix the `formatPrice` JPY bug. Requirements: CHK-06, CHK-07.
 - `12-02-PLAN.md` — Checkout page + cart migration + type rename: `checkout/page.tsx` async server component with invalid-plan redirect+notice; browse-page notice banner + i18n key; `MockPlan`→`Plan` rename across cart/quick-checkout stores + checkout components; cart `persist` `version: 2` migration. Requirements: CHK-08 (+ CHK-06 for the checkout-page lookup).
 - 12-02 depends on 12-01 (shares the Supabase plan-lookup pattern + the canonical `Plan` type usage). Sequential.
+- Note: the currency-aware coupon work makes 12-01 the heavier of the two plans.
 
 ### Claude's Discretion
 - Exact error code / response shape for an unknown plan ID (reuse the existing checkout error convention)
@@ -76,8 +92,10 @@ Out of scope (later phases): deletion of `src/lib/mock-data/` files and extracti
 
 ### Code to modify / reuse
 - `src/lib/db/destinations.ts` — `getPlanById` (the Supabase plan lookup to reuse) + the canonical `Plan` type
-- `src/lib/checkout/pricing.ts` — `calculatePrice` (currently `mockPlans.find`) — being rewired
-- `src/lib/checkout/coupons.ts` — coupon validation logic — unchanged except where copy lives
+- `src/lib/checkout/pricing.ts` — `calculatePrice` (currently `mockPlans.find`, currency-unaware) — being rewired + given a `currency` argument
+- `src/lib/checkout/coupons.ts` — coupon validation logic — gets the currency-aware minimum-order gate
+- `src/lib/currency/rates.ts` — `RATES`, `convertPrice`, `formatPrice`, `CURRENCIES` (6: USD/EUR/GBP/BRL/JPY/CNY, base USD). Source of the cross-rate conversion for the coupon minimum; the `formatPrice` JPY bug lives here.
+- `src/stores/currency.ts` / `useCurrencyStore` — the user's selected currency; must be passed into coupon validation
 - `src/app/api/checkout/validate-coupon/route.ts`, `create-intent/route.ts`, `update-intent/route.ts` — plan-resolution routes
 - `src/app/[locale]/checkout/page.tsx` — checkout server component (currently `mockPlans.find` + `redirect`)
 - `src/stores/cart.ts` — `persist` middleware, `MockPlan` type, needs `version: 2`
@@ -123,9 +141,10 @@ Out of scope (later phases): deletion of `src/lib/mock-data/` files and extracti
 <deferred>
 ## Deferred Ideas
 
-- **Coupon threshold / discount re-audit against real Celitech prices** — considered; deferred. It is a pricing-strategy decision, not a cutover task. Revisit post-v1.1 if real-price data shows the thresholds are off.
 - **Selective cart re-resolution** (matching dead items to real plans by destination+data+duration) — considered; rejected for v1.1 in favor of silent clear-all. Could revisit if cart-abandonment telemetry warrants it.
 - **Mock-data file deletion + pure-helper extraction to `src/lib/plans/pricing-display.ts`** — Phase 13 (INF-11). Phase 12 keeps importing pure helpers from `mock-data/plans` as Phase 11 does.
+- **Live exchange-rate fetching** — `RATES` in `rates.ts` is a static table. Currency-aware coupon minimums use these static rates; a live FX feed is out of scope for v1.1.
+- ~~POL-06 (dynamic EUR conversion of the coupon minimum)~~ — **pulled into Phase 12** as the currency-aware minimum-order rule (see Implementation Decisions). No longer deferred.
 
 </deferred>
 
