@@ -9,8 +9,6 @@ import { AuthProvider } from '@/components/auth/auth-provider';
 import { PushManager } from '@/components/pwa/push-manager';
 import { OfflineIndicator } from '@/components/pwa/offline-indicator';
 import { SwRegister } from '@/components/pwa/sw-register';
-import { SplashScreen } from '@/components/pwa/splash-screen';
-import { SignupIncentiveModal } from '@/components/auth/signup-incentive-modal';
 import { CartDrawer } from '@/components/cart/cart-drawer';
 import { createClient } from '@/lib/supabase/server';
 import { routing } from '@/i18n/routing';
@@ -48,8 +46,6 @@ export default async function LocaleLayout({
         <BottomNav />
         <Toaster />
         <PushManager />
-        <SplashScreen />
-        <SignupIncentiveModal />
         <CartDrawer />
       </AuthProvider>
     </NextIntlClientProvider>

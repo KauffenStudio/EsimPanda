@@ -67,6 +67,14 @@ export interface Catalog {
 // region_bucket values that mean a multi-country regional hero card.
 const REGIONAL_BUCKETS = new Set(['europe-wide', 'asia-wide', 'global']);
 
+// Catalog plan curation (business decision): the storefront only sells 30-day
+// plans, and the entry-level 1GB plan is dropped. Applied at the query layer so
+// browse pricing, the destination plan grid, and discount badges all stay
+// consistent. The underlying `plans` table is untouched — the daily Celitech
+// sync still ingests every plan; these filters just decide what is shown.
+const CATALOG_PLAN_DURATION_DAYS = 30;
+const CATALOG_PLAN_MIN_DATA_GB = 1; // plans with data_gb <= this are hidden (drops 1GB)
+
 // Column list reused across destination queries — keeps Destination shape exact.
 const DESTINATION_COLUMNS =
   'id, name, slug, iso_code, region, region_bucket, image_url, popularity_rank, is_active';
@@ -98,6 +106,8 @@ export async function listPlansForDestination(destinationId: string): Promise<Pl
     .select('*')
     .eq('destination_id', destinationId)
     .eq('is_active', true)
+    .eq('duration_days', CATALOG_PLAN_DURATION_DAYS)
+    .gt('data_gb', CATALOG_PLAN_MIN_DATA_GB)
     .order('retail_price_cents', { ascending: true });
   if (error) {
     console.error('listPlansForDestination error:', error);
@@ -175,7 +185,9 @@ export async function getCatalog(): Promise<Catalog> {
     .from('plans')
     .select('id, destination_id, data_gb, retail_price_cents, is_active')
     .in('destination_id', ids)
-    .eq('is_active', true);
+    .eq('is_active', true)
+    .eq('duration_days', CATALOG_PLAN_DURATION_DAYS)
+    .gt('data_gb', CATALOG_PLAN_MIN_DATA_GB);
   if (plansError) {
     // Non-fatal: still return destinations with 0 pricing. The error flag is
     // reserved for a destinations-query failure (drives the UXD-06 banner).

@@ -15,7 +15,7 @@ const fromTables: string[] = [];
 function makeBuilder(result: QueryResult) {
   const builder: Record<string, unknown> = {};
   const chain = () => builder;
-  for (const m of ['select', 'eq', 'in', 'order']) {
+  for (const m of ['select', 'eq', 'in', 'gt', 'order']) {
     builder[m] = vi.fn(chain);
   }
   builder.maybeSingle = vi.fn(() => Promise.resolve(result));
