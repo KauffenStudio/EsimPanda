@@ -2,6 +2,7 @@
 
 import { useCallback, useState } from 'react';
 import { useTranslations } from 'next-intl';
+import { useStripe, useElements } from '@stripe/react-stripe-js';
 import { Button } from '@/components/ui/button';
 import { useCheckoutStore } from '@/stores/checkout';
 import { STRIPE_MOCK_MODE } from '@/lib/stripe/client';
@@ -35,8 +36,10 @@ function MockPayButton() {
 }
 
 function RealPayButton() {
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  const { useStripe, useElements } = require('@stripe/react-stripe-js') as typeof import('@stripe/react-stripe-js');
+  // useStripe/useElements MUST come from the same module instance that the
+  // <Elements> provider in checkout-page.tsx uses. A lazy require() here loaded
+  // a second copy with its own React context, so the hook could not see the
+  // provider — "Could not find Elements context" crashed the whole checkout.
   const stripe = useStripe();
   const elements = useElements();
   const { email, total_cents, payment_status, setPaymentStatus } = useCheckoutStore();
