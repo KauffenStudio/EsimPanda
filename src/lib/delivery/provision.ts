@@ -1,6 +1,7 @@
 import { encrypt, decrypt } from './encryption';
 import { mockProvision } from '@/lib/mock-data/delivery';
 import { createProvider } from '@/lib/esim/provider';
+import { toWholesaleIso } from '@/lib/esim/destination-iso';
 import { sendDeliveryEmail } from '@/lib/email/send-delivery';
 import { IS_MOCK } from '@/lib/config/mode';
 import {
@@ -149,7 +150,12 @@ export async function provisionEsim(paymentIntentId: string, email?: string): Pr
         }
         const provider = createProvider();
         purchase = await provider.purchase({
-          destination: orderData.destinationIso,
+          // Translate our curated synthetic regional ISOs (EUW/ASW/GLW) back
+          // to Celitech's identifiers (EUROPE/ASIA/GLOBAL). Country ISOs pass
+          // through unchanged. Without this, regional purchases would 404 on
+          // Celitech because they only know our DB-internal codes via the
+          // sync.
+          destination: toWholesaleIso(orderData.destinationIso),
           dataLimitInGb: Number(orderData.dataGb),
           durationDays: Number(orderData.durationDays),
           email: orderData.orderEmail,
