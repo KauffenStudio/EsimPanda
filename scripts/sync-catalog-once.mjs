@@ -22,6 +22,28 @@ function slugify(name) {
   return name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
 }
 
+// Mirror of src/lib/esim/sync.ts REGIONAL_ISO_MAP — Celitech labels regional
+// bundles "Europe (44 countries)" / "Asia (...)" / "Global" with ISOs like
+// EUROPE/ASIA/GLOBAL. The storefront's three hero rows use synthetic EU/AS/GL
+// ISOs seeded by backfill-curation.mjs (they carry image_url + region_bucket).
+// Without this remap the script attaches regional packages to parallel rows
+// that getCatalog filters out, leaving the hero cards empty.
+const REGIONAL_ISO_MAP = [
+  { match: /^europe/i, iso: 'EU', name: 'Europe', slug: 'europe' },
+  { match: /^asia/i, iso: 'AS', name: 'Asia', slug: 'asia' },
+  { match: /^(global|worldwide)/i, iso: 'GL', name: 'Global', slug: 'global' },
+];
+
+function curatedRegional(dest) {
+  if (dest.region !== 'region') return null;
+  for (const entry of REGIONAL_ISO_MAP) {
+    if (entry.match.test(dest.name)) {
+      return { iso: entry.iso, name: entry.name, slug: entry.slug };
+    }
+  }
+  return null;
+}
+
 async function main() {
   console.log('Fetching destinations from Celitech...');
   const destResp = await celitech.destinations.listDestinations();
@@ -33,23 +55,29 @@ async function main() {
   console.log(`Got ${destinations.length} destinations.`);
 
   let destOk = 0;
+  let regionalMapped = 0;
   for (const dest of destinations) {
     if (!dest.iso) continue;
+    const curated = curatedRegional(dest);
+    if (curated) regionalMapped++;
+    const iso = curated?.iso ?? dest.iso;
+    const name = curated?.name ?? dest.name;
+    const slug = curated?.slug ?? slugify(dest.name);
     const { error } = await supabase.from('destinations').upsert(
       {
-        name: dest.name,
-        slug: slugify(dest.name),
-        iso_code: dest.iso,
+        name,
+        slug,
+        iso_code: iso,
         region: dest.region,
         is_active: true,
         synced_at: new Date().toISOString(),
       },
       { onConflict: 'iso_code' },
     );
-    if (error) console.error(`destination ${dest.iso} upsert error:`, error.message);
+    if (error) console.error(`destination ${iso} upsert error:`, error.message);
     else destOk++;
   }
-  console.log(`Upserted ${destOk}/${destinations.length} destinations.`);
+  console.log(`Upserted ${destOk}/${destinations.length} destinations (regional mapped: ${regionalMapped}).`);
 
   let totalPlans = 0;
   let totalDestsWithPlans = 0;
@@ -57,6 +85,8 @@ async function main() {
     if (!dest.iso) continue;
     let pkgs = [];
     try {
+      // Packages MUST be fetched with Celitech's own iso (e.g. 'EUROPE'); the
+      // destination row we attach them to uses our curated iso (e.g. 'EU').
       const pkgResp = await celitech.packages.listPackages({ destination: dest.iso });
       pkgs = pkgResp.data?.packages ?? pkgResp.packages ?? [];
     } catch (e) {
@@ -66,7 +96,8 @@ async function main() {
     if (pkgs.length === 0) continue;
     totalDestsWithPlans++;
 
-    const { data: destRow } = await supabase.from('destinations').select('id').eq('iso_code', dest.iso).single();
+    const lookupIso = curatedRegional(dest)?.iso ?? dest.iso;
+    const { data: destRow } = await supabase.from('destinations').select('id').eq('iso_code', lookupIso).single();
     if (!destRow) continue;
 
     for (const p of pkgs) {
