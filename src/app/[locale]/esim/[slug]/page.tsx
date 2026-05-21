@@ -12,7 +12,9 @@ import { FAQSection } from '@/components/seo/faq-section';
 import { PlanCard } from '@/components/browse/plan-card';
 import { PageCurrencyBar } from '@/components/layout/page-currency-bar';
 
-const REGIONAL_TYPES = ['europe-wide', 'asia-wide', 'global'];
+// Hero buckets — must match `region_bucket` (the curation column), not `region`
+// (the Celitech classifier, which is only ever 'country' | 'region').
+const REGIONAL_BUCKETS = ['europe-wide', 'asia-wide', 'global'];
 
 type Props = { params: Promise<{ locale: string; slug: string }> };
 
@@ -27,7 +29,7 @@ export async function generateMetadata({ params }: Props) {
   const { locale, slug } = await params;
   const destination = await getDestinationBySlug(slug);
   if (!destination) return {};
-  const isRegional = REGIONAL_TYPES.includes(destination.region ?? '');
+  const isRegional = REGIONAL_BUCKETS.includes(destination.region_bucket ?? '');
   const plans = await listPlansForDestination(destination.id);
   const startingPriceCents = plans.length
     ? Math.min(...plans.map((p) => p.retail_price_cents))
@@ -52,7 +54,7 @@ export default async function DestinationPage({ params }: Props) {
   const destination = await getDestinationBySlug(slug);
   if (!destination) notFound();
 
-  const isRegional = REGIONAL_TYPES.includes(destination.region ?? '');
+  const isRegional = REGIONAL_BUCKETS.includes(destination.region_bucket ?? '');
   const plans = await listPlansForDestination(destination.id);
   const taggedPlans = tagPlans(plans);
 

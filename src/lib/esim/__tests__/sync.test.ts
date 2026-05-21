@@ -116,22 +116,39 @@ describe('syncCatalog', () => {
     expect(mockListPackages).toHaveBeenCalledWith('GB');
   });
 
-  it('should upsert destinations with onConflict iso_code', async () => {
+  it('should batch-upsert destinations in a single call with onConflict iso_code', async () => {
     await syncCatalog();
 
+    // Sync now batches all destinations into one upsert call (array payload).
     const destUpsertCalls = mockUpsert.mock.calls.filter(
-      (call: unknown[]) => (call[0] as Record<string, unknown>)?.iso_code,
+      (call: unknown[]) => {
+        const payload = call[0] as unknown;
+        return (
+          Array.isArray(payload) &&
+          payload.length > 0 &&
+          (payload[0] as Record<string, unknown>)?.iso_code !== undefined
+        );
+      },
     );
-    expect(destUpsertCalls.length).toBe(2);
+    expect(destUpsertCalls.length).toBe(1);
+    expect((destUpsertCalls[0][0] as unknown[]).length).toBe(2);
     expect(destUpsertCalls[0][1]).toEqual({ onConflict: 'iso_code' });
   });
 
-  it('should upsert plans with onConflict wholesale_plan_id,provider', async () => {
+  it('should batch-upsert plans per destination with onConflict wholesale_plan_id,provider', async () => {
     await syncCatalog();
 
+    // Plans are batched per destination (array payload of plan rows).
     const planUpsertCalls = mockUpsert.mock.calls.filter(
-      (call: unknown[]) =>
-        (call[0] as Record<string, unknown>)?.wholesale_plan_id,
+      (call: unknown[]) => {
+        const payload = call[0] as unknown;
+        return (
+          Array.isArray(payload) &&
+          payload.length > 0 &&
+          (payload[0] as Record<string, unknown>)?.wholesale_plan_id !==
+            undefined
+        );
+      },
     );
     expect(planUpsertCalls.length).toBeGreaterThan(0);
     expect(planUpsertCalls[0][1]).toEqual({
@@ -151,32 +168,30 @@ describe('syncCatalog', () => {
   it('should generate correct slugs from destination names', async () => {
     await syncCatalog();
 
-    const destUpsertCalls = mockUpsert.mock.calls.filter(
-      (call: unknown[]) => (call[0] as Record<string, unknown>)?.iso_code,
-    );
-    const usCall = destUpsertCalls.find(
-      (call: unknown[]) =>
-        (call[0] as Record<string, unknown>)?.iso_code === 'US',
-    );
-    expect((usCall?.[0] as Record<string, unknown>)?.slug).toBe(
-      'united-states',
-    );
+    const destBatchCall = mockUpsert.mock.calls.find((call: unknown[]) => {
+      const payload = call[0] as unknown;
+      return (
+        Array.isArray(payload) &&
+        payload.length > 0 &&
+        (payload[0] as Record<string, unknown>)?.iso_code !== undefined
+      );
+    });
+    const rows = (destBatchCall?.[0] as Array<Record<string, unknown>>) ?? [];
 
-    const gbCall = destUpsertCalls.find(
-      (call: unknown[]) =>
-        (call[0] as Record<string, unknown>)?.iso_code === 'GB',
-    );
-    expect((gbCall?.[0] as Record<string, unknown>)?.slug).toBe(
-      'united-kingdom',
-    );
+    const usRow = rows.find((r) => r.iso_code === 'US');
+    expect(usRow?.slug).toBe('united-states');
+
+    const gbRow = rows.find((r) => r.iso_code === 'GB');
+    expect(gbRow?.slug).toBe('united-kingdom');
   });
 
   it('should return destinations and plans counts', async () => {
     const result = await syncCatalog();
-    expect(result).toEqual({
+    expect(result).toMatchObject({
       destinations: 2,
       plans: 2,
     });
+    expect(result.plansWithErrors).toBe(0);
   });
 
   it('should use service role key for Supabase client', async () => {
