@@ -50,6 +50,8 @@
     "deviceIncompatible": "Sorry, {brand} {model} doesn't support eSIM",
     "browseAnyway": "Browse anyway",
     "resetDevice": "Check a different device",
+    "noDeviceListed": "I don't see my device",
+    "noDeviceResult": "We can't confirm your device. Most phones from 2018 onwards support eSIM — check your manufacturer's eSIM list to be sure.",
     "planUnavailableNotice": {
       "message": "That plan is no longer available — here is the current catalog.",
       "dismiss": "Dismiss"

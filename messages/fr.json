@@ -50,6 +50,8 @@
     "deviceIncompatible": "Désolé, {brand} {model} n'est pas compatible eSIM",
     "browseAnyway": "Parcourir quand même",
     "resetDevice": "Vérifier un autre appareil",
+    "noDeviceListed": "Je ne vois pas mon appareil",
+    "noDeviceResult": "Nous ne pouvons pas confirmer votre appareil. La plupart des téléphones depuis 2018 sont compatibles eSIM — vérifiez la liste officielle du fabricant.",
     "planUnavailableNotice": {
       "message": "Ce forfait n’est plus disponible — voici le catalogue actuel.",
       "dismiss": "Fermer"

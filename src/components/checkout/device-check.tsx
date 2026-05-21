@@ -1,15 +1,17 @@
 'use client';
 
+import { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import { AlertTriangle } from 'lucide-react';
 import { useDeviceCompatStore } from '@/hooks/use-device-compat';
 import { Badge } from '@/components/ui/badge';
-import Link from 'next/link';
+import { DeviceChecker } from '@/components/browse/device-compatibility/device-checker';
 
 export function DeviceCheck() {
   const t = useTranslations('checkout.device');
-  const { brand, model, isCompatible } = useDeviceCompatStore();
+  const { brand, model, isCompatible, reset } = useDeviceCompatStore();
+  const [pickerOpen, setPickerOpen] = useState(false);
 
   const hasChecked = brand && model && isCompatible !== null;
 
@@ -27,9 +29,16 @@ export function DeviceCheck() {
             <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
               {t('incompatible_detail', { brand, model })}
             </p>
-            <Link href="/browse" className="text-xs text-accent underline mt-2 inline-block">
+            <button
+              type="button"
+              onClick={() => {
+                reset();
+                setPickerOpen(true);
+              }}
+              className="text-xs text-accent underline mt-2 inline-block"
+            >
               {t('check_other')}
-            </Link>
+            </button>
           </div>
         </div>
       </motion.div>
@@ -42,14 +51,31 @@ export function DeviceCheck() {
 
       {hasChecked && isCompatible ? (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }}>
-          <Badge variant="success">
-            {t('compatible', { brand, model })}
-          </Badge>
+          <Badge variant="success">{t('compatible', { brand, model })}</Badge>
         </motion.div>
       ) : (
-        <Link href="/browse" className="text-sm text-accent underline">
-          {t('check')}
-        </Link>
+        <>
+          <button
+            type="button"
+            onClick={() => setPickerOpen((open) => !open)}
+            className="text-sm text-accent underline"
+          >
+            {t('check')}
+          </button>
+          <AnimatePresence>
+            {pickerOpen && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.2 }}
+                className="overflow-hidden"
+              >
+                <DeviceChecker onDismiss={() => setPickerOpen(false)} />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </>
       )}
     </div>
   );

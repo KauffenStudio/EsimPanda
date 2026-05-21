@@ -2,6 +2,14 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import deviceList from '@/components/browse/device-compatibility/device-list.json';
 
+/**
+ * Sentinel model string the picker shows as a final option ("I don't see my
+ * device"). When selected, the compatibility check reports incompatible — the
+ * underlying JSON is a positive list (compatible-only), so without this
+ * sentinel the dropdown could never produce a negative result.
+ */
+export const NOT_LISTED_MODEL = '__not_listed__';
+
 interface DeviceCompatState {
   brand: string | null;
   model: string | null;
@@ -31,6 +39,7 @@ export const useDeviceCompatStore = create<DeviceCompatState>()(
       checkCompatibility: () => {
         const { brand, model } = get();
         if (!brand || !model) { set({ isCompatible: null }); return; }
+        if (model === NOT_LISTED_MODEL) { set({ isCompatible: false }); return; }
         const brandEntry = deviceList.brands.find(b => b.name === brand);
         const compatible = brandEntry?.models.includes(model) ?? false;
         set({ isCompatible: compatible });

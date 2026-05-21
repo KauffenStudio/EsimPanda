@@ -50,6 +50,8 @@
     "deviceIncompatible": "抱歉，{brand} {model} 不支持eSIM",
     "browseAnyway": "仍然浏览",
     "resetDevice": "检查其他设备",
+    "noDeviceListed": "我没看到我的设备",
+    "noDeviceResult": "我们无法确认您的设备。2018年以后的大多数手机都支持eSIM——请查看制造商的官方列表确认。",
     "planUnavailableNotice": {
       "message": "该套餐已不再提供，以下是当前的可选套餐。",
       "dismiss": "关闭"

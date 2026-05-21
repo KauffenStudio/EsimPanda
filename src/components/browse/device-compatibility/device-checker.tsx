@@ -2,17 +2,39 @@
 
 import { motion } from 'motion/react';
 import { useTranslations } from 'next-intl';
-import { useDeviceCompatStore, getBrands, getModelsForBrand } from '@/hooks/use-device-compat';
+import {
+  useDeviceCompatStore,
+  getBrands,
+  getModelsForBrand,
+  NOT_LISTED_MODEL,
+} from '@/hooks/use-device-compat';
 import { BambuVideo } from '@/components/bambu/bambu-video';
 import { Button } from '@/components/ui/button';
 
-export function DeviceChecker() {
+interface DeviceCheckerProps {
+  /**
+   * Called when the user accepts a negative result via "Browse anyway".
+   * The picker always clears its own state — this lets the host (e.g. the
+   * checkout form) collapse the inline picker after the user dismisses.
+   */
+  onDismiss?: () => void;
+}
+
+export function DeviceChecker({ onDismiss }: DeviceCheckerProps = {}) {
   const t = useTranslations('browse');
   const { brand, model, isCompatible, setBrand, setModel, checkCompatibility, reset } =
     useDeviceCompatStore();
 
   const brands = getBrands();
   const models = brand ? getModelsForBrand(brand) : [];
+
+  // The sentinel renders as a final dropdown option ("I don't see my device").
+  // Without it the dropdown is a compatible-only list and the check can never
+  // produce a negative result.
+  const handleBrowseAnyway = () => {
+    reset();
+    onDismiss?.();
+  };
 
   return (
     <div className="flex flex-col items-center gap-4 max-w-sm mx-auto p-6">
@@ -49,6 +71,7 @@ export function DeviceChecker() {
               {m}
             </option>
           ))}
+          <option value={NOT_LISTED_MODEL}>{t('noDeviceListed')}</option>
         </select>
       )}
 
@@ -80,9 +103,11 @@ export function DeviceChecker() {
             <>
               <BambuVideo variant="error" size={120} />
               <p className="text-destructive font-medium">
-                {t('deviceIncompatible', { brand: brand!, model: model! })}
+                {model === NOT_LISTED_MODEL
+                  ? t('noDeviceResult')
+                  : t('deviceIncompatible', { brand: brand!, model: model! })}
               </p>
-              <Button variant="ghost" onClick={() => {}}>
+              <Button variant="ghost" onClick={handleBrowseAnyway}>
                 {t('browseAnyway')}
               </Button>
             </>

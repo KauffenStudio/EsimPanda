@@ -50,6 +50,8 @@
     "deviceIncompatible": "申し訳ありません、{brand} {model}はeSIMに対応していません",
     "browseAnyway": "それでも閲覧する",
     "resetDevice": "別のデバイスを確認",
+    "noDeviceListed": "デバイスが見つかりません",
+    "noDeviceResult": "お使いのデバイスを確認できません。2018年以降のほとんどのスマートフォンはeSIMに対応しています。メーカーの公式リストでご確認ください。",
     "planUnavailableNotice": {
       "message": "そのプランは現在ご利用いただけません。最新のカタログをご覧ください。",
       "dismiss": "閉じる"

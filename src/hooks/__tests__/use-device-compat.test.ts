@@ -1,6 +1,11 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { act } from '@testing-library/react';
-import { useDeviceCompatStore, getBrands, getModelsForBrand } from '../use-device-compat';
+import {
+  useDeviceCompatStore,
+  getBrands,
+  getModelsForBrand,
+  NOT_LISTED_MODEL,
+} from '../use-device-compat';
 
 describe('Device Compatibility Store', () => {
   beforeEach(() => {
@@ -77,6 +82,19 @@ describe('Device Compatibility Store', () => {
     });
     act(() => {
       useDeviceCompatStore.getState().setModel('P30 Lite');
+    });
+    act(() => {
+      useDeviceCompatStore.getState().checkCompatibility();
+    });
+    expect(useDeviceCompatStore.getState().isCompatible).toBe(false);
+  });
+
+  it('checkCompatibility returns false when the user picks "not listed" sentinel', () => {
+    act(() => {
+      useDeviceCompatStore.getState().setBrand('Apple');
+    });
+    act(() => {
+      useDeviceCompatStore.getState().setModel(NOT_LISTED_MODEL);
     });
     act(() => {
       useDeviceCompatStore.getState().checkCompatibility();
