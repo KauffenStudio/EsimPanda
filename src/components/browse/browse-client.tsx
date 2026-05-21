@@ -54,11 +54,15 @@ interface RegionGroup {
 }
 
 // Post-Phase-10 the live `region` column holds Celitech's 'country'/'region'
-// classifier — the UI groups by `region_bucket` instead.
+// classifier — the UI groups by `region_bucket` instead. Within each continent
+// we sort alphabetically by name; localeCompare keeps accented characters
+// ordered correctly across locales.
 function groupByRegion(destinations: CatalogDestination[]): RegionGroup[] {
   const groups: RegionGroup[] = [];
   for (const region of REGION_ORDER) {
-    const items = destinations.filter((d) => d.region_bucket === region);
+    const items = destinations
+      .filter((d) => d.region_bucket === region)
+      .sort((a, b) => a.name.localeCompare(b.name));
     if (items.length > 0) {
       groups.push({ region, label: regionLabels[region] ?? region, items });
     }
