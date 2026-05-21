@@ -68,7 +68,7 @@ describe('DestinationCard', () => {
     expect(container.querySelector('img')).toBeNull();
   });
 
-  it('renders a motion.img with alt text when image_url is present', () => {
+  it('renders an optimized <Image> with alt text when image_url is present', () => {
     render(
       <DestinationCard
         name={withImage.name}
@@ -80,9 +80,11 @@ describe('DestinationCard', () => {
         bestDiscountPercent={withImage.bestDiscountPercent}
       />,
     );
+    // next/image rewrites src to /_next/image?url=...&w=...&q=... — assert the
+    // original URL appears inside that rewrite rather than as the literal src.
     const img = screen.getByAltText(withImage.name);
     expect(img).toBeInTheDocument();
-    expect(img).toHaveAttribute('src', withImage.image_url);
+    expect(img.getAttribute('src')).toContain(encodeURIComponent(withImage.image_url));
   });
 
   it('shows the no-plans label when startingPriceCents is 0', () => {

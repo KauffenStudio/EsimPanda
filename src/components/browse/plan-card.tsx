@@ -3,7 +3,6 @@
 import { useTranslations } from 'next-intl';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { useComparisonStore } from '@/stores/comparison';
 import { useCartStore } from '@/stores/cart';
 import { useCurrencyStore } from '@/stores/currency';
 import { formatPrice } from '@/lib/currency/rates';
@@ -34,17 +33,11 @@ export function PlanCard({
   isMostPopular,
 }: PlanCardProps) {
   const t = useTranslations();
-  const selectedPlans = useComparisonStore((state) => state.selectedPlans);
-  const togglePlan = useComparisonStore((state) => state.togglePlan);
   const addItem = useCartStore((state) => state.addItem);
   const currency = useCurrencyStore((state) => state.currency);
-  const isSelected = selectedPlans.some((p) => p.id === id);
 
-  // Phase-11 bridge: PlanCard keeps its flat-props API (RESEARCH Open Question 3)
-  // because esim/[slug] also renders it and stays on mock data until Phase 12.
-  // We reconstruct a minimal Plan object here from the flat props. Comparison
-  // only reads name/data_gb/duration_days/retail_price_cents; the remaining
-  // Plan fields are filled with safe defaults sufficient for comparison display.
+  // PlanCard keeps its flat-props API and reconstructs a minimal Plan object
+  // here from the flat props for the cart store, which is Plan-typed.
   const plan: Plan = {
     id,
     destination_id: '',
@@ -60,14 +53,7 @@ export function PlanCard({
   };
 
   const handleCardClick = () => {
-    // Cart store is Plan-typed (canonical Plan from db/destinations); the flat
-    // props already satisfy it — the timestamp fields are optional.
     addItem(plan);
-  };
-
-  const handleCheckboxClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    togglePlan(plan);
   };
 
   return (
@@ -91,32 +77,22 @@ export function PlanCard({
           </div>
         </div>
 
-        <div className="flex items-center gap-3">
-          <div className="flex flex-col items-end">
+        <div className="flex flex-col items-end">
+          {data_gb > 1 && (
+            <span className="text-xs text-gray-400 line-through">
+              {formatPrice(getOriginalPrice(retail_price_cents, data_gb), currency)}
+            </span>
+          )}
+          <div className="flex items-center gap-1.5">
             {data_gb > 1 && (
-              <span className="text-xs text-gray-400 line-through">
-                {formatPrice(getOriginalPrice(retail_price_cents, data_gb), currency)}
+              <span className="text-[10px] font-bold text-white bg-[#E53935] px-1.5 py-0.5 rounded">
+                -{getDiscountPercent(retail_price_cents, data_gb)}%
               </span>
             )}
-            <div className="flex items-center gap-1.5">
-              {data_gb > 1 && (
-                <span className="text-[10px] font-bold text-white bg-[#E53935] px-1.5 py-0.5 rounded">
-                  -{getDiscountPercent(retail_price_cents, data_gb)}%
-                </span>
-              )}
-              <span className="text-xl font-bold text-accent">
-                {formatPrice(retail_price_cents, currency)}
-              </span>
-            </div>
+            <span className="text-xl font-bold text-accent">
+              {formatPrice(retail_price_cents, currency)}
+            </span>
           </div>
-          <input
-            type="checkbox"
-            checked={isSelected}
-            onClick={handleCheckboxClick}
-            onChange={() => {}}
-            className="h-4 w-4 rounded border-gray-300 text-accent focus:ring-accent cursor-pointer"
-            aria-label={t('browse.selectToCompare')}
-          />
         </div>
       </div>
     </Card>

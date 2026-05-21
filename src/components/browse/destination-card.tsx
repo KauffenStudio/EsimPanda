@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useReducedMotion } from 'motion/react';
+import Image from 'next/image';
 import { useTranslations, useLocale } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { Card } from '@/components/ui/card';
@@ -39,7 +39,6 @@ export function DestinationCard({
   const locale = useLocale();
   const router = useRouter();
   const currency = useCurrencyStore((s) => s.currency);
-  const reduceMotion = useReducedMotion();
 
   const flag = isoToFlag(isoCode);
 
@@ -60,17 +59,18 @@ export function DestinationCard({
         <TypographicFallbackCard name={name} />
 
         {imageUrl && (
-          <motion.img
+          // next/image handles lazy loading, AVIF/WebP negotiation, and the
+          // responsive srcset off the `sizes` prop. The grid is 2/3/4 columns
+          // at 640/768/1024 so each tile is roughly half/third/quarter of the
+          // viewport — those breakpoints below tell next/image which size to
+          // pre-fetch instead of always downloading the full source.
+          <Image
             src={imageUrl}
             alt={name}
-            className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-            initial={
-              reduceMotion
-                ? { opacity: 1, filter: 'blur(0px)' }
-                : { opacity: 0, filter: 'blur(12px)' }
-            }
-            animate={{ opacity: 1, filter: 'blur(0px)' }}
-            transition={reduceMotion ? { duration: 0 } : { duration: 0.4, ease: 'easeOut' }}
+            fill
+            sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
+            loading="lazy"
           />
         )}
 
