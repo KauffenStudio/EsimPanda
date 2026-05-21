@@ -50,10 +50,11 @@ export async function sendDeliveryEmail(
   // a real route in a future phase. For now, the email itself contains all
   // setup instructions inline (manual codes section), so a dead link here
   // is acceptable.
-  const setupGuideUrl = `https://esimpanda.com/en/setup?order=${params.orderId}`;
+  const setupGuideUrl = `https://esimpanda.co/en/setup?order=${params.orderId}`;
 
   const { data, error } = await getResend().emails.send({
-    from: 'eSIM Panda <noreply@esimpanda.com>',
+    from: 'eSIM Panda <noreply@esimpanda.co>',
+    replyTo: 'geral@kauffen.com',
     to: params.to,
     subject: `Your eSIM for ${params.destination} is ready!`,
     react: DeliveryEmail({

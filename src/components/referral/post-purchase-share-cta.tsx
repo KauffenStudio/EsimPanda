@@ -20,7 +20,7 @@ export function PostPurchaseShareCTA({ referralCode }: PostPurchaseShareCTAProps
 
   if (dismissed) return null;
 
-  const origin = typeof window !== 'undefined' ? window.location.origin : 'https://esimpanda.com';
+  const origin = typeof window !== 'undefined' ? window.location.origin : 'https://esimpanda.co';
   const referralUrl = referralCode ? `${origin}/r/${referralCode}` : '';
 
   return (

@@ -28,7 +28,7 @@ export function ReferralLinkCard({ code, onCopy }: ReferralLinkCardProps) {
       <p className="text-sm font-bold mb-2 dark:text-gray-100">Your Referral Link</p>
       <div className="flex items-center gap-3">
         <span className="font-mono text-sm truncate flex-1" style={{ color: '#2979FF' }}>
-          esimpanda.com/r/{code}
+          esimpanda.co/r/{code}
         </span>
         <button
           type="button"

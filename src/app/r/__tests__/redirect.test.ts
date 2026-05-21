@@ -3,7 +3,7 @@ import { GET } from '../[code]/route';
 
 describe('Referral redirect', () => {
   it('redirects to /en and sets ref cookie with 7-day expiry', async () => {
-    const request = new Request('https://esimpanda.com/r/ABC123');
+    const request = new Request('https://esimpanda.co/r/ABC123');
     const response = await GET(request, { params: Promise.resolve({ code: 'ABC123' }) });
 
     expect(response.status).toBe(307); // redirect

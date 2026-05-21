@@ -1,6 +1,6 @@
 export const MOCK_USER = {
   id: 'mock-user-id',
-  email: 'test@esimpanda.com',
+  email: 'test@esimpanda.co',
   created_at: new Date().toISOString(),
   user_metadata: {},
 };

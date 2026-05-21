@@ -57,7 +57,7 @@ describe('sendDeliveryEmail', () => {
 
     expect(mockSend).toHaveBeenCalledWith(
       expect.objectContaining({
-        from: 'eSIM Panda <noreply@esimpanda.com>',
+        from: 'eSIM Panda <noreply@esimpanda.co>',
         to: 'test@example.com',
         subject: 'Your eSIM for Europe is ready!',
       })
@@ -82,7 +82,7 @@ describe('DeliveryEmail component', () => {
     const element = DeliveryEmail({
       ...baseParams,
       qrCodeDataUrl: 'data:image/png;base64,mock',
-      setupGuideUrl: 'https://esimpanda.com/en/setup?order=ORD-12345678',
+      setupGuideUrl: 'https://esimpanda.co/en/setup?order=ORD-12345678',
       email: 'test@example.com',
     });
     expect(element).toBeTruthy();

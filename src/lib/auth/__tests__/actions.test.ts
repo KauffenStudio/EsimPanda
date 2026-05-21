@@ -69,7 +69,7 @@ describe('Auth Actions', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     delete process.env.NEXT_PUBLIC_STRIPE_MOCK;
-    process.env.NEXT_PUBLIC_SITE_URL = 'https://esimpanda.com';
+    process.env.NEXT_PUBLIC_SITE_URL = 'https://esimpanda.co';
   });
 
   afterEach(() => {
