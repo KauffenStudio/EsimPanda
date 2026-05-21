@@ -1,4 +1,5 @@
 import 'server-only'; // build-time guard: a client component importing this fails the build
+import { cache } from 'react';
 import { createClient as createSupabaseClient } from '@supabase/supabase-js';
 import { getDiscountPercent } from '@/lib/plans/pricing-display';
 
@@ -98,39 +99,52 @@ export async function listActiveDestinations(): Promise<Destination[]> {
   return data ?? [];
 }
 
-/** Active plans for a single destination, cheapest first. [] on error. */
-export async function listPlansForDestination(destinationId: string): Promise<Plan[]> {
-  const supabase = catalogClient();
-  const { data, error } = await supabase
-    .from('plans')
-    .select('*')
-    .eq('destination_id', destinationId)
-    .eq('is_active', true)
-    .eq('duration_days', CATALOG_PLAN_DURATION_DAYS)
-    .gt('data_gb', CATALOG_PLAN_MIN_DATA_GB)
-    .order('retail_price_cents', { ascending: true });
-  if (error) {
-    console.error('listPlansForDestination error:', error);
-    return [];
-  }
-  return data ?? [];
-}
+/**
+ * Active plans for a single destination, cheapest first. [] on error.
+ *
+ * Wrapped in React.cache so a single request that resolves the same destination
+ * twice (generateMetadata + the RSC body of `[slug]/page.tsx`) hits Supabase
+ * exactly once.
+ */
+export const listPlansForDestination = cache(
+  async (destinationId: string): Promise<Plan[]> => {
+    const supabase = catalogClient();
+    const { data, error } = await supabase
+      .from('plans')
+      .select('*')
+      .eq('destination_id', destinationId)
+      .eq('is_active', true)
+      .eq('duration_days', CATALOG_PLAN_DURATION_DAYS)
+      .gt('data_gb', CATALOG_PLAN_MIN_DATA_GB)
+      .order('retail_price_cents', { ascending: true });
+    if (error) {
+      console.error('listPlansForDestination error:', error);
+      return [];
+    }
+    return data ?? [];
+  },
+);
 
-/** Single active destination by slug. null (not throw) when 0 rows. */
-export async function getDestinationBySlug(slug: string): Promise<Destination | null> {
-  const supabase = catalogClient();
-  const { data, error } = await supabase
-    .from('destinations')
-    .select(DESTINATION_COLUMNS)
-    .eq('slug', slug)
-    .eq('is_active', true)
-    .maybeSingle(); // maybeSingle: 0 rows → null, not an error
-  if (error) {
-    console.error('getDestinationBySlug error:', error);
-    return null;
-  }
-  return data;
-}
+/**
+ * Single active destination by slug. null (not throw) when 0 rows.
+ * React.cache shares the result across generateMetadata + page body in one request.
+ */
+export const getDestinationBySlug = cache(
+  async (slug: string): Promise<Destination | null> => {
+    const supabase = catalogClient();
+    const { data, error } = await supabase
+      .from('destinations')
+      .select(DESTINATION_COLUMNS)
+      .eq('slug', slug)
+      .eq('is_active', true)
+      .maybeSingle(); // maybeSingle: 0 rows → null, not an error
+    if (error) {
+      console.error('getDestinationBySlug error:', error);
+      return null;
+    }
+    return data;
+  },
+);
 
 /** Single plan by id. null (not throw) when 0 rows. Reused by Phase 12. */
 export async function getPlanById(planId: string): Promise<Plan | null> {

@@ -199,6 +199,7 @@ export function DeliveryPage({ paymentIntentId, email }: DeliveryPageProps) {
               isGuest={!!email && !authUser}
               referralCode={referralCode ?? undefined}
               orderId={order_id}
+              paymentIntentId={paymentIntentId}
             />
 
             <InstallBanner />

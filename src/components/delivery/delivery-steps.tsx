@@ -20,6 +20,7 @@ interface DeliveryStepsProps {
   isGuest: boolean;
   referralCode?: string;
   orderId?: string | null;
+  paymentIntentId: string;
 }
 
 interface StepHeaderProps {
@@ -77,6 +78,7 @@ export function DeliverySteps({
   isGuest,
   referralCode,
   orderId,
+  paymentIntentId,
 }: DeliveryStepsProps) {
   const t = useTranslations('delivery');
   const [activeStep, setActiveStep] = useState(1);
@@ -104,10 +106,8 @@ export function DeliverySteps({
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          payment_intent_id: paymentIntentId,
           email,
-          order_id: orderId,
-          smdp_address: data.smdp_address,
-          activation_code: data.manual_activation_code,
         }),
       });
       if (res.ok) {
@@ -120,7 +120,7 @@ export function DeliverySteps({
     } finally {
       setEmailSending(false);
     }
-  }, [email, orderId, data, t]);
+  }, [email, paymentIntentId, t]);
 
   return (
     <div className="w-full space-y-2">
