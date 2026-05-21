@@ -2,7 +2,7 @@ import type { MetadataRoute } from 'next';
 import { routing } from '@/i18n/routing';
 import { listActiveDestinations } from '@/lib/db/destinations';
 
-const host = process.env.NEXT_PUBLIC_SITE_URL || 'https://esimpanda.com';
+const host = process.env.NEXT_PUBLIC_SITE_URL || 'https://esimpanda.co';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const destinations = await listActiveDestinations();

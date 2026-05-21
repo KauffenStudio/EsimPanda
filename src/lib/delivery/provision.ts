@@ -1,9 +1,14 @@
-import { encrypt } from './encryption';
+import { encrypt, decrypt } from './encryption';
 import { mockProvision } from '@/lib/mock-data/delivery';
 import { createProvider } from '@/lib/esim/provider';
 import { sendDeliveryEmail } from '@/lib/email/send-delivery';
 import { IS_MOCK } from '@/lib/config/mode';
-import { getOrderByPaymentIntent, updateOrderProvisionData, updateOrderStatus } from '@/lib/db/orders';
+import {
+  getOrderByPaymentIntent,
+  claimOrderForProvisioning,
+  updateOrderProvisionData,
+  updateOrderStatus,
+} from '@/lib/db/orders';
 import type { ProvisionResult, DeliveryData } from './types';
 import type { NormalizedPurchase } from '@/lib/esim/types';
 
@@ -72,22 +77,60 @@ export async function provisionEsim(paymentIntentId: string, email?: string): Pr
   if (!IS_MOCK) {
     try {
       const order = await getOrderByPaymentIntent(paymentIntentId);
-      if (order?.plans) {
-        orderData = {
-          wholesalePlanId: order.plans.wholesale_plan_id,
-          planName: order.plans.name,
-          destination: order.plans.destinations?.name || 'Unknown',
-          destinationIso: order.plans.destinations?.iso_code || '',
-          dataGb: String(order.plans.data_gb),
-          durationDays: String(order.plans.duration_days),
-          orderEmail: order.email,
-          amountPaid: (order.amount_paid_cents / 100).toFixed(2),
+
+      // Idempotency 1 — already delivered: return the existing eSIM. Never
+      // start a second Celitech purchase for a payment that was already
+      // fulfilled (e.g. the success page polls after the webhook finished).
+      if (
+        order &&
+        order.status === 'delivered' &&
+        order.esim_iccid &&
+        order.esim_qr_encrypted
+      ) {
+        const qrData = JSON.parse(decrypt(order.esim_qr_encrypted));
+        const done: ProvisionResult = {
+          status: 'ready',
+          order_id: orderId,
+          encrypted_payload: order.esim_qr_encrypted,
+          data: {
+            iccid: order.esim_iccid,
+            activation_qr_base64: qrData.qr_base64 ?? '',
+            manual_activation_code: qrData.activation_code ?? '',
+            smdp_address: qrData.smdp_address ?? '',
+          },
         };
-        email = email || order.email;
-        await updateOrderStatus(paymentIntentId, 'provisioning');
+        provisioningState.set(paymentIntentId, done);
+        return done;
+      }
+
+      // Idempotency 2 — atomic single-winner claim. The Stripe webhook and the
+      // checkout success page both call this function; only the caller that
+      // wins the claim runs the Celitech purchase. A loser bails out here so
+      // the customer is never charged once but provisioned twice.
+      const claimed = await claimOrderForProvisioning(paymentIntentId);
+      if (!claimed) {
+        // Another worker owns provisioning. Drop this instance's stale
+        // in-memory entry so the status route falls through to the DB, which
+        // the winning worker updates to 'delivered'.
+        provisioningState.delete(paymentIntentId);
+        return { status: 'provisioning', order_id: orderId };
+      }
+
+      if (claimed.plans) {
+        orderData = {
+          wholesalePlanId: claimed.plans.wholesale_plan_id,
+          planName: claimed.plans.name,
+          destination: claimed.plans.destinations?.name || 'Unknown',
+          destinationIso: claimed.plans.destinations?.iso_code || '',
+          dataGb: String(claimed.plans.data_gb),
+          durationDays: String(claimed.plans.duration_days),
+          orderEmail: claimed.email,
+          amountPaid: (claimed.amount_paid_cents / 100).toFixed(2),
+        };
+        email = email || claimed.email;
       }
     } catch (err) {
-      console.error('Order lookup failed, continuing with provisioning:', err);
+      console.error('Order lookup/claim failed, continuing with provisioning:', err);
     }
   }
 

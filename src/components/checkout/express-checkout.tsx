@@ -23,19 +23,23 @@ export function ExpressCheckout() {
     // Stripe handles the payment confirmation via the Elements provider
   };
 
-  if (!available) {
-    return null;
-  }
-
+  // ExpressCheckoutElement MUST stay mounted for its onReady event to fire —
+  // that event is what tells us whether any wallet (Apple Pay / Google Pay) is
+  // available. Returning null before it mounts (the previous bug) meant
+  // `available` could never flip true, so express checkout never appeared.
+  // When no wallet is available the element simply renders nothing.
   return (
     <motion.div
       initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
+      animate={{ opacity: available ? 1 : 0 }}
       transition={{ duration: 0.3, ease: 'easeOut' }}
+      aria-hidden={!available}
     >
-      <p className="text-sm text-gray-400 dark:text-gray-600 uppercase tracking-wide mb-2">
-        {t('title')}
-      </p>
+      {available && (
+        <p className="text-sm text-gray-400 dark:text-gray-600 uppercase tracking-wide mb-2">
+          {t('title')}
+        </p>
+      )}
       <ExpressCheckoutElement
         onReady={handleReady}
         onConfirm={handleConfirm}

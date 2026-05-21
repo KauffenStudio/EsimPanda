@@ -73,7 +73,7 @@ export default function ReferralPage() {
     );
   }
 
-  const origin = typeof window !== 'undefined' ? window.location.origin : 'https://esimpanda.com';
+  const origin = typeof window !== 'undefined' ? window.location.origin : 'https://esimpanda.co';
   const referralUrl = `${origin}/r/${code}`;
 
   return (

@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/server';
+import { createServiceClient } from '@/lib/supabase/service';
 
 export interface CreateOrderParams {
   user_id?: string;
@@ -43,7 +43,7 @@ export interface OrderRow {
 }
 
 export async function createOrder(params: CreateOrderParams): Promise<OrderRow | null> {
-  const supabase = await createClient();
+  const supabase = createServiceClient();
   const { data, error } = await supabase
     .from('orders')
     .insert({
@@ -68,7 +68,7 @@ export async function createOrder(params: CreateOrderParams): Promise<OrderRow |
 }
 
 export async function getOrderByPaymentIntent(paymentIntentId: string): Promise<OrderRow | null> {
-  const supabase = await createClient();
+  const supabase = createServiceClient();
   const { data, error } = await supabase
     .from('orders')
     .select(`
@@ -94,11 +94,57 @@ export async function getOrderByPaymentIntent(paymentIntentId: string): Promise<
   return data;
 }
 
+// Order statuses from which provisioning may still be (re)started. An order
+// already 'provisioning' or 'delivered' must NOT be claimed again.
+const CLAIMABLE_STATUSES = ['pending', 'payment_confirmed', 'provision_failed'];
+
+/**
+ * Atomically claim an order for provisioning. Flips its status to
+ * 'provisioning' ONLY if it is currently in a claimable state, and returns the
+ * order row (with joined plan data) when THIS caller won the claim — or null
+ * when another worker already holds it.
+ *
+ * This is the idempotency gate for eSIM delivery. The Stripe webhook and the
+ * checkout success page both call provisionEsim(); without this single-winner
+ * claim, one payment could trigger two Celitech purchases. The UPDATE ... WHERE
+ * status IN (...) is atomic per row in Postgres, so exactly one caller wins.
+ */
+export async function claimOrderForProvisioning(
+  paymentIntentId: string,
+): Promise<OrderRow | null> {
+  const supabase = createServiceClient();
+  const { data, error } = await supabase
+    .from('orders')
+    .update({ status: 'provisioning', updated_at: new Date().toISOString() })
+    .eq('stripe_payment_intent_id', paymentIntentId)
+    .in('status', CLAIMABLE_STATUSES)
+    .select(`
+      *,
+      plans (
+        wholesale_plan_id,
+        name,
+        data_gb,
+        duration_days,
+        destinations (
+          name,
+          iso_code
+        )
+      )
+    `)
+    .maybeSingle();
+
+  if (error) {
+    console.error('claimOrderForProvisioning error:', error);
+    return null;
+  }
+  return data;
+}
+
 export async function updateOrderStatus(
   paymentIntentId: string,
   status: string,
 ): Promise<boolean> {
-  const supabase = await createClient();
+  const supabase = createServiceClient();
   const { error } = await supabase
     .from('orders')
     .update({ status, updated_at: new Date().toISOString() })
@@ -122,7 +168,7 @@ export async function updateOrderProvisionData(
     status: string;
   },
 ): Promise<boolean> {
-  const supabase = await createClient();
+  const supabase = createServiceClient();
   const { error } = await supabase
     .from('orders')
     .update({ ...data, updated_at: new Date().toISOString() })
@@ -136,7 +182,7 @@ export async function updateOrderProvisionData(
 }
 
 export async function getOrdersByUser(userId: string): Promise<OrderRow[]> {
-  const supabase = await createClient();
+  const supabase = createServiceClient();
   const { data, error } = await supabase
     .from('orders')
     .select(`

@@ -49,7 +49,7 @@ describe('sendResetEmail', () => {
 
     expect(mockSend).toHaveBeenCalledWith(
       expect.objectContaining({
-        from: 'eSIM Panda <noreply@esimpanda.com>',
+        from: 'eSIM Panda <noreply@esimpanda.co>',
         to: 'user@example.com',
         subject: 'Reset your eSIM Panda password',
       }),

@@ -1,6 +1,6 @@
 import type { Plan } from '@/lib/db/destinations';
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://esimpanda.com';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://esimpanda.co';
 
 export function buildProductJsonLd(plan: Plan, destinationName: string) {
   return {

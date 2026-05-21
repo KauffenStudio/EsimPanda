@@ -21,7 +21,8 @@ export async function sendResetEmail(params: {
   }
 
   const { data, error } = await getResend().emails.send({
-    from: 'eSIM Panda <noreply@esimpanda.com>',
+    from: 'eSIM Panda <noreply@esimpanda.co>',
+    replyTo: 'geral@kauffen.com',
     to: params.to,
     subject: 'Reset your eSIM Panda password',
     react: ResetEmail({ resetUrl: params.resetUrl }),

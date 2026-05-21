@@ -477,7 +477,7 @@ export function DeliveryEmail({
           {/* Referral footer */}
           <Section style={{ padding: '20px 40px', textAlign: 'center' }}>
             <Link
-              href={referralCode ? `https://esimpanda.com/r/${referralCode}` : 'https://esimpanda.com'}
+              href={referralCode ? `https://esimpanda.co/r/${referralCode}` : 'https://esimpanda.co'}
               style={{
                 fontSize: '14px',
                 color: '#666666',

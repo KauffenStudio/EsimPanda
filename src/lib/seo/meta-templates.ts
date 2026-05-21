@@ -1,6 +1,6 @@
 import { routing } from '@/i18n/routing';
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://esimpanda.com';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://esimpanda.co';
 
 export function buildDestinationMeta(params: {
   countryName: string;
