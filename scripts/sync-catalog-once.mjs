@@ -24,14 +24,15 @@ function slugify(name) {
 
 // Mirror of src/lib/esim/sync.ts REGIONAL_ISO_MAP — Celitech labels regional
 // bundles "Europe (44 countries)" / "Asia (...)" / "Global" with ISOs like
-// EUROPE/ASIA/GLOBAL. The storefront's three hero rows use synthetic EU/AS/GL
-// ISOs seeded by backfill-curation.mjs (they carry image_url + region_bucket).
-// Without this remap the script attaches regional packages to parallel rows
-// that getCatalog filters out, leaving the hero cards empty.
+// EUROPE/ASIA/GLOBAL. The storefront's three hero rows use synthetic 3-letter
+// ISOs (EUW/ASW/GLW) that cannot collide with any real ISO-3166-1 alpha-2
+// country code. An earlier version used 'EU'/'AS'/'GL' — but 'AS' is American
+// Samoa and 'GL' is Greenland, and Celitech's country sync overwrote our
+// curated rows with country data on every sync run.
 const REGIONAL_ISO_MAP = [
-  { match: /^europe/i, iso: 'EU', name: 'Europe', slug: 'europe' },
-  { match: /^asia/i, iso: 'AS', name: 'Asia', slug: 'asia' },
-  { match: /^(global|worldwide)/i, iso: 'GL', name: 'Global', slug: 'global' },
+  { match: /^europe/i, iso: 'EUW', name: 'Europe', slug: 'europe' },
+  { match: /^asia/i, iso: 'ASW', name: 'Asia', slug: 'asia' },
+  { match: /^(global|worldwide)/i, iso: 'GLW', name: 'Global', slug: 'global' },
 ];
 
 function curatedRegional(dest) {
@@ -86,7 +87,7 @@ async function main() {
     let pkgs = [];
     try {
       // Packages MUST be fetched with Celitech's own iso (e.g. 'EUROPE'); the
-      // destination row we attach them to uses our curated iso (e.g. 'EU').
+      // destination row we attach them to uses our curated iso (e.g. 'EUW').
       const pkgResp = await celitech.packages.listPackages({ destination: dest.iso });
       pkgs = pkgResp.data?.packages ?? pkgResp.packages ?? [];
     } catch (e) {

@@ -15,15 +15,20 @@ import { createClient } from '@supabase/supabase-js';
 const DESTINATION_SYNC_COLUMNS = ['name', 'slug', 'iso_code', 'region', 'is_active', 'synced_at'] as const;
 
 // Map Celitech regional bundles ("Europe (39 countries)", "Asia (15)", "Global")
-// onto our three curated hero rows. Backfill seeds those rows with synthetic ISOs
-// (EU/AS/GL) plus image_url + region_bucket; without remapping, Celitech would
-// create parallel rows (iso_code='EUROPE' etc.) and the hero cards would never
-// see plans. The Celitech iso is preserved separately and still used to fetch
-// packages from the wholesale API.
+// onto our three curated hero rows. Backfill seeds those rows with synthetic
+// 3-letter ISOs (EUW/ASW/GLW) plus image_url + region_bucket; without remapping,
+// Celitech would create parallel rows (iso_code='EUROPE' etc.) and the hero cards
+// would never see plans. The Celitech iso is preserved separately and still used
+// to fetch packages from the wholesale API.
+//
+// IMPORTANT: the synthetic ISOs are deliberately 3 letters so they cannot collide
+// with any real ISO-3166-1 alpha-2 country code. An earlier version used 'EU' /
+// 'AS' / 'GL' — those are real country codes for American Samoa and Greenland,
+// and Celitech's country sync overwrote our curated rows with country data.
 const REGIONAL_ISO_MAP: ReadonlyArray<{ match: RegExp; iso: string; name: string; slug: string }> = [
-  { match: /^europe/i, iso: 'EU', name: 'Europe', slug: 'europe' },
-  { match: /^asia/i, iso: 'AS', name: 'Asia', slug: 'asia' },
-  { match: /^(global|worldwide)/i, iso: 'GL', name: 'Global', slug: 'global' },
+  { match: /^europe/i, iso: 'EUW', name: 'Europe', slug: 'europe' },
+  { match: /^asia/i, iso: 'ASW', name: 'Asia', slug: 'asia' },
+  { match: /^(global|worldwide)/i, iso: 'GLW', name: 'Global', slug: 'global' },
 ];
 
 function curatedRegional(dest: { name: string; region: string }):
@@ -85,7 +90,7 @@ export async function syncCatalog() {
   let plansWithErrors = 0;
   for (const dest of destinations) {
     // Packages MUST be fetched with Celitech's own iso (e.g. 'EUROPE'), but the
-    // destination row we attach them to uses our curated iso (e.g. 'EU').
+    // destination row we attach them to uses our curated iso (e.g. 'EUW').
     const packages = await provider.listPackages(dest.iso);
     if (packages.length === 0) continue;
     const curated = curatedRegional(dest);

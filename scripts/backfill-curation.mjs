@@ -27,7 +27,11 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY,
 );
 
-const REGIONAL_HEROES = new Set(['EU', 'AS', 'GL']);
+// Synthetic 3-letter ISOs for the curated hero rows. Must not collide with any
+// real ISO-3166-1 alpha-2 (an earlier 'EU' / 'AS' / 'GL' version did — 'AS' is
+// American Samoa and 'GL' is Greenland, both of which Celitech syncs as
+// countries, overwriting our curated rows on every run).
+const REGIONAL_HEROES = new Set(['EUW', 'ASW', 'GLW']);
 
 let upsertedHero = 0;
 let updatedCountry = 0;
