@@ -194,6 +194,7 @@
     },
     "email_required_hint": "続行するには有効なメールアドレスを入力してください",
     "pay": "${amount}を支払う",
+    "processing": "処理中...",
     "success": {
       "heading": "eSIMの準備ができました！",
       "order": "注文 {id}",

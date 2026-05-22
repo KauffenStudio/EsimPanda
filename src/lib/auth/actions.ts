@@ -14,8 +14,16 @@ async function getLocale(): Promise<string> {
   return cookieStore.get('NEXT_LOCALE')?.value ?? 'en';
 }
 
+// Normalize email exactly the same way at every entry point so a user who signs
+// up as ' User@EXAMPLE.com ' can later log in as 'user@example.com' (and
+// doesn't end up with two separate accounts via Supabase's case-sensitive
+// uniqueness on the email column).
+function normalizeEmail(raw: unknown): string {
+  return String(raw ?? '').trim().toLowerCase();
+}
+
 export async function login(formData: FormData): Promise<AuthResult> {
-  const email = String(formData.get('email') ?? '');
+  const email = normalizeEmail(formData.get('email'));
   const password = String(formData.get('password') ?? '');
 
   if (isMockMode()) {
@@ -35,7 +43,7 @@ export async function login(formData: FormData): Promise<AuthResult> {
 }
 
 export async function signup(formData: FormData): Promise<AuthResult> {
-  const email = String(formData.get('email') ?? '');
+  const email = normalizeEmail(formData.get('email'));
   const password = String(formData.get('password') ?? '');
 
   if (isMockMode()) {
@@ -96,7 +104,7 @@ export async function signOut(): Promise<void> {
 }
 
 export async function resetPassword(formData: FormData): Promise<AuthResult> {
-  const email = String(formData.get('email') ?? '');
+  const email = normalizeEmail(formData.get('email'));
 
   if (isMockMode()) {
     console.log('[MOCK AUTH] resetPassword:', email);
@@ -146,7 +154,7 @@ export async function updatePassword(formData: FormData): Promise<AuthResult> {
 }
 
 export async function convertGuestToAccount(formData: FormData): Promise<AuthResult> {
-  const email = String(formData.get('email') ?? '');
+  const email = normalizeEmail(formData.get('email'));
   const password = String(formData.get('password') ?? '');
 
   if (isMockMode()) {

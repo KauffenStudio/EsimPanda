@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { ChevronRight } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 interface BreadcrumbProps {
   locale: string;
@@ -9,13 +10,14 @@ interface BreadcrumbProps {
 }
 
 export function Breadcrumb({ locale, destinationName }: BreadcrumbProps) {
+  const t = useTranslations('nav');
   return (
     <nav aria-label="Breadcrumb" className="bg-[#F5F5F5] dark:bg-surface-dark py-2">
       <div className="max-w-[1200px] mx-auto px-4">
         <ol className="flex items-center gap-1 text-sm font-normal">
           <li>
             <Link href={`/${locale}`} className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">
-              Home
+              {t('home')}
             </Link>
           </li>
           <li>
@@ -23,7 +25,7 @@ export function Breadcrumb({ locale, destinationName }: BreadcrumbProps) {
           </li>
           <li>
             <Link href={`/${locale}/browse`} className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">
-              Destinations
+              {t('destinations')}
             </Link>
           </li>
           {destinationName && (

@@ -45,7 +45,7 @@ describe('Dashboard Actions', () => {
 
   it('resendDeliveryEmail returns success in mock mode', async () => {
     const { resendDeliveryEmail } = await import('../actions');
-    const result = await resendDeliveryEmail('ord-001', 'test@example.com');
+    const result = await resendDeliveryEmail('ord-001');
 
     expect(result.success).toBe(true);
   });

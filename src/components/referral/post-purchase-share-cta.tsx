@@ -54,11 +54,11 @@ export function PostPurchaseShareCTA({ referralCode }: PostPurchaseShareCTAProps
         /* Not logged in: show signup CTA */
         <div className="text-center pr-6">
           <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
-            Create an account to start referring friends
+            {t('noAccount')}
           </p>
           <Link href={`/${locale}/signup`}>
             <Button variant="primary" size="sm">
-              Create Account
+              {t('noAccountCta')}
             </Button>
           </Link>
         </div>

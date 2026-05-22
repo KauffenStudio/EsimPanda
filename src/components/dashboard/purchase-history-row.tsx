@@ -47,7 +47,7 @@ export function PurchaseHistoryRow({ purchase, onResendEmail }: PurchaseHistoryR
   const handleResendEmail = async () => {
     setResending(true);
     try {
-      const result = await resendDeliveryEmail(purchase.order_id, '');
+      const result = await resendDeliveryEmail(purchase.order_id);
       if (result.success) {
         toast.success('Delivery email sent');
       } else {

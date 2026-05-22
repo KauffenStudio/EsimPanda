@@ -48,9 +48,9 @@ export default function DashboardPage() {
   };
 
   const handleResendEmail = async (orderId: string) => {
-    const result = await resendDeliveryEmail(orderId, '');
+    const result = await resendDeliveryEmail(orderId);
     if (result.success) {
-      toast.success(t('dashboard.resend_email_success', { email: '' }));
+      toast.success(t('dashboard.resend_email_success', { email: result.email ?? '' }));
     } else {
       toast.error(t('dashboard.resend_email_error'));
     }

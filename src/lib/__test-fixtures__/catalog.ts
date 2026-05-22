@@ -66,7 +66,7 @@ export const fixtureRegionalPlans: CatalogDestination[] = [
     id: 'dest-europe-wide',
     name: 'Europe',
     slug: 'europe',
-    iso_code: 'EU',
+    iso_code: 'EUW',
     region: 'region',
     region_bucket: 'europe-wide',
     image_url: 'https://images.pexels.com/photos/europe.jpg',

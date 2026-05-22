@@ -65,7 +65,7 @@ export function SignupForm() {
         <p className="text-sm text-[#E53935] text-center" role="alert">
           {t('error.emailExists')}{' '}
           <Link href={`/${locale}/login`} className="text-accent hover:underline">
-            Log in
+            {t('header.login')}
           </Link>
         </p>
       );

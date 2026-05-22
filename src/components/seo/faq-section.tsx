@@ -41,12 +41,14 @@ export function FAQSection({ countryName }: FAQSectionProps) {
                 </span>
               </button>
               <div
-                className="overflow-hidden transition-all duration-200 ease-out"
-                style={{ maxHeight: isOpen ? '300px' : '0px' }}
+                className="grid transition-all duration-200 ease-out"
+                style={{ gridTemplateRows: isOpen ? '1fr' : '0fr' }}
               >
-                <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed pt-3">
-                  {faq.answer}
-                </p>
+                <div className="overflow-hidden">
+                  <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed pt-3">
+                    {faq.answer}
+                  </p>
+                </div>
               </div>
             </div>
           );

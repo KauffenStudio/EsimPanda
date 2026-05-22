@@ -194,6 +194,7 @@
     },
     "email_required_hint": "Introduce una dirección de email válida para continuar",
     "pay": "Pagar ${amount}",
+    "processing": "Procesando...",
     "success": {
       "heading": "¡Tu eSIM está listo!",
       "order": "Pedido {id}",
