@@ -3,6 +3,8 @@
 import { useEffect, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useCheckoutStore } from '@/stores/checkout';
+import { useCurrencyStore } from '@/stores/currency';
+import { formatPrice } from '@/lib/currency/rates';
 import type { Plan } from '@/lib/db/destinations';
 
 interface StickyOrderBarProps {
@@ -10,14 +12,11 @@ interface StickyOrderBarProps {
   observeRef: React.RefObject<HTMLDivElement | null>;
 }
 
-function formatUsd(cents: number): string {
-  return `$${(cents / 100).toFixed(2)}`;
-}
-
 export function StickyOrderBar({ plan, observeRef }: StickyOrderBarProps) {
   const [show, setShow] = useState(false);
   const total_cents = useCheckoutStore((s) => s.total_cents);
   const subtotal_cents = useCheckoutStore((s) => s.subtotal_cents);
+  const currency = useCurrencyStore((s) => s.currency);
   const displayTotal = total_cents || subtotal_cents || plan.retail_price_cents;
 
   useEffect(() => {
@@ -50,7 +49,7 @@ export function StickyOrderBar({ plan, observeRef }: StickyOrderBarProps) {
               {plan.name}
             </span>
             <span className="text-sm font-bold text-gray-900 dark:text-gray-100">
-              {formatUsd(displayTotal)}
+              {formatPrice(displayTotal, currency)}
             </span>
           </div>
         </motion.div>

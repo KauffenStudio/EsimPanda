@@ -195,7 +195,7 @@
       "travelers": "深受旅行者信赖"
     },
     "email_required_hint": "请输入有效的邮箱地址以继续",
-    "pay": "支付 ${amount}",
+    "pay": "支付 {amount}",
     "processing": "处理中...",
     "success": {
       "heading": "您的eSIM已就绪！",

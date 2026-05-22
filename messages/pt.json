@@ -195,7 +195,7 @@
       "travelers": "Confiado por viajantes"
     },
     "email_required_hint": "Introduza um endereço de email válido para continuar",
-    "pay": "Pagar ${amount}",
+    "pay": "Pagar {amount}",
     "processing": "A processar...",
     "success": {
       "heading": "O seu eSIM está pronto!",

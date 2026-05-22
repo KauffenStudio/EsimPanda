@@ -5,15 +5,23 @@ import { useTranslations } from 'next-intl';
 import { useStripe, useElements } from '@stripe/react-stripe-js';
 import { Button } from '@/components/ui/button';
 import { useCheckoutStore } from '@/stores/checkout';
+import { useCurrencyStore } from '@/stores/currency';
+import { formatPrice } from '@/lib/currency/rates';
 import { STRIPE_MOCK_MODE } from '@/lib/stripe/client';
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function MockPayButton() {
   const { email, total_cents, payment_status, setPaymentStatus } = useCheckoutStore();
+  const currency = useCurrencyStore((s) => s.currency);
   const [processing, setProcessing] = useState(false);
 
-  const totalFormatted = (total_cents / 100).toFixed(2);
+  // Display total in the currency the user picked (same as OrderSummary). The
+  // earlier version printed `$X.XX` regardless of selection, so a customer
+  // seeing "€18.99" in the summary then saw "$22.05" on the button — looked
+  // like a bug, plus the "pay" i18n key embedded a literal '$' that would
+  // render as "$€18.99" once the formatter was attached.
+  const totalFormatted = formatPrice(total_cents, currency);
   const isDisabled =
     !email ||
     !EMAIL_REGEX.test(email) ||
@@ -43,9 +51,10 @@ function RealPayButton() {
   const stripe = useStripe();
   const elements = useElements();
   const { email, total_cents, payment_status, setPaymentStatus } = useCheckoutStore();
+  const currency = useCurrencyStore((s) => s.currency);
   const [processing, setProcessing] = useState(false);
 
-  const totalFormatted = (total_cents / 100).toFixed(2);
+  const totalFormatted = formatPrice(total_cents, currency);
   const isDisabled =
     !stripe || !elements ||
     !email ||
