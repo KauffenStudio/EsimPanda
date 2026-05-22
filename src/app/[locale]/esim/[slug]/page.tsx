@@ -5,6 +5,7 @@ import { getDestinationBySlug, listActiveDestinations, listPlansForDestination }
 import { tagPlans } from '@/lib/plans/pricing-display';
 import { buildProductJsonLd, buildBreadcrumbJsonLd } from '@/lib/seo/structured-data';
 import { buildDestinationMeta } from '@/lib/seo/meta-templates';
+import { localizedDestinationName } from '@/lib/i18n/destination-name';
 import { JsonLd } from '@/components/seo/json-ld';
 import { Breadcrumb } from '@/components/seo/breadcrumb';
 import { DestinationHero } from '@/components/seo/destination-hero';
@@ -35,8 +36,9 @@ export async function generateMetadata({ params }: Props) {
     ? Math.min(...plans.map((p) => p.retail_price_cents))
     : 0;
   const startingPrice = (startingPriceCents / 100).toFixed(2);
+  const countryName = localizedDestinationName(destination.iso_code, destination.name, locale);
   return buildDestinationMeta({
-    countryName: destination.name,
+    countryName,
     slug: destination.slug,
     locale,
     startingPrice,
@@ -57,22 +59,26 @@ export default async function DestinationPage({ params }: Props) {
   const isRegional = REGIONAL_BUCKETS.includes(destination.region_bucket ?? '');
   const plans = await listPlansForDestination(destination.id);
   const taggedPlans = tagPlans(plans);
+  // Locale-aware display name: France / França / Francia / フランス. Used in
+  // every customer-visible string and in the JSON-LD output (search engines
+  // pick up the right language for that locale's URL).
+  const displayName = localizedDestinationName(destination.iso_code, destination.name, locale);
 
   return (
     <>
       {/* Breadcrumb JSON-LD */}
-      <JsonLd data={buildBreadcrumbJsonLd(locale, { name: destination.name, slug: destination.slug })} />
+      <JsonLd data={buildBreadcrumbJsonLd(locale, { name: displayName, slug: destination.slug })} />
 
       {/* Product JSON-LD for each plan */}
       {taggedPlans.map((plan) => (
-        <JsonLd key={plan.id} data={buildProductJsonLd(plan, destination.name)} />
+        <JsonLd key={plan.id} data={buildProductJsonLd(plan, displayName)} />
       ))}
 
-      <Breadcrumb locale={locale} destinationName={destination.name} />
+      <Breadcrumb locale={locale} destinationName={displayName} />
 
       <div className="max-w-[1200px] mx-auto px-4">
         <DestinationHero
-          countryName={destination.name}
+          countryName={displayName}
           isoCode={destination.iso_code}
           isRegional={isRegional}
         />
@@ -81,7 +87,7 @@ export default async function DestinationPage({ params }: Props) {
         <section>
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-2xl font-bold dark:text-gray-100">
-              {isRegional ? `${destination.name} Plans` : 'Available Plans'}
+              {isRegional ? `${displayName} Plans` : 'Available Plans'}
             </h2>
             <PageCurrencyBar />
           </div>
@@ -111,7 +117,7 @@ export default async function DestinationPage({ params }: Props) {
 
         {/* FAQ section */}
         <div className="mt-12 mb-16">
-          <FAQSection countryName={destination.name} />
+          <FAQSection countryName={displayName} />
         </div>
       </div>
     </>

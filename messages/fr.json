@@ -24,6 +24,8 @@
     "europePlan": "Couverture Régionale",
     "europeDescription": "Forfaits multi-pays",
     "from": "à partir de",
+    "coverageRegion": "Couverture {name}",
+    "coverageGlobal": "Couverture mondiale",
     "noResults": "Aucune destination ne correspond à \"{query}\"",
     "noResultsSuggestion": "Essayez un forfait régional ou parcourez les destinations populaires",
     "noPlans": "Aucun forfait disponible",

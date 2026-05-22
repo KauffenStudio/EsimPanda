@@ -24,6 +24,8 @@
     "europePlan": "Cobertura Regional",
     "europeDescription": "Planes multi-país",
     "from": "desde",
+    "coverageRegion": "Cobertura en {name}",
+    "coverageGlobal": "Cobertura mundial",
     "noResults": "Ningún destino coincide con \"{query}\"",
     "noResultsSuggestion": "Prueba un plan regional o explora los destinos populares",
     "noPlans": "Sin planes disponibles",

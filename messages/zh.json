@@ -24,6 +24,8 @@
     "europePlan": "区域覆盖",
     "europeDescription": "多国套餐",
     "from": "起",
+    "coverageRegion": "{name}覆盖",
+    "coverageGlobal": "全球覆盖",
     "noResults": "没有与\"{query}\"匹配的目的地",
     "noResultsSuggestion": "试试区域套餐或浏览热门目的地",
     "noPlans": "暂无可用套餐",

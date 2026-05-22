@@ -14,8 +14,9 @@
 
 import { memo, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { useBrowseStore } from '@/stores/browse';
+import { localizedDestinationName } from '@/lib/i18n/destination-name';
 import type { CatalogDestination } from '@/lib/db/destinations';
 import { refetchCatalogAction } from '@/app/[locale]/browse/actions';
 import { DestinationSearch } from './destination-search';
@@ -55,14 +56,17 @@ interface RegionGroup {
 
 // Post-Phase-10 the live `region` column holds Celitech's 'country'/'region'
 // classifier — the UI groups by `region_bucket` instead. Within each continent
-// we sort alphabetically by name; localeCompare keeps accented characters
-// ordered correctly across locales.
-function groupByRegion(destinations: CatalogDestination[]): RegionGroup[] {
+// we sort alphabetically by the LOCALE-LOCALIZED name so PT users see Albânia /
+// Alemanha / França in that order, not the English-storage order. localeCompare
+// also keeps accented characters in the right slot.
+function groupByRegion(destinations: CatalogDestination[], locale: string): RegionGroup[] {
   const groups: RegionGroup[] = [];
   for (const region of REGION_ORDER) {
     const items = destinations
       .filter((d) => d.region_bucket === region)
-      .sort((a, b) => a.name.localeCompare(b.name));
+      .map((d) => ({ d, localized: localizedDestinationName(d.iso_code, d.name, locale) }))
+      .sort((a, b) => a.localized.localeCompare(b.localized, locale))
+      .map((entry) => entry.d);
     if (items.length > 0) {
       groups.push({ region, label: regionLabels[region] ?? region, items });
     }
@@ -70,7 +74,7 @@ function groupByRegion(destinations: CatalogDestination[]): RegionGroup[] {
   return groups;
 }
 
-function CountryGrid({ items }: { items: CatalogDestination[] }) {
+function CountryGrid({ items, locale }: { items: CatalogDestination[]; locale: string }) {
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5">
       {items.map((dest, index) => (
@@ -85,7 +89,7 @@ function CountryGrid({ items }: { items: CatalogDestination[] }) {
           }}
         >
           <MemoizedDestinationCard
-            name={dest.name}
+            name={localizedDestinationName(dest.iso_code, dest.name, locale)}
             slug={dest.slug}
             isoCode={dest.iso_code}
             imageUrl={dest.image_url}
@@ -115,6 +119,7 @@ export function BrowseClient({
   notice,
 }: BrowseClientProps) {
   const t = useTranslations();
+  const locale = useLocale();
   const searchQuery = useBrowseStore((state) => state.searchQuery);
   const setSearch = useBrowseStore((state) => state.setSearch);
   const isSearching = searchQuery.trim().length > 0;
@@ -135,15 +140,19 @@ export function BrowseClient({
   };
 
   // In-memory search filter — synchronous, hydration-safe, no network round-trip.
-  const filtered = useMemo(
-    () =>
-      catalog.destinations.filter((d) =>
-        d.name.toLowerCase().includes(searchQuery.toLowerCase()),
-      ),
-    [catalog.destinations, searchQuery],
-  );
+  // Match against BOTH the stored English name and the locale-localized name so
+  // a PT user searching for "França" finds the row stored as "France".
+  const filtered = useMemo(() => {
+    const q = searchQuery.toLowerCase();
+    if (!q) return catalog.destinations;
+    return catalog.destinations.filter((d) => {
+      if (d.name.toLowerCase().includes(q)) return true;
+      const localized = localizedDestinationName(d.iso_code, d.name, locale).toLowerCase();
+      return localized.includes(q);
+    });
+  }, [catalog.destinations, searchQuery, locale]);
 
-  const groups = useMemo(() => groupByRegion(filtered), [filtered]);
+  const groups = useMemo(() => groupByRegion(filtered, locale), [filtered, locale]);
   const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
 
   // Dismissable plan-unavailable notice — shown when a stale checkout link
@@ -201,7 +210,7 @@ export function BrowseClient({
       ) : isSearching ? (
         // While the user is typing, ignore the region tabs and show a flat
         // grid of every destination matching the query.
-        <CountryGrid items={filtered} />
+        <CountryGrid items={filtered} locale={locale} />
       ) : (
         <div className="flex flex-col gap-4">
           {/* Region pills — horizontal scroll on small screens, wrap on wider ones */}
@@ -248,7 +257,7 @@ export function BrowseClient({
                 transition={{ duration: 0.18, ease: 'easeOut' }}
                 aria-label={activeGroup.label}
               >
-                <CountryGrid items={activeGroup.items} />
+                <CountryGrid items={activeGroup.items} locale={locale} />
               </motion.section>
             )}
           </AnimatePresence>

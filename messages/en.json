@@ -24,6 +24,8 @@
     "europePlan": "Regional Coverage",
     "europeDescription": "Multi-country plans",
     "from": "from",
+    "coverageRegion": "{name}-Wide Coverage",
+    "coverageGlobal": "Worldwide Coverage",
     "noResults": "No destinations match \"{query}\"",
     "noResultsSuggestion": "Try a regional plan or browse popular destinations",
     "noPlans": "No plans available",

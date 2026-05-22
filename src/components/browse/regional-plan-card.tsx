@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { Badge } from '@/components/ui/badge';
 import { useCurrencyStore } from '@/stores/currency';
 import { formatPrice } from '@/lib/currency/rates';
+import { localizedDestinationName } from '@/lib/i18n/destination-name';
 import type { CatalogDestination } from '@/lib/db/destinations';
 import { TypographicFallbackCard } from './typographic-fallback-card';
 
@@ -22,6 +23,7 @@ function RegionalCard({ plan }: { plan: CatalogDestination }) {
   const currency = useCurrencyStore((s) => s.currency);
 
   const meta = regionMeta[plan.region_bucket ?? ''] || { badge: 'Multi-country', countryCount: '' };
+  const displayName = localizedDestinationName(plan.iso_code, plan.name, locale);
 
   return (
     <div
@@ -34,7 +36,7 @@ function RegionalCard({ plan }: { plan: CatalogDestination }) {
         // Existing regional-plan-card photo treatment — unchanged.
         <Image
           src={plan.image_url}
-          alt={`${plan.name} Coverage`}
+          alt={`${displayName} Coverage`}
           fill
           className="object-cover"
           sizes="(min-width: 768px) 33vw, 100vw"
@@ -42,11 +44,15 @@ function RegionalCard({ plan }: { plan: CatalogDestination }) {
       ) : (
         // Missing image — falls back to the SAME shared typographic primitive
         // as country cards (New Pitfall: regional cards must fall back identically).
-        <TypographicFallbackCard name={plan.name} />
+        <TypographicFallbackCard name={displayName} />
       )}
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
       <div className="absolute bottom-0 left-0 right-0 p-4 flex flex-col gap-1">
-        <h3 className="text-white font-bold text-lg">{plan.name}-Wide Coverage</h3>
+        <h3 className="text-white font-bold text-lg">
+          {plan.region_bucket === 'global'
+            ? t('browse.coverageGlobal')
+            : t('browse.coverageRegion', { name: displayName })}
+        </h3>
         <p className="text-white/80 text-sm">One plan, {meta.countryCount} countries</p>
         <div className="flex items-center gap-2 mt-1">
           <Badge variant="accent">{meta.badge}</Badge>

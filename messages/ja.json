@@ -24,6 +24,8 @@
     "europePlan": "地域カバレッジ",
     "europeDescription": "複数国プラン",
     "from": "から",
+    "coverageRegion": "{name}全域カバー",
+    "coverageGlobal": "ワールドワイドカバー",
     "noResults": "「{query}」に一致する目的地はありません",
     "noResultsSuggestion": "地域プランを試すか、人気の目的地をご覧ください",
     "noPlans": "利用可能なプランがありません",

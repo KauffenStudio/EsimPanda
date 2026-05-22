@@ -6,12 +6,19 @@ import type { CatalogDestination } from '@/lib/db/destinations';
 
 // next-intl
 vi.mock('next-intl', () => ({
-  useTranslations: () => (key: string) => {
+  useTranslations: () => (key: string, params?: Record<string, string>) => {
     const messages: Record<string, string> = {
       'browse.from': 'from',
       'browse.noPlans': 'No plans available',
+      'browse.coverageRegion': '{name}-Wide Coverage',
+      'browse.coverageGlobal': 'Worldwide Coverage',
     };
-    return messages[key] || key;
+    const template = messages[key] ?? key;
+    if (!params) return template;
+    return Object.entries(params).reduce(
+      (acc, [k, v]) => acc.replace(new RegExp(`\\{${k}\\}`, 'g'), v),
+      template,
+    );
   },
   useLocale: () => 'en',
 }));
