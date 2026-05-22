@@ -1,15 +1,26 @@
 'use client';
 
 import { useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { motion } from 'motion/react';
-import { ExpressCheckoutElement } from '@stripe/react-stripe-js';
+import {
+  ExpressCheckoutElement,
+  useStripe,
+  useElements,
+} from '@stripe/react-stripe-js';
 import { useCheckoutStore } from '@/stores/checkout';
-import type { StripeExpressCheckoutElementReadyEvent, StripeExpressCheckoutElementConfirmEvent } from '@stripe/stripe-js';
+import type {
+  StripeExpressCheckoutElementReadyEvent,
+  StripeExpressCheckoutElementConfirmEvent,
+} from '@stripe/stripe-js';
 
 export function ExpressCheckout() {
   const t = useTranslations('checkout.express');
+  const locale = useLocale();
+  const stripe = useStripe();
+  const elements = useElements();
   const setPaymentStatus = useCheckoutStore((s) => s.setPaymentStatus);
+  const storedEmail = useCheckoutStore((s) => s.email);
   const [available, setAvailable] = useState(false);
 
   const handleReady = (event: StripeExpressCheckoutElementReadyEvent) => {
@@ -18,9 +29,48 @@ export function ExpressCheckout() {
     }
   };
 
-  const handleConfirm = (_event: StripeExpressCheckoutElementConfirmEvent) => {
+  // CRITICAL: previously this only flipped a local status flag. The
+  // ExpressCheckoutElement does NOT auto-confirm — when the wallet UI returns
+  // (after Face ID / Touch ID / wallet authentication) Stripe expects us to
+  // explicitly call confirmPayment, otherwise the PaymentIntent stays in
+  // 'requires_confirmation' forever and the customer is never charged. The
+  // user's most-recent report ("can't pay with Apple Pay") was this bug.
+  const handleConfirm = async (event: StripeExpressCheckoutElementConfirmEvent) => {
+    if (!stripe || !elements) {
+      setPaymentStatus('failed', 'generic');
+      return;
+    }
     setPaymentStatus('processing');
-    // Stripe handles the payment confirmation via the Elements provider
+
+    // ExpressCheckoutElement may surface a billing email from the wallet (Apple
+    // Pay returns it when the user has the option enabled). Prefer that over a
+    // blank stored email so the receipt actually reaches the buyer.
+    const walletEmail = event.billingDetails?.email ?? '';
+    const email = (walletEmail || storedEmail || '').trim();
+
+    try {
+      const { error } = await stripe.confirmPayment({
+        elements,
+        confirmParams: {
+          return_url: `${window.location.origin}/${locale}/checkout/success`,
+          receipt_email: email || undefined,
+        },
+      });
+
+      if (error) {
+        let errorType: string;
+        if (error.type === 'card_error' && error.decline_code) {
+          errorType = 'declined';
+        } else if (error.type === 'api_connection_error') {
+          errorType = 'network';
+        } else {
+          errorType = 'generic';
+        }
+        setPaymentStatus('failed', errorType);
+      }
+    } catch {
+      setPaymentStatus('failed', 'generic');
+    }
   };
 
   // ExpressCheckoutElement MUST stay mounted for its onReady event to fire —
