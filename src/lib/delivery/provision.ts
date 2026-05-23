@@ -163,6 +163,34 @@ export async function provisionEsim(paymentIntentId: string, email?: string): Pr
         });
       }
 
+      // Diagnostic: log exactly what Celitech (or mock) returned so we can
+      // tell, from production logs, whether the provider returned a real eSIM
+      // or an empty profile (which is the symptom that produces an empty QR
+      // code on screen and silently bypasses real delivery).
+      console.log('[provision] purchase returned', {
+        attempt,
+        iccidLength: purchase.iccid?.length ?? 0,
+        manualActivationCodeLength: purchase.manualActivationCode?.length ?? 0,
+        hasIosLink: !!purchase.iosActivationLink,
+        hasAndroidLink: !!purchase.androidActivationLink,
+      });
+
+      // Safeguard: Celitech can return a "successful" response with a missing
+      // profile object — the adapter then surfaces all-empty fields. Marking
+      // such an order as `delivered` is worse than failing, because the
+      // frontend serves a useless QR code (LPA:1$$) and the email goes out
+      // with empty manual-setup codes. Treat empty iccid as a hard failure so
+      // the retry loop runs again and the customer ultimately sees the proper
+      // error UI instead of a broken-looking success state.
+      if (!IS_MOCK && (!purchase.iccid || !purchase.manualActivationCode)) {
+        throw new Error(
+          `Celitech returned empty profile (iccid=${purchase.iccid?.length ?? 0}, ` +
+            `manualActivationCode=${purchase.manualActivationCode?.length ?? 0}). ` +
+            `Most likely cause: sandbox credentials, or destination/duration/data combo ` +
+            `not matching any package on the Celitech side.`,
+        );
+      }
+
       const { encrypted_payload, ...deliveryData } = buildDeliveryData(purchase);
 
       const result: ProvisionResult = {
@@ -191,9 +219,14 @@ export async function provisionEsim(paymentIntentId: string, email?: string): Pr
       }
 
       // Send delivery email with real data
+      console.log('[provision] before email gate', {
+        emailPresent: !!email,
+        emailLength: email?.length ?? 0,
+      });
       if (email) {
         try {
-          await sendDeliveryEmail({
+          console.log('[provision] calling sendDeliveryEmail', { to: email });
+          const sendResult = await sendDeliveryEmail({
             to: email,
             orderId,
             planName: orderData?.planName || 'eSIM Data Plan',
@@ -207,9 +240,15 @@ export async function provisionEsim(paymentIntentId: string, email?: string): Pr
             amountPaid: orderData?.amountPaid || '-',
             currency: 'USD',
           });
+          console.log('[provision] sendDeliveryEmail returned', {
+            success: !!sendResult,
+            id: sendResult?.id,
+          });
         } catch (emailError) {
-          console.error('Failed to send delivery email:', emailError);
+          console.error('[provision] Failed to send delivery email:', emailError);
         }
+      } else {
+        console.warn('[provision] skipping email send — no email available');
       }
 
       return result;

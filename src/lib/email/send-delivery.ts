@@ -1,3 +1,4 @@
+import { createElement } from 'react';
 import { Resend } from 'resend';
 import QRCode from 'qrcode';
 import { DeliveryEmail } from './templates/delivery-email';
@@ -52,35 +53,66 @@ export async function sendDeliveryEmail(
   // is acceptable.
   const setupGuideUrl = `https://esimpanda.co/en/setup?order=${params.orderId}`;
 
-  const { data, error } = await getResend().emails.send({
-    from: 'eSIM Panda <noreply@esimpanda.co>',
-    replyTo: 'geral@kauffen.com',
+  // Diagnostic logging — captured by Vercel runtime logs so we can see exactly
+  // what reached this function and what Resend returned. Sanitize the API key
+  // (just confirm whether it's set + its prefix) and never log the actual key.
+  const apiKey = process.env.RESEND_API_KEY ?? '';
+  console.log('[send-delivery] start', {
     to: params.to,
-    subject: `Your eSIM for ${params.destination} is ready!`,
-    react: DeliveryEmail({
-      orderId: params.orderId,
-      planName: params.planName,
-      destination: params.destination,
-      dataGb: params.dataGb,
-      durationDays: params.durationDays,
-      qrCodeDataUrl,
-      smdpAddress: params.smdpAddress,
-      activationCode: params.activationCode,
-      iosLink: params.iosLink,
-      androidLink: params.androidLink,
-      amountPaid: params.amountPaid,
-      currency: params.currency,
-      discount: params.discount,
-      vat: params.vat,
-      setupGuideUrl,
-      email: params.to,
-    }),
+    apiKeyPrefix: apiKey ? apiKey.slice(0, 5) + '...' : 'EMPTY',
+    apiKeyLength: apiKey.length,
+    smdpAddressLength: params.smdpAddress.length,
+    activationCodeLength: params.activationCode.length,
+    destination: params.destination,
   });
 
-  if (error) {
-    console.error('Failed to send delivery email:', error);
+  // Use createElement explicitly. Calling `DeliveryEmail({...})` returns the
+  // component's inner JSX tree (a render result), whereas Resend's @react-email
+  // pipeline expects a React Element with the component reference attached so
+  // it can do server-side rendering. The previous form (`react: Component({...})`)
+  // could silently fail under certain conditions.
+  const emailElement = createElement(DeliveryEmail, {
+    orderId: params.orderId,
+    planName: params.planName,
+    destination: params.destination,
+    dataGb: params.dataGb,
+    durationDays: params.durationDays,
+    qrCodeDataUrl,
+    smdpAddress: params.smdpAddress,
+    activationCode: params.activationCode,
+    iosLink: params.iosLink,
+    androidLink: params.androidLink,
+    amountPaid: params.amountPaid,
+    currency: params.currency,
+    discount: params.discount,
+    vat: params.vat,
+    setupGuideUrl,
+    email: params.to,
+  });
+
+  let response;
+  try {
+    response = await getResend().emails.send({
+      from: 'eSIM Panda <noreply@esimpanda.co>',
+      replyTo: 'geral@kauffen.com',
+      to: params.to,
+      subject: `Your eSIM for ${params.destination} is ready!`,
+      react: emailElement,
+    });
+  } catch (sdkError) {
+    // The Resend SDK can throw (not always return { error }) on network/auth
+    // failures, malformed React payloads, etc. Without this catch the error
+    // bubbles up to provision.ts where it's also swallowed — but at least
+    // here we get the full error in logs first.
+    console.error('[send-delivery] Resend SDK threw:', sdkError);
     return null;
   }
 
+  const { data, error } = response;
+  if (error) {
+    console.error('[send-delivery] Resend returned error:', error);
+    return null;
+  }
+  console.log('[send-delivery] success', { id: data?.id, to: params.to });
   return data;
 }
