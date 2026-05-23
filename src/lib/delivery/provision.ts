@@ -212,6 +212,13 @@ export async function provisionEsim(paymentIntentId: string, email?: string): Pr
             esim_smdp_address_encrypted: encrypt(deliveryData.smdp_address),
             esim_status: 'provisioned',
             status: 'delivered',
+            // Backfill the email if the stored value is empty. /create-intent
+            // creates the order before the user has typed an address, so the
+            // column is '' until we get here. /api/delivery/email-credentials
+            // (the "Email me these details" button on the success page) looks
+            // up by stored email, so without this update that endpoint
+            // rejects every request with "Order not found".
+            ...(email && !orderData?.orderEmail ? { email } : {}),
           });
         } catch (dbErr) {
           console.error('DB update failed after provisioning:', dbErr);

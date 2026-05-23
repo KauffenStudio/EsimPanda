@@ -166,6 +166,15 @@ export async function updateOrderProvisionData(
     esim_smdp_address_encrypted: string;
     esim_status: string;
     status: string;
+    /**
+     * Optional: persist the buyer's email to the order row. The order is
+     * originally created with email='' in /api/checkout/create-intent (before
+     * the user has typed anything), and the form value never makes it back to
+     * the database until now. Without this, dashboard "resend delivery email"
+     * lookups by email fail with "Order not found" because the stored email
+     * is empty.
+     */
+    email?: string;
   },
 ): Promise<boolean> {
   const supabase = createServiceClient();
