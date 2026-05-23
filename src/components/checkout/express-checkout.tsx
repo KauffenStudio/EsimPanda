@@ -49,10 +49,17 @@ export function ExpressCheckout() {
     const email = (walletEmail || storedEmail || '').trim();
 
     try {
+      // Email must travel via the return_url so it flows through the success
+      // page → DeliveryPage → /api/delivery/provision → sendDeliveryEmail.
+      // Otherwise the customer's eSIM email never gets sent (the order was
+      // created at checkout-mount time with an empty email field).
+      const successUrl = email
+        ? `${window.location.origin}/${locale}/checkout/success?email=${encodeURIComponent(email)}`
+        : `${window.location.origin}/${locale}/checkout/success`;
       const { error } = await stripe.confirmPayment({
         elements,
         confirmParams: {
-          return_url: `${window.location.origin}/${locale}/checkout/success`,
+          return_url: successUrl,
           receipt_email: email || undefined,
         },
       });
