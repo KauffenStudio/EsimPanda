@@ -13,7 +13,8 @@ import { LowDataBanner } from '@/components/dashboard/low-data-banner';
 import { UsageTimestamp } from '@/components/dashboard/usage-timestamp';
 import { EsimGrid } from '@/components/dashboard/esim-grid';
 import { TopUpModal } from '@/components/dashboard/top-up-modal';
-import { NotificationPrefs } from '@/components/dashboard/notification-prefs';
+// NotificationPrefs intentionally not imported — see comment below.
+// import { NotificationPrefs } from '@/components/dashboard/notification-prefs';
 import { PurchaseHistoryList } from '@/components/dashboard/purchase-history-list';
 import { WelcomeDiscountBanner } from '@/components/marketing/welcome-discount-banner';
 import { resendDeliveryEmail } from '@/lib/dashboard/actions';
@@ -180,7 +181,13 @@ export default function DashboardPage() {
         </AnimatePresence>
       </div>
 
-      <NotificationPrefs />
+      {/* Notification preferences hidden until the dispatcher is built.
+          The toggles only persist to localStorage and there is no server-side
+          job that reads them to send expiry / usage / promo notifications, so
+          surfacing the UI would mislead customers into thinking they are
+          enrolled. The component still exists at
+          components/dashboard/notification-prefs.tsx — re-enable by restoring
+          the import + render once cron-based alerts are wired up. */}
 
       {/* Top-up modal — always mounted, visibility controlled by store */}
       <TopUpModal />
