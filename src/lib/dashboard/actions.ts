@@ -5,6 +5,7 @@ import { mockDashboardEsims } from '@/lib/mock-data/dashboard';
 import { createClient as createServerSupabase } from '@/lib/supabase/server';
 import { createServiceClient } from '@/lib/supabase/service';
 import { decrypt } from '@/lib/delivery/encryption';
+import { parseLpaUri } from '@/lib/delivery/lpa';
 import { sendDeliveryEmail } from '@/lib/email/send-delivery';
 import type { DashboardEsim } from './types';
 
@@ -116,7 +117,13 @@ export async function resendDeliveryEmail(
   } catch {
     return { success: false, error: 'Stored credentials unreadable' };
   }
-  if (!credentials.activation_code || !credentials.smdp_address) {
+  // Backward compat: older orders stored full LPA URI in `activation_code`;
+  // newer ones store just the matching id. Normalize so QR builders and
+  // manual-entry display always get clean parts.
+  const parsedLpa = parseLpaUri(credentials.activation_code ?? '');
+  const cleanActivationCode = parsedLpa.matchingId;
+  const cleanSmdpAddress = credentials.smdp_address || parsedLpa.smdpAddress;
+  if (!cleanActivationCode || !cleanSmdpAddress) {
     return { success: false, error: 'Stored credentials incomplete' };
   }
 
@@ -135,8 +142,8 @@ export async function resendDeliveryEmail(
     destination: destination?.name ?? 'Your destination',
     dataGb: plan?.data_gb != null ? String(plan.data_gb) : '-',
     durationDays: plan?.duration_days != null ? String(plan.duration_days) : '-',
-    smdpAddress: credentials.smdp_address,
-    activationCode: credentials.activation_code,
+    smdpAddress: cleanSmdpAddress,
+    activationCode: cleanActivationCode,
     amountPaid: (order.amount_paid_cents / 100).toFixed(2),
     currency: order.currency,
   });

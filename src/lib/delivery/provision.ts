@@ -1,4 +1,5 @@
 import { encrypt, decrypt } from './encryption';
+import { parseLpaUri } from './lpa';
 import { mockProvision } from '@/lib/mock-data/delivery';
 import { createProvider } from '@/lib/esim/provider';
 import { toWholesaleIso } from '@/lib/esim/destination-iso';
@@ -22,17 +23,12 @@ import type { NormalizedPurchase } from '@/lib/esim/types';
  */
 export const provisioningState = new Map<string, ProvisionResult>();
 
-function extractSmdpAddress(activationCode: string): string {
-  const match = activationCode.match(/LPA:1\$([^$]+)\$/);
-  return match?.[1] ?? '';
-}
-
 function buildDeliveryData(purchase: NormalizedPurchase): DeliveryData & { encrypted_payload: string } {
-  const smdpAddress = extractSmdpAddress(purchase.manualActivationCode);
+  const { smdpAddress, matchingId } = parseLpaUri(purchase.manualActivationCode);
 
   const encrypted_payload = encrypt(
     JSON.stringify({
-      activation_code: purchase.manualActivationCode,
+      activation_code: matchingId,
       smdp_address: smdpAddress,
       qr_base64: purchase.activationQrBase64,
     }),
@@ -41,7 +37,7 @@ function buildDeliveryData(purchase: NormalizedPurchase): DeliveryData & { encry
   return {
     iccid: purchase.iccid,
     activation_qr_base64: purchase.activationQrBase64,
-    manual_activation_code: purchase.manualActivationCode,
+    manual_activation_code: matchingId,
     smdp_address: smdpAddress,
     ios_activation_link: purchase.iosActivationLink,
     android_activation_link: purchase.androidActivationLink,
@@ -97,6 +93,12 @@ export async function provisionEsim(paymentIntentId: string, email?: string): Pr
         order.esim_qr_encrypted
       ) {
         const qrData = JSON.parse(decrypt(order.esim_qr_encrypted));
+        // Backward compat: orders provisioned before the LPA-parsing fix have
+        // the full LPA URI (LPA:1$smdp$id) saved in `activation_code`. Normalize
+        // at read time so the UI always sees just the matching id, regardless
+        // of when the order was stored.
+        const storedCode: string = qrData.activation_code ?? '';
+        const { matchingId, smdpAddress: smdpFromCode } = parseLpaUri(storedCode);
         const done: ProvisionResult = {
           status: 'ready',
           order_id: orderId,
@@ -104,8 +106,8 @@ export async function provisionEsim(paymentIntentId: string, email?: string): Pr
           data: {
             iccid: order.esim_iccid,
             activation_qr_base64: qrData.qr_base64 ?? '',
-            manual_activation_code: qrData.activation_code ?? '',
-            smdp_address: qrData.smdp_address ?? '',
+            manual_activation_code: matchingId,
+            smdp_address: qrData.smdp_address || smdpFromCode,
           },
         };
         provisioningState.set(paymentIntentId, done);

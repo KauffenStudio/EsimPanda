@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { sendDeliveryEmail } from '@/lib/email/send-delivery';
 import { getOrderByPaymentIntent } from '@/lib/db/orders';
 import { decrypt } from '@/lib/delivery/encryption';
+import { parseLpaUri } from '@/lib/delivery/lpa';
 
 // SECURITY: this endpoint sends activation credentials by email and ships under
 // the eSIM Panda brand. Earlier it accepted arbitrary { email, smdp_address,
@@ -58,8 +59,14 @@ export async function POST(request: Request) {
       );
     }
 
-    const activationCode = credentials.activation_code;
-    const smdpAddress = credentials.smdp_address;
+    // Backward compat: older orders stored the full LPA URI in `activation_code`;
+    // newer ones store just the matching id. Normalize here so the email always
+    // gets a clean matching id (the QR builder re-assembles LPA:1$smdp$id).
+    const { matchingId, smdpAddress: smdpFromCode } = parseLpaUri(
+      credentials.activation_code ?? '',
+    );
+    const activationCode = matchingId;
+    const smdpAddress = credentials.smdp_address || smdpFromCode;
     if (!activationCode || !smdpAddress) {
       return NextResponse.json(
         { error: 'Stored credentials incomplete' },
