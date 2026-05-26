@@ -30,3 +30,12 @@ export interface PurchaseInput {
   email?: string;
   referenceId?: string;
 }
+
+export interface NormalizedConsumption {
+  /** Bytes remaining on the purchase. Celitech doesn't return "used", only "remaining" — derive used = total - remaining at the caller. */
+  remainingBytes: number;
+  /** Remaining GB (Celitech rounds; treat as ~2 decimals). */
+  remainingGb: number;
+  /** 'ACTIVE' once the user has started consuming data, 'NOT_ACTIVE' before first connection. */
+  connectivityStatus: 'ACTIVE' | 'NOT_ACTIVE' | string;
+}

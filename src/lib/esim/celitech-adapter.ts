@@ -3,6 +3,7 @@ import { Celitech } from 'celitech-sdk';
 import QRCode from 'qrcode';
 import type { ESIMProvider } from './provider';
 import type {
+  NormalizedConsumption,
   NormalizedDestination,
   NormalizedPackage,
   NormalizedPurchase,
@@ -103,6 +104,32 @@ export class CelitechAdapter implements ESIMProvider {
       iosActivationLink: e?.iosActivationLink,
       androidActivationLink: e?.androidActivationLink,
       status: mapStatus(e?.status),
+    };
+  }
+
+  /**
+   * Live consumption for an eSIM. Celitech doesn't have an iccid → consumption
+   * endpoint directly — we have to translate iccid → purchaseId via
+   * listPurchases, then ask getPurchaseConsumption for the live remaining.
+   * Two API calls per refresh; cache the purchaseId per-iccid at the route
+   * layer if this becomes a hotspot.
+   */
+  async getConsumption(iccid: string): Promise<NormalizedConsumption | null> {
+    const listResponse = await this.client.purchases.listPurchases({ iccid, limit: 1 } as any);
+    const list = unwrap<{ purchases?: Array<{ id?: string }> }>(listResponse);
+    const purchaseId = list?.purchases?.[0]?.id;
+    if (!purchaseId) return null;
+
+    const consumeResponse = await this.client.purchases.getPurchaseConsumption(purchaseId);
+    const c = unwrap<{
+      dataUsageRemainingInBytes?: number;
+      dataUsageRemainingInGb?: number;
+      status?: string;
+    }>(consumeResponse);
+    return {
+      remainingBytes: c?.dataUsageRemainingInBytes ?? 0,
+      remainingGb: c?.dataUsageRemainingInGb ?? 0,
+      connectivityStatus: c?.status ?? 'NOT_ACTIVE',
     };
   }
 
