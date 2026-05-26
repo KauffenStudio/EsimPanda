@@ -16,6 +16,7 @@
     "@capacitor/push-notifications": "^8.0.3",
     "@capacitor/splash-screen": "^8.0.1",
     "@react-email/components": "^1.0.12",
+    "@react-email/render": "^2.0.8",
     "@stripe/react-stripe-js": "^6.2.0",
     "@stripe/stripe-js": "^9.2.0",
     "@supabase/ssr": "^0.10.2",

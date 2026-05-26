@@ -1,5 +1,6 @@
 import { createElement } from 'react';
 import { Resend } from 'resend';
+import { render } from '@react-email/render';
 import QRCode from 'qrcode';
 import { DeliveryEmail } from './templates/delivery-email';
 
@@ -90,6 +91,19 @@ export async function sendDeliveryEmail(
     email: params.to,
   });
 
+  // Pre-render the React Email component to HTML *here*, then send `html` to
+  // Resend instead of `react`. Resend's internal renderer goes through
+  // react-dom/server APIs that misbehave under React 19 + Next.js 15 minified
+  // builds (manifests as `TypeError: b is not a function` in prod). Pre-rendering
+  // sidesteps that entirely — Resend just sends the string we hand it.
+  let html: string;
+  try {
+    html = await render(emailElement);
+  } catch (renderError) {
+    console.error('[send-delivery] render() threw:', renderError);
+    return null;
+  }
+
   let response;
   try {
     response = await getResend().emails.send({
@@ -97,7 +111,7 @@ export async function sendDeliveryEmail(
       replyTo: 'geral@kauffen.com',
       to: params.to,
       subject: `Your eSIM for ${params.destination} is ready!`,
-      react: emailElement,
+      html,
     });
   } catch (sdkError) {
     // The Resend SDK can throw (not always return { error }) on network/auth

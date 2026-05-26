@@ -1,4 +1,6 @@
+import { createElement } from 'react';
 import { Resend } from 'resend';
+import { render } from '@react-email/render';
 import { ResetEmail } from './templates/reset-email';
 
 // Lazy-initialize to avoid constructor error when RESEND_API_KEY is not set (e.g. in tests/mock mode)
@@ -20,12 +22,14 @@ export async function sendResetEmail(params: {
     return { id: 'mock_reset_email_id' };
   }
 
+  const html = await render(createElement(ResetEmail, { resetUrl: params.resetUrl }));
+
   const { data, error } = await getResend().emails.send({
     from: 'eSIM Panda <noreply@esimpanda.co>',
     replyTo: 'geral@kauffen.com',
     to: params.to,
     subject: 'Reset your eSIM Panda password',
-    react: ResetEmail({ resetUrl: params.resetUrl }),
+    html,
   });
 
   if (error) {
