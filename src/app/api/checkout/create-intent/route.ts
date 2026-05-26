@@ -5,6 +5,7 @@ import { calculatePrice } from '@/lib/checkout/pricing';
 import { calculateTax } from '@/lib/checkout/tax';
 import { IS_MOCK } from '@/lib/config/mode';
 import { createOrder } from '@/lib/db/orders';
+import { createClient as createServerSupabase } from '@/lib/supabase/server';
 
 export async function POST(request: Request) {
   try {
@@ -53,7 +54,20 @@ export async function POST(request: Request) {
       receipt_email: email || undefined,
     });
 
-    // Create order in DB
+    // If the customer is currently authenticated, attach their user_id to the
+    // order at creation time so the dashboard query can find it immediately.
+    // Without this the order is orphaned (user_id=null) and only gets linked
+    // retroactively on next sign-in via linkOrdersByEmail. A logged-in
+    // customer expects to see their fresh purchase in their dashboard.
+    let userId: string | null = null;
+    try {
+      const supabase = await createServerSupabase();
+      const { data } = await supabase.auth.getUser();
+      userId = data.user?.id ?? null;
+    } catch (err) {
+      console.warn('[create-intent] auth.getUser failed, treating as guest:', err);
+    }
+
     await createOrder({
       email: email || '',
       plan_id,
@@ -61,6 +75,7 @@ export async function POST(request: Request) {
       amount_paid_cents: tax.total_cents,
       coupon_code: coupon_code || undefined,
       discount_cents: pricing.discount_cents,
+      user_id: userId ?? undefined,
     });
 
     return NextResponse.json({
