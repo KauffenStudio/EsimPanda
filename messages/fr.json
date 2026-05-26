@@ -438,6 +438,22 @@
       "final": "Nous travaillons encore sur votre eSIM. Vous le recevrez par email dans quelques minutes.",
       "contact": "Besoin d'aide ? Consultez notre page d'aide"
     },
+    "outOfStock": {
+      "heading": "Temporairement en rupture de stock",
+      "body": "Notre fournisseur a manqué d'eSIMs pour votre destination au moment où votre paiement a été traité. Nous vous avons remboursé intégralement automatiquement.",
+      "refundNote": "Le remboursement apparaît généralement sur votre compte sous 5 à 10 jours ouvrables. Email de confirmation en route.",
+      "contact": "Besoin d'aide ? Consultez notre page d'aide"
+    },
+    "setupNotice": {
+      "title": "Configuration rapide — à lire avant de voyager",
+      "step1Title": "Installer",
+      "step1Body": "Appuyez sur Installer ci-dessus (sur votre téléphone) ou scannez le QR depuis Réglages → Données cellulaires → Ajouter une eSIM → Utiliser un code QR.",
+      "step2Title": "Activer Données en itinérance",
+      "step2Body": "Réglages → Données cellulaires → touchez la nouvelle ligne (elle s'affiche comme 'Orange France' — c'est normal) → activez Données en itinérance. Sans ceci l'eSIM est installé mais n'a pas internet.",
+      "step3Title": "C'est terminé",
+      "step3Body": "À votre arrivée à destination, votre forfait s'active automatiquement.",
+      "carrierNote": "Pourquoi 'Orange France' ? C'est l'opérateur d'ancrage — toutes les eSIM de voyage fonctionnent ainsi. Vos données sont facturées depuis votre forfait eSIM Panda, pas depuis Orange. Aucuns frais d'itinérance surprise."
+    },
     "email": {
       "reminder": "Nous avons aussi tout envoyé à {email}",
       "subject": "Votre eSIM pour {destination} est prêt !",

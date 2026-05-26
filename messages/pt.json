@@ -444,6 +444,16 @@
       "refundNote": "O reembolso costuma aparecer na sua conta em 5–10 dias úteis. Vai receber um email de confirmação.",
       "contact": "Precisa de ajuda? Visite a nossa página de Ajuda"
     },
+    "setupNotice": {
+      "title": "Configuração rápida — leia antes de viajar",
+      "step1Title": "Instalar",
+      "step1Body": "Toque em Instalar acima (no seu telemóvel) ou leia o QR em Definições → Dados móveis → Adicionar eSIM → Usar Código QR.",
+      "step2Title": "Ativar Roaming de dados",
+      "step2Body": "Definições → Dados móveis → selecione a nova linha (vai aparecer como 'Orange France' — é normal) → ative Roaming de dados. Sem isto o eSIM fica instalado mas sem internet.",
+      "step3Title": "Está pronto",
+      "step3Body": "Quando chegar ao destino, o seu plano ativa-se automaticamente.",
+      "carrierNote": "Porque aparece 'Orange France'? É o operador âncora — todos os eSIMs de viagem funcionam assim. Os dados são debitados do seu plano eSIM Panda, não da Orange. Sem cobranças surpresa de roaming."
+    },
     "email": {
       "reminder": "Também enviámos tudo para {email}",
       "subject": "O seu eSIM para {destination} está pronto!",

@@ -7,6 +7,7 @@ import { detectDeviceFamily, isMobile } from './device-detection';
 import { QrCodeDisplay } from './qr-code-display';
 import { InstallButton } from './install-button';
 import { ManualCodes } from './manual-codes';
+import { SetupNotice } from './setup-notice';
 
 interface EsimCredentialsProps {
   data: DeliveryData;
@@ -44,6 +45,8 @@ export function EsimCredentials({ data }: EsimCredentialsProps) {
       ) : (
         <QrCodeDisplay data={qrData} />
       )}
+
+      <SetupNotice />
 
       <ManualCodes
         smdpAddress={data.smdp_address}

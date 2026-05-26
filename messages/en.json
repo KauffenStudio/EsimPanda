@@ -444,6 +444,16 @@
       "refundNote": "The refund usually shows up in your bank within 5–10 business days. Confirmation email on the way.",
       "contact": "Need help? Visit our Help page"
     },
+    "setupNotice": {
+      "title": "Quick setup — please read",
+      "step1Title": "Install",
+      "step1Body": "Tap Install above (on your phone) or scan the QR from Settings → Cellular → Add eSIM → Use QR Code.",
+      "step2Title": "Turn ON Data Roaming",
+      "step2Body": "Settings → Cellular → tap the new line (it shows as 'Orange France' — that's normal) → turn on Data Roaming. Without this the eSIM has no internet.",
+      "step3Title": "You're done",
+      "step3Body": "When you arrive at your destination, your plan activates automatically.",
+      "carrierNote": "Why does it say 'Orange France'? That's the anchor carrier — every travel eSIM works this way. Your data is billed from your eSIM Panda plan, not from Orange. No surprise roaming charges."
+    },
     "email": {
       "reminder": "We also sent everything to {email}",
       "subject": "Your eSIM for {destination} is ready!",

@@ -438,6 +438,22 @@
       "final": "我们仍在处理您的eSIM。几分钟内将通过邮件发送给您。",
       "contact": "需要帮助？访问我们的帮助页面"
     },
+    "outOfStock": {
+      "heading": "暂时缺货",
+      "body": "在您支付的瞬间，我们的供应商目的地eSIM库存已用完。我们已自动为您全额退款。",
+      "refundNote": "退款通常会在5-10个工作日内显示在您的银行账户中。确认邮件即将发送。",
+      "contact": "需要帮助？访问我们的帮助页面"
+    },
+    "setupNotice": {
+      "title": "快速设置 — 旅行前请阅读",
+      "step1Title": "安装",
+      "step1Body": "点击上方的安装按钮（在您的手机上），或从 设置 → 蜂窝网络 → 添加 eSIM → 使用二维码 扫描二维码。",
+      "step2Title": "开启数据漫游",
+      "step2Body": "设置 → 蜂窝网络 → 点击新线路（显示为 'Orange France' — 这是正常的）→ 开启数据漫游。否则 eSIM 已安装但无法上网。",
+      "step3Title": "完成",
+      "step3Body": "当您到达目的地时，您的套餐会自动激活。",
+      "carrierNote": "为什么显示 'Orange France'？这是锚定运营商 — 所有旅行 eSIM 都是这样工作的。您的数据从 eSIM Panda 套餐扣费，不是 Orange。没有意外的漫游费用。"
+    },
     "email": {
       "reminder": "我们也已将所有信息发送至 {email}",
       "subject": "您的{destination} eSIM已就绪！",

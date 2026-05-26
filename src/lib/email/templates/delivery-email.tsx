@@ -191,6 +191,53 @@ export function DeliveryEmail({
           {/* Divider */}
           <Hr style={{ borderColor: '#E5E5E5', margin: '24px 40px' }} />
 
+          {/* Quick setup — high-impact UX notice. Customers who skip this end
+              up in support tickets ("eSIM installed but no internet"). Two
+              things must be communicated: (1) Data Roaming must be ON for the
+              new line, (2) the carrier name on iOS is Orange France even when
+              they're in another country — that's expected, not a mistake. */}
+          <Section style={{ padding: '0 40px', margin: '0 0 24px' }}>
+            <div
+              style={{
+                background: '#FFF8E1',
+                border: '1px solid #F5C16C',
+                borderRadius: '8px',
+                padding: '16px 18px',
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: '15px',
+                  fontWeight: 'bold',
+                  color: '#7A4F00',
+                  fontFamily,
+                  margin: '0 0 10px',
+                }}
+              >
+                Quick setup (read this!)
+              </Text>
+              <Text style={{ fontSize: '14px', color: '#1A1A1A', fontFamily, margin: '0 0 8px', lineHeight: '1.55' }}>
+                <b>1. Install the eSIM</b> — tap the install button above, or scan the QR from{' '}
+                <i>Settings → Cellular → Add eSIM → Use QR Code</i>.
+              </Text>
+              <Text style={{ fontSize: '14px', color: '#1A1A1A', fontFamily, margin: '0 0 8px', lineHeight: '1.55' }}>
+                <b>2. Turn ON Data Roaming for the new line.</b> Go to{' '}
+                <i>Settings → Cellular</i>, tap the newly added line (it will be labelled{' '}
+                <b>Orange France</b> — that is normal), and switch on <b>Data Roaming</b>. Without
+                this, the eSIM installs but has no internet.
+              </Text>
+              <Text style={{ fontSize: '14px', color: '#1A1A1A', fontFamily, margin: '0 0 8px', lineHeight: '1.55' }}>
+                <b>3. You&apos;re done.</b> When you arrive at {destination}, the data plan you
+                bought activates automatically.
+              </Text>
+              <Text style={{ fontSize: '13px', color: '#7A4F00', fontFamily, margin: '12px 0 0', lineHeight: '1.5' }}>
+                Why does it say <b>Orange France</b>? That is the anchor carrier — every travel
+                eSIM works like this. Your data is billed from your eSIM Panda plan, not from
+                Orange. There are no surprise roaming charges.
+              </Text>
+            </div>
+          </Section>
+
           {/* Manual codes section */}
           <Section style={{ padding: '0 40px' }}>
             <Text
