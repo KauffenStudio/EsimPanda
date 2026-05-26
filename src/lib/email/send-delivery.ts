@@ -30,22 +30,37 @@ export interface SendDeliveryEmailParams {
   vat?: string;
 }
 
+export interface SendDeliveryEmailResult {
+  ok: true;
+  id: string;
+}
+export interface SendDeliveryEmailError {
+  ok: false;
+  error: string;
+}
+
 export async function sendDeliveryEmail(
   params: SendDeliveryEmailParams
-): Promise<{ id: string } | null> {
-  // Generate QR code as data URL for email embedding
+): Promise<SendDeliveryEmailResult | SendDeliveryEmailError> {
+  // Generate QR code as a PNG Buffer. We attach it inline via CID rather than
+  // inlining a `data:image/png;base64,...` URI, because Gmail (and several
+  // other clients) strip data-URI <img src> from HTML email bodies — that
+  // would render an empty box where the QR should be. The cid reference below
+  // points at the attachment named "qr-code" further down.
   const qrContent = `LPA:1$${params.smdpAddress}$${params.activationCode}`;
-  const qrCodeDataUrl = await QRCode.toDataURL(qrContent, {
+  const qrCodeBuffer = await QRCode.toBuffer(qrContent, {
     width: 200,
     margin: 2,
     color: { dark: '#000000', light: '#FFFFFF' },
   });
+  const qrCodeCid = 'qr-code';
+  const qrCodeDataUrl = `cid:${qrCodeCid}`;
 
   // In mock mode, skip actual sending
   if (process.env.NEXT_PUBLIC_STRIPE_MOCK === 'true') {
     console.log('[MOCK] Would send delivery email to:', params.to);
-    console.log('[MOCK] QR data URL generated, length:', qrCodeDataUrl.length);
-    return { id: 'mock_email_id' };
+    console.log('[MOCK] QR buffer generated, bytes:', qrCodeBuffer.length);
+    return { ok: true, id: 'mock_email_id' };
   }
 
   // TODO: PLACEHOLDER -- /en/setup page does not exist yet. This URL will become
@@ -100,8 +115,9 @@ export async function sendDeliveryEmail(
   try {
     html = await render(emailElement);
   } catch (renderError) {
+    const msg = renderError instanceof Error ? renderError.message : String(renderError);
     console.error('[send-delivery] render() threw:', renderError);
-    return null;
+    return { ok: false, error: `render: ${msg}` };
   }
 
   let response;
@@ -112,21 +128,31 @@ export async function sendDeliveryEmail(
       to: params.to,
       subject: `Your eSIM for ${params.destination} is ready!`,
       html,
+      attachments: [
+        {
+          filename: 'esim-qr.png',
+          content: qrCodeBuffer,
+          contentType: 'image/png',
+          contentId: qrCodeCid,
+        },
+      ],
     });
   } catch (sdkError) {
     // The Resend SDK can throw (not always return { error }) on network/auth
     // failures, malformed React payloads, etc. Without this catch the error
     // bubbles up to provision.ts where it's also swallowed — but at least
     // here we get the full error in logs first.
+    const msg = sdkError instanceof Error ? sdkError.message : String(sdkError);
     console.error('[send-delivery] Resend SDK threw:', sdkError);
-    return null;
+    return { ok: false, error: `resend-sdk: ${msg}` };
   }
 
   const { data, error } = response;
   if (error) {
     console.error('[send-delivery] Resend returned error:', error);
-    return null;
+    const message = (error as { message?: string }).message ?? JSON.stringify(error);
+    return { ok: false, error: `resend-api: ${message}` };
   }
   console.log('[send-delivery] success', { id: data?.id, to: params.to });
-  return data;
+  return { ok: true, id: data?.id ?? 'unknown' };
 }

@@ -3,6 +3,9 @@ import { mockProvision } from '@/lib/mock-data/delivery';
 import { createProvider } from '@/lib/esim/provider';
 import { toWholesaleIso } from '@/lib/esim/destination-iso';
 import { sendDeliveryEmail } from '@/lib/email/send-delivery';
+import { sendDeliveryFailureAlert } from '@/lib/email/send-admin-alert';
+import { sendOutOfStockEmail } from '@/lib/email/send-out-of-stock';
+import { refundChargeForOutOfStock } from './refund';
 import { IS_MOCK } from '@/lib/config/mode';
 import {
   getOrderByPaymentIntent,
@@ -53,7 +56,12 @@ function generateOrderId(paymentIntentId: string): string {
 export async function provisionEsim(paymentIntentId: string, email?: string): Promise<ProvisionResult> {
   // Idempotency: return cached result
   const existing = provisioningState.get(paymentIntentId);
-  if (existing && (existing.status === 'ready' || existing.status === 'failed')) {
+  if (
+    existing &&
+    (existing.status === 'ready' ||
+      existing.status === 'failed' ||
+      existing.status === 'out_of_stock')
+  ) {
     return existing;
   }
 
@@ -102,6 +110,20 @@ export async function provisionEsim(paymentIntentId: string, email?: string): Pr
         };
         provisioningState.set(paymentIntentId, done);
         return done;
+      }
+
+      // Idempotency 1b — already refunded for out-of-stock: surface that status
+      // so the polling success page renders the apology screen, not a stuck
+      // spinner. Without this the late caller would fall through and either
+      // attempt provisioning again or get parked in `provisioning` forever.
+      if (order && order.status === 'refunded_out_of_stock') {
+        const result: ProvisionResult = {
+          status: 'out_of_stock',
+          order_id: orderId,
+          error: 'This destination was temporarily out of stock. Your payment has been refunded.',
+        };
+        provisioningState.set(paymentIntentId, result);
+        return result;
       }
 
       // Idempotency 2 — atomic single-winner claim. The Stripe webhook and the
@@ -231,13 +253,15 @@ export async function provisionEsim(paymentIntentId: string, email?: string): Pr
         emailLength: email?.length ?? 0,
       });
       if (email) {
+        const destination = orderData?.destination || 'Your destination';
+        let failureReason: string | null = null;
         try {
           console.log('[provision] calling sendDeliveryEmail', { to: email });
           const sendResult = await sendDeliveryEmail({
             to: email,
             orderId,
             planName: orderData?.planName || 'eSIM Data Plan',
-            destination: orderData?.destination || 'Your destination',
+            destination,
             dataGb: orderData?.dataGb || '-',
             durationDays: orderData?.durationDays || '-',
             smdpAddress: deliveryData.smdp_address,
@@ -247,12 +271,26 @@ export async function provisionEsim(paymentIntentId: string, email?: string): Pr
             amountPaid: orderData?.amountPaid || '-',
             currency: 'USD',
           });
-          console.log('[provision] sendDeliveryEmail returned', {
-            success: !!sendResult,
-            id: sendResult?.id,
-          });
+          console.log('[provision] sendDeliveryEmail returned', sendResult);
+          if (!sendResult.ok) {
+            failureReason = sendResult.error;
+          }
         } catch (emailError) {
+          const msg = emailError instanceof Error ? emailError.message : String(emailError);
           console.error('[provision] Failed to send delivery email:', emailError);
+          failureReason = `unhandled: ${msg}`;
+        }
+
+        // Fire-and-forget admin alert when the customer email fails. We do not
+        // await this — provision should not block on a courtesy notification.
+        if (failureReason) {
+          void sendDeliveryFailureAlert({
+            orderId,
+            paymentIntentId,
+            customerEmail: email,
+            destination,
+            failureReason,
+          });
         }
       } else {
         console.warn('[provision] skipping email send — no email available');
@@ -261,6 +299,21 @@ export async function provisionEsim(paymentIntentId: string, email?: string): Pr
       return result;
     } catch (error) {
       lastError = error instanceof Error ? error : new Error(String(error));
+
+      // Out-of-stock from Celitech is non-transient — retrying won't summon
+      // new profiles. Bail out, refund the customer, notify both sides, and
+      // surface a distinct status so the UI can show an apology instead of a
+      // generic provisioning error.
+      if (isCelitechOutOfStock(lastError)) {
+        return await handleOutOfStock({
+          paymentIntentId,
+          orderId,
+          customerEmail: email,
+          destination: orderData?.destination,
+          amount: orderData?.amountPaid,
+        });
+      }
+
       if (attempt < MAX_RETRIES - 1) {
         await new Promise((resolve) => setTimeout(resolve, 2000));
       }
@@ -282,4 +335,73 @@ export async function provisionEsim(paymentIntentId: string, email?: string): Pr
   }
 
   return failedResult;
+}
+
+/**
+ * Celitech surfaces "out of stock" as a thrown error with this exact string in
+ * the message. Other Celitech errors (auth, network, bad params) must NOT
+ * match — those are transient and should still go through the retry loop.
+ */
+function isCelitechOutOfStock(err: Error): boolean {
+  return /not enough available profiles/i.test(err.message);
+}
+
+/**
+ * Run when Celitech is sold out for the destination the customer paid for:
+ * refund the Stripe charge (idempotent), email the customer an apology, fire
+ * an admin alert so we know to top up Celitech, and surface a distinct
+ * `out_of_stock` status to the frontend.
+ */
+async function handleOutOfStock(args: {
+  paymentIntentId: string;
+  orderId: string;
+  customerEmail?: string;
+  destination?: string;
+  amount?: string;
+}): Promise<ProvisionResult> {
+  const { paymentIntentId, orderId, customerEmail, destination, amount } = args;
+  const destLabel = destination || 'your destination';
+
+  console.warn('[provision] Celitech out-of-stock', { paymentIntentId, orderId, destination });
+
+  let refundId: string | undefined;
+  if (!IS_MOCK) {
+    const refund = await refundChargeForOutOfStock(paymentIntentId);
+    if (refund.ok) {
+      refundId = refund.refundId;
+      console.log('[provision] refund succeeded', { refundId });
+    } else {
+      console.error('[provision] refund FAILED', { error: refund.error });
+    }
+    await updateOrderStatus(paymentIntentId, 'refunded_out_of_stock').catch((err) => {
+      console.error('[provision] failed to mark order refunded_out_of_stock:', err);
+    });
+  }
+
+  if (customerEmail) {
+    void sendOutOfStockEmail({
+      to: customerEmail,
+      destination: destLabel,
+      orderId,
+      amount: amount || '-',
+      currency: 'USD',
+      refundId,
+    });
+  }
+
+  void sendDeliveryFailureAlert({
+    orderId,
+    paymentIntentId,
+    customerEmail: customerEmail || '<empty>',
+    destination: destLabel,
+    failureReason: `out_of_stock — Celitech has no profiles for ${destLabel}. Refund ${refundId ? `succeeded (${refundId})` : 'FAILED — manual refund needed'}.`,
+  });
+
+  const result: ProvisionResult = {
+    status: 'out_of_stock',
+    order_id: orderId,
+    error: `${destLabel} is temporarily out of stock. Your payment has been refunded.`,
+  };
+  provisioningState.set(paymentIntentId, result);
+  return result;
 }

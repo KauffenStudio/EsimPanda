@@ -135,7 +135,9 @@ export function DeliveryEmail({
                 margin: '8px 0 0',
               }}
             >
-              Scan this QR code with your phone camera
+              Reading on your phone? Tap the Install button below.
+              Otherwise: open Settings → Cellular → Add eSIM → Use QR Code,
+              then scan this QR.
             </Text>
           </Section>
 

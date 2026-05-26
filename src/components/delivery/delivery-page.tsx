@@ -8,6 +8,7 @@ import { useAuthStore } from '@/stores/auth';
 import { detectDeviceFamily } from './device-detection';
 import { ProvisioningState } from './provisioning-state';
 import { ProvisioningError } from './provisioning-error';
+import { OutOfStockScreen } from './out-of-stock-screen';
 import { DeliverySteps } from './delivery-steps';
 import { InstallBanner } from '@/components/pwa/install-banner';
 import { useReferralStore } from '@/stores/referral';
@@ -23,8 +24,18 @@ const DELAY_THRESHOLD = 20000;
 
 export function DeliveryPage({ paymentIntentId, email }: DeliveryPageProps) {
   const t = useTranslations('delivery');
-  const { status, data, order_id, error, retry_count, setStatus, setData, setError, setEmail } =
-    useDeliveryStore();
+  const {
+    status,
+    data,
+    order_id,
+    error,
+    retry_count,
+    setStatus,
+    setData,
+    setError,
+    setOutOfStock,
+    setEmail,
+  } = useDeliveryStore();
   const authUser = useAuthStore((s) => s.user);
   const referralCode = useReferralStore((s) => s.code);
   const fetchReferralData = useReferralStore((s) => s.fetchReferralData);
@@ -64,6 +75,9 @@ export function DeliveryPage({ paymentIntentId, email }: DeliveryPageProps) {
       if (result.status === 'ready' && result.data) {
         stopPolling();
         setData(result.data, result.order_id);
+      } else if (result.status === 'out_of_stock') {
+        stopPolling();
+        setOutOfStock(result.error || 'Destination temporarily out of stock');
       } else if (result.status === 'failed') {
         stopPolling();
         setError(result.error || 'Provisioning failed', result.retry_count || 0);
@@ -71,7 +85,7 @@ export function DeliveryPage({ paymentIntentId, email }: DeliveryPageProps) {
     } catch {
       // Silently continue polling on network errors
     }
-  }, [paymentIntentId, stopPolling, setData, setError]);
+  }, [paymentIntentId, stopPolling, setData, setError, setOutOfStock]);
 
   useEffect(() => {
     if (mountedRef.current) return;
@@ -215,6 +229,18 @@ export function DeliveryPage({ paymentIntentId, email }: DeliveryPageProps) {
             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
           >
             <ProvisioningError retryCount={retry_count} error={error ?? undefined} />
+          </motion.div>
+        )}
+
+        {status === 'out_of_stock' && (
+          <motion.div
+            key="out_of_stock"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+          >
+            <OutOfStockScreen />
           </motion.div>
         )}
       </AnimatePresence>

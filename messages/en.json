@@ -398,11 +398,11 @@
     },
     "ready": {
       "heading": "Your eSIM is Ready!",
-      "subheading": "Scan the QR code or tap Install to activate"
+      "subheading": "Tap Install on your phone, or scan the QR from Settings → Cellular → Add eSIM"
     },
     "install": "Install eSIM",
     "qr": {
-      "instruction": "Scan this QR code with your phone",
+      "instruction": "Open Settings → Cellular → Add eSIM → Use QR Code, then scan",
       "download": "Save QR code"
     },
     "manual": {
@@ -435,6 +435,12 @@
       "body": "We could not set up your eSIM. We are working on it and you will receive it by email shortly.",
       "retry": "Retrying... ({count}/3)",
       "final": "We are still working on your eSIM. You will receive it by email within a few minutes.",
+      "contact": "Need help? Visit our Help page"
+    },
+    "outOfStock": {
+      "heading": "Temporarily out of stock",
+      "body": "Our supplier ran out of eSIMs for your destination just as your payment went through. We've refunded you in full automatically.",
+      "refundNote": "The refund usually shows up in your bank within 5–10 business days. Confirmation email on the way.",
       "contact": "Need help? Visit our Help page"
     },
     "email": {

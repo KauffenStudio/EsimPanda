@@ -141,7 +141,7 @@ export async function resendDeliveryEmail(
     currency: order.currency,
   });
 
-  if (!result) {
+  if (!result.ok) {
     return { success: false, error: 'Failed to send email' };
   }
   return { success: true, email: order.email };

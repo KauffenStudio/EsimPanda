@@ -398,11 +398,11 @@
     },
     "ready": {
       "heading": "O Seu eSIM Está Pronto!",
-      "subheading": "Leia o código QR ou toque em Instalar para ativar"
+      "subheading": "Toque em Instalar no seu telemóvel, ou leia o QR a partir de Definições → Dados móveis → Adicionar eSIM"
     },
     "install": "Instalar eSIM",
     "qr": {
-      "instruction": "Leia este código QR com o seu telemóvel",
+      "instruction": "Abra Definições → Dados móveis → Adicionar eSIM → Usar Código QR, depois leia o código",
       "download": "Guardar código QR"
     },
     "manual": {
@@ -435,6 +435,12 @@
       "body": "Não foi possível configurar o seu eSIM. Estamos a resolver e irá recebê-lo por email em breve.",
       "retry": "A tentar novamente... ({count}/3)",
       "final": "Ainda estamos a trabalhar no seu eSIM. Irá recebê-lo por email dentro de poucos minutos.",
+      "contact": "Precisa de ajuda? Visite a nossa página de Ajuda"
+    },
+    "outOfStock": {
+      "heading": "Temporariamente esgotado",
+      "body": "O nosso fornecedor ficou sem eSIMs para o seu destino mesmo quando o seu pagamento foi processado. Reembolsámos automaticamente o valor total.",
+      "refundNote": "O reembolso costuma aparecer na sua conta em 5–10 dias úteis. Vai receber um email de confirmação.",
       "contact": "Precisa de ajuda? Visite a nossa página de Ajuda"
     },
     "email": {

@@ -52,6 +52,13 @@ export async function GET(request: NextRequest) {
             error: 'Provisioning failed',
           });
         }
+        if (order.status === 'refunded_out_of_stock') {
+          return NextResponse.json({
+            status: 'out_of_stock',
+            order_id: 'ORD-' + piId.slice(-8).toUpperCase(),
+            error: 'Destination was temporarily out of stock. Your payment has been refunded.',
+          });
+        }
         // Still processing
         return NextResponse.json({
           status: order.status === 'provisioning' ? 'provisioning' : 'pending',

@@ -84,9 +84,9 @@ export async function POST(request: Request) {
       currency: order.currency,
     });
 
-    if (!result) {
+    if (!result.ok) {
       return NextResponse.json(
-        { error: 'Failed to send email' },
+        { error: 'Failed to send email', detail: result.error },
         { status: 500 },
       );
     }

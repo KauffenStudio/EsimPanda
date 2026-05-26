@@ -1,5 +1,5 @@
 export type EsimStatus = 'pending' | 'provisioning' | 'provisioned' | 'delivered' | 'failed';
-export type ProvisioningStatus = 'pending' | 'provisioning' | 'ready' | 'failed';
+export type ProvisioningStatus = 'pending' | 'provisioning' | 'ready' | 'failed' | 'out_of_stock';
 
 export interface DeliveryData {
   iccid: string;

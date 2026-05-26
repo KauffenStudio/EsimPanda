@@ -11,6 +11,7 @@ interface DeliveryState {
   setStatus: (status: ProvisioningStatus) => void;
   setData: (data: DeliveryData, orderId: string) => void;
   setError: (error: string, retryCount: number) => void;
+  setOutOfStock: (message: string) => void;
   setEmail: (email: string) => void;
   reset: () => void;
 }
@@ -25,6 +26,7 @@ export const useDeliveryStore = create<DeliveryState>((set) => ({
   setStatus: (status) => set({ status }),
   setData: (data, order_id) => set({ status: 'ready', data, order_id, error: null }),
   setError: (error, retry_count) => set({ status: 'failed', error, retry_count }),
+  setOutOfStock: (message) => set({ status: 'out_of_stock', error: message }),
   setEmail: (email) => set({ email }),
   reset: () => set({ status: 'pending', data: null, order_id: null, error: null, retry_count: 0, email: null }),
 }));
