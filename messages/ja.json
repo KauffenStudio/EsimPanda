@@ -19,6 +19,7 @@
   },
   "browse": {
     "title": "目的地",
+    "popularInEurope": "ヨーロッパの人気の目的地",
     "empty": "まだ目的地がありません。後ほどお確かめください！",
     "searchPlaceholder": "目的地を検索...",
     "europePlan": "地域カバレッジ",

@@ -19,6 +19,7 @@
   },
   "browse": {
     "title": "Destinations",
+    "popularInEurope": "Populaires en Europe",
     "empty": "Pas encore de destinations disponibles. Revenez bientôt !",
     "searchPlaceholder": "Rechercher des destinations...",
     "europePlan": "Couverture Régionale",

@@ -28,6 +28,24 @@ import { ComparisonSheet } from './comparison-sheet';
 
 const MemoizedDestinationCard = memo(DestinationCard);
 
+// Curated featured row at the top of the browse page. Surfaces the 10
+// destinations most travellers from Portugal are likely to want first, so
+// they don't have to scroll through the alphabetical region list. Edit this
+// array to change which countries are featured — order in the array drives
+// the on-screen order. ISO codes match the `iso_code` column on destinations.
+const POPULAR_EUROPE_ISO_CODES = [
+  'FR', // France
+  'ES', // Spain
+  'IT', // Italy
+  'GB', // United Kingdom
+  'DE', // Germany
+  'CH', // Switzerland
+  'NL', // Netherlands
+  'GR', // Greece
+  'AT', // Austria
+  'PT', // Portugal
+];
+
 const REGION_ORDER = [
   'europe',
   'asia',
@@ -155,6 +173,16 @@ export function BrowseClient({
   const groups = useMemo(() => groupByRegion(filtered, locale), [filtered, locale]);
   const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
 
+  // Featured "Popular in Europe" row. Map the curated ISO list onto live
+  // catalog rows so a destination missing from the catalog (e.g. sold-out
+  // and deactivated) is silently skipped instead of rendering a broken card.
+  // Ordering follows POPULAR_EUROPE_ISO_CODES, not catalog popularity_rank.
+  const popularDestinations = useMemo(() => {
+    return POPULAR_EUROPE_ISO_CODES.map((iso) =>
+      catalog.destinations.find((d) => d.iso_code === iso),
+    ).filter((d): d is CatalogDestination => d !== undefined);
+  }, [catalog.destinations]);
+
   // Dismissable plan-unavailable notice — shown when a stale checkout link
   // redirected here with ?notice=plan-unavailable.
   const [noticeDismissed, setNoticeDismissed] = useState(false);
@@ -192,6 +220,38 @@ export function BrowseClient({
 
       <DestinationSearch ref={searchInputRef} />
       <RegionalPlanCard regionalPlans={catalog.regionalPlans} />
+
+      {/* Popular in Europe — curated featured row. Hidden while searching so
+          the user's query result owns the whole grid. Horizontal scroll on
+          mobile, wraps naturally on wider screens. */}
+      {!isSearching && popularDestinations.length > 0 && (
+        <section aria-label={t('browse.popularInEurope')} className="flex flex-col gap-3">
+          <h2 className="text-lg md:text-xl font-bold tracking-tight text-primary dark:text-gray-100">
+            {t('browse.popularInEurope')}
+          </h2>
+          <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4 md:mx-0 md:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden snap-x snap-mandatory md:snap-none">
+            {popularDestinations.map((dest, index) => (
+              <motion.div
+                key={dest.slug}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.25, delay: Math.min(index, 5) * 0.03, ease: 'easeOut' }}
+                className="shrink-0 w-[160px] sm:w-[180px] md:w-[200px] snap-start"
+              >
+                <MemoizedDestinationCard
+                  name={localizedDestinationName(dest.iso_code, dest.name, locale)}
+                  slug={dest.slug}
+                  isoCode={dest.iso_code}
+                  imageUrl={dest.image_url}
+                  destinationId={dest.id}
+                  startingPriceCents={dest.startingPriceCents}
+                  bestDiscountPercent={dest.bestDiscountPercent}
+                />
+              </motion.div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {filtered.length === 0 ? (
         // Search-miss state — plain message + a Clear-search button (CAT-06).

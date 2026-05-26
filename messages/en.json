@@ -19,6 +19,7 @@
   },
   "browse": {
     "title": "Destinations",
+    "popularInEurope": "Popular in Europe",
     "empty": "No destinations available yet. Check back soon!",
     "searchPlaceholder": "Search destinations...",
     "europePlan": "Regional Coverage",

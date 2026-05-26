@@ -19,6 +19,7 @@
   },
   "browse": {
     "title": "目的地",
+    "popularInEurope": "欧洲热门目的地",
     "empty": "暂无目的地。请稍后再来！",
     "searchPlaceholder": "搜索目的地...",
     "europePlan": "区域覆盖",
