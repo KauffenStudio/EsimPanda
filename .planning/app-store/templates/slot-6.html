@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Slot 6 — Weekend or semester</title>
+<link rel="stylesheet" href="_shared.css" />
+<style>
+  .canvas {
+    background:
+      radial-gradient(60% 50% at 0% 100%, rgba(41, 121, 255, 0.10) 0%, transparent 60%),
+      radial-gradient(50% 40% at 100% 0%, rgba(186, 230, 253, 0.5) 0%, transparent 65%),
+      #F8FAFC;
+  }
+  .caption h1 .blue { color: var(--c-blue); }
+
+  /* Timeline above the phone */
+  .timeline {
+    position: absolute;
+    top: 700px;
+    left: 60px;
+    right: 60px;
+    height: 8px;
+    background: #E4E4E7;
+    border-radius: 4px;
+    z-index: 4;
+  }
+  .timeline .fill {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, var(--c-blue) 0%, var(--c-blue-deep) 100%);
+    border-radius: 4px;
+  }
+  .timeline .tick {
+    position: absolute;
+    top: -28px;
+    transform: translateX(-50%);
+    width: 8px; height: 64px;
+    background: var(--c-blue);
+    border-radius: 4px;
+  }
+  .timeline .label {
+    position: absolute;
+    top: 50px;
+    transform: translateX(-50%);
+    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--c-ink);
+    white-space: nowrap;
+  }
+  .timeline .label small {
+    display: block;
+    font-size: 20px;
+    color: var(--c-ink-soft);
+    font-weight: 500;
+    margin-top: 6px;
+  }
+  .t-0 { left: 0%; } .t-1 { left: 25%; } .t-2 { left: 50%; } .t-3 { left: 75%; } .t-4 { left: 100%; }
+
+  .home {
+    height: 100%;
+    padding: 0 56px;
+  }
+  .home .header {
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .home .back {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: #F4F4F5;
+    display: grid; place-items: center;
+    font-size: 32px;
+  }
+  .home .title { font-size: 32px; font-weight: 700; }
+
+  .destination-row {
+    margin-top: 36px;
+    display: flex;
+    align-items: center;
+    gap: 22px;
+  }
+  .destination-row .flag {
+    width: 84px; height: 84px;
+    border-radius: 24px;
+    background: #FFFBF3;
+    display: grid; place-items: center;
+    font-size: 56px;
+  }
+  .destination-row .meta .name {
+    font-size: 40px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--c-ink);
+  }
+  .destination-row .meta .sub {
+    font-size: 24px;
+    color: var(--c-ink-soft);
+    font-weight: 500;
+    margin-top: 2px;
+  }
+
+  .h-label {
+    margin-top: 40px;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--c-ink);
+    letter-spacing: -0.005em;
+  }
+
+  .duration-pills {
+    margin-top: 22px;
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .duration {
+    padding: 18px 28px;
+    border-radius: 999px;
+    border: 2px solid #E4E4E7;
+    background: #FFFFFF;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--c-ink);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .duration.active {
+    background: var(--c-blue);
+    border-color: var(--c-blue);
+    color: #FFFFFF;
+  }
+  .duration .star {
+    background: rgba(255,255,255,0.22);
+    color: #FFF;
+    font-size: 20px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 999px;
+    margin-left: 4px;
+  }
+
+  .plan-list {
+    margin-top: 36px;
+    display: grid;
+    gap: 18px;
+  }
+  .plan {
+    border: 2px solid #E4E4E7;
+    background: #FFFFFF;
+    border-radius: 28px;
+    padding: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .plan.active {
+    border-color: var(--c-blue);
+    background: #F5F9FF;
+  }
+  .plan .left .gb {
+    font-size: 36px;
+    font-weight: 800;
+    letter-spacing: -0.015em;
+    color: var(--c-ink);
+  }
+  .plan .left .sub {
+    font-size: 22px;
+    color: var(--c-ink-soft);
+    font-weight: 500;
+    margin-top: 4px;
+  }
+  .plan .right {
+    text-align: right;
+  }
+  .plan .right .price {
+    font-size: 38px;
+    font-weight: 800;
+    color: var(--c-ink);
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .plan .right .day {
+    font-size: 22px;
+    color: var(--c-ink-soft);
+    font-weight: 500;
+    margin-top: 4px;
+  }
+  .plan.active .right .price { color: var(--c-blue); }
+  .plan .right .tag {
+    display: inline-block;
+    margin-top: 8px;
+    background: #FEF3C7;
+    color: #92400E;
+    font-size: 18px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 999px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .cta {
+    margin-top: 36px;
+    background: var(--c-blue);
+    color: #FFF;
+    border-radius: 999px;
+    height: 100px;
+    display: grid;
+    place-items: center;
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.005em;
+    box-shadow: 0 18px 30px rgba(41, 121, 255, 0.35);
+  }
+</style>
+</head>
+<body>
+<div class="canvas">
+  <div class="caption">
+    <h1>A weekend or<br/>a <span class="blue">semester</span>.</h1>
+    <p>Plans from 24 hours to 6 months.</p>
+  </div>
+
+  <div class="timeline">
+    <div class="fill"></div>
+    <div class="tick t-0"></div><div class="label t-0">24h<small>weekend</small></div>
+    <div class="tick t-1"></div><div class="label t-1">7d<small>short trip</small></div>
+    <div class="tick t-2"></div><div class="label t-2">30d<small>month abroad</small></div>
+    <div class="tick t-3"></div><div class="label t-3">90d<small>Erasmus</small></div>
+    <div class="tick t-4"></div><div class="label t-4">180d<small>semester</small></div>
+  </div>
+
+  <div class="phone">
+    <div class="screen">
+      <div class="island"></div>
+      <div class="home">
+        <div class="statusbar">
+          <span>9:41</span>
+          <span class="icons">
+            <svg viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2" width="3" height="10" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
+            <svg viewBox="0 0 24 12" fill="currentColor"><rect x="1" y="1" width="20" height="10" rx="3" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="3" y="3" width="14" height="6" rx="1.5"/><rect x="22" y="4" width="1.5" height="4" rx="0.5"/></svg>
+          </span>
+        </div>
+
+        <div class="header">
+          <span class="back">‹</span>
+          <span class="title">Pick your plan</span>
+          <span style="width:56px"></span>
+        </div>
+
+        <div class="destination-row">
+          <span class="flag">🇯🇵</span>
+          <div class="meta">
+            <div class="name">Japan</div>
+            <div class="sub">62 plans · most travelers stay 5–14 days</div>
+          </div>
+        </div>
+
+        <div class="h-label">How long do you need it?</div>
+        <div class="duration-pills">
+          <span class="duration">24 h</span>
+          <span class="duration">7 days</span>
+          <span class="duration active">30 days <span class="star">★</span></span>
+          <span class="duration">90 days</span>
+          <span class="duration">180 days</span>
+        </div>
+
+        <div class="plan-list">
+          <div class="plan">
+            <div class="left">
+              <div class="gb">3 GB</div>
+              <div class="sub">Light use · email, maps, chat</div>
+            </div>
+            <div class="right">
+              <div class="price">$6.00</div>
+              <div class="day">$0.20 / day</div>
+            </div>
+          </div>
+          <div class="plan active">
+            <div class="left">
+              <div class="gb">5 GB</div>
+              <div class="sub">Streaming · Spotify, Maps, Messages</div>
+            </div>
+            <div class="right">
+              <div class="price">$9.00</div>
+              <div class="day">$0.30 / day</div>
+              <span class="tag">Most popular</span>
+            </div>
+          </div>
+          <div class="plan">
+            <div class="left">
+              <div class="gb">10 GB</div>
+              <div class="sub">Heavy use · video calls, work</div>
+            </div>
+            <div class="right">
+              <div class="price">$15.00</div>
+              <div class="day">$0.50 / day</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cta">Continue · $9.00</div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

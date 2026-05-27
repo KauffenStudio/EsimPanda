@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Slot 7 — Sign in with Apple. Done.</title>
+<link rel="stylesheet" href="_shared.css" />
+<style>
+  .canvas {
+    background:
+      radial-gradient(60% 45% at 50% 110%, #E8EEF8 0%, transparent 60%),
+      radial-gradient(50% 35% at 0% 0%, rgba(41, 121, 255, 0.10) 0%, transparent 65%),
+      #FFFFFF;
+  }
+  .caption h1 .underline {
+    background: linear-gradient(180deg, transparent 60%, #FFD8A8 60%);
+    padding: 0 8px;
+  }
+
+  /* Floating chat bubbles around the phone */
+  .bubble {
+    position: absolute;
+    z-index: 6;
+    background: #FFFFFF;
+    border-radius: 32px;
+    padding: 28px 30px;
+    box-shadow: 0 24px 50px rgba(15, 23, 42, 0.10);
+    max-width: 480px;
+  }
+  .bubble .who {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--c-ink);
+    margin-bottom: 14px;
+  }
+  .bubble .who .avatar {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #2979FF, #1B4F9E);
+    color: #FFF;
+    font-weight: 800;
+    font-size: 24px;
+    display: grid;
+    place-items: center;
+  }
+  .bubble .who .lang {
+    font-weight: 500;
+    font-size: 22px;
+    color: var(--c-ink-soft);
+    margin-left: auto;
+  }
+  .bubble .text {
+    font-size: 28px;
+    line-height: 1.35;
+    font-weight: 500;
+    color: var(--c-ink);
+  }
+  .b-left {
+    top: 2200px;
+    left: 30px;
+    transform: rotate(-3deg);
+    max-width: 440px;
+  }
+  .b-right {
+    top: 2440px;
+    right: 30px;
+    transform: rotate(2deg);
+    max-width: 440px;
+  }
+  .b-typing {
+    top: 2640px;
+    left: 60px;
+    transform: rotate(-2deg);
+    padding: 22px 30px;
+    max-width: 380px;
+  }
+  .b-typing .dots {
+    display: flex; gap: 8px; margin-top: 12px;
+  }
+  .b-typing .dots span {
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: #CBD5E1;
+  }
+  .b-typing .dots span:nth-child(1) { background: var(--c-blue); }
+
+  /* Auth screen */
+  .auth {
+    height: 100%;
+    padding: 0 56px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .auth .top {
+    margin-top: 56px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .auth .top .mark {
+    width: 84px; height: 84px;
+    border-radius: 28px;
+    background: var(--c-blue);
+    display: grid; place-items: center;
+    color: #FFF; font-size: 40px; font-weight: 900;
+  }
+  .auth .top .brand {
+    font-size: 40px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+
+  .auth h2 {
+    margin-top: 64px;
+    font-size: 76px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 0.98;
+    color: var(--c-ink);
+  }
+  .auth .h2-sub {
+    margin-top: 20px;
+    font-size: 28px;
+    color: var(--c-ink-soft);
+    font-weight: 500;
+  }
+
+  .providers {
+    margin-top: 48px;
+    display: grid;
+    gap: 18px;
+  }
+  .provider {
+    background: #FFFFFF;
+    border: 2px solid #E4E4E7;
+    border-radius: 28px;
+    height: 102px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    font-size: 30px;
+    font-weight: 600;
+    color: var(--c-ink);
+  }
+  .provider.apple {
+    background: #000;
+    color: #FFF;
+    border-color: #000;
+  }
+  .provider.apple .glyph {
+    font-size: 36px;
+    margin-top: -4px;
+  }
+  .provider .g {
+    width: 36px; height: 36px;
+    background: conic-gradient(from 0deg, #EA4335, #FBBC05, #34A853, #4285F4, #EA4335);
+    border-radius: 50%;
+  }
+  .provider .ring {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    border: 4px solid var(--c-ink);
+  }
+
+  .divider {
+    margin-top: 32px;
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    color: var(--c-ink-soft);
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+  }
+  .divider hr {
+    flex: 1;
+    border: none;
+    border-top: 1px solid var(--c-line);
+  }
+
+  .email-field {
+    margin-top: 32px;
+    height: 102px;
+    border-radius: 28px;
+    background: #F4F4F5;
+    display: flex;
+    align-items: center;
+    padding: 0 28px;
+    gap: 18px;
+    font-size: 28px;
+    color: #94A3B8;
+    font-weight: 500;
+  }
+  .email-field .icon { width: 34px; height: 34px; }
+
+  .trust-line {
+    margin-top: auto;
+    margin-bottom: 56px;
+    padding: 24px;
+    border-radius: 24px;
+    background: #F4F8FF;
+    color: var(--c-blue);
+    font-weight: 600;
+    font-size: 24px;
+    text-align: center;
+    line-height: 1.4;
+  }
+  .trust-line strong { font-weight: 800; }
+</style>
+</head>
+<body>
+<div class="canvas">
+  <div class="caption">
+    <h1>Sign in with <span class="underline">Apple</span>. <br/>Done.</h1>
+    <p>Live chat in 9 languages. Real humans.</p>
+  </div>
+
+  <div class="bubble b-left">
+    <div class="who"><span class="avatar">L</span> Lía · Support<span class="lang">ES</span></div>
+    <div class="text">¡Hola! Tu eSIM ya está activa en Madrid 🇪🇸 ¿Necesitas que te ayude con algo más?</div>
+  </div>
+  <div class="bubble b-right">
+    <div class="who"><span class="avatar">K</span> Kenji · Support<span class="lang">JP</span></div>
+    <div class="text">5GBプランをご購入いただきありがとうございます。すぐにご利用いただけます。</div>
+  </div>
+  <div class="bubble b-typing">
+    <div class="who"><span class="avatar">M</span> Marie · Support<span class="lang">FR</span></div>
+    <div class="dots"><span></span><span></span><span></span></div>
+  </div>
+
+  <div class="phone">
+    <div class="screen">
+      <div class="island"></div>
+      <div class="auth">
+        <div class="statusbar">
+          <span>9:41</span>
+          <span class="icons">
+            <svg viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2" width="3" height="10" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
+            <svg viewBox="0 0 24 12" fill="currentColor"><rect x="1" y="1" width="20" height="10" rx="3" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="3" y="3" width="14" height="6" rx="1.5"/><rect x="22" y="4" width="1.5" height="4" rx="0.5"/></svg>
+          </span>
+        </div>
+
+        <div class="top">
+          <span class="mark">P</span>
+          <span class="brand">eSIM Panda</span>
+        </div>
+
+        <h2>Get connected<br/>in seconds.</h2>
+        <div class="h2-sub">Skip the form. One tap, you're in.</div>
+
+        <div class="providers">
+          <div class="provider apple">
+            <span class="glyph"></span>
+            Continue with Apple
+          </div>
+          <div class="provider">
+            <span class="g"></span>
+            Continue with Google
+          </div>
+        </div>
+
+        <div class="divider"><hr/><span>OR</span><hr/></div>
+
+        <div class="email-field">
+          <span class="icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+          </span>
+          you@studentmail.edu
+        </div>
+
+        <div class="trust-line">
+          <strong>No password required.</strong> No marketing email. Delete your account anytime — really.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

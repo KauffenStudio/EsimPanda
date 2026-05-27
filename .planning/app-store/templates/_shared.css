@@ -1,0 +1,188 @@
+/* Shared style + tokens for eSIM Panda App Store screenshots.
+ * Canvas: 1320 x 2868 (6.9" / iPhone 17 Pro Max class).
+ * Brand: electric blue (#2979FF), Outfit font, white default.
+ */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap');
+
+:root {
+  --canvas-w: 1320px;
+  --canvas-h: 2868px;
+  --c-ink: #18181B;
+  --c-ink-soft: #52525B;
+  --c-line: #E4E4E7;
+  --c-bg: #FFFFFF;
+  --c-bg-soft: #F8FAFC;
+  --c-blue: #2979FF;
+  --c-blue-soft: #E3F0FF;
+  --c-blue-deep: #1B4F9E;
+  --c-success: #43A047;
+  --c-cream: #FBF7EE;
+  --c-charcoal: #0E0F12;
+  --c-warm: #FFD8A8;
+  --shadow-card: 0 30px 80px rgba(15, 23, 42, 0.12), 0 8px 24px rgba(15, 23, 42, 0.06);
+  --shadow-phone: 0 60px 120px rgba(15, 23, 42, 0.25), 0 24px 48px rgba(15, 23, 42, 0.15);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: var(--canvas-w);
+  height: var(--canvas-h);
+  font-family: 'Outfit', system-ui, -apple-system, 'SF Pro Display', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+  color: var(--c-ink);
+  background: var(--c-bg);
+  overflow: hidden;
+}
+
+.canvas {
+  position: relative;
+  width: var(--canvas-w);
+  height: var(--canvas-h);
+  overflow: hidden;
+}
+
+/* ---------- Captions ---------- */
+.caption {
+  position: absolute;
+  top: 200px;
+  left: 80px;
+  right: 80px;
+  text-align: center;
+  z-index: 4;
+}
+.caption h1 {
+  font-size: 120px;
+  line-height: 1.0;
+  letter-spacing: -0.04em;
+  font-weight: 800;
+  color: var(--c-ink);
+}
+.caption p {
+  margin-top: 32px;
+  font-size: 46px;
+  line-height: 1.25;
+  font-weight: 500;
+  color: var(--c-ink-soft);
+  letter-spacing: -0.005em;
+}
+.caption.on-dark h1 { color: #FFFFFF; }
+.caption.on-dark p { color: rgba(255, 255, 255, 0.72); }
+
+/* ---------- iPhone frame ---------- */
+.phone {
+  position: absolute;
+  width: 940px;
+  height: 1900px;
+  left: 50%;
+  bottom: 120px;
+  transform: translateX(-50%);
+  background: #0A0A0B;
+  border-radius: 110px;
+  padding: 22px;
+  box-shadow: var(--shadow-phone);
+}
+.phone::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 112px;
+  background: linear-gradient(155deg, #2A2D34 0%, #0A0A0B 40%, #1A1C20 80%);
+  z-index: -1;
+}
+.phone .screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: var(--c-bg);
+  border-radius: 88px;
+  overflow: hidden;
+}
+.phone .screen.dark { background: #000; color: #FFF; }
+
+/* Dynamic Island */
+.phone .island {
+  position: absolute;
+  top: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 280px;
+  height: 64px;
+  background: #000;
+  border-radius: 999px;
+  z-index: 5;
+}
+
+/* iOS status bar */
+.statusbar {
+  position: relative;
+  height: 110px;
+  padding: 50px 60px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  font-size: 32px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--c-ink);
+}
+.screen.dark .statusbar { color: #FFF; }
+.statusbar .icons { display: flex; gap: 8px; align-items: center; }
+.statusbar svg { width: 36px; height: 22px; }
+
+/* ---------- Background variants ---------- */
+.bg-white { background: #FFFFFF; }
+.bg-soft  { background: var(--c-bg-soft); }
+.bg-cream { background: var(--c-cream); }
+.bg-blue-gradient {
+  background:
+    radial-gradient(80% 60% at 50% 110%, var(--c-blue-soft) 0%, transparent 60%),
+    radial-gradient(50% 40% at 100% 0%, rgba(41, 121, 255, 0.10) 0%, transparent 70%),
+    #FFFFFF;
+}
+.bg-charcoal {
+  background:
+    radial-gradient(60% 50% at 50% 0%, rgba(41, 121, 255, 0.18) 0%, transparent 60%),
+    #0E0F12;
+}
+.bg-warm {
+  background:
+    radial-gradient(70% 50% at 50% 100%, rgba(255, 216, 168, 0.55) 0%, transparent 60%),
+    #FFFFFF;
+}
+
+/* ---------- Helpers ---------- */
+.brand-strip {
+  position: absolute;
+  bottom: 56px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  font-weight: 700;
+  font-size: 32px;
+  color: var(--c-ink-soft);
+  letter-spacing: 0.02em;
+}
+.brand-strip .dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--c-blue);
+}
+.caption.on-dark ~ .brand-strip { color: rgba(255,255,255,0.5); }
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 28px;
+  border-radius: 999px;
+  background: var(--c-blue-soft);
+  color: var(--c-blue);
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+}

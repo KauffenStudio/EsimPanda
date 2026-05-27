@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Slot 5 — Students save 15%</title>
+<link rel="stylesheet" href="_shared.css" />
+<style>
+  .canvas {
+    background:
+      radial-gradient(70% 50% at 50% 110%, rgba(255, 216, 168, 0.6) 0%, transparent 60%),
+      radial-gradient(60% 45% at 0% 0%, rgba(41, 121, 255, 0.10) 0%, transparent 60%),
+      #FFFBF3;
+  }
+
+  .erasmus-strip {
+    position: absolute;
+    top: 660px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    z-index: 4;
+  }
+  .erasmus-strip .chip {
+    background: #FFFFFF;
+    border: 2px solid #FDE8C8;
+    border-radius: 999px;
+    padding: 14px 26px;
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--c-ink);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .erasmus-strip .chip .flag { font-size: 36px; }
+
+  .home {
+    height: 100%;
+    padding: 0 56px;
+    overflow: hidden;
+  }
+  .home .header {
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .home .back {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: #F4F4F5;
+    display: grid; place-items: center;
+    font-size: 32px;
+  }
+  .home .student-badge {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--c-blue);
+    color: #FFF;
+    padding: 14px 22px;
+    border-radius: 999px;
+    font-size: 24px;
+    font-weight: 700;
+  }
+  .home .student-badge .grad { font-size: 28px; }
+
+  .destination-hero {
+    margin-top: 36px;
+    border-radius: 40px;
+    height: 540px;
+    background:
+      linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.55) 100%),
+      linear-gradient(135deg, #FCAE4D 0%, #EF6F6C 60%, #842F4D 100%);
+    position: relative;
+    padding: 32px 32px 36px;
+    color: #FFF;
+    overflow: hidden;
+  }
+  .destination-hero .pin {
+    position: absolute;
+    top: 32px;
+    left: 32px;
+    background: rgba(255,255,255,0.20);
+    backdrop-filter: blur(20px);
+    padding: 12px 22px;
+    border-radius: 999px;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .destination-hero .flag-big {
+    position: absolute;
+    top: 32px;
+    right: 32px;
+    font-size: 92px;
+    line-height: 1;
+  }
+  .destination-hero .name {
+    position: absolute;
+    bottom: 110px;
+    left: 32px;
+    right: 32px;
+    font-size: 96px;
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    line-height: 0.95;
+  }
+  .destination-hero .meta {
+    position: absolute;
+    bottom: 36px;
+    left: 32px;
+    right: 32px;
+    font-size: 30px;
+    font-weight: 500;
+    opacity: 0.92;
+  }
+
+  .price-card {
+    margin-top: 32px;
+    background: #FFFFFF;
+    border-radius: 36px;
+    padding: 32px;
+    border: 1px solid var(--c-line);
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.06);
+  }
+  .price-card .row1 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .price-card .plan {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--c-ink);
+  }
+  .price-card .badge {
+    background: #FFF6E0;
+    color: #B45309;
+    font-weight: 700;
+    font-size: 22px;
+    letter-spacing: 0.04em;
+    padding: 10px 18px;
+    border-radius: 999px;
+    text-transform: uppercase;
+  }
+  .price-card .pricing {
+    margin-top: 22px;
+    display: flex;
+    align-items: baseline;
+    gap: 24px;
+  }
+  .price-card .pricing .strike {
+    font-size: 44px;
+    font-weight: 600;
+    color: #94A3B8;
+    text-decoration: line-through;
+    text-decoration-color: #E53935;
+    text-decoration-thickness: 6px;
+  }
+  .price-card .pricing .now {
+    font-size: 92px;
+    font-weight: 800;
+    color: var(--c-ink);
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  .price-card .pricing .now .cent { font-size: 56px; vertical-align: super; }
+  .price-card .pricing .save {
+    background: var(--c-blue-soft);
+    color: var(--c-blue);
+    font-weight: 700;
+    font-size: 22px;
+    padding: 12px 18px;
+    border-radius: 999px;
+  }
+  .price-card .breakdown {
+    margin-top: 24px;
+    border-top: 1px solid var(--c-line);
+    padding-top: 20px;
+    display: grid;
+    gap: 14px;
+  }
+  .price-card .breakdown .row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 24px;
+    font-weight: 500;
+    color: var(--c-ink-soft);
+  }
+  .price-card .breakdown .row .v { color: var(--c-ink); font-weight: 600; }
+  .price-card .breakdown .row.discount { color: var(--c-blue); font-weight: 700; }
+  .price-card .breakdown .row.discount .v { color: var(--c-blue); }
+
+  .cta {
+    margin-top: 28px;
+    background: var(--c-ink);
+    color: #FFF;
+    border-radius: 999px;
+    height: 100px;
+    display: grid;
+    place-items: center;
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.005em;
+  }
+
+  .verify-pill {
+    position: absolute;
+    z-index: 6;
+    top: 1340px;
+    right: 30px;
+    background: #FFFFFF;
+    border-radius: 28px;
+    padding: 22px 26px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    box-shadow: 0 24px 60px rgba(15, 23, 42, 0.18);
+    transform: rotate(3deg);
+  }
+  .verify-pill .icon {
+    width: 56px; height: 56px;
+    border-radius: 18px;
+    background: var(--c-blue);
+    color: #FFF;
+    font-weight: 800;
+    font-size: 30px;
+    display: grid; place-items: center;
+  }
+  .verify-pill .text { font-size: 26px; font-weight: 600; color: var(--c-ink); line-height: 1.2; }
+  .verify-pill .text small { display: block; color: var(--c-ink-soft); font-weight: 500; font-size: 20px; margin-top: 4px; }
+</style>
+</head>
+<body>
+<div class="canvas">
+  <div class="caption">
+    <h1>Students<br/>save 15%.</h1>
+    <p>Every plan. Every destination.</p>
+  </div>
+
+  <div class="erasmus-strip">
+    <span class="chip"><span class="flag">🇪🇸</span> Erasmus Madrid</span>
+    <span class="chip"><span class="flag">🇫🇷</span> Erasmus Paris</span>
+    <span class="chip"><span class="flag">🇮🇹</span> Erasmus Rome</span>
+  </div>
+
+  <div class="verify-pill">
+    <span class="icon">UNiDAYS</span>
+    <span class="text">Verified student<small>15% off applied at checkout</small></span>
+  </div>
+
+  <div class="phone">
+    <div class="screen">
+      <div class="island"></div>
+      <div class="home">
+        <div class="statusbar">
+          <span>9:41</span>
+          <span class="icons">
+            <svg viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2" width="3" height="10" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
+            <svg viewBox="0 0 24 12" fill="currentColor"><rect x="1" y="1" width="20" height="10" rx="3" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="3" y="3" width="14" height="6" rx="1.5"/><rect x="22" y="4" width="1.5" height="4" rx="0.5"/></svg>
+          </span>
+        </div>
+
+        <div class="header">
+          <span class="back">‹</span>
+          <span class="student-badge"><span class="grad">🎓</span> Student · −15%</span>
+        </div>
+
+        <div class="destination-hero">
+          <span class="pin">Most popular</span>
+          <span class="flag-big">🇪🇸</span>
+          <div class="name">Spain</div>
+          <div class="meta">For your semester abroad</div>
+        </div>
+
+        <div class="price-card">
+          <div class="row1">
+            <span class="plan">10 GB · 90 days</span>
+            <span class="badge">Best for Erasmus</span>
+          </div>
+          <div class="pricing">
+            <span class="strike">€42</span>
+            <span class="now">€35<span class="cent">.70</span></span>
+            <span class="save">You save €6.30</span>
+          </div>
+          <div class="breakdown">
+            <div class="row"><span>Plan price</span><span class="v">€42.00</span></div>
+            <div class="row discount"><span>Student discount (−15%)</span><span class="v">−€6.30</span></div>
+            <div class="row" style="font-weight:700;color:var(--c-ink);"><span>Total today</span><span class="v">€35.70</span></div>
+          </div>
+        </div>
+
+        <div class="cta">Buy &amp; install eSIM</div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Slot 3 — Lives in Apple Wallet</title>
+<link rel="stylesheet" href="_shared.css" />
+<style>
+  .canvas {
+    background:
+      radial-gradient(70% 50% at 50% 5%, rgba(41, 121, 255, 0.22) 0%, transparent 55%),
+      radial-gradient(50% 40% at 0% 100%, rgba(120, 60, 200, 0.18) 0%, transparent 70%),
+      #0E0F12;
+  }
+  .caption.on-dark h1 { color: #FFFFFF; }
+  .caption.on-dark p { color: rgba(255, 255, 255, 0.72); }
+
+  .phone .screen.dark .wallet {
+    position: relative;
+    height: 100%;
+    background:
+      radial-gradient(50% 30% at 50% 0%, rgba(255, 255, 255, 0.08) 0%, transparent 60%),
+      #000;
+    color: #FFF;
+    padding: 0 28px;
+  }
+
+  .wallet-title {
+    margin-top: 200px;
+    font-size: 56px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: #FFF;
+  }
+
+  .pass-stack {
+    margin-top: 90px;
+    position: relative;
+    height: 1300px;
+  }
+  .pass {
+    position: absolute;
+    left: 0;
+    right: 0;
+    border-radius: 36px;
+    padding: 36px 36px 28px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), 0 4px 0 rgba(255,255,255,0.02);
+    color: #FFF;
+  }
+  .pass .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    opacity: 0.85;
+  }
+  .pass .top .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .pass .top .logo .dot {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.9);
+  }
+  .pass .main {
+    margin-top: 26px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  .pass .main .key {
+    font-size: 22px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    opacity: 0.7;
+  }
+  .pass .main .val {
+    font-size: 60px;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    line-height: 1;
+    margin-top: 6px;
+  }
+
+  /* Pass 1 — Boarding pass (back of stack) */
+  .pass-1 {
+    top: 0;
+    background: linear-gradient(135deg, #5B4FFF 0%, #2C2A88 100%);
+    height: 200px;
+    transform: scale(0.94);
+    opacity: 0.85;
+  }
+  /* Pass 2 — eSIM Panda (front, hero) */
+  .pass-2 {
+    top: 130px;
+    background: linear-gradient(135deg, #2979FF 0%, #1B4F9E 100%);
+    height: 560px;
+  }
+  .pass-2 .barcode-row {
+    margin-top: 28px;
+    display: flex;
+    gap: 22px;
+    align-items: center;
+  }
+  .pass-2 .qr {
+    width: 220px;
+    height: 220px;
+    background: #FFF;
+    border-radius: 16px;
+    padding: 18px;
+    flex-shrink: 0;
+    position: relative;
+  }
+  .pass-2 .qr .pattern {
+    width: 100%;
+    height: 100%;
+    background:
+      repeating-conic-gradient(#000 0% 25%, transparent 0% 50%) 0/24px 24px,
+      #FFF;
+    border-radius: 6px;
+  }
+  .pass-2 .qr .corner {
+    position: absolute;
+    width: 60px; height: 60px;
+    border: 12px solid #000;
+    background: #FFF;
+    border-radius: 14px;
+  }
+  .pass-2 .qr .c-tl { top: 18px; left: 18px; }
+  .pass-2 .qr .c-tr { top: 18px; right: 18px; }
+  .pass-2 .qr .c-bl { bottom: 18px; left: 18px; }
+  .pass-2 .iccid {
+    flex: 1;
+  }
+  .pass-2 .iccid .row {
+    display: flex;
+    justify-content: space-between;
+    padding: 18px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+    font-size: 22px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    opacity: 0.9;
+    font-weight: 600;
+  }
+  .pass-2 .iccid .row .v {
+    font-family: 'SF Mono', 'Menlo', monospace;
+    font-weight: 700;
+    opacity: 1;
+  }
+
+  /* Pass 3 — Hotel key (front of stack, peek) */
+  .pass-3 {
+    top: 760px;
+    background: linear-gradient(135deg, #1F2937 0%, #0B1220 100%);
+    height: 200px;
+  }
+  /* Pass 4 — Coffee loyalty (deeper peek) */
+  .pass-4 {
+    top: 1010px;
+    background: linear-gradient(135deg, #8B5A2B 0%, #5C3A1C 100%);
+    height: 160px;
+    transform: scale(0.97);
+  }
+
+  .add-cue {
+    position: absolute;
+    bottom: 180px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    color: rgba(255,255,255,0.7);
+    font-size: 28px;
+    font-weight: 500;
+  }
+  .add-cue .arrow {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.12);
+    display: grid;
+    place-items: center;
+    font-size: 22px;
+  }
+</style>
+</head>
+<body>
+<div class="canvas">
+  <div class="caption on-dark">
+    <h1>Lives in<br/>Apple&nbsp;Wallet.</h1>
+    <p>Boarding pass, hotel, eSIM. One swipe.</p>
+  </div>
+
+  <div class="phone">
+    <div class="screen dark">
+      <div class="island"></div>
+      <div class="wallet">
+        <div class="statusbar">
+          <span>9:41</span>
+          <span class="icons">
+            <svg viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2" width="3" height="10" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
+            <svg viewBox="0 0 24 12" fill="currentColor"><rect x="1" y="1" width="20" height="10" rx="3" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="3" y="3" width="14" height="6" rx="1.5"/><rect x="22" y="4" width="1.5" height="4" rx="0.5"/></svg>
+          </span>
+        </div>
+
+        <div class="wallet-title">Wallet</div>
+
+        <div class="pass-stack">
+          <div class="pass pass-1">
+            <div class="top">
+              <span class="logo"><span class="dot"></span> Boarding Pass</span>
+              <span>LIS → NRT</span>
+            </div>
+          </div>
+
+          <div class="pass pass-2">
+            <div class="top">
+              <span class="logo"><span class="dot"></span> eSIM Panda</span>
+              <span>5 GB · 30 DAYS</span>
+            </div>
+            <div class="main">
+              <div>
+                <div class="key">Destination</div>
+                <div class="val">Japan</div>
+              </div>
+              <div style="text-align:right">
+                <div class="key">Status</div>
+                <div class="val" style="font-size: 38px; color: #B4F2D1;">Active</div>
+              </div>
+            </div>
+            <div class="barcode-row">
+              <div class="qr">
+                <div class="pattern"></div>
+                <div class="corner c-tl"></div>
+                <div class="corner c-tr"></div>
+                <div class="corner c-bl"></div>
+              </div>
+              <div class="iccid">
+                <div class="row"><span>ICCID</span><span class="v">…14F2</span></div>
+                <div class="row"><span>SM-DP+</span><span class="v">smdp.celitech</span></div>
+                <div class="row"><span>Activates</span><span class="v">On install</span></div>
+                <div class="row" style="border-bottom: none;"><span>Plan</span><span class="v">PANDA-J5</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pass pass-3">
+            <div class="top">
+              <span class="logo"><span class="dot"></span> Park Hyatt Tokyo</span>
+              <span>ROOM 4123</span>
+            </div>
+          </div>
+
+          <div class="pass pass-4">
+            <div class="top">
+              <span class="logo"><span class="dot"></span> Blue Bottle</span>
+              <span>8 / 10 ☕</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="add-cue">
+          <span class="arrow">+</span>
+          <span>Add to Wallet</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

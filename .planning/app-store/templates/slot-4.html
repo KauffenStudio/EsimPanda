@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Slot 4 — $3/day, not $12/MB</title>
+<link rel="stylesheet" href="_shared.css" />
+<style>
+  .canvas {
+    background:
+      radial-gradient(50% 35% at 100% 0%, rgba(229, 57, 53, 0.10) 0%, transparent 60%),
+      radial-gradient(60% 45% at 0% 100%, rgba(41, 121, 255, 0.12) 0%, transparent 60%),
+      #FBFCFE;
+  }
+
+  .caption h1 .strike {
+    color: var(--c-destructive, #E53935);
+    text-decoration: line-through;
+    text-decoration-thickness: 14px;
+    text-decoration-color: var(--c-destructive, #E53935);
+  }
+
+  .home {
+    height: 100%;
+    padding: 0 56px;
+    overflow: hidden;
+  }
+  .home .header {
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 32px;
+    font-weight: 700;
+  }
+  .home .header .back {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #F4F4F5;
+    display: grid;
+    place-items: center;
+    color: var(--c-ink);
+    font-size: 32px;
+  }
+  .home .header .title { font-weight: 700; font-size: 32px; }
+  .home .header .more {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #F4F4F5;
+    display: grid;
+    place-items: center;
+    color: var(--c-ink);
+  }
+
+  .compare-card {
+    margin-top: 40px;
+    border-radius: 36px;
+    padding: 28px 28px;
+    position: relative;
+  }
+  .compare-card.bad {
+    background: #FEF2F2;
+    border: 2px solid #FECACA;
+  }
+  .compare-card.good {
+    background: #EFF7FF;
+    border: 2px solid var(--c-blue);
+    margin-top: 28px;
+  }
+  .compare-card .head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .compare-card .head .label {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .compare-card.bad .head .label { color: #B91C1C; }
+  .compare-card.good .head .label { color: var(--c-blue); }
+  .compare-card .head .tag {
+    font-size: 22px;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 999px;
+  }
+  .compare-card.bad .head .tag { background: #FEE2E2; color: #B91C1C; }
+  .compare-card.good .head .tag { background: var(--c-blue-soft); color: var(--c-blue); }
+
+  .compare-card .who {
+    margin-top: 18px;
+    font-size: 30px;
+    font-weight: 600;
+    color: var(--c-ink-soft);
+  }
+  .compare-card .total {
+    margin-top: 12px;
+    font-size: 96px;
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    line-height: 1;
+  }
+  .compare-card.bad .total { color: #B91C1C; }
+  .compare-card.good .total { color: var(--c-blue); }
+  .compare-card .meta {
+    margin-top: 10px;
+    font-size: 26px;
+    font-weight: 500;
+    color: var(--c-ink-soft);
+  }
+
+  .lines {
+    margin-top: 28px;
+    display: grid;
+    gap: 16px;
+  }
+  .line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 26px;
+    font-weight: 500;
+    color: var(--c-ink);
+  }
+  .line .lab { display: flex; align-items: center; gap: 14px; color: var(--c-ink-soft); }
+  .line .lab .dot {
+    width: 12px; height: 12px; border-radius: 50%;
+    background: #CBD5E1;
+  }
+  .line .v { font-weight: 700; }
+  .compare-card.bad .line.hot { font-weight: 700; }
+  .compare-card.bad .line.hot .v { color: #B91C1C; }
+
+  .savings-banner {
+    margin-top: 36px;
+    padding: 28px 32px;
+    border-radius: 28px;
+    background: var(--c-blue);
+    color: #FFF;
+    display: flex;
+    align-items: center;
+    gap: 22px;
+  }
+  .savings-banner .badge {
+    background: rgba(255,255,255,0.18);
+    color: #FFF;
+    padding: 14px 22px;
+    font-size: 24px;
+    font-weight: 700;
+  }
+  .savings-banner .pitch {
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    line-height: 1.2;
+  }
+  .savings-banner .pitch strong { font-weight: 800; }
+
+  .floating-receipt {
+    position: absolute;
+    z-index: 6;
+    bottom: 220px;
+    right: 30px;
+    width: 360px;
+    background: #FFF;
+    border-radius: 28px;
+    padding: 24px 26px;
+    box-shadow: 0 30px 70px rgba(15, 23, 42, 0.20);
+    transform: rotate(4deg);
+  }
+  .floating-receipt .row { display: flex; justify-content: space-between; font-size: 22px; padding: 8px 0; font-weight: 500; color: var(--c-ink-soft); }
+  .floating-receipt .row.big { font-size: 30px; font-weight: 800; color: var(--c-ink); padding-top: 12px; border-top: 2px dashed #E4E4E7; margin-top: 8px; }
+</style>
+</head>
+<body>
+<div class="canvas">
+  <div class="caption">
+    <h1>$3 a day,<br/>not <span class="strike">$147</span>.</h1>
+    <p>Prepaid. No carrier surprise.</p>
+  </div>
+
+  <div class="phone">
+    <div class="screen">
+      <div class="island"></div>
+      <div class="home">
+        <div class="statusbar">
+          <span>9:41</span>
+          <span class="icons">
+            <svg viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2" width="3" height="10" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
+            <svg viewBox="0 0 24 12" fill="currentColor"><rect x="1" y="1" width="20" height="10" rx="3" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="3" y="3" width="14" height="6" rx="1.5"/><rect x="22" y="4" width="1.5" height="4" rx="0.5"/></svg>
+          </span>
+        </div>
+
+        <div class="header">
+          <span class="back">‹</span>
+          <span class="title">Cost of staying online</span>
+          <span class="more">···</span>
+        </div>
+
+        <div class="compare-card bad">
+          <div class="head">
+            <span class="label">Your carrier roaming</span>
+            <span class="tag">3 days in Japan</span>
+          </div>
+          <div class="who">Vodafone Pay-as-you-go</div>
+          <div class="total">$147.32</div>
+          <div class="meta">First bill after returning home</div>
+          <div class="lines">
+            <div class="line">
+              <span class="lab"><span class="dot"></span>Data (412 MB)</span>
+              <span class="v">$98.40</span>
+            </div>
+            <div class="line">
+              <span class="lab"><span class="dot"></span>Per‑day add‑on</span>
+              <span class="v">$36.00</span>
+            </div>
+            <div class="line hot">
+              <span class="lab"><span class="dot" style="background:#EF4444"></span>Overage</span>
+              <span class="v">$12.92</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="compare-card good">
+          <div class="head">
+            <span class="label">eSIM Panda</span>
+            <span class="tag">5 GB · 30 days</span>
+          </div>
+          <div class="who">Japan local data plan</div>
+          <div class="total">$9.00</div>
+          <div class="meta">Paid once. No surprise charges.</div>
+        </div>
+
+        <div class="savings-banner">
+          <span class="badge">−$138</span>
+          <span class="pitch">You keep <strong>94% more</strong> for the trip itself.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="floating-receipt">
+    <div class="row" style="font-weight:700;color:var(--c-ink);font-size:24px;">eSIM Panda · Receipt</div>
+    <div class="row"><span>Japan · 5GB</span><span>$9.00</span></div>
+    <div class="row"><span>Stripe</span><span>•••• 4242</span></div>
+    <div class="row big"><span>Total</span><span>$9.00</span></div>
+  </div>
+</div>
+</body>
+</html>

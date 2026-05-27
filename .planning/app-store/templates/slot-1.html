@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Slot 1 — Hero</title>
+<link rel="stylesheet" href="_shared.css" />
+<style>
+  /* Slot-specific overrides */
+  .canvas { background: linear-gradient(180deg, #FFFFFF 0%, #F5F8FF 60%, #E3F0FF 100%); }
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.45;
+    pointer-events: none;
+  }
+  .blob.b1 { width: 720px; height: 720px; top: -120px; left: -160px; background: #BFD7FF; }
+  .blob.b2 { width: 520px; height: 520px; bottom: -80px; right: -120px; background: #C9DCFF; }
+
+  /* iPhone content — country picker */
+  .home {
+    position: relative;
+    height: 100%;
+    padding: 0 56px;
+    overflow: hidden;
+  }
+  .home .header {
+    margin-top: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .home .logo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-weight: 800;
+    font-size: 36px;
+    letter-spacing: -0.02em;
+  }
+  .home .logo .mark {
+    width: 56px;
+    height: 56px;
+    background: var(--c-blue);
+    border-radius: 18px;
+    display: grid;
+    place-items: center;
+    color: #FFF;
+    font-size: 28px;
+    font-weight: 900;
+  }
+  .home .avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #E3F0FF, #BFD7FF);
+  }
+  .home h2 {
+    margin-top: 64px;
+    font-size: 88px;
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    line-height: 0.98;
+    color: var(--c-ink);
+  }
+  .home h2 .accent { color: var(--c-blue); }
+  .home .sub {
+    margin-top: 20px;
+    font-size: 30px;
+    color: var(--c-ink-soft);
+    font-weight: 500;
+  }
+
+  .search {
+    margin-top: 48px;
+    height: 110px;
+    background: #F4F6FB;
+    border-radius: 32px;
+    display: flex;
+    align-items: center;
+    padding: 0 36px;
+    gap: 22px;
+    font-size: 32px;
+    color: #94A3B8;
+    font-weight: 500;
+  }
+  .search .icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 4px solid #CBD5E1;
+    position: relative;
+  }
+  .search .icon::after {
+    content: '';
+    position: absolute;
+    right: -22px; bottom: -8px;
+    width: 22px; height: 6px;
+    background: #CBD5E1;
+    transform: rotate(45deg);
+    border-radius: 4px;
+  }
+
+  .picker-label {
+    margin-top: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--c-ink);
+  }
+  .picker-label .more { color: var(--c-blue); font-weight: 600; font-size: 28px; }
+
+  .grid {
+    margin-top: 32px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+  .card {
+    background: #FFFFFF;
+    border: 1px solid var(--c-line);
+    border-radius: 36px;
+    padding: 36px 32px;
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05);
+    position: relative;
+  }
+  .card .flag {
+    font-size: 92px;
+    line-height: 1;
+    display: block;
+    margin-bottom: 22px;
+  }
+  .card .name {
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--c-ink);
+  }
+  .card .price {
+    margin-top: 6px;
+    font-size: 28px;
+    color: var(--c-ink-soft);
+    font-weight: 500;
+  }
+  .card.featured {
+    background: var(--c-blue);
+    border-color: var(--c-blue);
+    color: #FFF;
+  }
+  .card.featured .name { color: #FFF; }
+  .card.featured .price { color: rgba(255, 255, 255, 0.85); }
+  .card .bestseller {
+    position: absolute;
+    top: 28px;
+    right: 28px;
+    background: rgba(255,255,255,0.18);
+    border-radius: 999px;
+    padding: 8px 16px;
+    font-size: 22px;
+    font-weight: 700;
+    color: #FFF;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  /* Panda mascot peeking */
+  .panda {
+    position: absolute;
+    bottom: -60px;
+    right: -40px;
+    width: 360px;
+    height: auto;
+    pointer-events: none;
+    z-index: 6;
+    transform: rotate(-6deg);
+    filter: drop-shadow(0 30px 50px rgba(15, 23, 42, 0.15));
+  }
+
+  .floating-pill {
+    position: absolute;
+    z-index: 6;
+    background: #FFFFFF;
+    border-radius: 999px;
+    padding: 22px 32px;
+    box-shadow: 0 20px 50px rgba(15, 23, 42, 0.12), 0 6px 16px rgba(15, 23, 42, 0.06);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-weight: 700;
+    font-size: 30px;
+    color: var(--c-ink);
+  }
+  .floating-pill .dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--c-success);
+    box-shadow: 0 0 0 6px rgba(67, 160, 71, 0.18);
+  }
+  .pill-1 { top: 1420px; left: 60px; }
+  .pill-2 { top: 1820px; right: 60px; }
+  .panda { width: 300px; bottom: -40px; right: -70px; }
+</style>
+</head>
+<body>
+<div class="canvas">
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+
+  <div class="caption">
+    <h1>Travel light.<br/>Stay online.</h1>
+    <p>200+ destinations, one Panda.</p>
+  </div>
+
+  <div class="floating-pill pill-1">
+    <span class="dot"></span>
+    <span>Connected in Tokyo</span>
+  </div>
+  <div class="floating-pill pill-2">
+    🐼
+    <span>One‑tap install</span>
+  </div>
+
+  <div class="phone">
+    <div class="screen">
+      <div class="island"></div>
+      <div class="statusbar">
+        <span>9:41</span>
+        <span class="icons">
+          <svg viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2" width="3" height="10" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
+          <svg viewBox="0 0 24 12" fill="currentColor"><rect x="1" y="1" width="20" height="10" rx="3" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="3" y="3" width="14" height="6" rx="1.5"/><rect x="22" y="4" width="1.5" height="4" rx="0.5"/></svg>
+        </span>
+      </div>
+
+      <div class="home">
+        <div class="header">
+          <div class="logo"><span class="mark">P</span> eSIM Panda</div>
+          <div class="avatar"></div>
+        </div>
+
+        <h2>Where to?<br/><span class="accent">Pick your country.</span></h2>
+        <div class="sub">Prepaid plans from 24 hours to 6 months.</div>
+
+        <div class="search">
+          <span class="icon"></span>
+          <span>Search destinations…</span>
+        </div>
+
+        <div class="picker-label">
+          <span>Popular this month</span>
+          <span class="more">See all →</span>
+        </div>
+
+        <div class="grid">
+          <div class="card featured">
+            <span class="bestseller">Bestseller</span>
+            <span class="flag">🇯🇵</span>
+            <div class="name">Japan</div>
+            <div class="price">From $4 · 1 GB</div>
+          </div>
+          <div class="card">
+            <span class="flag">🇺🇸</span>
+            <div class="name">United States</div>
+            <div class="price">From $6 · 1 GB</div>
+          </div>
+          <div class="card">
+            <span class="flag">🇪🇸</span>
+            <div class="name">Spain</div>
+            <div class="price">From $5 · 1 GB</div>
+          </div>
+          <div class="card">
+            <span class="flag">🇵🇹</span>
+            <div class="name">Portugal</div>
+            <div class="price">From $5 · 1 GB</div>
+          </div>
+          <div class="card">
+            <span class="flag">🇫🇷</span>
+            <div class="name">France</div>
+            <div class="price">From $5 · 1 GB</div>
+          </div>
+          <div class="card">
+            <span class="flag">🇬🇧</span>
+            <div class="name">United Kingdom</div>
+            <div class="price">From $5 · 1 GB</div>
+          </div>
+        </div>
+      </div>
+
+      <img class="panda" src="../../../public/bambu/Logo Esim Panda.png" alt="" />
+    </div>
+  </div>
+</div>
+</body>
+</html>

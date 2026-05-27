@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Slot 2 — Install in 2 minutes</title>
+<link rel="stylesheet" href="_shared.css" />
+<style>
+  .canvas {
+    background:
+      radial-gradient(70% 50% at 50% 110%, #E3F0FF 0%, transparent 60%),
+      radial-gradient(50% 40% at 100% 0%, rgba(41, 121, 255, 0.08) 0%, transparent 70%),
+      #FBFCFE;
+  }
+
+  .countdown {
+    position: absolute;
+    top: 660px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    color: var(--c-blue);
+    font-weight: 700;
+    font-size: 36px;
+    letter-spacing: -0.005em;
+  }
+  .countdown .stop {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--c-success);
+    box-shadow: 0 0 0 8px rgba(67, 160, 71, 0.18);
+  }
+
+  /* iOS-style "Use eSIM" sheet */
+  .ios-sheet {
+    position: relative;
+    height: 100%;
+    background: linear-gradient(180deg, #F2F2F7 0%, #F2F2F7 38%, transparent 38%);
+  }
+  .sheet-host {
+    position: absolute;
+    top: 168px;
+    left: 36px;
+    right: 36px;
+    background: #FFFFFF;
+    border-radius: 44px;
+    padding: 36px 36px 28px;
+    box-shadow: 0 30px 60px rgba(15, 23, 42, 0.10);
+  }
+  .sheet-host .grabber {
+    width: 76px;
+    height: 8px;
+    background: #D4D4D8;
+    border-radius: 6px;
+    margin: 0 auto 28px;
+  }
+  .sheet-host .title {
+    font-size: 48px;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    text-align: center;
+    color: var(--c-ink);
+  }
+  .sheet-host .lead {
+    margin-top: 14px;
+    font-size: 28px;
+    color: var(--c-ink-soft);
+    text-align: center;
+    font-weight: 500;
+    line-height: 1.3;
+  }
+
+  .plan-card {
+    margin-top: 32px;
+    border: 2px solid var(--c-blue);
+    border-radius: 28px;
+    padding: 28px 28px 24px;
+    background: #F5F9FF;
+  }
+  .plan-card .row1 {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+  }
+  .plan-card .flag { font-size: 80px; line-height: 1; }
+  .plan-card .who { flex: 1; }
+  .plan-card .who .carrier {
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--c-ink);
+  }
+  .plan-card .who .meta {
+    font-size: 24px;
+    color: var(--c-ink-soft);
+    margin-top: 4px;
+    font-weight: 500;
+  }
+  .plan-card .check {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--c-success);
+    color: #FFF;
+    display: grid;
+    place-items: center;
+    font-size: 36px;
+  }
+
+  .install-btn {
+    margin-top: 28px;
+    background: var(--c-blue);
+    color: #FFF;
+    border-radius: 999px;
+    height: 96px;
+    display: grid;
+    place-items: center;
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.005em;
+    box-shadow: 0 18px 30px rgba(41, 121, 255, 0.35);
+  }
+
+  .steps {
+    margin-top: 36px;
+    display: grid;
+    gap: 22px;
+  }
+  .step {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 22px 28px;
+    border-radius: 24px;
+    background: #FAFBFE;
+  }
+  .step.done { background: #E8F5EA; }
+  .step.now  { background: #E3F0FF; border: 2px solid var(--c-blue); }
+  .step .n {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #FFF;
+    border: 2px solid #E4E4E7;
+    display: grid;
+    place-items: center;
+    font-weight: 800;
+    font-size: 26px;
+    color: var(--c-ink-soft);
+  }
+  .step.done .n { background: var(--c-success); border-color: var(--c-success); color: #FFF; }
+  .step.now .n  { background: var(--c-blue); border-color: var(--c-blue); color: #FFF; }
+  .step .label {
+    flex: 1;
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--c-ink);
+  }
+  .step .time {
+    font-size: 22px;
+    color: var(--c-ink-soft);
+    font-weight: 500;
+  }
+  .step.done .label, .step.done .time { color: var(--c-ink); }
+
+  .floating-badge {
+    position: absolute;
+    background: #FFFFFF;
+    border-radius: 28px;
+    padding: 22px 28px;
+    box-shadow: 0 24px 60px rgba(15, 23, 42, 0.18);
+    z-index: 6;
+    font-weight: 600;
+    color: var(--c-ink);
+  }
+  .fb-top {
+    top: 1320px;
+    right: 60px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    font-size: 28px;
+  }
+  .fb-top .icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    background: var(--c-blue);
+    display: grid;
+    place-items: center;
+    color: #FFF;
+    font-size: 32px;
+  }
+  .fb-bottom {
+    bottom: 280px;
+    left: 60px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    font-size: 28px;
+  }
+  .fb-bottom .icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--c-success);
+    color: #FFF;
+    display: grid;
+    place-items: center;
+    font-size: 32px;
+  }
+</style>
+</head>
+<body>
+<div class="canvas">
+
+  <div class="caption">
+    <h1>Installed in<br/>2 minutes.</h1>
+    <p>Tap the link. iOS does the rest.</p>
+  </div>
+
+  <div class="countdown">
+    <span class="stop"></span>
+    <span>00 : 01 : 47 remaining</span>
+  </div>
+
+  <div class="floating-badge fb-top">
+    <span class="icon">✓</span>
+    <span>QR scanned</span>
+  </div>
+  <div class="floating-badge fb-bottom">
+    <span class="icon">5G</span>
+    <span>Data on. You're connected.</span>
+  </div>
+
+  <div class="phone">
+    <div class="screen">
+      <div class="island"></div>
+      <div class="ios-sheet">
+        <div class="statusbar">
+          <span>9:41</span>
+          <span class="icons">
+            <svg viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2" width="3" height="10" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
+            <svg viewBox="0 0 24 12" fill="currentColor"><rect x="1" y="1" width="20" height="10" rx="3" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="3" y="3" width="14" height="6" rx="1.5"/><rect x="22" y="4" width="1.5" height="4" rx="0.5"/></svg>
+          </span>
+        </div>
+
+        <div class="sheet-host">
+          <div class="grabber"></div>
+          <div class="title">Add Cellular Plan</div>
+          <div class="lead">eSIM Panda would like to activate a plan on this iPhone.</div>
+
+          <div class="plan-card">
+            <div class="row1">
+              <span class="flag">🇯🇵</span>
+              <div class="who">
+                <div class="carrier">eSIM Panda — Japan</div>
+                <div class="meta">5 GB · 30 days · prepaid</div>
+              </div>
+              <span class="check">✓</span>
+            </div>
+          </div>
+
+          <div class="install-btn">Continue</div>
+
+          <div class="steps">
+            <div class="step done">
+              <span class="n">✓</span>
+              <span class="label">Bought your plan</span>
+              <span class="time">00:30</span>
+            </div>
+            <div class="step now">
+              <span class="n">2</span>
+              <span class="label">Activate the eSIM</span>
+              <span class="time">~01:00</span>
+            </div>
+            <div class="step">
+              <span class="n">3</span>
+              <span class="label">You're online</span>
+              <span class="time">00:30</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
