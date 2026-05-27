@@ -402,6 +402,9 @@
       "subheading": "Scannez le code QR ou appuyez sur Installer pour activer"
     },
     "install": "Installer l'eSIM",
+    "wallet": {
+      "addToWallet": "Ajouter à Apple Wallet"
+    },
     "qr": {
       "instruction": "Scannez ce code QR avec votre téléphone",
       "download": "Enregistrer le code QR"

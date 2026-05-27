@@ -402,6 +402,9 @@
       "subheading": "Toque em Instalar no seu telemóvel, ou leia o QR a partir de Definições → Dados móveis → Adicionar eSIM"
     },
     "install": "Instalar eSIM",
+    "wallet": {
+      "addToWallet": "Adicionar à Apple Wallet"
+    },
     "qr": {
       "instruction": "Abra Definições → Dados móveis → Adicionar eSIM → Usar Código QR, depois leia o código",
       "download": "Guardar código QR"

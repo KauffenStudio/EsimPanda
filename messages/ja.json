@@ -402,6 +402,9 @@
       "subheading": "QRコードをスキャンするか、インストールをタップして有効化"
     },
     "install": "eSIMをインストール",
+    "wallet": {
+      "addToWallet": "Apple Walletに追加"
+    },
     "qr": {
       "instruction": "このQRコードをスマートフォンでスキャン",
       "download": "QRコードを保存"

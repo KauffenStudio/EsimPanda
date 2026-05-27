@@ -8,12 +8,14 @@ import { QrCodeDisplay } from './qr-code-display';
 import { InstallButton } from './install-button';
 import { ManualCodes } from './manual-codes';
 import { SetupNotice } from './setup-notice';
+import { AddToWalletButton } from './add-to-wallet-button';
 
 interface EsimCredentialsProps {
   data: DeliveryData;
+  orderId?: string | null;
 }
 
-export function EsimCredentials({ data }: EsimCredentialsProps) {
+export function EsimCredentials({ data, orderId }: EsimCredentialsProps) {
   const deviceFamily = useMemo(
     () => (typeof navigator !== 'undefined' ? detectDeviceFamily(navigator.userAgent) : 'desktop'),
     []
@@ -45,6 +47,8 @@ export function EsimCredentials({ data }: EsimCredentialsProps) {
       ) : (
         <QrCodeDisplay data={qrData} />
       )}
+
+      <AddToWalletButton orderId={orderId} />
 
       <SetupNotice />
 

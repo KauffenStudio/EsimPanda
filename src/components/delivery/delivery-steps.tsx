@@ -144,7 +144,7 @@ export function DeliverySteps({
               className="overflow-hidden"
             >
               <div className="px-4 pb-4 space-y-4">
-                <EsimCredentials data={data} />
+                <EsimCredentials data={data} orderId={orderId} />
 
                 {email && (
                   <p className="text-sm text-gray-600 dark:text-gray-400 text-center">

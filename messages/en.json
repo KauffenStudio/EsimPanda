@@ -402,6 +402,9 @@
       "subheading": "Tap Install on your phone, or scan the QR from Settings → Cellular → Add eSIM"
     },
     "install": "Install eSIM",
+    "wallet": {
+      "addToWallet": "Add to Apple Wallet"
+    },
     "qr": {
       "instruction": "Open Settings → Cellular → Add eSIM → Use QR Code, then scan",
       "download": "Save QR code"

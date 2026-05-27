@@ -94,6 +94,36 @@ export async function getOrderByPaymentIntent(paymentIntentId: string): Promise<
   return data;
 }
 
+export async function getOrderByIdForUser(
+  orderId: string,
+  userId: string,
+): Promise<OrderRow | null> {
+  const supabase = createServiceClient();
+  const { data, error } = await supabase
+    .from('orders')
+    .select(`
+      *,
+      plans (
+        wholesale_plan_id,
+        name,
+        data_gb,
+        duration_days,
+        destinations (
+          name,
+          iso_code
+        )
+      )
+    `)
+    .eq('id', orderId)
+    .eq('user_id', userId)
+    .single();
+
+  if (error) {
+    return null;
+  }
+  return data;
+}
+
 // Order statuses from which provisioning may still be (re)started. An order
 // already 'provisioning' or 'delivered' must NOT be claimed again.
 const CLAIMABLE_STATUSES = ['pending', 'payment_confirmed', 'provision_failed'];
