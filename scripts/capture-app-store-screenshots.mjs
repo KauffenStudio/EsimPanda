@@ -18,11 +18,11 @@ async function run() {
 
   const arg = process.argv[2];
   const files = (await readdir(TEMPLATE_DIR))
-    .filter((f) => /^slot-\d+\.html$/.test(f))
+    .filter((f) => /^(slot|lifestyle)-\d+\.html$/.test(f))
     .sort();
 
   const targets = arg
-    ? files.filter((f) => f === `slot-${arg}.html`)
+    ? files.filter((f) => f === `slot-${arg}.html` || f === `lifestyle-${arg}.html`)
     : files;
 
   if (targets.length === 0) {

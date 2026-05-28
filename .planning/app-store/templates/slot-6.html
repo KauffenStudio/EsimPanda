@@ -2,242 +2,69 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<title>Slot 6 — Weekend or semester</title>
+<title>Slot 6 — Keep your number</title>
 <link rel="stylesheet" href="_shared.css" />
 <style>
   .canvas {
     background:
-      radial-gradient(60% 50% at 0% 100%, rgba(41, 121, 255, 0.10) 0%, transparent 60%),
-      radial-gradient(50% 40% at 100% 0%, rgba(186, 230, 253, 0.5) 0%, transparent 65%),
-      #F8FAFC;
+      radial-gradient(58% 44% at 0% 100%, rgba(41, 121, 255, 0.10) 0%, transparent 60%),
+      radial-gradient(50% 38% at 100% 0%, rgba(186, 220, 255, 0.5) 0%, transparent 65%),
+      #F4F7FC;
   }
   .caption h1 .blue { color: var(--c-blue); }
 
-  /* Timeline above the phone */
-  .timeline {
-    position: absolute;
-    top: 700px;
-    left: 60px;
-    right: 60px;
-    height: 8px;
-    background: #E4E4E7;
-    border-radius: 4px;
-    z-index: 4;
-  }
-  .timeline .fill {
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, var(--c-blue) 0%, var(--c-blue-deep) 100%);
-    border-radius: 4px;
-  }
-  .timeline .tick {
-    position: absolute;
-    top: -28px;
-    transform: translateX(-50%);
-    width: 8px; height: 64px;
-    background: var(--c-blue);
-    border-radius: 4px;
-  }
-  .timeline .label {
-    position: absolute;
-    top: 50px;
-    transform: translateX(-50%);
-    text-align: center;
-    font-size: 24px;
-    font-weight: 700;
-    color: var(--c-ink);
-    white-space: nowrap;
-  }
-  .timeline .label small {
-    display: block;
-    font-size: 20px;
-    color: var(--c-ink-soft);
-    font-weight: 500;
-    margin-top: 6px;
-  }
-  .t-0 { left: 0%; } .t-1 { left: 25%; } .t-2 { left: 50%; } .t-3 { left: 75%; } .t-4 { left: 100%; }
+  /* iOS Settings aesthetic */
+  .settings { position: relative; height: 100%; background: #F2F2F7; padding: 0 0 60px; }
+  .settings .nav { padding: 8px 44px 0; display: flex; align-items: center; gap: 12px; color: var(--c-blue); font-size: 32px; font-weight: 500; }
+  .settings .nav .chev { font-size: 40px; line-height: 1; margin-top: -4px; }
+  .settings h1.big { padding: 6px 44px 24px; font-size: 64px; font-weight: 800; letter-spacing: -0.03em; color: var(--c-ink); }
 
-  .home {
-    height: 100%;
-    padding: 0 56px;
-  }
-  .home .header {
-    margin-top: 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .home .back {
-    width: 56px; height: 56px;
-    border-radius: 50%;
-    background: #F4F4F5;
-    display: grid; place-items: center;
-    font-size: 32px;
-  }
-  .home .title { font-size: 32px; font-weight: 700; }
+  .grp { margin: 0 36px 40px; }
+  .grp .ghead { font-size: 26px; font-weight: 600; color: #8A8F9C; letter-spacing: 0.02em; text-transform: uppercase; padding: 0 24px 16px; }
+  .grp .card { background: #FFFFFF; border-radius: 30px; overflow: hidden; }
+  .grp .row { display: flex; align-items: center; gap: 24px; padding: 30px 30px; position: relative; }
+  .grp .row + .row::before { content: ''; position: absolute; top: 0; left: 30px; right: 0; height: 1.5px; background: #ECECEF; }
+  .grp .row .ic { width: 76px; height: 76px; border-radius: 20px; display: grid; place-items: center; flex-shrink: 0; font-size: 40px; }
+  .grp .row .ic.sim { background: #EAEFF7; }
+  .grp .row .ic.panda { overflow: hidden; box-shadow: 0 8px 18px rgba(20,28,48,0.18); padding: 0; }
+  .grp .row .ic.panda img { width: 100%; height: 100%; object-fit: cover; }
+  .grp .row .main { flex: 1; }
+  .grp .row .main .t { font-size: 34px; font-weight: 700; color: var(--c-ink); letter-spacing: -0.01em; }
+  .grp .row .main .s { font-size: 26px; color: var(--c-ink-soft); font-weight: 500; margin-top: 5px; }
+  .grp .row .tag { font-size: 23px; font-weight: 700; padding: 9px 18px; border-radius: 999px; letter-spacing: 0.02em; }
+  .grp .row .tag.primary { background: #EEF1F6; color: #5A6072; }
+  .grp .row .tag.active { background: var(--c-success-soft); color: var(--c-success); }
+  .grp .row .val { font-size: 30px; color: var(--c-ink-soft); font-weight: 500; display: flex; align-items: center; gap: 14px; }
+  .grp .row .val .chev { color: #C4C9D4; font-size: 34px; }
+  .grp .row.add .t { color: var(--c-blue); font-weight: 600; }
+  .grp .row .plus { width: 76px; height: 76px; border-radius: 20px; background: #EAEFF7; display: grid; place-items: center; font-size: 44px; color: var(--c-blue); }
 
-  .destination-row {
-    margin-top: 36px;
-    display: flex;
-    align-items: center;
-    gap: 22px;
-  }
-  .destination-row .flag {
-    width: 84px; height: 84px;
-    border-radius: 24px;
-    background: #FFFBF3;
-    display: grid; place-items: center;
-    font-size: 56px;
-  }
-  .destination-row .meta .name {
-    font-size: 40px;
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    color: var(--c-ink);
-  }
-  .destination-row .meta .sub {
-    font-size: 24px;
-    color: var(--c-ink-soft);
-    font-weight: 500;
-    margin-top: 2px;
-  }
+  .grp .foot { font-size: 25px; color: #8A8F9C; font-weight: 500; padding: 18px 28px 0; line-height: 1.4; }
+  .grp .foot b { color: var(--c-ink-soft); font-weight: 700; }
 
-  .h-label {
-    margin-top: 40px;
-    font-size: 26px;
-    font-weight: 700;
-    color: var(--c-ink);
-    letter-spacing: -0.005em;
-  }
+  .pill-call { top: 1244px; left: 50px; }
+  .pill-data { top: 1244px; right: 50px; }
 
-  .duration-pills {
-    margin-top: 22px;
-    display: flex;
-    gap: 14px;
-    flex-wrap: wrap;
-  }
-  .duration {
-    padding: 18px 28px;
-    border-radius: 999px;
-    border: 2px solid #E4E4E7;
-    background: #FFFFFF;
-    font-size: 28px;
-    font-weight: 700;
-    color: var(--c-ink);
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .duration.active {
-    background: var(--c-blue);
-    border-color: var(--c-blue);
-    color: #FFFFFF;
-  }
-  .duration .star {
-    background: rgba(255,255,255,0.22);
-    color: #FFF;
-    font-size: 20px;
-    font-weight: 700;
-    padding: 4px 10px;
-    border-radius: 999px;
-    margin-left: 4px;
-  }
-
-  .plan-list {
-    margin-top: 36px;
-    display: grid;
-    gap: 18px;
-  }
-  .plan {
-    border: 2px solid #E4E4E7;
-    background: #FFFFFF;
-    border-radius: 28px;
-    padding: 28px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .plan.active {
-    border-color: var(--c-blue);
-    background: #F5F9FF;
-  }
-  .plan .left .gb {
-    font-size: 36px;
-    font-weight: 800;
-    letter-spacing: -0.015em;
-    color: var(--c-ink);
-  }
-  .plan .left .sub {
-    font-size: 22px;
-    color: var(--c-ink-soft);
-    font-weight: 500;
-    margin-top: 4px;
-  }
-  .plan .right {
-    text-align: right;
-  }
-  .plan .right .price {
-    font-size: 38px;
-    font-weight: 800;
-    color: var(--c-ink);
-    letter-spacing: -0.02em;
-    line-height: 1;
-  }
-  .plan .right .day {
-    font-size: 22px;
-    color: var(--c-ink-soft);
-    font-weight: 500;
-    margin-top: 4px;
-  }
-  .plan.active .right .price { color: var(--c-blue); }
-  .plan .right .tag {
-    display: inline-block;
-    margin-top: 8px;
-    background: #FEF3C7;
-    color: #92400E;
-    font-size: 18px;
-    font-weight: 700;
-    padding: 4px 10px;
-    border-radius: 999px;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-  }
-
-  .cta {
-    margin-top: 36px;
-    background: var(--c-blue);
-    color: #FFF;
-    border-radius: 999px;
-    height: 100px;
-    display: grid;
-    place-items: center;
-    font-size: 32px;
-    font-weight: 700;
-    letter-spacing: -0.005em;
-    box-shadow: 0 18px 30px rgba(41, 121, 255, 0.35);
-  }
+  .usage-track { margin-top: 24px; height: 28px; border-radius: 10px; background: #ECEEF3; overflow: hidden; }
+  .usage-fill { width: 24%; height: 100%; border-radius: 10px; background: linear-gradient(90deg, var(--c-blue), var(--c-blue-deep)); }
+  .ios-toggle { width: 96px; height: 56px; border-radius: 999px; background: #E4E6EB; position: relative; flex-shrink: 0; }
+  .ios-toggle .knob { position: absolute; top: 4px; left: 4px; width: 48px; height: 48px; border-radius: 50%; background: #fff; box-shadow: 0 3px 8px rgba(0,0,0,0.18); }
 </style>
 </head>
 <body>
 <div class="canvas">
   <div class="caption">
-    <h1>A weekend or<br/>a <span class="blue">semester</span>.</h1>
-    <p>Plans from 24 hours to 6 months.</p>
+    <h1>Keep your<br/><span class="blue">number</span>.</h1>
+    <p>Your SIM stays on for calls. We add the data.</p>
   </div>
 
-  <div class="timeline">
-    <div class="fill"></div>
-    <div class="tick t-0"></div><div class="label t-0">24h<small>weekend</small></div>
-    <div class="tick t-1"></div><div class="label t-1">7d<small>short trip</small></div>
-    <div class="tick t-2"></div><div class="label t-2">30d<small>month abroad</small></div>
-    <div class="tick t-3"></div><div class="label t-3">90d<small>Erasmus</small></div>
-    <div class="tick t-4"></div><div class="label t-4">180d<small>semester</small></div>
-  </div>
+  <div class="float pill-call"><span class="chip-ic" style="background:#5A6072">☎</span><span>Calls: home #</span></div>
+  <div class="float pill-data"><span class="led"></span><span>Data: eSIM Panda</span></div>
 
   <div class="phone">
     <div class="screen">
       <div class="island"></div>
-      <div class="home">
+      <div class="settings">
         <div class="statusbar">
           <span>9:41</span>
           <span class="icons">
@@ -246,64 +73,66 @@
           </span>
         </div>
 
-        <div class="header">
-          <span class="back">‹</span>
-          <span class="title">Pick your plan</span>
-          <span style="width:56px"></span>
-        </div>
+        <div class="nav"><span class="chev">‹</span> Settings</div>
+        <h1 class="big">Cellular</h1>
 
-        <div class="destination-row">
-          <span class="flag">🇯🇵</span>
-          <div class="meta">
-            <div class="name">Japan</div>
-            <div class="sub">62 plans · most travelers stay 5–14 days</div>
-          </div>
-        </div>
-
-        <div class="h-label">How long do you need it?</div>
-        <div class="duration-pills">
-          <span class="duration">24 h</span>
-          <span class="duration">7 days</span>
-          <span class="duration active">30 days <span class="star">★</span></span>
-          <span class="duration">90 days</span>
-          <span class="duration">180 days</span>
-        </div>
-
-        <div class="plan-list">
-          <div class="plan">
-            <div class="left">
-              <div class="gb">3 GB</div>
-              <div class="sub">Light use · email, maps, chat</div>
+        <div class="grp">
+          <div class="ghead">SIMs</div>
+          <div class="card">
+            <div class="row">
+              <span class="ic sim">📱</span>
+              <div class="main">
+                <div class="t">Personal</div>
+                <div class="s">+1 (415) 555‑0142 · calls &amp; texts</div>
+              </div>
+              <span class="tag primary">Primary</span>
             </div>
-            <div class="right">
-              <div class="price">$6.00</div>
-              <div class="day">$0.20 / day</div>
+            <div class="row">
+              <span class="ic panda"><img src="../lifestyle/panda-face.png" alt=""/></span>
+              <div class="main">
+                <div class="t">eSIM Panda — Japan</div>
+                <div class="s">5 GB · 30 days · data</div>
+              </div>
+              <span class="tag active">Active</span>
             </div>
-          </div>
-          <div class="plan active">
-            <div class="left">
-              <div class="gb">5 GB</div>
-              <div class="sub">Streaming · Spotify, Maps, Messages</div>
-            </div>
-            <div class="right">
-              <div class="price">$9.00</div>
-              <div class="day">$0.30 / day</div>
-              <span class="tag">Most popular</span>
-            </div>
-          </div>
-          <div class="plan">
-            <div class="left">
-              <div class="gb">10 GB</div>
-              <div class="sub">Heavy use · video calls, work</div>
-            </div>
-            <div class="right">
-              <div class="price">$15.00</div>
-              <div class="day">$0.50 / day</div>
+            <div class="row add">
+              <span class="plus">+</span>
+              <div class="main"><div class="t">Add eSIM</div></div>
             </div>
           </div>
         </div>
 
-        <div class="cta">Continue · $9.00</div>
+        <div class="grp">
+          <div class="ghead">Cellular Data</div>
+          <div class="card">
+            <div class="row">
+              <div class="main"><div class="t">Cellular Data</div></div>
+              <span class="val">eSIM Panda — Japan <span class="chev">›</span></span>
+            </div>
+            <div class="row">
+              <div class="main"><div class="t">Default Voice Line</div></div>
+              <span class="val">Personal <span class="chev">›</span></span>
+            </div>
+          </div>
+          <div class="foot">Your home number keeps ringing for <b>calls and texts</b>. eSIM Panda only carries your <b>data</b> — so no roaming, and nobody back home notices a thing.</div>
+        </div>
+
+        <div class="grp">
+          <div class="ghead">eSIM Panda — Data Usage</div>
+          <div class="card">
+            <div class="row" style="display:block; padding: 32px 30px;">
+              <div style="display:flex; justify-content:space-between; align-items:baseline;">
+                <span style="font-size:34px; font-weight:700; color:var(--c-ink);">1.2 GB used</span>
+                <span style="font-size:28px; color:var(--c-ink-soft); font-weight:600;">3.8 GB left · 26 days</span>
+              </div>
+              <div class="usage-track"><div class="usage-fill"></div></div>
+            </div>
+            <div class="row">
+              <div class="main"><div class="t">Data Roaming</div><div class="s">Not needed — this is a local plan</div></div>
+              <span class="ios-toggle"><span class="knob"></span></span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
