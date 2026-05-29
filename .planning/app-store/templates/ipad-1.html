@@ -15,6 +15,16 @@
   .caption { position: absolute; top: 180px; left: 160px; right: 160px; text-align: center; z-index: 4; }
   .caption h1 { font-size: 168px; line-height: 0.95; letter-spacing: -0.045em; font-weight: 800; color: var(--c-ink); }
   .caption p { margin-top: 38px; font-size: 62px; font-weight: 500; color: var(--c-ink-soft); letter-spacing: -0.012em; }
+  .socialproof { margin-top: 42px; display: inline-flex; align-items: center; gap: 26px; background: #fff; border: 1px solid var(--c-line); border-radius: 999px; padding: 22px 46px 22px 30px; box-shadow: 0 12px 34px rgba(20,28,48,0.10); }
+  .socialproof .avatars { display: flex; }
+  .socialproof .avatars i { width: 76px; height: 76px; border-radius: 50%; border: 5px solid #fff; margin-left: -24px; }
+  .socialproof .avatars i:first-child { margin-left: 0; }
+  .socialproof .avatars i:nth-child(1){ background: linear-gradient(135deg,#FCAE4D,#EF6F6C); }
+  .socialproof .avatars i:nth-child(2){ background: linear-gradient(135deg,#2979FF,#1858C4); }
+  .socialproof .avatars i:nth-child(3){ background: linear-gradient(135deg,#2BB673,#1E8C57); }
+  .socialproof .avatars i:nth-child(4){ background: linear-gradient(135deg,#8B5CF6,#5B3FC4); }
+  .socialproof .sp-text { font-size: 44px; font-weight: 600; color: var(--c-ink-soft); letter-spacing: -0.01em; }
+  .socialproof .sp-text b { color: var(--c-ink); font-weight: 800; }
 
   /* iPhone mockup centered on the iPad canvas */
   .phone {
@@ -68,7 +78,8 @@
 
   <div class="caption">
     <h1>Travel light. Stay online.</h1>
-    <p>One Panda. 200+ destinations, all in your pocket.</p>
+    <p>One Panda. 100+ destinations, all in your pocket.</p>
+    <div class="socialproof"><span class="avatars"><i></i><i></i><i></i><i></i></span><span class="sp-text"><b>20,000+</b> travelers online daily</span></div>
   </div>
 
   <div class="float pill-1"><span class="led"></span><span>Connected in Tokyo</span></div>
@@ -91,7 +102,7 @@
         </div>
         <h2>Where to?<br/><span class="accent">Pick your country.</span></h2>
         <div class="sub">Local data plans. No roaming, no contracts.</div>
-        <div class="search"><span class="icon"></span><span>Search 200+ destinations…</span></div>
+        <div class="search"><span class="icon"></span><span>Search 100+ destinations…</span></div>
         <div class="picker-label"><span>Popular this month</span><span class="more">See all →</span></div>
         <div class="grid">
           <div class="card featured"><span class="bestseller">Bestseller</span><span class="flag">🇯🇵</span><div class="name">Japan</div><div class="price">From $9.99</div></div>
