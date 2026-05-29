@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>iPad 4 — More days, less money</title>
+<link rel="stylesheet" href="_shared.css" />
+<style>
+  html, body, .canvas { width: 2064px; height: 2752px; }
+  .canvas { overflow: hidden; background:
+      radial-gradient(40% 28% at 100% 0%, rgba(232,69,60,0.10) 0%, transparent 60%),
+      radial-gradient(54% 40% at 0% 100%, rgba(41,121,255,0.12) 0%, transparent 60%),
+      #FBFCFE; }
+  .caption { position: absolute; top: 170px; left: 140px; right: 140px; text-align: center; z-index: 4; }
+  .caption h1 { font-size: 162px; line-height: 0.95; letter-spacing: -0.045em; font-weight: 800; color: var(--c-ink); }
+  .caption h1 .blue { color: var(--c-blue); }
+  .caption p { margin-top: 34px; font-size: 60px; font-weight: 500; color: var(--c-ink-soft); letter-spacing: -0.012em; }
+
+  .phone { position: absolute; width: 940px; height: 1900px; left: 50%; bottom: 120px; transform: translateX(-50%); background: #050507; border-radius: 112px; padding: 20px; box-shadow: var(--shadow-phone); z-index: 3; }
+  .phone::before { content:''; position:absolute; inset:-4px; border-radius:116px; background: linear-gradient(145deg,#7c8089,#3a3d43 14%,#0b0b0d 36%,#1d1f24 54%,#54585f 76%,#14151a 92%,#2c2e34); z-index:-1; }
+  .phone .screen { position: relative; width: 100%; height: 100%; background: #fff; border-radius: 93px; overflow: hidden; }
+  .phone .island { position:absolute; top:30px; left:50%; transform:translateX(-50%); width:300px; height:66px; background:#000; border-radius:999px; z-index:15; }
+  .statusbar { position: relative; height: 120px; padding: 54px 66px 0; display: flex; justify-content: space-between; font-size: 34px; font-weight: 600; z-index:16; }
+  .statusbar .icons { display:flex; gap:10px; } .statusbar svg { width:38px; height:24px; }
+
+  .app { position: relative; height: 100%; padding: 0 60px; overflow: hidden; }
+  .app .topbar { margin-top: 8px; display: flex; align-items: center; justify-content: space-between; font-size:33px; font-weight:700; }
+  .app .back { width: 60px; height: 60px; border-radius: 50%; background: #F1F3F8; display: grid; place-items: center; font-size: 34px; }
+  .app .topbar .title { font-weight: 700; font-size: 33px; color: var(--c-ink); }
+  .app .topbar .more { width: 60px; height: 60px; border-radius: 50%; background: #F1F3F8; display: grid; place-items: center; }
+
+  .cmp { margin-top: 36px; border-radius: 38px; padding: 36px; position: relative; }
+  .cmp.bad { background: #FDF1F0; border: 2px solid #F8D2CE; }
+  .cmp.good { background: #EEF5FF; border: 2px solid var(--c-blue); margin-top: 28px; box-shadow: 0 20px 44px rgba(41,121,255,0.14); }
+  .cmp .head { display: flex; align-items: center; justify-content: space-between; }
+  .cmp .head .label { font-size: 27px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+  .cmp.bad .head .label { color: #C0392B; }
+  .cmp.good .head .label { color: var(--c-blue); display: flex; align-items: center; gap: 14px; }
+  .cmp.good .head .label .mk { width: 48px; height: 48px; border-radius: 13px; overflow: hidden; }
+  .cmp.good .head .label .mk img { width: 100%; height: 100%; object-fit: cover; }
+  .cmp .head .price { font-size: 72px; font-weight: 800; letter-spacing: -0.035em; line-height: 1; }
+  .cmp.bad .head .price { color: #C0392B; } .cmp.good .head .price { color: var(--c-blue); }
+  .cmp .head .price .cent { font-size: 40px; vertical-align: super; }
+  .cmp .what { margin-top: 10px; font-size: 30px; font-weight: 600; color: var(--c-ink-soft); }
+  .valbar { margin-top: 30px; }
+  .valbar .track { height: 36px; border-radius: 12px; background: #fff; border: 2px solid rgba(0,0,0,0.05); overflow: hidden; position: relative; }
+  .valbar .fill { height: 100%; border-radius: 9px 0 0 9px; display: flex; align-items: center; padding-left: 22px; font-size: 22px; font-weight: 800; color: #fff; white-space: nowrap; }
+  .cmp.bad .valbar .fill { width: 23.3%; background: #E8453C; } .cmp.good .valbar .fill { width: 100%; background: var(--c-blue); }
+  .valbar .scale { margin-top: 14px; display: flex; justify-content: space-between; font-size: 22px; font-weight: 600; color: var(--c-ink-soft); }
+  .valbar .scale .end { color: var(--c-ink); }
+  .cmp.bad .expire { margin-top: 14px; font-size: 24px; font-weight: 600; color: #C0392B; }
+  .verdict { margin-top: 36px; background: var(--c-ink); color: #fff; border-radius: 30px; padding: 34px 38px; display: flex; align-items: center; gap: 28px; }
+  .verdict .big { font-size: 56px; font-weight: 800; letter-spacing: -0.03em; line-height: 0.95; }
+  .verdict .big small { display: block; font-size: 26px; font-weight: 600; color: rgba(255,255,255,0.7); margin-top: 8px; }
+  .verdict .sep { width: 2px; height: 96px; background: rgba(255,255,255,0.16); }
+  .verdict .pts { display: grid; gap: 16px; }
+  .verdict .pt { display: flex; align-items: center; gap: 16px; font-size: 28px; font-weight: 600; color: rgba(255,255,255,0.92); }
+  .verdict .pt .tick { width: 38px; height: 38px; border-radius: 50%; background: var(--c-success); color: #fff; display: grid; place-items: center; font-size: 22px; }
+  .buy-cta { margin-top: 32px; }
+  .buy-cta .buy-line { display: flex; align-items: baseline; justify-content: space-between; padding: 0 8px 18px; }
+  .buy-cta .buy-what { font-size: 30px; font-weight: 600; color: var(--c-ink-soft); }
+  .buy-cta .buy-price { font-size: 40px; font-weight: 800; color: var(--c-ink); }
+  .buy-cta .buy-btn { background: var(--c-blue); color: #fff; border-radius: 999px; height: 104px; display: grid; place-items: center; font-size: 34px; font-weight: 700; box-shadow: 0 18px 34px rgba(41,121,255,0.38); }
+
+  .float { position: absolute; z-index: 9; background: #fff; border-radius: 34px; padding: 30px 38px; box-shadow: var(--shadow-float); display: flex; align-items: center; gap: 20px; font-weight: 700; font-size: 38px; color: var(--c-ink); }
+  .float .chip-ic { width: 70px; height: 70px; border-radius: 20px; display: grid; place-items: center; color: #fff; font-size: 38px; }
+  .pill-paid { top: 1180px; right: 150px; }
+</style>
+</head>
+<body>
+<div class="canvas">
+  <div class="caption"><h1>$13, not $25. For <span class="blue">30 days</span>.</h1><p>Same 5 GB. We just don't make it expire.</p></div>
+  <div class="float pill-paid"><span class="chip-ic" style="background:var(--c-success)">$</span><span>Paid once</span></div>
+  <div class="phone">
+    <div class="screen">
+      <div class="island"></div>
+      <div class="app">
+        <div class="statusbar"><span>9:41</span><span class="icons">
+          <svg viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2" width="3" height="10" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
+          <svg viewBox="0 0 24 12" fill="currentColor"><rect x="1" y="1" width="20" height="10" rx="3" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="3" y="3" width="14" height="6" rx="1.5"/><rect x="22" y="4" width="1.5" height="4" rx="0.5"/></svg>
+        </span></div>
+        <div class="topbar"><span class="back">‹</span><span class="title">5 GB in Japan</span><span class="more">···</span></div>
+        <div class="cmp bad">
+          <div class="head"><span class="label">Typical travel eSIM</span><span class="price">$25</span></div>
+          <div class="what">5 GB · expires in 7 days</div>
+          <div class="valbar"><div class="track"><div class="fill">7 DAYS</div></div><div class="scale"><span>Day 0</span><span class="end">Day 30</span></div></div>
+          <div class="expire">⚠ Buy again for the rest of your trip</div>
+        </div>
+        <div class="cmp good">
+          <div class="head"><span class="label"><span class="mk"><img src="../lifestyle/panda-face.png" alt=""/></span> eSIM Panda</span><span class="price">$12<span class="cent">.99</span></span></div>
+          <div class="what">5 GB · valid a full 30 days</div>
+          <div class="valbar"><div class="track"><div class="fill">30 DAYS</div></div><div class="scale"><span>Day 0</span><span class="end">Day 30</span></div></div>
+        </div>
+        <div class="verdict">
+          <div class="big">4×<small>the days</small></div>
+          <div class="sep"></div>
+          <div class="pts"><div class="pt"><span class="tick">✓</span> Half the price</div><div class="pt"><span class="tick">✓</span> No re-buying mid-trip</div></div>
+        </div>
+        <div class="buy-cta">
+          <div class="buy-line"><span class="buy-what">5 GB · 30 days</span><span class="buy-price">$12.99</span></div>
+          <div class="buy-btn">Get this plan</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

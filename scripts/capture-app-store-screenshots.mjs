@@ -7,22 +7,27 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 const TEMPLATE_DIR = path.join(ROOT, '.planning/app-store/templates');
-const OUT_DIR = path.join(ROOT, '.planning/app-store/screenshots/6.9');
+const SHOT_DIR = path.join(ROOT, '.planning/app-store/screenshots');
 
-// 6.9" iPhone 17 Pro Max class — Apple's 2026 primary required set.
-const CANVAS_W = 1320;
-const CANVAS_H = 2868;
+// Canvas profiles by template prefix.
+// iPhone 6.9" (1320x2868) is Apple's primary required set; iPad 13" (2064x2752).
+const PROFILES = {
+  phone: { w: 1320, h: 2868, out: '6.9' },
+  ipad: { w: 2064, h: 2752, out: 'ipad-13' },
+};
+
+function profileFor(file) {
+  return file.startsWith('ipad-') ? PROFILES.ipad : PROFILES.phone;
+}
 
 async function run() {
-  await mkdir(OUT_DIR, { recursive: true });
-
   const arg = process.argv[2];
   const files = (await readdir(TEMPLATE_DIR))
-    .filter((f) => /^(slot|lifestyle)-\d+\.html$/.test(f))
+    .filter((f) => /^(slot|lifestyle|ipad)-\d+\.html$/.test(f))
     .sort();
 
   const targets = arg
-    ? files.filter((f) => f === `slot-${arg}.html` || f === `lifestyle-${arg}.html`)
+    ? files.filter((f) => f.endsWith(`-${arg}.html`))
     : files;
 
   if (targets.length === 0) {
@@ -31,24 +36,31 @@ async function run() {
   }
 
   const browser = await chromium.launch();
-  const ctx = await browser.newContext({
-    viewport: { width: CANVAS_W, height: CANVAS_H },
-    deviceScaleFactor: 1,
-  });
-  const page = await ctx.newPage();
+  let count = 0;
 
   for (const file of targets) {
+    const prof = profileFor(file);
+    const outDir = path.join(SHOT_DIR, prof.out);
+    await mkdir(outDir, { recursive: true });
+
+    const ctx = await browser.newContext({
+      viewport: { width: prof.w, height: prof.h },
+      deviceScaleFactor: 1,
+    });
+    const page = await ctx.newPage();
     const url = pathToFileURL(path.join(TEMPLATE_DIR, file)).href;
-    process.stdout.write(`  ${file.padEnd(15)} ... `);
+    process.stdout.write(`  ${file.padEnd(16)} ${prof.w}x${prof.h} ... `);
     await page.goto(url, { waitUntil: 'networkidle' });
     await page.waitForTimeout(700);
-    const out = path.join(OUT_DIR, file.replace('.html', '.png'));
+    const out = path.join(outDir, file.replace('.html', '.png'));
     await page.screenshot({ path: out, omitBackground: false, fullPage: false });
+    await ctx.close();
     console.log('ok');
+    count++;
   }
 
   await browser.close();
-  console.log(`\nDone — ${targets.length} screenshots in ${OUT_DIR}`);
+  console.log(`\nDone — ${count} screenshots`);
 }
 
 run().catch((e) => {

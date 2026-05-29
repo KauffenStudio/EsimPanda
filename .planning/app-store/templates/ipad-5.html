@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>iPad 5 — Students save 15%</title>
+<link rel="stylesheet" href="_shared.css" />
+<style>
+  html, body, .canvas { width: 2064px; height: 2752px; }
+  .canvas { overflow: hidden; background:
+      radial-gradient(60% 44% at 50% 106%, rgba(255,216,168,0.5) 0%, transparent 60%),
+      radial-gradient(54% 40% at 0% 0%, rgba(41,121,255,0.10) 0%, transparent 60%),
+      #FFFBF3; }
+  .caption { position: absolute; top: 180px; left: 160px; right: 160px; text-align: center; z-index: 4; }
+  .caption h1 { font-size: 168px; line-height: 0.95; letter-spacing: -0.045em; font-weight: 800; color: var(--c-ink); }
+  .caption p { margin-top: 38px; font-size: 62px; font-weight: 500; color: var(--c-ink-soft); letter-spacing: -0.012em; }
+
+  .erasmus-strip { position: absolute; top: 700px; left: 0; right: 0; display: flex; justify-content: center; gap: 26px; z-index: 5; }
+  .erasmus-strip .chip { background: #fff; border: 2px solid #FCE6C7; border-radius: 999px; padding: 20px 36px; font-size: 34px; font-weight: 600; color: var(--c-ink); display: flex; align-items: center; gap: 14px; box-shadow: 0 8px 22px rgba(20,28,48,0.05); }
+  .erasmus-strip .chip .flag { font-size: 46px; }
+
+  .phone { position: absolute; width: 940px; height: 1900px; left: 50%; bottom: 120px; transform: translateX(-50%); background: #050507; border-radius: 112px; padding: 20px; box-shadow: var(--shadow-phone); z-index: 3; }
+  .phone::before { content:''; position:absolute; inset:-4px; border-radius:116px; background: linear-gradient(145deg,#7c8089,#3a3d43 14%,#0b0b0d 36%,#1d1f24 54%,#54585f 76%,#14151a 92%,#2c2e34); z-index:-1; }
+  .phone .screen { position: relative; width: 100%; height: 100%; background: #fff; border-radius: 93px; overflow: hidden; }
+  .phone .island { position:absolute; top:30px; left:50%; transform:translateX(-50%); width:300px; height:66px; background:#000; border-radius:999px; z-index:15; }
+  .statusbar { position: relative; height: 120px; padding: 54px 66px 0; display: flex; justify-content: space-between; font-size: 34px; font-weight: 600; z-index:16; }
+  .statusbar .icons { display:flex; gap:10px; } .statusbar svg { width:38px; height:24px; }
+
+  .app { height: 100%; padding: 0 56px; }
+  .app .topbar { margin-top: 8px; display:flex; align-items:center; justify-content:space-between; }
+  .app .back { width: 60px; height: 60px; border-radius: 50%; background: #F1F3F8; display: grid; place-items: center; font-size: 34px; }
+  .student-badge { display: flex; align-items: center; gap: 12px; background: var(--c-blue); color: #fff; padding: 16px 26px; border-radius: 999px; font-size: 26px; font-weight: 700; box-shadow: 0 10px 24px rgba(41,121,255,0.3); }
+  .student-badge .grad { font-size: 30px; }
+  .dest-hero { margin-top: 38px; border-radius: 42px; height: 560px; position: relative; padding: 36px; color: #fff; overflow: hidden; background: linear-gradient(180deg, transparent 46%, rgba(0,0,0,0.55) 100%), linear-gradient(135deg, #FCAE4D 0%, #EF6F6C 58%, #842F4D 100%); }
+  .dest-hero .pin { position: absolute; top: 36px; left: 36px; background: rgba(255,255,255,0.22); backdrop-filter: blur(20px); padding: 13px 24px; border-radius: 999px; font-size: 25px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+  .dest-hero .flag-big { position: absolute; top: 32px; right: 36px; font-size: 100px; line-height: 1; }
+  .dest-hero .name { position: absolute; bottom: 108px; left: 36px; font-size: 104px; font-weight: 800; letter-spacing: -0.035em; line-height: 0.95; }
+  .dest-hero .meta { position: absolute; bottom: 40px; left: 36px; right: 36px; font-size: 31px; font-weight: 500; opacity: 0.92; }
+  .price-card { margin-top: 34px; background: #fff; border-radius: 38px; padding: 36px; border: 1px solid var(--c-line); box-shadow: 0 18px 44px rgba(20,28,48,0.07); }
+  .price-card .row1 { display: flex; align-items: center; justify-content: space-between; }
+  .price-card .plan { font-size: 30px; font-weight: 700; color: var(--c-ink); }
+  .price-card .badge2 { background: #FFF3DC; color: #B45309; font-weight: 700; font-size: 23px; letter-spacing: 0.03em; padding: 11px 20px; border-radius: 999px; text-transform: uppercase; }
+  .price-card .pricing { margin-top: 24px; display: flex; align-items: baseline; gap: 26px; flex-wrap: wrap; }
+  .price-card .pricing .strike { font-size: 46px; font-weight: 600; color: #9AA5B8; text-decoration: line-through; text-decoration-color: #E8453C; text-decoration-thickness: 6px; }
+  .price-card .pricing .now { font-size: 98px; font-weight: 800; color: var(--c-ink); letter-spacing: -0.03em; line-height: 1; }
+  .price-card .pricing .now .cent { font-size: 56px; vertical-align: super; }
+  .price-card .pricing .save { background: var(--c-blue-soft); color: var(--c-blue); font-weight: 700; font-size: 24px; padding: 13px 20px; border-radius: 999px; }
+  .price-card .breakdown { margin-top: 26px; border-top: 1px solid var(--c-line); padding-top: 22px; display: grid; gap: 16px; }
+  .price-card .breakdown .row { display: flex; justify-content: space-between; font-size: 26px; font-weight: 500; color: var(--c-ink-soft); }
+  .price-card .breakdown .row .v { color: var(--c-ink); font-weight: 600; }
+  .price-card .breakdown .row.discount, .price-card .breakdown .row.discount .v { color: var(--c-blue); font-weight: 700; }
+  .price-card .breakdown .row.total, .price-card .breakdown .row.total .v { color: var(--c-ink); font-weight: 800; font-size: 30px; }
+  .cta { margin-top: 30px; background: var(--c-ink); color: #fff; border-radius: 999px; height: 104px; display: grid; place-items: center; font-size: 33px; font-weight: 700; }
+  .includes { margin-top: 34px; display: flex; justify-content: space-between; gap: 16px; }
+  .includes .inc { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; font-size: 25px; font-weight: 600; color: var(--c-ink-soft); line-height: 1.2; }
+  .includes .inc .iic { width: 84px; height: 84px; border-radius: 26px; background: #fff; border: 1px solid var(--c-line); display: grid; place-items: center; font-size: 40px; box-shadow: 0 6px 16px rgba(20,28,48,0.05); }
+
+  .float { position: absolute; z-index: 9; background: #fff; border-radius: 34px; padding: 28px 34px; box-shadow: var(--shadow-float); display: flex; align-items: center; gap: 22px; }
+  .float .chip-ic { width: 84px; height: 70px; border-radius: 18px; background: var(--c-blue); color:#fff; display:grid; place-items:center; font-weight:800; font-size:26px; }
+  .float .txt { font-size: 34px; font-weight: 700; color: var(--c-ink); line-height: 1.2; }
+  .float .txt small { display: block; color: var(--c-ink-soft); font-weight: 500; font-size: 26px; margin-top: 6px; }
+  .verify { top: 1240px; right: 140px; }
+</style>
+</head>
+<body>
+<div class="canvas">
+  <div class="caption"><h1>Students save 15%.</h1><p>Every plan. Every destination.</p></div>
+  <div class="erasmus-strip"><span class="chip"><span class="flag">🇪🇸</span> Madrid</span><span class="chip"><span class="flag">🇫🇷</span> Paris</span><span class="chip"><span class="flag">🇮🇹</span> Rome</span></div>
+  <div class="float verify"><span class="chip-ic">UNiD</span><span class="txt">Verified student<small>15% off applied automatically</small></span></div>
+  <div class="phone">
+    <div class="screen">
+      <div class="island"></div>
+      <div class="app">
+        <div class="statusbar"><span>9:41</span><span class="icons">
+          <svg viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2" width="3" height="10" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
+          <svg viewBox="0 0 24 12" fill="currentColor"><rect x="1" y="1" width="20" height="10" rx="3" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="3" y="3" width="14" height="6" rx="1.5"/><rect x="22" y="4" width="1.5" height="4" rx="0.5"/></svg>
+        </span></div>
+        <div class="topbar"><span class="back">‹</span><span class="student-badge"><span class="grad">🎓</span> Student · −15%</span></div>
+        <div class="dest-hero"><span class="pin">Most popular</span><span class="flag-big">🇪🇸</span><div class="name">Spain</div><div class="meta">Loved by Erasmus students</div></div>
+        <div class="price-card">
+          <div class="row1"><span class="plan">8 GB · 30 days</span><span class="badge2">Great for a term</span></div>
+          <div class="pricing"><span class="strike">$15.99</span><span class="now">$13<span class="cent">.59</span></span><span class="save">Save $2.40</span></div>
+          <div class="breakdown">
+            <div class="row"><span>Plan price</span><span class="v">$15.99</span></div>
+            <div class="row discount"><span>Student discount (−15%)</span><span class="v">−$2.40</span></div>
+            <div class="row total"><span>Total today</span><span class="v">$13.59</span></div>
+          </div>
+        </div>
+        <div class="cta">Buy &amp; install eSIM</div>
+        <div class="includes">
+          <div class="inc"><span class="iic">⚡</span><span>Instant<br/>install</span></div>
+          <div class="inc"><span class="iic">📶</span><span>Fast 5G<br/>speeds</span></div>
+          <div class="inc"><span class="iic">☎</span><span>Keep your<br/>number</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

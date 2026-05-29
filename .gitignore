@@ -61,3 +61,7 @@ android/app-release-*.idsig
 android/app-release-unsigned-aligned.apk
 android/manifest-checksum.txt
 android/store_icon.png
+.env*
+
+# Convenience export of App Store screenshots (canonical copies live in .planning/app-store/)
+/App Store Screenshots/

@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>iPad 1 — Hero</title>
+<link rel="stylesheet" href="_shared.css" />
+<style>
+  /* iPad canvas 2064x2752 */
+  html, body, .canvas { width: 2064px; height: 2752px; }
+  .canvas { background: linear-gradient(180deg, #FFFFFF 0%, #F1F6FF 55%, #DEEBFF 100%); overflow: hidden; }
+  .blob { position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.5; pointer-events: none; }
+  .blob.b1 { width: 1000px; height: 1000px; top: -220px; left: -240px; background: #C4DBFF; }
+  .blob.b2 { width: 820px; height: 820px; bottom: -200px; right: -200px; background: #D6E6FF; }
+
+  .caption { position: absolute; top: 180px; left: 160px; right: 160px; text-align: center; z-index: 4; }
+  .caption h1 { font-size: 168px; line-height: 0.95; letter-spacing: -0.045em; font-weight: 800; color: var(--c-ink); }
+  .caption p { margin-top: 38px; font-size: 62px; font-weight: 500; color: var(--c-ink-soft); letter-spacing: -0.012em; }
+
+  /* iPhone mockup centered on the iPad canvas */
+  .phone {
+    position: absolute; width: 940px; height: 1900px;
+    left: 50%; bottom: 120px; transform: translateX(-50%);
+    background: #050507; border-radius: 112px; padding: 20px; box-shadow: var(--shadow-phone); z-index: 3;
+  }
+  .phone::before { content:''; position:absolute; inset:-4px; border-radius:116px; background: linear-gradient(145deg,#7c8089,#3a3d43 14%,#0b0b0d 36%,#1d1f24 54%,#54585f 76%,#14151a 92%,#2c2e34); z-index:-1; }
+  .phone .screen { position: relative; width: 100%; height: 100%; background: #fff; border-radius: 93px; overflow: hidden; }
+  .phone .island { position:absolute; top:30px; left:50%; transform:translateX(-50%); width:300px; height:66px; background:#000; border-radius:999px; z-index:15; }
+
+  .home { height: 100%; padding: 0 58px; overflow: hidden; }
+  .home .header { margin-top: 50px; display: flex; align-items: center; justify-content: space-between; }
+  .home .logo { display: flex; align-items: center; gap: 16px; font-weight: 800; font-size: 38px; letter-spacing: -0.02em; }
+  .home .logo .mark { width: 66px; height: 66px; border-radius: 20px; overflow: hidden; box-shadow: 0 8px 20px rgba(20,28,48,0.18); }
+  .home .logo .mark img { width: 100%; height: 100%; object-fit: cover; }
+  .home .avatar { width: 68px; height: 68px; border-radius: 50%; background: linear-gradient(135deg, #E3F0FF, #BFD7FF); border: 3px solid #fff; }
+  .home h2 { margin-top: 66px; font-size: 92px; font-weight: 800; letter-spacing: -0.038em; line-height: 0.96; color: var(--c-ink); }
+  .home h2 .accent { color: var(--c-blue); }
+  .home .sub { margin-top: 22px; font-size: 31px; color: var(--c-ink-soft); font-weight: 500; }
+  .statusbar { position: relative; height: 120px; padding: 54px 66px 0; display: flex; justify-content: space-between; font-size: 34px; font-weight: 600; color: var(--c-ink); }
+  .statusbar .icons { display: flex; gap: 10px; } .statusbar svg { width: 38px; height: 24px; }
+  .search { margin-top: 46px; height: 116px; background: #F1F4FA; border-radius: 34px; display: flex; align-items: center; padding: 0 38px; gap: 24px; font-size: 33px; color: #9AA5B8; font-weight: 500; }
+  .search .icon { width: 40px; height: 40px; border-radius: 50%; border: 5px solid #C2CCDB; position: relative; }
+  .search .icon::after { content:''; position:absolute; right:-22px; bottom:-8px; width:24px; height:7px; background:#C2CCDB; transform:rotate(45deg); border-radius:4px; }
+  .picker-label { margin-top: 48px; display: flex; align-items: center; justify-content: space-between; font-size: 33px; font-weight: 700; }
+  .picker-label .more { color: var(--c-blue); font-weight: 600; font-size: 29px; }
+  .grid { margin-top: 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  .card { background: #fff; border: 1px solid var(--c-line); border-radius: 38px; padding: 38px 34px; box-shadow: 0 6px 22px rgba(20,28,48,0.05); position: relative; }
+  .card .flag { font-size: 96px; line-height: 1; display: block; margin-bottom: 24px; }
+  .card .name { font-size: 37px; font-weight: 700; letter-spacing: -0.015em; }
+  .card .price { margin-top: 8px; font-size: 29px; color: var(--c-ink-soft); font-weight: 600; }
+  .card.featured { background: linear-gradient(150deg, #2979FF, #1858C4); border-color: transparent; color: #fff; box-shadow: 0 18px 40px rgba(41,121,255,0.35); }
+  .card.featured .name { color: #fff; } .card.featured .price { color: rgba(255,255,255,0.9); }
+  .card .bestseller { position: absolute; top: 30px; right: 30px; background: rgba(255,255,255,0.2); border-radius: 999px; padding: 9px 18px; font-size: 22px; font-weight: 700; color: #fff; letter-spacing: 0.04em; text-transform: uppercase; }
+
+  /* Panda + pills in the generous side margins */
+  .panda { position: absolute; bottom: 120px; right: 110px; width: 540px; height: auto; z-index: 10; filter: drop-shadow(0 40px 60px rgba(15,23,42,0.28)); }
+  .float { position: absolute; z-index: 9; background: #fff; border-radius: 34px; padding: 30px 38px; box-shadow: var(--shadow-float); display: flex; align-items: center; gap: 20px; font-weight: 700; font-size: 38px; color: var(--c-ink); }
+  .float .led { width: 22px; height: 22px; border-radius: 50%; background: var(--c-success); box-shadow: 0 0 0 8px rgba(43,182,115,0.16); }
+  .float .chip-ic { width: 70px; height: 70px; border-radius: 20px; display: grid; place-items: center; color: #fff; font-size: 38px; }
+  .pill-1 { top: 1180px; left: 150px; }
+  .pill-2 { top: 1560px; left: 110px; }
+  .pill-3 { top: 2050px; right: 150px; }
+</style>
+</head>
+<body>
+<div class="canvas">
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+
+  <div class="caption">
+    <h1>Travel light. Stay online.</h1>
+    <p>One Panda. 200+ destinations, all in your pocket.</p>
+  </div>
+
+  <div class="float pill-1"><span class="led"></span><span>Connected in Tokyo</span></div>
+  <div class="float pill-2"><span class="chip-ic" style="background:var(--c-blue)">↓</span><span>Install in 2 min</span></div>
+  <div class="float pill-3"><span class="chip-ic" style="background:var(--c-success)">$</span><span>From $7.99</span></div>
+
+  <img class="panda" src="../lifestyle/panda-cutout.png" alt="" />
+
+  <div class="phone">
+    <div class="screen">
+      <div class="island"></div>
+      <div class="statusbar"><span>9:41</span><span class="icons">
+        <svg viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2" width="3" height="10" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
+        <svg viewBox="0 0 24 12" fill="currentColor"><rect x="1" y="1" width="20" height="10" rx="3" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="3" y="3" width="14" height="6" rx="1.5"/><rect x="22" y="4" width="1.5" height="4" rx="0.5"/></svg>
+      </span></div>
+      <div class="home">
+        <div class="header">
+          <div class="logo"><span class="mark"><img src="../lifestyle/panda-face.png" alt=""/></span> eSIM Panda</div>
+          <div class="avatar"></div>
+        </div>
+        <h2>Where to?<br/><span class="accent">Pick your country.</span></h2>
+        <div class="sub">Local data plans. No roaming, no contracts.</div>
+        <div class="search"><span class="icon"></span><span>Search 200+ destinations…</span></div>
+        <div class="picker-label"><span>Popular this month</span><span class="more">See all →</span></div>
+        <div class="grid">
+          <div class="card featured"><span class="bestseller">Bestseller</span><span class="flag">🇯🇵</span><div class="name">Japan</div><div class="price">From $9.99</div></div>
+          <div class="card"><span class="flag">🇺🇸</span><div class="name">United States</div><div class="price">From $11.99</div></div>
+          <div class="card"><span class="flag">🇪🇸</span><div class="name">Spain</div><div class="price">From $7.99</div></div>
+          <div class="card"><span class="flag">🇵🇹</span><div class="name">Portugal</div><div class="price">From $7.99</div></div>
+          <div class="card"><span class="flag">🇫🇷</span><div class="name">France</div><div class="price">From $9.99</div></div>
+          <div class="card"><span class="flag">🇬🇧</span><div class="name">United Kingdom</div><div class="price">From $7.99</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

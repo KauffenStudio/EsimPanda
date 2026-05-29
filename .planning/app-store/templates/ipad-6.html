@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>iPad 6 — Keep your number</title>
+<link rel="stylesheet" href="_shared.css" />
+<style>
+  html, body, .canvas { width: 2064px; height: 2752px; }
+  .canvas { overflow: hidden; background:
+      radial-gradient(54% 40% at 0% 100%, rgba(41,121,255,0.10) 0%, transparent 60%),
+      radial-gradient(46% 34% at 100% 0%, rgba(186,220,255,0.5) 0%, transparent 65%),
+      #F4F7FC; }
+  .caption { position: absolute; top: 180px; left: 160px; right: 160px; text-align: center; z-index: 4; }
+  .caption h1 { font-size: 168px; line-height: 0.95; letter-spacing: -0.045em; font-weight: 800; color: var(--c-ink); }
+  .caption h1 .blue { color: var(--c-blue); }
+  .caption p { margin-top: 38px; font-size: 60px; font-weight: 500; color: var(--c-ink-soft); letter-spacing: -0.012em; }
+
+  .phone { position: absolute; width: 940px; height: 1900px; left: 50%; bottom: 120px; transform: translateX(-50%); background: #050507; border-radius: 112px; padding: 20px; box-shadow: var(--shadow-phone); z-index: 3; }
+  .phone::before { content:''; position:absolute; inset:-4px; border-radius:116px; background: linear-gradient(145deg,#7c8089,#3a3d43 14%,#0b0b0d 36%,#1d1f24 54%,#54585f 76%,#14151a 92%,#2c2e34); z-index:-1; }
+  .phone .screen { position: relative; width: 100%; height: 100%; background: #fff; border-radius: 93px; overflow: hidden; }
+  .phone .island { position:absolute; top:30px; left:50%; transform:translateX(-50%); width:300px; height:66px; background:#000; border-radius:999px; z-index:15; }
+  .statusbar { position: relative; height: 120px; padding: 54px 66px 0; display: flex; justify-content: space-between; font-size: 34px; font-weight: 600; z-index:16; }
+  .statusbar .icons { display:flex; gap:10px; } .statusbar svg { width:38px; height:24px; }
+
+  .settings { position: relative; height: 100%; background: #F2F2F7; padding: 0 0 60px; }
+  .settings .nav { padding: 8px 44px 0; display: flex; align-items: center; gap: 12px; color: var(--c-blue); font-size: 32px; font-weight: 500; }
+  .settings .nav .chev { font-size: 40px; line-height: 1; margin-top: -4px; }
+  .settings h1.big { padding: 6px 44px 24px; font-size: 64px; font-weight: 800; letter-spacing: -0.03em; color: var(--c-ink); }
+  .grp { margin: 0 36px 40px; }
+  .grp .ghead { font-size: 26px; font-weight: 600; color: #8A8F9C; letter-spacing: 0.02em; text-transform: uppercase; padding: 0 24px 16px; }
+  .grp .card { background: #fff; border-radius: 30px; overflow: hidden; }
+  .grp .row { display: flex; align-items: center; gap: 24px; padding: 30px; position: relative; }
+  .grp .row + .row::before { content:''; position: absolute; top: 0; left: 30px; right: 0; height: 1.5px; background: #ECECEF; }
+  .grp .row .ic { width: 76px; height: 76px; border-radius: 20px; display: grid; place-items: center; flex-shrink: 0; font-size: 40px; }
+  .grp .row .ic.sim { background: #EAEFF7; }
+  .grp .row .ic.panda { overflow: hidden; box-shadow: 0 8px 18px rgba(20,28,48,0.18); padding: 0; }
+  .grp .row .ic.panda img { width: 100%; height: 100%; object-fit: cover; }
+  .grp .row .main { flex: 1; }
+  .grp .row .main .t { font-size: 34px; font-weight: 700; color: var(--c-ink); letter-spacing: -0.01em; }
+  .grp .row .main .s { font-size: 26px; color: var(--c-ink-soft); font-weight: 500; margin-top: 5px; }
+  .grp .row .tag { font-size: 23px; font-weight: 700; padding: 9px 18px; border-radius: 999px; }
+  .grp .row .tag.primary { background: #EEF1F6; color: #5A6072; } .grp .row .tag.active { background: var(--c-success-soft); color: var(--c-success); }
+  .grp .row .val { font-size: 30px; color: var(--c-ink-soft); font-weight: 500; display: flex; align-items: center; gap: 14px; }
+  .grp .row .val .chev { color: #C4C9D4; font-size: 34px; }
+  .grp .row.add .t { color: var(--c-blue); font-weight: 600; }
+  .grp .row .plus { width: 76px; height: 76px; border-radius: 20px; background: #EAEFF7; display: grid; place-items: center; font-size: 44px; color: var(--c-blue); }
+  .grp .foot { font-size: 25px; color: #8A8F9C; font-weight: 500; padding: 18px 28px 0; line-height: 1.4; }
+  .grp .foot b { color: var(--c-ink-soft); font-weight: 700; }
+  .usage-track { margin-top: 24px; height: 28px; border-radius: 10px; background: #ECEEF3; overflow: hidden; }
+  .usage-fill { width: 24%; height: 100%; border-radius: 10px; background: linear-gradient(90deg, var(--c-blue), var(--c-blue-deep)); }
+  .ios-toggle { width: 96px; height: 56px; border-radius: 999px; background: #E4E6EB; position: relative; flex-shrink: 0; }
+  .ios-toggle .knob { position: absolute; top: 4px; left: 4px; width: 48px; height: 48px; border-radius: 50%; background: #fff; box-shadow: 0 3px 8px rgba(0,0,0,0.18); }
+
+  .float { position: absolute; z-index: 9; background: #fff; border-radius: 34px; padding: 30px 38px; box-shadow: var(--shadow-float); display: flex; align-items: center; gap: 20px; font-weight: 700; font-size: 38px; color: var(--c-ink); }
+  .float .chip-ic { width: 70px; height: 70px; border-radius: 20px; display: grid; place-items: center; color: #fff; font-size: 38px; }
+  .float .led { width: 22px; height: 22px; border-radius: 50%; background: var(--c-success); box-shadow: 0 0 0 8px rgba(43,182,115,0.16); }
+  .pill-call { top: 1240px; left: 150px; }
+  .pill-data { top: 1240px; right: 150px; }
+</style>
+</head>
+<body>
+<div class="canvas">
+  <div class="caption"><h1>Keep your <span class="blue">number</span>.</h1><p>Your SIM stays on for calls. We add the data.</p></div>
+  <div class="float pill-call"><span class="chip-ic" style="background:#5A6072">☎</span><span>Calls: home #</span></div>
+  <div class="float pill-data"><span class="led"></span><span>Data: eSIM Panda</span></div>
+  <div class="phone">
+    <div class="screen">
+      <div class="island"></div>
+      <div class="settings">
+        <div class="statusbar"><span>9:41</span><span class="icons">
+          <svg viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2" width="3" height="10" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
+          <svg viewBox="0 0 24 12" fill="currentColor"><rect x="1" y="1" width="20" height="10" rx="3" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="3" y="3" width="14" height="6" rx="1.5"/><rect x="22" y="4" width="1.5" height="4" rx="0.5"/></svg>
+        </span></div>
+        <div class="nav"><span class="chev">‹</span> Settings</div>
+        <h1 class="big">Cellular</h1>
+        <div class="grp">
+          <div class="ghead">SIMs</div>
+          <div class="card">
+            <div class="row"><span class="ic sim">📱</span><div class="main"><div class="t">Personal</div><div class="s">+1 (415) 555‑0142 · calls &amp; texts</div></div><span class="tag primary">Primary</span></div>
+            <div class="row"><span class="ic panda"><img src="../lifestyle/panda-face.png" alt=""/></span><div class="main"><div class="t">eSIM Panda — Japan</div><div class="s">5 GB · 30 days · data</div></div><span class="tag active">Active</span></div>
+            <div class="row add"><span class="plus">+</span><div class="main"><div class="t">Add eSIM</div></div></div>
+          </div>
+        </div>
+        <div class="grp">
+          <div class="ghead">Cellular Data</div>
+          <div class="card">
+            <div class="row"><div class="main"><div class="t">Cellular Data</div></div><span class="val">eSIM Panda — Japan <span class="chev">›</span></span></div>
+            <div class="row"><div class="main"><div class="t">Default Voice Line</div></div><span class="val">Personal <span class="chev">›</span></span></div>
+          </div>
+          <div class="foot">Your home number keeps ringing for <b>calls and texts</b>. eSIM Panda only carries your <b>data</b> — so no roaming, and nobody back home notices a thing.</div>
+        </div>
+        <div class="grp">
+          <div class="ghead">eSIM Panda — Data Usage</div>
+          <div class="card">
+            <div class="row" style="display:block; padding: 32px 30px;">
+              <div style="display:flex; justify-content:space-between; align-items:baseline;"><span style="font-size:34px; font-weight:700; color:var(--c-ink);">1.2 GB used</span><span style="font-size:28px; color:var(--c-ink-soft); font-weight:600;">3.8 GB left · 26 days</span></div>
+              <div class="usage-track"><div class="usage-fill"></div></div>
+            </div>
+            <div class="row"><div class="main"><div class="t">Data Roaming</div><div class="s">Not needed — this is a local plan</div></div><span class="ios-toggle"><span class="knob"></span></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
