@@ -135,7 +135,7 @@ export async function buildEsimPass(input: BuildPassInput): Promise<Buffer> {
     {
       key: 'support',
       label: 'Support',
-      value: 'support@esimpanda.co',
+      value: 'geral@kauffen.com',
     },
   );
 

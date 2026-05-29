@@ -124,10 +124,10 @@ export function AboutSection({ locale }: { locale: string }) {
         <h2 className="text-xl md:text-2xl font-bold tracking-tight">{c.contactHeading}</h2>
         <p className="mt-2 text-gray-600 dark:text-gray-400">{c.contact}</p>
         <a
-          href="mailto:support@esimpanda.co"
+          href="mailto:geral@kauffen.com"
           className="mt-4 inline-block font-semibold text-accent hover:underline"
         >
-          support@esimpanda.co
+          geral@kauffen.com
         </a>
         <div className="mt-2">
           <Link href={`/${locale}/help`} className="text-sm text-gray-500 dark:text-gray-400 hover:underline">
