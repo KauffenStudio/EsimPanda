@@ -15,7 +15,8 @@
     "subtitle": "Planes eSIM accesibles para viajeros en todo el mundo",
     "subtitle2": "Activación instantánea, conectado en menos de 2 minutos",
     "cta_primary": "Conectarse",
-    "cta_secondary": "Ver Planes"
+    "cta_secondary": "Ver Planes",
+    "socialProof": "Más de 20.000 viajeros ya confían en nosotros"
   },
   "browse": {
     "title": "Destinos",
@@ -292,6 +293,7 @@
     "privacy": "Privacidad",
     "terms": "Términos",
     "help": "Ayuda",
+    "about": "Acerca de",
     "copyright": "© 2026 Kauffen Studio"
   },
   "help": {

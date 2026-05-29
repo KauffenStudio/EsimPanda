@@ -15,7 +15,8 @@
     "subtitle": "世界中の旅行者のための手頃なeSIMデータプラン",
     "subtitle2": "即時アクティベーション、2分以内に接続",
     "cta_primary": "今すぐ接続",
-    "cta_secondary": "プランを見る"
+    "cta_secondary": "プランを見る",
+    "socialProof": "20,000人以上の旅行者に利用されています"
   },
   "browse": {
     "title": "目的地",
@@ -292,6 +293,7 @@
     "privacy": "プライバシー",
     "terms": "利用規約",
     "help": "ヘルプ",
+    "about": "会社概要",
     "copyright": "© 2026 Kauffen Studio"
   },
   "help": {

@@ -70,6 +70,18 @@ export default function LandingPage() {
             </Button>
           </Link>
         </div>
+
+        <div className="flex items-center gap-2.5 mt-5">
+          <div className="flex -space-x-2" aria-hidden="true">
+            <span className="w-6 h-6 rounded-full border-2 border-white dark:border-background-dark bg-gradient-to-br from-[#FCAE4D] to-[#EF6F6C]" />
+            <span className="w-6 h-6 rounded-full border-2 border-white dark:border-background-dark bg-gradient-to-br from-[#2979FF] to-[#1858C4]" />
+            <span className="w-6 h-6 rounded-full border-2 border-white dark:border-background-dark bg-gradient-to-br from-[#2BB673] to-[#1E8C57]" />
+            <span className="w-6 h-6 rounded-full border-2 border-white dark:border-background-dark bg-gradient-to-br from-[#8B5CF6] to-[#5B3FC4]" />
+          </div>
+          <span className="text-xs md:text-sm text-gray-500 dark:text-gray-400 font-medium">
+            {t('landing.socialProof')}
+          </span>
+        </div>
       </motion.div>
     </div>
   );

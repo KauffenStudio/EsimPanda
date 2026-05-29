@@ -15,7 +15,8 @@
     "subtitle": "Affordable eSIM data plans for travelers worldwide",
     "subtitle2": "Instant activation, connected under 2 minutes",
     "cta_primary": "Get Connected",
-    "cta_secondary": "Browse Plans"
+    "cta_secondary": "Browse Plans",
+    "socialProof": "Trusted by 20,000+ travelers worldwide"
   },
   "browse": {
     "title": "Destinations",
@@ -292,6 +293,7 @@
     "privacy": "Privacy",
     "terms": "Terms",
     "help": "Help",
+    "about": "About",
     "copyright": "© 2026 Kauffen Studio"
   },
   "help": {

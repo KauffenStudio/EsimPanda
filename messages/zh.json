@@ -15,7 +15,8 @@
     "subtitle": "为全球旅行者提供实惠的eSIM数据套餐",
     "subtitle2": "即时激活，2分钟内连接",
     "cta_primary": "立即连接",
-    "cta_secondary": "浏览套餐"
+    "cta_secondary": "浏览套餐",
+    "socialProof": "超过 20,000 名旅行者的信赖之选"
   },
   "browse": {
     "title": "目的地",
@@ -292,6 +293,7 @@
     "privacy": "隐私",
     "terms": "条款",
     "help": "帮助",
+    "about": "关于我们",
     "copyright": "© 2026 Kauffen Studio"
   },
   "help": {

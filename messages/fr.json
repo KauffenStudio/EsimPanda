@@ -15,7 +15,8 @@
     "subtitle": "Forfaits eSIM abordables pour les voyageurs du monde entier",
     "subtitle2": "Activation instantanée, connecté en moins de 2 minutes",
     "cta_primary": "Se Connecter",
-    "cta_secondary": "Voir les Forfaits"
+    "cta_secondary": "Voir les Forfaits",
+    "socialProof": "Plus de 20 000 voyageurs nous font confiance"
   },
   "browse": {
     "title": "Destinations",
@@ -292,6 +293,7 @@
     "privacy": "Confidentialité",
     "terms": "Conditions",
     "help": "Aide",
+    "about": "À propos",
     "copyright": "© 2026 Kauffen Studio"
   },
   "help": {
