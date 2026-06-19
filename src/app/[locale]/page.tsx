@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { setRequestLocale } from 'next-intl/server';
 import { buildHomeMeta } from '@/lib/seo/meta-templates';
 import { getCatalog } from '@/lib/db/destinations';
+import { getComparison, isCompareLocale, listComparisonSlugs } from '@/lib/seo/comparisons';
 import { LandingClient } from '@/components/home/landing-client';
 import { ValueProps } from '@/components/home/value-props';
 import { HowItWorks } from '@/components/home/how-it-works';
@@ -39,6 +41,28 @@ export default async function LandingPage({ params }: Props) {
       <HowItWorks />
       <PopularDestinations locale={locale} destinations={popular} />
       <WhyPanda />
+      {isCompareLocale(locale) && (
+        <section className="w-full max-w-[760px] mx-auto px-4 mt-10 text-center">
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            {locale === 'pt' ? 'Comparar: ' : 'Compare: '}
+            {listComparisonSlugs().map((slug, i) => {
+              const c = getComparison(slug);
+              if (!c) return null;
+              return (
+                <span key={slug}>
+                  {i > 0 && <span className="mx-1">·</span>}
+                  <Link
+                    href={`/${locale}/compare/${slug}`}
+                    className="text-accent font-medium hover:underline"
+                  >
+                    eSIM Panda vs {c.competitor}
+                  </Link>
+                </span>
+              );
+            })}
+          </p>
+        </section>
+      )}
       <HomeFaq />
     </>
   );
