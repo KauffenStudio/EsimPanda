@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next';
 import { routing } from '@/i18n/routing';
 import { listActiveDestinations } from '@/lib/db/destinations';
+import { COMPARISON_LOCALES, listComparisonSlugs } from '@/lib/seo/comparisons';
 
 const host = process.env.NEXT_PUBLIC_SITE_URL || 'https://esimpanda.co';
 
@@ -11,6 +12,15 @@ function languagesFor(path: string): Record<string, string> {
     routing.locales.map((locale) => [locale, `${host}/${locale}${path}`])
   );
   languages['x-default'] = `${host}/${routing.defaultLocale}${path}`;
+  return languages;
+}
+
+// Comparison pages exist only for en + pt (see comparisons.ts).
+function comparisonLanguagesFor(path: string): Record<string, string> {
+  const languages: Record<string, string> = Object.fromEntries(
+    COMPARISON_LOCALES.map((locale) => [locale, `${host}/${locale}${path}`])
+  );
+  languages['x-default'] = `${host}/en${path}`;
   return languages;
 }
 
@@ -33,5 +43,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     alternates: { languages: languagesFor(path) },
   }));
 
-  return [...staticPages, ...destinationEntries];
+  const comparisonEntries: MetadataRoute.Sitemap = listComparisonSlugs().map((slug) => ({
+    url: `${host}/en/compare/${slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly',
+    priority: 0.7,
+    alternates: { languages: comparisonLanguagesFor(`/compare/${slug}`) },
+  }));
+
+  return [...staticPages, ...destinationEntries, ...comparisonEntries];
 }
