@@ -1,9 +1,19 @@
 import type { Metadata } from 'next';
 import { setRequestLocale } from 'next-intl/server';
 import { buildHomeMeta } from '@/lib/seo/meta-templates';
+import { getCatalog } from '@/lib/db/destinations';
 import { LandingClient } from '@/components/home/landing-client';
+import { ValueProps } from '@/components/home/value-props';
+import { HowItWorks } from '@/components/home/how-it-works';
+import { PopularDestinations } from '@/components/home/popular-destinations';
+import { WhyPanda } from '@/components/home/why-panda';
+import { HomeFaq } from '@/components/home/home-faq';
 
 type Props = { params: Promise<{ locale: string }> };
+
+// ISR — the popular-destinations grid reads the catalog; match the browse/esim
+// revalidation cadence so it stays static and cheap to serve.
+export const revalidate = 3600;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
@@ -13,5 +23,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function LandingPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
-  return <LandingClient />;
+
+  const { destinations } = await getCatalog();
+  const popular = destinations.slice(0, 12).map((d) => ({
+    slug: d.slug,
+    iso_code: d.iso_code,
+    name: d.name,
+    startingPriceCents: d.startingPriceCents,
+  }));
+
+  return (
+    <>
+      <LandingClient />
+      <ValueProps />
+      <HowItWorks />
+      <PopularDestinations locale={locale} destinations={popular} />
+      <WhyPanda />
+      <HomeFaq />
+    </>
+  );
 }

@@ -10,13 +10,80 @@
     "light": "ライトモード"
   },
   "landing": {
-    "headline": "どこでも接続",
-    "eyebrow": "世界のeSIMプラン",
-    "subtitle": "世界中の旅行者のための手頃なeSIMデータプラン",
-    "subtitle2": "即時アクティベーション、2分以内に接続",
-    "cta_primary": "今すぐ接続",
+    "headline": "旅行用 eSIM、2分で使える",
+    "eyebrow": "世界中で使える eSIM プラン",
+    "subtitle": "旅行用 eSIM をオンラインで購入し、メールのQRコードを読み取れば、到着後すぐに接続できます。",
+    "subtitle2": "190以上の地域。SIM入れ替え不要。ローミング料金なし。",
+    "cta_primary": "はじめる",
     "cta_secondary": "プランを見る",
-    "socialProof": "20,000人以上の旅行者に利用されています"
+    "socialProof": "20,000人以上の旅行者に選ばれています",
+    "valueProps": {
+      "speed": {
+        "title": "2分で接続",
+        "desc": "QRコードはメールで届き、数秒で開通。"
+      },
+      "coverage": {
+        "title": "190以上の地域",
+        "desc": "世界中をひとつのストアで。"
+      },
+      "keepNumber": {
+        "title": "今の番号はそのまま",
+        "desc": "eSIM は現在の SIM と併用できます。"
+      },
+      "noRoaming": {
+        "title": "ローミング料金なし",
+        "desc": "使った分のデータだけお支払い。"
+      }
+    },
+    "how": {
+      "title": "使い方",
+      "step1": {
+        "title": "目的地を選ぶ",
+        "desc": "190以上の国と地域のデータプラン。"
+      },
+      "step2": {
+        "title": "支払ってQRを受け取る",
+        "desc": "数秒でメールに届きます。"
+      },
+      "step3": {
+        "title": "到着後に接続",
+        "desc": "読み取って開通、すぐにオンラインに。SIM入れ替え不要。"
+      }
+    },
+    "popular": {
+      "title": "人気の目的地",
+      "viewAll": "すべての目的地を見る",
+      "from": "〜"
+    },
+    "why": {
+      "title": "eSIM Panda が選ばれる理由",
+      "body": "チャージの失敗も、隠れた料金もありません。到着後すぐに使える手頃なデータを、20,000人以上の旅行者が信頼しています。"
+    },
+    "faq": {
+      "title": "よくある質問",
+      "items": [
+        {
+          "q": "eSIM とは何ですか？",
+          "a": "eSIM はスマートフォンにダウンロードして使うデジタル SIM で、物理カードは不要です。今の SIM を入れ替えずに海外でデータ通信が使えます。"
+        },
+        {
+          "q": "自分のスマホで eSIM は使えますか？",
+          "a": "2019年以降のほとんどの機種が eSIM に対応しています（最近の iPhone、Samsung Galaxy、Google Pixel など）。設定で「eSIM を追加」をご確認ください。"
+        },
+        {
+          "q": "eSIM はどうやって設定しますか？",
+          "a": "購入後、QRコードがメールで届きます。スマホの設定から読み取り、案内に従うだけで約2分で完了します。"
+        },
+        {
+          "q": "配信はどのくらい速いですか？",
+          "a": "即時です。支払い後すぐにQRコードがメールで届くので、出発前に設定して到着後すぐ接続できます。"
+        },
+        {
+          "q": "プランを使い切ったらどうなりますか？",
+          "a": "アカウントからいつでもチャージや新しいプランの購入ができます。最初からやり直す必要はありません。"
+        }
+      ]
+    }
   },
   "browse": {
     "title": "目的地",
@@ -420,10 +487,18 @@
     "copy_success": "クリップボードにコピーしました",
     "setup": {
       "trigger": "設定にお困りですか？",
-      "ios": { "heading": "iPhoneでの設定" },
-      "samsung": { "heading": "Samsungでの設定" },
-      "pixel": { "heading": "Pixel / Androidでの設定" },
-      "android": { "heading": "Androidでの設定" },
+      "ios": {
+        "heading": "iPhoneでの設定"
+      },
+      "samsung": {
+        "heading": "Samsungでの設定"
+      },
+      "pixel": {
+        "heading": "Pixel / Androidでの設定"
+      },
+      "android": {
+        "heading": "Androidでの設定"
+      },
       "help": "設定でお困りですか？ヘルプページをご覧ください"
     },
     "steps": {
@@ -464,13 +539,19 @@
       "subject": "{destination}のeSIMの準備ができました！",
       "preview": "QRコードをスキャンするか、タップしてeSIMをインストール",
       "heading": "eSIMの準備ができました！",
-      "qr": { "instruction": "スマートフォンのカメラでこのQRコードをスキャン" },
+      "qr": {
+        "instruction": "スマートフォンのカメラでこのQRコードをスキャン"
+      },
       "manual": {
         "heading": "手動設定",
         "instruction": "QRコードが機能しない場合は、スマートフォンの設定で以下の情報を手動入力してください"
       },
-      "receipt": { "heading": "注文レシート" },
-      "setup": { "button": "設定ガイドを見る" },
+      "receipt": {
+        "heading": "注文レシート"
+      },
+      "setup": {
+        "button": "設定ガイドを見る"
+      },
       "referral": "旅行する知り合いはいますか？eSIM Pandaをシェア"
     }
   },
