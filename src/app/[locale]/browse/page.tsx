@@ -1,5 +1,7 @@
+import type { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { getCatalog } from '@/lib/db/destinations';
+import { buildBrowseMeta } from '@/lib/seo/meta-templates';
 import { BrowseClient } from '@/components/browse/browse-client';
 import { CurrencySwitcher } from '@/components/layout/currency-switcher';
 import { WelcomeDiscountBanner } from '@/components/marketing/welcome-discount-banner';
@@ -10,6 +12,11 @@ type Props = {
   params: Promise<{ locale: string }>;
   searchParams: Promise<{ notice?: string }>;
 };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  return buildBrowseMeta(locale);
+}
 
 export default async function BrowsePage({ params, searchParams }: Props) {
   const { locale } = await params;

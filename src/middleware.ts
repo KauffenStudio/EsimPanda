@@ -90,5 +90,9 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/', '/(en|pt|es|fr|zh|ja)/:path*', '/api/:path*'],
+  // Run on every path except Next internals and files with an extension
+  // (e.g. /sitemap.xml, /robots.txt, /icon.png). This keeps /api matched for
+  // the CORS gate and lets the i18n middleware redirect '/' and any
+  // non-locale path to a locale-prefixed URL (there is no root layout/page).
+  matcher: ['/((?!_next|_vercel|.*\\..*).*)'],
 };
