@@ -10,13 +10,80 @@
     "light": "浅色模式"
   },
   "landing": {
-    "headline": "随时随地保持连接",
-    "eyebrow": "全球eSIM套餐",
-    "subtitle": "为全球旅行者提供实惠的eSIM数据套餐",
-    "subtitle2": "即时激活，2分钟内连接",
-    "cta_primary": "立即连接",
+    "headline": "旅行 eSIM，2 分钟即可使用",
+    "eyebrow": "面向全球的 eSIM 套餐",
+    "subtitle": "在线购买旅行 eSIM，扫描邮件中的二维码，落地即刻联网。",
+    "subtitle2": "190+ 目的地。无需换卡。没有漫游账单。",
+    "cta_primary": "开始使用",
     "cta_secondary": "浏览套餐",
-    "socialProof": "超过 20,000 名旅行者的信赖之选"
+    "socialProof": "超过 20,000 名旅行者的信赖之选",
+    "valueProps": {
+      "speed": {
+        "title": "2 分钟内联网",
+        "desc": "二维码通过邮件送达，几秒即可激活。"
+      },
+      "coverage": {
+        "title": "190+ 目的地",
+        "desc": "一个商店覆盖全球。"
+      },
+      "keepNumber": {
+        "title": "保留原号码",
+        "desc": "eSIM 与你现有的 SIM 卡同时使用。"
+      },
+      "noRoaming": {
+        "title": "没有漫游费",
+        "desc": "只为实际使用的流量付费。"
+      }
+    },
+    "how": {
+      "title": "使用方法",
+      "step1": {
+        "title": "选择目的地",
+        "desc": "190+ 国家和地区的数据套餐。"
+      },
+      "step2": {
+        "title": "付款并获取二维码",
+        "desc": "几秒内发送到邮箱。"
+      },
+      "step3": {
+        "title": "落地即联网",
+        "desc": "扫描、激活即可上网，无需换卡。"
+      }
+    },
+    "popular": {
+      "title": "热门目的地",
+      "viewAll": "查看所有目的地",
+      "from": "起"
+    },
+    "why": {
+      "title": "为什么选择 eSIM Panda",
+      "body": "没有充值失败，没有隐藏费用。只有落地即用的实惠流量——超过 20,000 名旅行者的信赖。"
+    },
+    "faq": {
+      "title": "常见问题",
+      "items": [
+        {
+          "q": "什么是 eSIM？",
+          "a": "eSIM 是下载到手机里的数字 SIM 卡，无需实体卡。在国外即可使用移动数据，且无需更换原有 SIM 卡。"
+        },
+        {
+          "q": "我的手机支持 eSIM 吗？",
+          "a": "2019 年以后的多数手机都支持 eSIM，包括较新的 iPhone、三星 Galaxy 和 Google Pixel。可在设置中查找“添加 eSIM”。"
+        },
+        {
+          "q": "如何安装 eSIM？",
+          "a": "购买后你会收到一封含二维码的邮件。在手机设置中扫描并按提示操作，大约两分钟即可完成。"
+        },
+        {
+          "q": "发货有多快？",
+          "a": "即时发货。付款后立即通过邮件发送二维码，可在出行前安装，落地即可联网。"
+        },
+        {
+          "q": "套餐用完后怎么办？",
+          "a": "你可以随时在账户中充值或购买新套餐，无需重新开始或更换任何东西。"
+        }
+      ]
+    }
   },
   "browse": {
     "title": "目的地",
@@ -420,10 +487,18 @@
     "copy_success": "已复制到剪贴板",
     "setup": {
       "trigger": "需要设置帮助？",
-      "ios": { "heading": "iPhone设置" },
-      "samsung": { "heading": "三星设置" },
-      "pixel": { "heading": "Pixel/安卓设置" },
-      "android": { "heading": "安卓设置" },
+      "ios": {
+        "heading": "iPhone设置"
+      },
+      "samsung": {
+        "heading": "三星设置"
+      },
+      "pixel": {
+        "heading": "Pixel/安卓设置"
+      },
+      "android": {
+        "heading": "安卓设置"
+      },
       "help": "需要安装帮助？访问我们的帮助页面"
     },
     "steps": {
@@ -464,13 +539,19 @@
       "subject": "您的{destination} eSIM已就绪！",
       "preview": "扫描二维码或点击安装eSIM",
       "heading": "您的eSIM已就绪！",
-      "qr": { "instruction": "用手机摄像头扫描此二维码" },
+      "qr": {
+        "instruction": "用手机摄像头扫描此二维码"
+      },
       "manual": {
         "heading": "手动设置",
         "instruction": "如果二维码无法使用，请在手机设置中手动输入以下信息"
       },
-      "receipt": { "heading": "订单收据" },
-      "setup": { "button": "查看设置指南" },
+      "receipt": {
+        "heading": "订单收据"
+      },
+      "setup": {
+        "button": "查看设置指南"
+      },
       "referral": "认识正在旅行的人？分享eSIM Panda"
     }
   },

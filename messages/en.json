@@ -10,13 +10,80 @@
     "light": "Light mode"
   },
   "landing": {
-    "headline": "Get Connected Anywhere",
+    "headline": "Travel eSIM, ready in 2 minutes",
     "eyebrow": "Worldwide eSIM Plans",
-    "subtitle": "Affordable eSIM data plans for travelers worldwide",
-    "subtitle2": "Instant activation, connected under 2 minutes",
+    "subtitle": "Buy a travel eSIM online, scan the QR code from your email, and you're connected the moment you land.",
+    "subtitle2": "190+ destinations. No SIM swaps. No roaming bills.",
     "cta_primary": "Get Connected",
     "cta_secondary": "Browse Plans",
-    "socialProof": "Trusted by 20,000+ travelers worldwide"
+    "socialProof": "Trusted by 20,000+ travelers worldwide",
+    "valueProps": {
+      "speed": {
+        "title": "Online in 2 minutes",
+        "desc": "Your QR code arrives by email — activate in seconds."
+      },
+      "coverage": {
+        "title": "190+ destinations",
+        "desc": "Worldwide coverage from a single store."
+      },
+      "keepNumber": {
+        "title": "Keep your number",
+        "desc": "Your eSIM runs alongside your regular SIM."
+      },
+      "noRoaming": {
+        "title": "No roaming bills",
+        "desc": "Pay only for the data you actually use."
+      }
+    },
+    "how": {
+      "title": "How it works",
+      "step1": {
+        "title": "Pick your destination",
+        "desc": "Choose a data plan for 190+ countries."
+      },
+      "step2": {
+        "title": "Pay and get your QR",
+        "desc": "Delivered to your email in seconds."
+      },
+      "step3": {
+        "title": "Connect on arrival",
+        "desc": "Scan, activate, and you're online — no SIM swap."
+      }
+    },
+    "popular": {
+      "title": "Popular destinations",
+      "viewAll": "View all destinations",
+      "from": "from"
+    },
+    "why": {
+      "title": "Why eSIM Panda",
+      "body": "No surprise top-up failures, no hidden fees. Just affordable data that works the moment you land — trusted by 20,000+ travelers."
+    },
+    "faq": {
+      "title": "Frequently asked questions",
+      "items": [
+        {
+          "q": "What is an eSIM?",
+          "a": "An eSIM is a digital SIM that downloads to your phone — no physical card needed. You get mobile data abroad without swapping your home SIM."
+        },
+        {
+          "q": "Will an eSIM work on my phone?",
+          "a": "Most phones from 2019 onward support eSIM, including recent iPhone, Samsung Galaxy, and Google Pixel models. Check your settings for 'Add eSIM'."
+        },
+        {
+          "q": "How do I install my eSIM?",
+          "a": "After buying, you'll receive a QR code by email. Scan it from your phone's settings and follow the prompts — it takes about two minutes."
+        },
+        {
+          "q": "How fast is delivery?",
+          "a": "Instantly. Your QR code is emailed right after payment, so you can install it before you travel and connect the moment you land."
+        },
+        {
+          "q": "What happens when my plan runs out?",
+          "a": "You can top up or buy a new plan anytime from your account — no need to start over or swap anything."
+        }
+      ]
+    }
   },
   "browse": {
     "title": "Destinations",
@@ -420,10 +487,18 @@
     "copy_success": "Copied to clipboard",
     "setup": {
       "trigger": "Need help setting up?",
-      "ios": { "heading": "Setup on iPhone" },
-      "samsung": { "heading": "Setup on Samsung" },
-      "pixel": { "heading": "Setup on Pixel / Android" },
-      "android": { "heading": "Setup on Android" },
+      "ios": {
+        "heading": "Setup on iPhone"
+      },
+      "samsung": {
+        "heading": "Setup on Samsung"
+      },
+      "pixel": {
+        "heading": "Setup on Pixel / Android"
+      },
+      "android": {
+        "heading": "Setup on Android"
+      },
       "help": "Need help setting up? Visit our Help page"
     },
     "steps": {
@@ -464,13 +539,19 @@
       "subject": "Your eSIM for {destination} is ready!",
       "preview": "Scan the QR code or tap to install your eSIM",
       "heading": "Your eSIM is Ready!",
-      "qr": { "instruction": "Scan this QR code with your phone camera" },
+      "qr": {
+        "instruction": "Scan this QR code with your phone camera"
+      },
       "manual": {
         "heading": "Manual Setup",
         "instruction": "If the QR code does not work, enter these details manually in your phone settings"
       },
-      "receipt": { "heading": "Order Receipt" },
-      "setup": { "button": "View Setup Guide" },
+      "receipt": {
+        "heading": "Order Receipt"
+      },
+      "setup": {
+        "button": "View Setup Guide"
+      },
       "referral": "Know someone traveling? Share eSIM Panda"
     }
   },

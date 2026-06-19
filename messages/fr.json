@@ -10,13 +10,80 @@
     "light": "Mode clair"
   },
   "landing": {
-    "headline": "Connectez-vous Partout",
-    "eyebrow": "Forfaits eSIM Mondiaux",
-    "subtitle": "Forfaits eSIM abordables pour les voyageurs du monde entier",
-    "subtitle2": "Activation instantanée, connecté en moins de 2 minutes",
-    "cta_primary": "Se Connecter",
-    "cta_secondary": "Voir les Forfaits",
-    "socialProof": "Plus de 20 000 voyageurs nous font confiance"
+    "headline": "eSIM de voyage, prête en 2 minutes",
+    "eyebrow": "Forfaits eSIM pour le monde entier",
+    "subtitle": "Achetez une eSIM de voyage en ligne, scannez le QR code reçu par e-mail et connectez-vous dès l'atterrissage.",
+    "subtitle2": "Plus de 190 destinations. Sans changer de SIM. Sans frais d'itinérance.",
+    "cta_primary": "Commencer",
+    "cta_secondary": "Voir les forfaits",
+    "socialProof": "Plus de 20 000 voyageurs nous font confiance",
+    "valueProps": {
+      "speed": {
+        "title": "Connecté en 2 minutes",
+        "desc": "Votre QR arrive par e-mail — activez-le en quelques secondes."
+      },
+      "coverage": {
+        "title": "+190 destinations",
+        "desc": "Couverture mondiale au même endroit."
+      },
+      "keepNumber": {
+        "title": "Gardez votre numéro",
+        "desc": "L'eSIM fonctionne en plus de votre SIM habituelle."
+      },
+      "noRoaming": {
+        "title": "Sans itinérance",
+        "desc": "Payez seulement les données utilisées."
+      }
+    },
+    "how": {
+      "title": "Comment ça marche",
+      "step1": {
+        "title": "Choisissez votre destination",
+        "desc": "Forfaits data pour plus de 190 pays."
+      },
+      "step2": {
+        "title": "Payez et recevez votre QR",
+        "desc": "Dans votre e-mail en quelques secondes."
+      },
+      "step3": {
+        "title": "Connectez-vous à l'arrivée",
+        "desc": "Scannez, activez, c'est en ligne — sans changer de SIM."
+      }
+    },
+    "popular": {
+      "title": "Destinations populaires",
+      "viewAll": "Voir toutes les destinations",
+      "from": "dès"
+    },
+    "why": {
+      "title": "Pourquoi eSIM Panda",
+      "body": "Pas d'échecs de recharge, pas de frais cachés. Juste des données abordables qui fonctionnent dès l'atterrissage — la confiance de plus de 20 000 voyageurs."
+    },
+    "faq": {
+      "title": "Questions fréquentes",
+      "items": [
+        {
+          "q": "Qu'est-ce qu'une eSIM ?",
+          "a": "Une eSIM est une SIM numérique qui s'installe sur votre téléphone, sans carte physique. Vous avez des données mobiles à l'étranger sans changer votre SIM."
+        },
+        {
+          "q": "L'eSIM fonctionnera-t-elle sur mon téléphone ?",
+          "a": "La plupart des téléphones depuis 2019 prennent en charge l’eSIM, dont les iPhone, Samsung Galaxy et Google Pixel récents. Cherchez « Ajouter une eSIM » dans les réglages."
+        },
+        {
+          "q": "Comment installer mon eSIM ?",
+          "a": "Après l’achat, vous recevez un QR code par e-mail. Scannez-le depuis les réglages du téléphone et suivez les étapes — environ deux minutes."
+        },
+        {
+          "q": "Quelle est la rapidité de livraison ?",
+          "a": "Instantanée. Le QR est envoyé juste après le paiement : installez-le avant de partir et connectez-vous dès l’atterrissage."
+        },
+        {
+          "q": "Que se passe-t-il à la fin de mon forfait ?",
+          "a": "Vous pouvez recharger ou acheter un nouveau forfait à tout moment depuis votre compte, sans tout recommencer."
+        }
+      ]
+    }
   },
   "browse": {
     "title": "Destinations",
@@ -420,10 +487,18 @@
     "copy_success": "Copié dans le presse-papiers",
     "setup": {
       "trigger": "Besoin d'aide pour la configuration ?",
-      "ios": { "heading": "Configuration sur iPhone" },
-      "samsung": { "heading": "Configuration sur Samsung" },
-      "pixel": { "heading": "Configuration sur Pixel / Android" },
-      "android": { "heading": "Configuration sur Android" },
+      "ios": {
+        "heading": "Configuration sur iPhone"
+      },
+      "samsung": {
+        "heading": "Configuration sur Samsung"
+      },
+      "pixel": {
+        "heading": "Configuration sur Pixel / Android"
+      },
+      "android": {
+        "heading": "Configuration sur Android"
+      },
       "help": "Besoin d'aide pour la configuration ? Consultez notre page d'aide"
     },
     "steps": {
@@ -464,13 +539,19 @@
       "subject": "Votre eSIM pour {destination} est prêt !",
       "preview": "Scannez le code QR ou appuyez pour installer votre eSIM",
       "heading": "Votre eSIM Est Prêt !",
-      "qr": { "instruction": "Scannez ce code QR avec l'appareil photo de votre téléphone" },
+      "qr": {
+        "instruction": "Scannez ce code QR avec l'appareil photo de votre téléphone"
+      },
       "manual": {
         "heading": "Configuration Manuelle",
         "instruction": "Si le code QR ne fonctionne pas, saisissez ces détails manuellement dans les paramètres de votre téléphone"
       },
-      "receipt": { "heading": "Reçu de Commande" },
-      "setup": { "button": "Voir le Guide de Configuration" },
+      "receipt": {
+        "heading": "Reçu de Commande"
+      },
+      "setup": {
+        "button": "Voir le Guide de Configuration"
+      },
       "referral": "Vous connaissez quelqu'un qui voyage ? Partagez eSIM Panda"
     }
   },
