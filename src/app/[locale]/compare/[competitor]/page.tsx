@@ -102,13 +102,17 @@ export default async function ComparePage({ params }: Props) {
 
       <div className="grid sm:grid-cols-2 gap-4 mt-8">
         <div className="rounded-card border border-border dark:border-border-dark p-5">
-          <h2 className="font-semibold text-primary dark:text-gray-100">{comparison.competitor}</h2>
+          <h2 className="font-semibold text-primary dark:text-gray-100">
+            {locale === 'pt' ? `O senão da ${comparison.competitor}` : `The catch with ${comparison.competitor}`}
+          </h2>
           <p className="mt-2 text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
-            {comparison.competitorStrength[locale]}
+            {comparison.competitorCatch[locale]}
           </p>
         </div>
         <div className="rounded-card border border-accent/40 bg-accent-soft/40 dark:bg-accent-soft-dark/30 p-5">
-          <h2 className="font-semibold text-accent">eSIM Panda</h2>
+          <h2 className="font-semibold text-accent">
+            {locale === 'pt' ? 'Porquê o eSIM Panda' : 'Why eSIM Panda'}
+          </h2>
           <p className="mt-2 text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
             {comparison.pandaPitch[locale]}
           </p>

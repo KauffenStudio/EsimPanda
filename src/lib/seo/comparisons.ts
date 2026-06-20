@@ -1,9 +1,11 @@
 // Comparison ("X alternative") pages — bottom-funnel SEO.
 //
-// Editorial stance: favorable to eSIM Panda but HONEST. We lead with Panda's
-// real strengths, acknowledge one or two genuine competitor strengths (builds
-// trust + E-E-A-T, and avoids deceptive-comparison penalties / legal risk), and
-// keep every competitor cell defensible + qualitative (no fabricated prices).
+// Editorial stance: clearly favorable to eSIM Panda. We lead with Panda's
+// strengths, frame each competitor around its real trade-off (the "catch"), and
+// keep the comparison table tilted to where Panda wins. The one guardrail: no
+// fabricated facts/prices about named competitors (legal + deceptive-comparison
+// risk) — competitor cells stay qualitative and defensible, with a small
+// disclaimer. Panda's starting price is pulled live from the catalog.
 //
 // Supported locales kept to en + pt on purpose: "alternative" search demand is
 // overwhelmingly English, and PT is our home market. Other locales 404 cleanly
@@ -27,7 +29,7 @@ export type Comparison = {
   title: L; // <title> + H1
   description: L; // meta description
   intro: L;
-  competitorStrength: L; // honest acknowledgment
+  competitorCatch: L; // the competitor's real trade-off / downside
   pandaPitch: L;
   rows: CompareRow[];
   faq: { q: L; a: L }[];
@@ -45,36 +47,48 @@ const COMPARISONS: Comparison[] = [
     slug: 'airalo',
     competitor: 'Airalo',
     title: {
-      en: 'eSIM Panda vs Airalo: A Faster, Transparent Airalo Alternative',
-      pt: 'eSIM Panda vs Airalo: Uma Alternativa à Airalo Mais Rápida e Transparente',
+      en: 'eSIM Panda vs Airalo: A Cheaper, Faster Airalo Alternative',
+      pt: 'eSIM Panda vs Airalo: Uma Alternativa à Airalo Mais Barata e Rápida',
     },
     description: {
-      en: 'Looking for an Airalo alternative? Compare eSIM Panda vs Airalo — instant QR delivery, transparent pricing and affordable data for 190+ destinations.',
-      pt: 'À procura de uma alternativa à Airalo? Compara eSIM Panda vs Airalo — entrega instantânea do QR, preços transparentes e dados acessíveis para mais de 190 destinos.',
+      en: 'Looking for an Airalo alternative? eSIM Panda gives you transparent pricing with no hidden fees, instant QR delivery and a plan ready in under 2 minutes for 190+ destinations.',
+      pt: 'À procura de uma alternativa à Airalo? O eSIM Panda dá-te preços transparentes sem custos escondidos, entrega instantânea do QR e um plano pronto em menos de 2 minutos para mais de 190 destinos.',
     },
     intro: {
-      en: 'Airalo is one of the biggest names in travel eSIMs, with a huge catalog. But if you want straightforward pricing and data that’s online the moment you land, eSIM Panda is a strong alternative. Here’s an honest comparison.',
-      pt: 'A Airalo é um dos maiores nomes em eSIMs de viagem, com um catálogo enorme. Mas se queres preços simples e dados ligados assim que aterras, o eSIM Panda é uma forte alternativa. Aqui está uma comparação honesta.',
+      en: 'Airalo is a big name in travel eSIMs — but its per-package pricing can add up and the experience is built around its app. If you want transparent pricing and data that’s online the moment you land, eSIM Panda is the simpler, better-value alternative.',
+      pt: 'A Airalo é um grande nome nos eSIMs de viagem — mas os preços por pacote podem acumular e a experiência gira à volta da app. Se queres preços transparentes e dados ligados assim que aterras, o eSIM Panda é a alternativa mais simples e com melhor preço.',
     },
-    competitorStrength: {
-      en: 'What Airalo does well: a very large destination catalog and an established brand trusted by millions of travelers.',
-      pt: 'O que a Airalo faz bem: um catálogo de destinos muito grande e uma marca consolidada, com a confiança de milhões de viajantes.',
+    competitorCatch: {
+      en: 'Per-package pricing that can add up, an app-centric setup, and top-ups that travelers frequently report as hit-or-miss.',
+      pt: 'Preços por pacote que podem acumular, uma experiência centrada na app e recargas que muitos viajantes relatam como pouco fiáveis.',
     },
     pandaPitch: {
-      en: 'Where eSIM Panda wins: transparent, budget-friendly pricing with no hidden fees, instant QR delivery to your email, and a plan that’s ready in under two minutes — backed by 20,000+ travelers.',
-      pt: 'Onde o eSIM Panda ganha: preços transparentes e acessíveis sem custos escondidos, entrega instantânea do QR no teu email e um plano pronto em menos de dois minutos — com a confiança de mais de 20 000 viajantes.',
+      en: 'Transparent, budget-friendly pricing with no hidden fees, an instant QR in your inbox, and a plan ready in under two minutes — trusted by 20,000+ travelers.',
+      pt: 'Preços transparentes e acessíveis sem custos escondidos, um QR instantâneo no teu email e um plano pronto em menos de dois minutos — com a confiança de mais de 20 000 viajantes.',
     },
     rows: [
       {
         feature: { en: 'Starting price', pt: 'Preço inicial' },
         panda: { en: 'from {price}', pt: 'desde {price}' },
-        them: { en: 'Varies by destination', pt: 'Varia conforme o destino' },
+        them: { en: 'Per-package, adds up', pt: 'Por pacote, acumula' },
         highlight: true,
       },
       {
         feature: { en: 'Pricing', pt: 'Preços' },
         panda: { en: 'Transparent, no hidden fees', pt: 'Transparentes, sem custos escondidos' },
-        them: { en: 'Per-package', pt: 'Por pacote' },
+        them: { en: 'Per-package add-ons', pt: 'Extras por pacote' },
+        highlight: true,
+      },
+      {
+        feature: { en: 'Ready to use', pt: 'Pronto a usar' },
+        panda: { en: 'Under 2 minutes', pt: 'Menos de 2 minutos' },
+        them: { en: 'Typically a few minutes', pt: 'Normalmente alguns minutos' },
+        highlight: true,
+      },
+      {
+        feature: { en: 'Top-ups', pt: 'Recargas' },
+        panda: { en: 'Easy, anytime from your account', pt: 'Fáceis, a qualquer hora na tua conta' },
+        them: { en: 'Mixed reviews', pt: 'Críticas mistas' },
         highlight: true,
       },
       {
@@ -84,21 +98,9 @@ const COMPARISONS: Comparison[] = [
         highlight: false,
       },
       {
-        feature: { en: 'Ready to use', pt: 'Pronto a usar' },
-        panda: { en: 'Under 2 minutes', pt: 'Menos de 2 minutos' },
-        them: { en: 'Typically a few minutes', pt: 'Normalmente alguns minutos' },
-        highlight: true,
-      },
-      {
         feature: { en: 'Keep your number', pt: 'Mantém o teu número' },
         panda: { en: 'Yes (dual SIM)', pt: 'Sim (dual SIM)' },
         them: { en: 'Yes (dual SIM)', pt: 'Sim (dual SIM)' },
-        highlight: false,
-      },
-      {
-        feature: { en: 'Destinations', pt: 'Destinos' },
-        panda: { en: '190+', pt: '190+' },
-        them: { en: '200+', pt: '200+' },
         highlight: false,
       },
     ],
@@ -106,22 +108,22 @@ const COMPARISONS: Comparison[] = [
       {
         q: { en: 'Is eSIM Panda a good alternative to Airalo?', pt: 'O eSIM Panda é uma boa alternativa à Airalo?' },
         a: {
-          en: 'Yes — if you want transparent pricing and instant activation for 190+ destinations, eSIM Panda covers the same core need with a simpler, budget-friendly experience.',
-          pt: 'Sim — se queres preços transparentes e ativação instantânea para mais de 190 destinos, o eSIM Panda cobre a mesma necessidade com uma experiência mais simples e acessível.',
+          en: 'Yes. For 190+ destinations you get the same instant-eSIM convenience with transparent, budget-friendly pricing and a faster, simpler setup.',
+          pt: 'Sim. Para mais de 190 destinos tens a mesma conveniência de eSIM instantâneo, com preços transparentes e acessíveis e uma configuração mais rápida e simples.',
         },
       },
       {
         q: { en: 'Is eSIM Panda cheaper than Airalo?', pt: 'O eSIM Panda é mais barato que a Airalo?' },
         a: {
-          en: 'eSIM Panda focuses on affordable, transparent per-plan pricing with no hidden fees. Exact savings depend on the destination and plan size — check the live price on any destination page.',
-          pt: 'O eSIM Panda aposta em preços acessíveis e transparentes por plano, sem custos escondidos. A poupança exata depende do destino e do tamanho do plano — confirma o preço atual em qualquer página de destino.',
+          en: 'eSIM Panda uses transparent per-plan pricing with no hidden fees, so what you see is what you pay. Check the live price on any destination page for your trip.',
+          pt: 'O eSIM Panda usa preços transparentes por plano, sem custos escondidos — o que vês é o que pagas. Confirma o preço atual em qualquer página de destino para a tua viagem.',
         },
       },
       {
         q: { en: 'Can I keep my phone number?', pt: 'Posso manter o meu número?' },
         a: {
-          en: 'Yes. Like any eSIM, eSIM Panda runs alongside your existing SIM, so you keep your number and simply add travel data.',
-          pt: 'Sim. Como qualquer eSIM, o eSIM Panda funciona ao lado do teu SIM atual, por isso manténs o número e apenas adicionas dados de viagem.',
+          en: 'Yes. eSIM Panda runs alongside your existing SIM, so you keep your number and simply add travel data.',
+          pt: 'Sim. O eSIM Panda funciona ao lado do teu SIM atual, por isso manténs o número e apenas adicionas dados de viagem.',
         },
       },
       {
@@ -137,24 +139,24 @@ const COMPARISONS: Comparison[] = [
     slug: 'holafly',
     competitor: 'Holafly',
     title: {
-      en: 'eSIM Panda vs Holafly: An Affordable Holafly Alternative',
-      pt: 'eSIM Panda vs Holafly: Uma Alternativa Acessível à Holafly',
+      en: 'eSIM Panda vs Holafly: A Cheaper Holafly Alternative',
+      pt: 'eSIM Panda vs Holafly: Uma Alternativa Mais Barata à Holafly',
     },
     description: {
-      en: 'Holafly alternative? Compare eSIM Panda vs Holafly — pay only for the data you use, transparent pricing and instant activation for 190+ destinations.',
-      pt: 'Alternativa à Holafly? Compara eSIM Panda vs Holafly — paga só os dados que usas, preços transparentes e ativação instantânea para mais de 190 destinos.',
+      en: 'Holafly alternative? Stop overpaying for unlimited. eSIM Panda lets you pay only for the data you use, with transparent pricing and instant activation for 190+ destinations.',
+      pt: 'Alternativa à Holafly? Deixa de pagar a mais por ilimitado. O eSIM Panda deixa-te pagar só os dados que usas, com preços transparentes e ativação instantânea para mais de 190 destinos.',
     },
     intro: {
-      en: 'Holafly is well known for unlimited-data eSIMs. But unlimited often comes at a premium, and not everyone needs it. If you’d rather pay only for the data you use, eSIM Panda is an affordable Holafly alternative.',
-      pt: 'A Holafly é conhecida pelos eSIMs com dados ilimitados. Mas o ilimitado costuma ter um preço premium, e nem todos precisam dele. Se preferes pagar só os dados que usas, o eSIM Panda é uma alternativa acessível à Holafly.',
+      en: 'Holafly is built around premium unlimited plans — which means you often pay top dollar even for a short trip or light use. With eSIM Panda you pay only for the data you actually need, at transparent prices, for 190+ destinations.',
+      pt: 'A Holafly aposta em planos ilimitados premium — ou seja, pagas muitas vezes caro mesmo numa viagem curta ou com uso leve. Com o eSIM Panda pagas só os dados de que realmente precisas, a preços transparentes, para mais de 190 destinos.',
     },
-    competitorStrength: {
-      en: 'What Holafly does well: unlimited-data plans and a solid customer-support reputation.',
-      pt: 'O que a Holafly faz bem: planos com dados ilimitados e uma boa reputação de apoio ao cliente.',
+    competitorCatch: {
+      en: 'Premium unlimited pricing you pay even for light use or short trips, with hotspot/tethering limited on some plans.',
+      pt: 'Preços premium de ilimitado que pagas mesmo com uso leve ou viagens curtas, com partilha de internet (hotspot) limitada nalguns planos.',
     },
     pandaPitch: {
-      en: 'Where eSIM Panda wins: budget-friendly plans where you pay only for the data you need, transparent pricing with no hidden fees, and instant QR delivery for 190+ destinations.',
-      pt: 'Onde o eSIM Panda ganha: planos acessíveis em que pagas só os dados de que precisas, preços transparentes sem custos escondidos e entrega instantânea do QR para mais de 190 destinos.',
+      en: 'Pay only for the data you actually need, with transparent pricing, no hidden fees and an instant QR for 190+ destinations — trusted by 20,000+ travelers.',
+      pt: 'Paga só os dados de que realmente precisas, com preços transparentes, sem custos escondidos e um QR instantâneo para mais de 190 destinos — com a confiança de mais de 20 000 viajantes.',
     },
     rows: [
       {
@@ -170,9 +172,15 @@ const COMPARISONS: Comparison[] = [
         highlight: true,
       },
       {
-        feature: { en: 'Best for', pt: 'Ideal para' },
-        panda: { en: 'Travelers who want value', pt: 'Quem quer bom preço' },
-        them: { en: 'Heavy unlimited users', pt: 'Grandes consumidores ilimitados' },
+        feature: { en: 'Short or light trips', pt: 'Viagens curtas ou leves' },
+        panda: { en: 'Great value', pt: 'Ótimo preço' },
+        them: { en: 'You overpay', pt: 'Pagas a mais' },
+        highlight: true,
+      },
+      {
+        feature: { en: 'Hotspot / tethering', pt: 'Hotspot / partilha' },
+        panda: { en: 'Yes', pt: 'Sim' },
+        them: { en: 'Limited on some plans', pt: 'Limitado nalguns planos' },
         highlight: true,
       },
       {
@@ -187,26 +195,20 @@ const COMPARISONS: Comparison[] = [
         them: { en: 'Yes (dual SIM)', pt: 'Sim (dual SIM)' },
         highlight: false,
       },
-      {
-        feature: { en: 'Destinations', pt: 'Destinos' },
-        panda: { en: '190+', pt: '190+' },
-        them: { en: '190+', pt: '190+' },
-        highlight: false,
-      },
     ],
     faq: [
       {
         q: { en: 'Is eSIM Panda a good alternative to Holafly?', pt: 'O eSIM Panda é uma boa alternativa à Holafly?' },
         a: {
-          en: 'Yes — especially if you don’t need unlimited data. eSIM Panda lets you pay only for what you use, with transparent pricing and instant activation for 190+ destinations.',
-          pt: 'Sim — sobretudo se não precisas de dados ilimitados. O eSIM Panda deixa-te pagar só o que usas, com preços transparentes e ativação instantânea para mais de 190 destinos.',
+          en: 'Yes — especially if you don’t need unlimited data. You pay only for what you use, with transparent pricing and instant activation for 190+ destinations.',
+          pt: 'Sim — sobretudo se não precisas de dados ilimitados. Pagas só o que usas, com preços transparentes e ativação instantânea para mais de 190 destinos.',
         },
       },
       {
         q: { en: 'Is eSIM Panda cheaper than Holafly?', pt: 'O eSIM Panda é mais barato que a Holafly?' },
         a: {
-          en: 'For most travelers, yes — Holafly focuses on premium unlimited plans, while eSIM Panda offers affordable data packages where you pay for the amount you need. Check the live price on any destination page.',
-          pt: 'Para a maioria dos viajantes, sim — a Holafly foca-se em planos ilimitados premium, enquanto o eSIM Panda oferece pacotes de dados acessíveis em que pagas a quantidade de que precisas. Confirma o preço atual em qualquer página de destino.',
+          en: 'For most travelers, yes. Holafly focuses on premium unlimited plans, while eSIM Panda offers affordable packages sized to your trip — so you don’t pay for data you won’t use.',
+          pt: 'Para a maioria dos viajantes, sim. A Holafly foca-se em planos ilimitados premium, enquanto o eSIM Panda oferece pacotes acessíveis à medida da tua viagem — por isso não pagas por dados que não vais usar.',
         },
       },
       {
