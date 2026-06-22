@@ -71,7 +71,7 @@ export default async function DestinationPage({ params }: Props) {
 
       {/* Product JSON-LD for each plan */}
       {taggedPlans.map((plan) => (
-        <JsonLd key={plan.id} data={buildProductJsonLd(plan, displayName)} />
+        <JsonLd key={plan.id} data={buildProductJsonLd(plan, displayName, destination.image_url ?? undefined)} />
       ))}
 
       <Breadcrumb locale={locale} destinationName={displayName} />

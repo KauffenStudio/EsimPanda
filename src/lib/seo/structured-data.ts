@@ -33,11 +33,21 @@ export function buildWebsiteJsonLd(locale: string) {
   };
 }
 
-export function buildProductJsonLd(plan: Plan, destinationName: string) {
+export function buildProductJsonLd(plan: Plan, destinationName: string, imageUrl?: string) {
+  // Google requires `image` for Product rich results — without it the item is
+  // flagged invalid in Search Console ("Campo image em falta"). Use the
+  // destination hero image when available; fall back to the brand logo so every
+  // Product always carries a valid absolute image URL.
+  const resolvedImage = imageUrl
+    ? imageUrl.startsWith('http')
+      ? imageUrl
+      : `${SITE_URL}${imageUrl.startsWith('/') ? '' : '/'}${imageUrl}`
+    : `${SITE_URL}/icon-512x512.png`;
   return {
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: `eSIM ${destinationName} - ${plan.data_gb}GB ${plan.duration_days} days`,
+    image: [resolvedImage],
     brand: { '@type': 'Brand', name: 'eSIM Panda' },
     offers: {
       '@type': 'Offer',
