@@ -13,6 +13,12 @@ const nextConfig = {
         protocol: 'https' as const,
         hostname: 'images.pexels.com',
       },
+      {
+        // Supabase Storage — destination card images live in the public
+        // `destination-images` bucket on this project's storage host.
+        protocol: 'https' as const,
+        hostname: 'dgpzjtmsiggfcxmjmazg.supabase.co',
+      },
     ],
   },
 };
