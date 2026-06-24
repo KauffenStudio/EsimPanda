@@ -68,7 +68,12 @@ export function DeliveryPage({ paymentIntentId, email }: DeliveryPageProps) {
 
   const pollStatus = useCallback(async () => {
     try {
-      const res = await fetch(`/api/delivery/status?payment_intent=${paymentIntentId}`);
+      // email is required server-side to authorize returning eSIM credentials
+      // (the payment_intent id alone is too weak a capability).
+      const statusUrl = email
+        ? `/api/delivery/status?payment_intent=${encodeURIComponent(paymentIntentId)}&email=${encodeURIComponent(email)}`
+        : `/api/delivery/status?payment_intent=${encodeURIComponent(paymentIntentId)}`;
+      const res = await fetch(statusUrl);
       if (!res.ok) return;
       const result = await res.json();
 
@@ -85,7 +90,7 @@ export function DeliveryPage({ paymentIntentId, email }: DeliveryPageProps) {
     } catch {
       // Silently continue polling on network errors
     }
-  }, [paymentIntentId, stopPolling, setData, setError, setOutOfStock]);
+  }, [paymentIntentId, email, stopPolling, setData, setError, setOutOfStock]);
 
   useEffect(() => {
     if (mountedRef.current) return;

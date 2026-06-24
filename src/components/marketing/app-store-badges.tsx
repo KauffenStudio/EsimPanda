@@ -1,5 +1,6 @@
 import { useTranslations } from 'next-intl';
 import { APP_STORE_LINKS } from '@/lib/config/app-store-links';
+import { isNative, nativePlatform } from '@/lib/native/platform';
 
 interface BadgeProps {
   href: string;
@@ -52,6 +53,9 @@ interface AppStoreBadgesProps {
 
 export function AppStoreBadges({ compact = false }: AppStoreBadgesProps = {}) {
   const t = useTranslations('appBadges');
+  // On the native iOS app hide the Android badge — Apple rejects binaries that
+  // reference competing platforms (Guideline 2.3.10).
+  const hideGoogle = isNative() && nativePlatform() === 'ios';
 
   return (
     <div className="flex flex-row items-center justify-center gap-2 sm:gap-3 w-full">
@@ -63,14 +67,16 @@ export function AppStoreBadges({ compact = false }: AppStoreBadgesProps = {}) {
         comingSoonLabel={t('comingSoon')}
         compact={compact}
       />
-      <Badge
-        href={APP_STORE_LINKS.google}
-        src="/badges/google-play-badge.svg"
-        alt="Get it on Google Play"
-        ariaLabel={t('googlePlayAria')}
-        comingSoonLabel={t('comingSoon')}
-        compact={compact}
-      />
+      {!hideGoogle && (
+        <Badge
+          href={APP_STORE_LINKS.google}
+          src="/badges/google-play-badge.svg"
+          alt="Get it on Google Play"
+          ariaLabel={t('googlePlayAria')}
+          comingSoonLabel={t('comingSoon')}
+          compact={compact}
+        />
+      )}
     </div>
   );
 }

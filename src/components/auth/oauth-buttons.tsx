@@ -6,6 +6,7 @@ import { createClient } from '@/lib/supabase/client';
 import { Button } from '@/components/ui/button';
 import { GoogleIcon } from '@/components/auth/icons/google-icon';
 import { AppleIcon } from '@/components/auth/icons/apple-icon';
+import { isNative } from '@/lib/native/platform';
 
 const APPLE_ENABLED = true;
 
@@ -26,8 +27,17 @@ export function OAuthButtons({ next }: OAuthButtonsProps) {
 
     try {
       const supabase = createClient();
-      const redirectTo = `${window.location.origin}/api/auth/callback?next=${encodeURIComponent(next)}`;
-      console.log('[oauth] starting', { provider, redirectTo });
+
+      // On native iOS the WKWebView cannot navigate to external OAuth domains
+      // (limitsNavigationsToAppBoundDomains is true). We open the flow inside
+      // SFSafariViewController via @capacitor/browser and redirect back via the
+      // custom URL scheme so appUrlOpen fires and we exchange the code in-app.
+      const native = isNative();
+      const redirectTo = native
+        ? `esimpanda://auth/callback?next=${encodeURIComponent(next)}`
+        : `${window.location.origin}/api/auth/callback?next=${encodeURIComponent(next)}`;
+
+      console.log('[oauth] starting', { provider, redirectTo, native });
 
       const { data, error: oauthError } = await supabase.auth.signInWithOAuth({
         provider,
@@ -52,7 +62,15 @@ export function OAuthButtons({ next }: OAuthButtonsProps) {
       }
 
       console.log('[oauth] redirecting to', data.url);
-      window.location.assign(data.url);
+
+      if (native) {
+        // SFSafariViewController — stays in-app, satisfies Apple Guideline 4.
+        const { Browser } = await import('@capacitor/browser');
+        await Browser.open({ url: data.url, windowName: '_self' });
+        // Loading spinner stays until deep-link handler completes and navigates away.
+      } else {
+        window.location.assign(data.url);
+      }
     } catch (e) {
       const message = e instanceof Error ? e.message : 'unknown error';
       console.error('[oauth] threw:', e);
