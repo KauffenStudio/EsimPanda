@@ -31,6 +31,7 @@ export function LandingClient() {
             variant="hero-panda"
             raw
             loop={false}
+            poster="/bambu/panda-face.png"
             className="w-full h-full"
           />
         </div>

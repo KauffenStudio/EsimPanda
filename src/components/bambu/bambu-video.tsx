@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 
 type BambuVariant = 'splash' | 'loading' | 'success' | 'error' | 'empty' | 'browse' | 'preparing' | 'welcome' | 'hero-intro' | 'hero-panda';
 
@@ -10,6 +10,11 @@ interface BambuVideoProps {
   className?: string;
   loop?: boolean;
   raw?: boolean;
+  /**
+   * Optional still shown instantly while the (heavier) video downloads.
+   * Improves perceived load on the hero, where the clip is a few MB.
+   */
+  poster?: string;
   onEnded?: () => void;
 }
 
@@ -34,10 +39,14 @@ export function BambuVideo({
   className = '',
   loop = true,
   raw = false,
+  poster,
   onEnded,
 }: BambuVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const observerRef = useRef<IntersectionObserver | null>(null);
+  // Some mascot clips are mid-migration and may 404. Rather than show a blank
+  // box (and a noisy console error), hide the element if its source fails.
+  const [failed, setFailed] = useState(false);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -77,6 +86,9 @@ export function BambuVideo({
     };
   }, [raw]);
 
+  // Source unavailable — render nothing so the surrounding layout stays clean.
+  if (failed) return null;
+
   if (raw) {
     return (
       <video
@@ -86,8 +98,10 @@ export function BambuVideo({
         muted
         playsInline
         autoPlay
-        preload="auto"
+        poster={poster}
+        preload={poster ? 'metadata' : 'auto'}
         onEnded={onEnded}
+        onError={() => setFailed(true)}
         className={`object-contain ${hasAlpha(variant) ? '' : 'mix-blend-multiply dark:mix-blend-screen'} ${className}`}
       />
     );
@@ -108,6 +122,7 @@ export function BambuVideo({
         playsInline
         preload={variant === 'splash' ? 'auto' : 'metadata'}
         onEnded={onEnded}
+        onError={() => setFailed(true)}
         className="w-full h-full object-cover mix-blend-multiply dark:mix-blend-screen"
       />
     </div>
