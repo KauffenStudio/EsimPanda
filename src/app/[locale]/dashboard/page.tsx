@@ -101,7 +101,7 @@ export default function DashboardPage() {
         <h2 className="text-lg font-bold mb-2">
           {t('dashboard.error_title')}
         </h2>
-        <p className="text-sm text-center mb-4" style={{ color: '#616161' }}>
+        <p className="text-sm text-center mb-4 text-gray-600 dark:text-gray-400">
           {t('dashboard.error_body')}
         </p>
         <Button variant="primary" onClick={() => initialize()}>
@@ -121,7 +121,7 @@ export default function DashboardPage() {
         <h2 className="text-lg font-bold mb-2">
           {t('dashboard.empty_title')}
         </h2>
-        <p className="text-sm text-center mb-4" style={{ color: '#616161' }}>
+        <p className="text-sm text-center mb-4 text-gray-600 dark:text-gray-400">
           {t('dashboard.empty_body')}
         </p>
         <Link href={`/${locale}/browse`}>

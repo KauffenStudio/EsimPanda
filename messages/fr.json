@@ -211,7 +211,9 @@
     "promo_placeholder": "Code promo",
     "promo_apply": "Appliquer",
     "promo_remove": "Supprimer",
-    "promo_invalid": "Code promo invalide"
+    "promo_invalid": "Code promo invalide",
+    "addToCart": "Ajouter au panier",
+    "added": "Ajouté"
   },
   "errors": {
     "generic": "Une erreur est survenue. Réessayez ou consultez notre page d'aide.",

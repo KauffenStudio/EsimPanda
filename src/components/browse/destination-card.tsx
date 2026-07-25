@@ -1,8 +1,8 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { useTranslations, useLocale } from 'next-intl';
-import { useRouter } from 'next/navigation';
 import { Card } from '@/components/ui/card';
 import { useCurrencyStore } from '@/stores/currency';
 import { formatPrice } from '@/lib/currency/rates';
@@ -37,22 +37,23 @@ export function DestinationCard({
 }: DestinationCardProps) {
   const t = useTranslations();
   const locale = useLocale();
-  const router = useRouter();
   const currency = useCurrencyStore((s) => s.currency);
 
   const flag = isoToFlag(isoCode);
+  const priceLabel =
+    startingPriceCents === 0
+      ? t('browse.noPlans')
+      : `${t('browse.from')} ${formatPrice(startingPriceCents, currency)}`;
 
-  // Navigation-only (RESEARCH Open Question 2 — auto-add-to-cart dropped).
-  const handleClick = () => {
-    router.push(`/${locale}/esim/${slug}`);
-  };
-
+  // Real anchor (RESEARCH Open Question 2 — auto-add-to-cart dropped): a crawlable
+  // link fixes SEO, keyboard activation, and open-in-new-tab that router.push lacked.
   return (
-    <Card
-      variant="elevated"
-      className="cursor-pointer overflow-hidden group"
-      onClick={handleClick}
+    <Link
+      href={`/${locale}/esim/${slug}`}
+      aria-label={`${name} — ${priceLabel}`}
+      className="block group rounded-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background dark:focus-visible:ring-offset-background-dark"
     >
+      <Card variant="elevated" className="overflow-hidden">
       <div className="aspect-[4/3] relative overflow-hidden rounded-card">
         {/* Typographic fallback is ALWAYS the base layer — the photo cross-fades
             in OVER it so there is no flicker if the photo 404s (CAT-07). */}
@@ -79,7 +80,7 @@ export function DestinationCard({
 
         {/* Discount badge — shows best available discount */}
         {bestDiscountPercent > 0 && (
-          <div className="absolute top-2.5 right-2.5 bg-[#E53935] text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+          <div className="absolute top-2.5 right-2.5 bg-destructive text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
             up to -{bestDiscountPercent}%
           </div>
         )}
@@ -88,13 +89,10 @@ export function DestinationCard({
           <p className="text-white font-semibold text-sm tracking-tight">
             {flag} {name}
           </p>
-          <p className="text-white/70 text-xs mt-0.5">
-            {startingPriceCents === 0
-              ? t('browse.noPlans')
-              : `${t('browse.from')} ${formatPrice(startingPriceCents, currency)}`}
-          </p>
+          <p className="text-white/80 text-xs mt-0.5">{priceLabel}</p>
         </div>
       </div>
-    </Card>
+      </Card>
+    </Link>
   );
 }

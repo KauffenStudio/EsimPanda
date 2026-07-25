@@ -211,7 +211,9 @@
     "promo_placeholder": "优惠码",
     "promo_apply": "应用",
     "promo_remove": "移除",
-    "promo_invalid": "无效的优惠码"
+    "promo_invalid": "无效的优惠码",
+    "addToCart": "加入购物车",
+    "added": "已加入"
   },
   "errors": {
     "generic": "出错了。请重试或访问我们的帮助页面。",

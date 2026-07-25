@@ -250,7 +250,7 @@ export function TopUpModal() {
                 <div className="space-y-4">
                   {/* Plan summary */}
                   {selectedPackage && (
-                    <div className="rounded-lg bg-[#F5F5F5] dark:bg-background-dark p-3 flex items-center justify-between">
+                    <div className="rounded-lg bg-surface dark:bg-background-dark p-3 flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <span className="text-lg">{isoToFlag(esim.destination_iso)}</span>
                         <span className="text-sm font-medium dark:text-gray-100">
@@ -269,7 +269,7 @@ export function TopUpModal() {
                         <button
                           type="button"
                           onClick={handleMockPayment}
-                          className="w-full rounded-lg bg-[#2979FF] px-4 py-3 text-white font-bold hover:bg-[#2164d9] transition-colors"
+                          className="w-full rounded-lg bg-accent px-4 py-3 text-white font-bold hover:bg-accent-hover transition-colors"
                         >
                           Simulate Payment - ${' '}
                           {selectedPackage ? (selectedPackage.price_cents / 100).toFixed(2) : '0.00'}
@@ -282,7 +282,7 @@ export function TopUpModal() {
                       <CardPayment />
                       <button
                         type="button"
-                        className="w-full rounded-lg bg-[#2979FF] px-4 py-3 text-white font-bold hover:bg-[#2164d9] transition-colors mt-4"
+                        className="w-full rounded-lg bg-accent px-4 py-3 text-white font-bold hover:bg-accent-hover transition-colors mt-4"
                       >
                         {t('dashboard.top_up_pay', {
                           amount: selectedPackage
@@ -319,7 +319,7 @@ export function TopUpModal() {
                   <button
                     type="button"
                     onClick={closeTopUp}
-                    className="rounded-lg bg-[#2979FF] px-6 py-2 text-white font-medium hover:bg-[#2164d9] transition-colors"
+                    className="rounded-lg bg-accent px-6 py-2 text-white font-medium hover:bg-accent-hover transition-colors"
                   >
                     {t('dashboard.done')}
                   </button>
