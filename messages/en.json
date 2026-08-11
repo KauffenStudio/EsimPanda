@@ -250,7 +250,7 @@
     "summary": {
       "title": "Order summary",
       "subtotal": "Subtotal",
-      "discount": "Student discount (15%)",
+      "discount": "Discount",
       "vat": "VAT ({rate}%)",
       "vatCalculating": "Calculating...",
       "total": "Total"

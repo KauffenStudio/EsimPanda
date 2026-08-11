@@ -3,6 +3,7 @@ import { statusRequestSchema } from '@/lib/delivery/schemas';
 import { provisioningState } from '@/lib/delivery/provision';
 import { IS_MOCK } from '@/lib/config/mode';
 import { getOrderByPaymentIntent } from '@/lib/db/orders';
+import { fetchBuyerEmail } from '@/lib/delivery/buyer-email';
 import { decrypt } from '@/lib/delivery/encryption';
 
 const pending = () => NextResponse.json({ status: 'pending' });
@@ -48,7 +49,26 @@ export async function GET(request: NextRequest) {
     return pending();
   }
 
-  if (!order || order.email.trim().toLowerCase() !== buyerEmail) {
+  if (!order) {
+    return pending();
+  }
+
+  // The order row is created with email='' before the buyer has typed one, and
+  // only gets the address written back when provisioning finishes. Matching
+  // solely against the stored value therefore fails for the entire
+  // provisioning window — and permanently whenever the row never received the
+  // backfill, which is what left paying customers watching the spinner until
+  // the 60s timeout while their eSIM sat ready in the database.
+  //
+  // Stripe holds the same address, so accept either source. The capability
+  // check is unchanged: the caller must still present the buyer's real email.
+  let authorized = order.email?.trim().toLowerCase() === buyerEmail;
+  if (!authorized) {
+    const stripeEmail = await fetchBuyerEmail(piId);
+    authorized = !!stripeEmail && stripeEmail.trim().toLowerCase() === buyerEmail;
+  }
+
+  if (!authorized) {
     return pending();
   }
 

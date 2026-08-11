@@ -21,6 +21,8 @@ interface DeliveryPageProps {
 const POLLING_INTERVAL = 2000;
 const PROVISIONING_TIMEOUT = 60000;
 const DELAY_THRESHOLD = 20000;
+/** Matches ProvisioningError's `retryCount < 3` gate for the exhausted copy. */
+const RETRIES_EXHAUSTED = 3;
 
 export function DeliveryPage({ paymentIntentId, email }: DeliveryPageProps) {
   const t = useTranslations('delivery');
@@ -116,10 +118,14 @@ export function DeliveryPage({ paymentIntentId, email }: DeliveryPageProps) {
       setIsDelayed(true);
     }, DELAY_THRESHOLD);
 
-    // Timeout guard
+    // Timeout guard. Report it as exhausted (not retry 0 of 3) — polling has
+    // just been stopped, so the "Retrying… (0/3)" copy would pulse forever
+    // while nothing was actually happening. The exhausted branch tells the
+    // customer their eSIM is coming by email, which provisioning does
+    // independently of this page.
     timeoutRef.current = setTimeout(() => {
       stopPolling();
-      setError('Provisioning timed out', 0);
+      setError('Provisioning timed out', RETRIES_EXHAUSTED);
     }, PROVISIONING_TIMEOUT);
 
     return () => stopPolling();

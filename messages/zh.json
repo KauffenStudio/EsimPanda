@@ -250,7 +250,7 @@
     "summary": {
       "title": "订单摘要",
       "subtotal": "小计",
-      "discount": "学生折扣（15%）",
+      "discount": "折扣",
       "vat": "增值税（{rate}%）",
       "vatCalculating": "计算中...",
       "total": "总计"

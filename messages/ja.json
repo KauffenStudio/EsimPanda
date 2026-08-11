@@ -250,7 +250,7 @@
     "summary": {
       "title": "注文概要",
       "subtotal": "小計",
-      "discount": "学生割引（15%）",
+      "discount": "割引",
       "vat": "消費税（{rate}%）",
       "vatCalculating": "計算中...",
       "total": "合計"

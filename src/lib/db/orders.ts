@@ -187,6 +187,37 @@ export async function updateOrderStatus(
   return true;
 }
 
+/**
+ * Attach the buyer's email to an order that does not have one yet.
+ *
+ * Orders are created in /api/checkout/create-intent before the customer has
+ * typed an address, so the column starts empty and — until this runs — the
+ * only copy of the address lives in the browser. Writing it at checkout time
+ * means provisioning and the delivery-status poller both work off the database
+ * instead of depending on the post-payment redirect surviving.
+ *
+ * Deliberately scoped to blank-email rows: once an address is on file it is
+ * the delivery target, and letting a later call overwrite it would turn a
+ * leaked payment_intent id into a way to redirect someone else's eSIM.
+ */
+export async function attachOrderEmail(
+  paymentIntentId: string,
+  email: string,
+): Promise<boolean> {
+  const supabase = createServiceClient();
+  const { error } = await supabase
+    .from('orders')
+    .update({ email, updated_at: new Date().toISOString() })
+    .eq('stripe_payment_intent_id', paymentIntentId)
+    .eq('email', '');
+
+  if (error) {
+    console.error('attachOrderEmail error:', error);
+    return false;
+  }
+  return true;
+}
+
 export async function updateOrderProvisionData(
   paymentIntentId: string,
   data: {

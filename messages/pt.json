@@ -250,7 +250,7 @@
     "summary": {
       "title": "Resumo do pedido",
       "subtotal": "Subtotal",
-      "discount": "Desconto estudante (15%)",
+      "discount": "Desconto",
       "vat": "IVA ({rate}%)",
       "vatCalculating": "A calcular...",
       "total": "Total"
