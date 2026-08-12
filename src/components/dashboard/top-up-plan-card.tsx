@@ -18,7 +18,7 @@ export function TopUpPlanCard({ package: pkg, selected, onSelect }: TopUpPlanCar
       onClick={() => onSelect(pkg)}
       className={`w-full rounded-lg p-4 text-left cursor-pointer transition-colors duration-150 ${
         selected
-          ? 'border-2 border-[#2979FF] bg-[#E3F0FF] dark:bg-accent-soft-dark'
+          ? 'border-2 border-accent bg-accent-soft dark:bg-accent-soft-dark'
           : 'border border-gray-200 dark:border-border-dark bg-white dark:bg-background-dark hover:border-gray-300 dark:hover:border-gray-600'
       }`}
     >
@@ -28,7 +28,7 @@ export function TopUpPlanCard({ package: pkg, selected, onSelect }: TopUpPlanCar
         <span className="text-sm text-gray-400 dark:text-gray-600">|</span>
         <span className="text-sm text-gray-600 dark:text-gray-400">{pkg.duration_days} days</span>
       </div>
-      <p className="mt-2 text-base font-bold text-[#2979FF]">
+      <p className="mt-2 text-base font-bold text-accent">
         ${(pkg.price_cents / 100).toFixed(2)}
       </p>
     </motion.button>

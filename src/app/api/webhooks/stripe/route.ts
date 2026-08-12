@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import type Stripe from 'stripe';
 import { provisionEsim } from '@/lib/delivery/provision';
+import { emailFromPaymentIntent } from '@/lib/delivery/buyer-email';
 import { updateOrderStatus } from '@/lib/db/orders';
 
 function allowMock() {
@@ -51,7 +52,12 @@ export async function POST(request: Request) {
         if (!ALLOW_MOCK) {
           await updateOrderStatus(paymentIntent.id, 'payment_confirmed');
         }
-        await provisionEsim(paymentIntent.id);
+        // The buyer's address is on the PaymentIntent (the pay button sets
+        // receipt_email on confirm; create-intent mirrors it into metadata).
+        // Passing it here is what lets the webhook — which normally wins the
+        // provisioning claim against the browser's success page — send the
+        // delivery email itself instead of provisioning silently.
+        await provisionEsim(paymentIntent.id, emailFromPaymentIntent(paymentIntent) || undefined);
         break;
       }
       case 'payment_intent.payment_failed': {

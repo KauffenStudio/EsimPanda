@@ -26,7 +26,7 @@ export function UsageTimestamp({
   }
 
   const isStale = !last_refresh || minutesAgo > 5;
-  const textColor = isStale ? '#FB8C00' : '#616161';
+  const textClass = isStale ? 'text-warning dark:text-warning-dark' : 'text-gray-600 dark:text-gray-400';
 
   const timestampText = !last_refresh
     ? t('dashboard.usage_fresh')
@@ -37,9 +37,7 @@ export function UsageTimestamp({
   return (
     <div className="flex flex-col">
       <div className="flex items-center gap-2">
-        <span className="text-sm" style={{ color: textColor }}>
-          {timestampText}
-        </span>
+        <span className={`text-sm ${textClass}`}>{timestampText}</span>
         <button
           onClick={onRefresh}
           disabled={refreshing}
@@ -48,15 +46,13 @@ export function UsageTimestamp({
         >
           <RefreshCw
             size={16}
-            style={{
-              color: '#616161',
-              animation: refreshing ? 'spin 600ms linear infinite' : 'none',
-            }}
+            className="text-gray-600 dark:text-gray-400"
+            style={{ animation: refreshing ? 'spin 600ms linear infinite' : 'none' }}
           />
         </button>
       </div>
       {refresh_error && (
-        <span className="text-sm mt-1" style={{ color: '#FB8C00' }}>
+        <span className="text-sm mt-1 text-warning dark:text-warning-dark">
           {t('dashboard.usage_outdated')}
         </span>
       )}

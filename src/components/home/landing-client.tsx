@@ -13,18 +13,27 @@ export function LandingClient() {
 
   return (
     <div className="flex flex-col items-center px-4 pt-6 md:pt-10">
-      {/* Panda hero — video faded into page background */}
+      {/* Panda hero — video faded into page background over a branded aura */}
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8, ease: [0.32, 0.72, 0, 1] }}
-        className="w-full flex items-center justify-center h-[220px] md:h-[300px]"
+        className="relative w-full flex items-center justify-center h-[220px] md:h-[300px]"
       >
+        {/* Soft accent aura behind the panda — turns the mask falloff into intentional light */}
         <div
-          className="w-[300px] h-[300px] md:w-[400px] md:h-[400px] rounded-full overflow-hidden"
+          aria-hidden="true"
+          className="absolute w-[320px] h-[320px] md:w-[440px] md:h-[440px] rounded-full blur-2xl"
           style={{
-            maskImage: 'radial-gradient(circle at center, black 35%, transparent 65%)',
-            WebkitMaskImage: 'radial-gradient(circle at center, black 35%, transparent 65%)',
+            background:
+              'radial-gradient(circle at center, rgba(41,121,255,0.14), rgba(41,121,255,0.04) 45%, transparent 70%)',
+          }}
+        />
+        <div
+          className="relative w-[300px] h-[300px] md:w-[400px] md:h-[400px] rounded-full overflow-hidden"
+          style={{
+            maskImage: 'radial-gradient(circle at center, black 30%, transparent 55%)',
+            WebkitMaskImage: 'radial-gradient(circle at center, black 30%, transparent 55%)',
           }}
         >
           <BambuVideo
@@ -58,18 +67,18 @@ export function LandingClient() {
           {t('landing.subtitle2')}
         </p>
 
-        <div className="flex flex-row gap-2 sm:gap-3 mt-6 w-full max-w-md px-2 sm:px-0">
+        <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-3 mt-6 w-full max-w-md">
           <Link href={`/${locale}/browse`} className="flex-1 min-w-0">
-            <Button variant="primary" size="md" className="w-full sm:size-lg sm:px-8 sm:py-3.5 sm:text-lg">
-              <span className="truncate">{t('landing.cta_primary')}</span>
+            <Button variant="primary" size="md" className="w-full sm:px-8 sm:py-3.5 sm:text-lg">
+              {t('landing.cta_primary')}
               <ArrowRight size={16} className="ml-1.5 shrink-0" />
             </Button>
           </Link>
-          <Link href={`/${locale}/browse`} className="flex-1 min-w-0">
+          <a href="#how-it-works" className="flex-1 min-w-0">
             <Button variant="secondary" size="md" className="w-full sm:px-8 sm:py-3.5 sm:text-lg">
-              <span className="truncate">{t('landing.cta_secondary')}</span>
+              {t('landing.how.title')}
             </Button>
-          </Link>
+          </a>
         </div>
 
         <div className="flex items-center gap-2.5 mt-5">

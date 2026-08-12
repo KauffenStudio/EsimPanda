@@ -22,28 +22,20 @@ import { TrustSignals } from './trust-signals';
 import { StickyOrderBar } from './sticky-order-bar';
 import { CheckoutProgress } from './checkout-progress';
 import { trackEvent, ANALYTICS_EVENTS } from '@/lib/analytics/events';
-import { WELCOME_COUPON_CODE } from '@/lib/checkout/coupons';
 
 interface CheckoutPageProps {
   plan: Plan;
   couponFromUrl?: string;
 }
 
-async function resolveAutoCoupon(explicit?: string): Promise<string | undefined> {
-  if (explicit) return explicit;
-  try {
-    const res = await fetch('/api/user/has-purchased', { cache: 'no-store' });
-    if (!res.ok) return undefined;
-    const data = (await res.json()) as { has_purchased?: boolean };
-    return data.has_purchased === false ? WELCOME_COUPON_CODE : undefined;
-  } catch {
-    return undefined;
-  }
-}
+/** Matches the gate the pay button uses, so both agree on "usable address". */
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const EMAIL_SYNC_DEBOUNCE_MS = 600;
 
 export function CheckoutPage({ plan, couponFromUrl }: CheckoutPageProps) {
   const {
     client_secret,
+    email,
     payment_status,
     error_message,
     setClientSecret,
@@ -55,6 +47,29 @@ export function CheckoutPage({ plan, couponFromUrl }: CheckoutPageProps) {
 
   const [loading, setLoading] = useState(true);
   const orderSummaryRef = useRef<HTMLDivElement>(null);
+
+  // Persist the buyer's address server-side as soon as it is valid, rather
+  // than relying on it surviving the post-payment redirect. The webhook
+  // usually provisions before the browser reaches the success page, so
+  // without this the order row is still blank at provisioning time: no
+  // delivery email is sent and the success page cannot authorize itself to
+  // show the QR. Debounced so typing doesn't fire a request per keystroke.
+  useEffect(() => {
+    if (!client_secret || !EMAIL_REGEX.test(email)) return;
+
+    const timer = setTimeout(() => {
+      fetch('/api/checkout/attach-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ client_secret, email }),
+        keepalive: true,
+      }).catch(() => {
+        // Best-effort: provisioning also recovers the address from Stripe.
+      });
+    }, EMAIL_SYNC_DEBOUNCE_MS);
+
+    return () => clearTimeout(timer);
+  }, [client_secret, email]);
 
   // Initialize checkout on mount
   useEffect(() => {
@@ -76,9 +91,10 @@ export function CheckoutPage({ plan, couponFromUrl }: CheckoutPageProps) {
         setPricing(data.subtotal, data.tax_amount, data.amount, data.discount);
         setPaymentStatus('idle');
 
-        // Auto-apply coupon: explicit URL coupon wins; otherwise WELCOME10
-        // auto-applies for authed users who have not purchased before.
-        const couponToApply = await resolveAutoCoupon(couponFromUrl);
+        // Only an explicit coupon from the URL is applied. There is no
+        // automatic discount: WELCOME10 used to self-apply for first-time
+        // buyers, which quietly discounted every new customer's first order.
+        const couponToApply = couponFromUrl;
         if (couponToApply) {
           try {
             const couponRes = await fetch('/api/checkout/validate-coupon', {

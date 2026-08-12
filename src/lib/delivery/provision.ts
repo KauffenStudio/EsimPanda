@@ -1,5 +1,6 @@
 import { encrypt, decrypt } from './encryption';
 import { parseLpaUri } from './lpa';
+import { fetchBuyerEmail } from './buyer-email';
 import { mockProvision } from '@/lib/mock-data/delivery';
 import { createProvider } from '@/lib/esim/provider';
 import { toWholesaleIso } from '@/lib/esim/destination-iso';
@@ -66,6 +67,11 @@ export async function provisionEsim(paymentIntentId: string, email?: string): Pr
   // Mark as provisioning
   const inProgress: ProvisionResult = { status: 'provisioning', order_id: orderId };
   provisioningState.set(paymentIntentId, inProgress);
+
+  // Whatever `orders.email` held before this run. Kept separate from the
+  // working `email` value below so the backfill can tell "the row was already
+  // correct" from "we just recovered the address and must write it back".
+  let storedEmail = '';
 
   // Look up order from DB for real plan data
   let orderData: {
@@ -141,6 +147,8 @@ export async function provisionEsim(paymentIntentId: string, email?: string): Pr
         return { status: 'provisioning', order_id: orderId };
       }
 
+      storedEmail = claimed?.email?.trim() ?? '';
+
       if (claimed.plans) {
         orderData = {
           wholesalePlanId: claimed.plans.wholesale_plan_id,
@@ -149,13 +157,31 @@ export async function provisionEsim(paymentIntentId: string, email?: string): Pr
           destinationIso: claimed.plans.destinations?.iso_code || '',
           dataGb: String(claimed.plans.data_gb),
           durationDays: String(claimed.plans.duration_days),
-          orderEmail: claimed.email,
+          orderEmail: storedEmail,
           amountPaid: (claimed.amount_paid_cents / 100).toFixed(2),
         };
-        email = email || claimed.email;
+        email = email || storedEmail;
       }
     } catch (err) {
       console.error('Order lookup/claim failed, continuing with provisioning:', err);
+    }
+
+    // Last resort: ask Stripe. The webhook calls this function with no email
+    // and usually beats the browser to the provisioning claim, so without this
+    // the delivery email is skipped for every customer whose success page
+    // loses the race — they pay, the eSIM is created, and nothing ever
+    // reaches their inbox. See ./buyer-email.ts.
+    if (!email) {
+      email = await fetchBuyerEmail(paymentIntentId);
+      console.log('[provision] recovered buyer email from Stripe', {
+        found: !!email,
+      });
+    }
+
+    // Celitech attaches this address to the profile it issues; sending it an
+    // empty string when we do know the buyer is a silent downgrade.
+    if (orderData && email) {
+      orderData.orderEmail = email;
     }
   }
 
@@ -242,7 +268,11 @@ export async function provisionEsim(paymentIntentId: string, email?: string): Pr
             // (the "Email me these details" button on the success page) looks
             // up by stored email, so without this update that endpoint
             // rejects every request with "Order not found".
-            ...(email && !orderData?.orderEmail ? { email } : {}),
+            //
+            // Gate on the *stored* value, not orderData.orderEmail — that
+            // field now carries the recovered address, so testing it would
+            // skip the write in exactly the case the backfill exists for.
+            ...(email && !storedEmail ? { email } : {}),
           });
         } catch (dbErr) {
           console.error('DB update failed after provisioning:', dbErr);

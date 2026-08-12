@@ -211,7 +211,9 @@
     "promo_placeholder": "Promo code",
     "promo_apply": "Apply",
     "promo_remove": "Remove",
-    "promo_invalid": "Invalid promo code"
+    "promo_invalid": "Invalid promo code",
+    "addToCart": "Add to cart",
+    "added": "Added"
   },
   "errors": {
     "generic": "Something went wrong. Try again or visit our Help page.",
@@ -248,7 +250,7 @@
     "summary": {
       "title": "Order summary",
       "subtotal": "Subtotal",
-      "discount": "Student discount (15%)",
+      "discount": "Discount",
       "vat": "VAT ({rate}%)",
       "vatCalculating": "Calculating...",
       "total": "Total"

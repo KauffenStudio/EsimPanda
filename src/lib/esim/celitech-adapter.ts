@@ -23,6 +23,16 @@ function mapStatus(raw: string | undefined): NormalizedPurchase['status'] {
   return 'pending';
 }
 
+/**
+ * Accepts a value only if it is an LPA activation URI (`LPA:1$smdp$matchingId`).
+ * Guards against Celitech's `activationCode` field, which holds a base64 PNG of
+ * the QR rather than the code itself. Returns '' for anything else, which the
+ * caller's empty-profile safeguard turns into a retry + hard failure.
+ */
+function asLpaUri(value: unknown): string {
+  return typeof value === 'string' && value.startsWith('LPA:1$') ? value : '';
+}
+
 async function buildQrDataUrl(manualActivationCode: string): Promise<string> {
   if (!manualActivationCode) return '';
   return QRCode.toDataURL(manualActivationCode, { errorCorrectionLevel: 'M', margin: 1, width: 320 });
@@ -78,7 +88,13 @@ export class CelitechAdapter implements ESIMProvider {
     const data = unwrap<any>(response);
     const first = Array.isArray(data) ? data[0] : data;
     const profile = first?.profile ?? first;
-    const manualActivationCode: string = profile?.manualActivationCode ?? profile?.activationCode ?? '';
+    // Only `manualActivationCode` carries the LPA URI. Celitech's
+    // `activationCode` field is a base64-encoded PNG of the QR image, so the
+    // old `?? profile.activationCode` fallback would have handed a megabyte of
+    // image data to the QR builder and to parseLpaUri — producing an
+    // unscannable QR and a blank SM-DP+ address, i.e. an eSIM the customer
+    // cannot install by either route. Take the code only when it looks like one.
+    const manualActivationCode: string = asLpaUri(profile?.manualActivationCode) || asLpaUri(profile?.activationCode);
     const activationQrBase64 = await buildQrDataUrl(manualActivationCode);
 
     return {

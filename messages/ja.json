@@ -211,7 +211,9 @@
     "promo_placeholder": "プロモコード",
     "promo_apply": "適用",
     "promo_remove": "削除",
-    "promo_invalid": "無効なプロモコード"
+    "promo_invalid": "無効なプロモコード",
+    "addToCart": "カートに追加",
+    "added": "追加しました"
   },
   "errors": {
     "generic": "エラーが発生しました。再試行するか、ヘルプページをご覧ください。",
@@ -248,7 +250,7 @@
     "summary": {
       "title": "注文概要",
       "subtotal": "小計",
-      "discount": "学生割引（15%）",
+      "discount": "割引",
       "vat": "消費税（{rate}%）",
       "vatCalculating": "計算中...",
       "total": "合計"
