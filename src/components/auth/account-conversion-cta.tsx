@@ -10,7 +10,6 @@ import { convertGuestToAccount } from '@/lib/auth/actions';
 import { useAuthStore } from '@/stores/auth';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { BambuVideo } from '@/components/bambu/bambu-video';
 import type { AuthResult } from '@/lib/auth/types';
 
 interface AccountConversionCTAProps {
@@ -59,7 +58,6 @@ export function AccountConversionCTA({ email }: AccountConversionCTAProps) {
         transition={{ type: 'spring', stiffness: 300, damping: 20 }}
         className="w-full rounded-[10px] p-6 text-center bg-accent-soft dark:bg-accent-soft-dark"
       >
-        <BambuVideo variant="success" size={80} className="mx-auto mb-3" />
         <div className="flex items-center justify-center gap-2 mb-1">
           <Check size={24} className="text-success dark:text-success-dark" />
           <span className="text-2xl font-bold text-success dark:text-success-dark">

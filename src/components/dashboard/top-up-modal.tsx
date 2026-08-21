@@ -312,7 +312,6 @@ export function TopUpModal() {
               {/* Success State */}
               {status === 'success' && (
                 <div className="flex flex-col items-center py-8 gap-4">
-                  <BambuVideo variant="success" size={80} />
                   <p className="text-lg font-bold text-gray-900 dark:text-gray-100">
                     {t('dashboard.data_added')}
                   </p>
@@ -329,7 +328,6 @@ export function TopUpModal() {
               {/* Error State */}
               {status === 'error' && (
                 <div className="flex flex-col items-center py-8 gap-4">
-                  <BambuVideo variant="error" size={80} />
                   <p className="text-base text-gray-600 dark:text-gray-400">
                     {errorMessage || t('dashboard.top_up_error')}
                   </p>

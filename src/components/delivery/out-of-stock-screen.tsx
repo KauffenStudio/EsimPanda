@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { motion } from 'motion/react';
 import { useLocale, useTranslations } from 'next-intl';
-import { BambuVideo } from '@/components/bambu/bambu-video';
 
 export function OutOfStockScreen() {
   const t = useTranslations('delivery.outOfStock');
@@ -16,8 +15,6 @@ export function OutOfStockScreen() {
       transition={{ duration: 0.3, ease: 'easeOut' }}
       className="flex flex-col items-center space-y-4 text-center"
     >
-      <BambuVideo variant="error" size={120} />
-
       <div className="space-y-2">
         <h3 className="text-lg font-bold text-primary dark:text-gray-100">
           {t('heading')}

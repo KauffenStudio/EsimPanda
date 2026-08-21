@@ -50,3 +50,23 @@
   --shadow-card-hover-dark: 0 8px 24px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
+
+/* Hero mascot entrance.
+ *
+ * Deliberately CSS, not motion/react: a `motion.div` with `initial={{opacity:0}}`
+ * server-renders as inline `opacity:0`, so the panda (and its poster frame) stays
+ * invisible until the JS bundle downloads and hydrates. Above the fold that reads
+ * as "the animation takes forever to appear". A keyframe runs on first paint with
+ * no JS involved. */
+@keyframes hero-mascot-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.hero-mascot-in {
+  animation: hero-mascot-in 0.8s cubic-bezier(0.32, 0.72, 0, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-mascot-in { animation: none; opacity: 1; transform: none; }
+}

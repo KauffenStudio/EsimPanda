@@ -8,7 +8,6 @@ import {
   getModelsForBrand,
   NOT_LISTED_MODEL,
 } from '@/hooks/use-device-compat';
-import { BambuVideo } from '@/components/bambu/bambu-video';
 import { Button } from '@/components/ui/button';
 
 interface DeviceCheckerProps {
@@ -94,14 +93,12 @@ export function DeviceChecker({ onDismiss }: DeviceCheckerProps = {}) {
         >
           {isCompatible ? (
             <>
-              <BambuVideo variant="success" size={120} />
               <p className="text-success font-medium">
                 {t('deviceCompatible', { brand: brand!, model: model! })}
               </p>
             </>
           ) : (
             <>
-              <BambuVideo variant="error" size={120} />
               <p className="text-destructive font-medium">
                 {model === NOT_LISTED_MODEL
                   ? t('noDeviceResult')
