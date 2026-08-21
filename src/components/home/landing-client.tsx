@@ -13,13 +13,13 @@ export function LandingClient() {
 
   return (
     <div className="flex flex-col items-center px-4 pt-6 md:pt-10">
-      {/* Panda hero — video faded into page background over a branded aura */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.8, ease: [0.32, 0.72, 0, 1] }}
-        className="relative w-full flex items-center justify-center h-[220px] md:h-[300px]"
-      >
+      {/* Panda hero — video faded into page background over a branded aura.
+       *
+       * The entrance is CSS (.hero-mascot-in), not motion/react. motion's
+       * `initial` server-renders as inline opacity:0, which kept the panda and
+       * its poster hidden until hydration finished — the slowest thing on the
+       * page gating the most prominent thing on the page. */}
+      <div className="hero-mascot-in relative w-full flex items-center justify-center h-[220px] md:h-[300px]">
         {/* Soft accent aura behind the panda — turns the mask falloff into intentional light */}
         <div
           aria-hidden="true"
@@ -44,7 +44,7 @@ export function LandingClient() {
             className="w-full h-full"
           />
         </div>
-      </motion.div>
+      </div>
 
       <motion.div
         initial={{ opacity: 0, y: 24, filter: 'blur(8px)' }}

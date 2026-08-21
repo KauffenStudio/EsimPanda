@@ -2,7 +2,7 @@
 
 import { useRef, useEffect, useState } from 'react';
 
-type BambuVariant = 'splash' | 'loading' | 'success' | 'error' | 'empty' | 'browse' | 'preparing' | 'welcome' | 'hero-intro' | 'hero-panda';
+type BambuVariant = 'splash' | 'loading' | 'hero-panda';
 
 interface BambuVideoProps {
   variant: BambuVariant;
@@ -18,16 +18,13 @@ interface BambuVideoProps {
   onEnded?: () => void;
 }
 
+// Only variants whose asset actually ships. Seven more (success, error, empty,
+// browse, preparing, welcome, hero-intro) used to live here pointing at files
+// that were never added — every one 404'd and silently rendered nothing across
+// 18 call sites. Re-add a variant only together with its clip.
 const videoMap: Record<BambuVariant, string> = {
   splash: '/bambu/panda-splash.mp4',
   loading: '/bambu/loading.mp4',
-  success: '/bambu/success.mp4',
-  error: '/bambu/error.mp4',
-  empty: '/bambu/empty.mp4',
-  browse: '/bambu/browse.mp4',
-  preparing: '/bambu/preparing.mp4',
-  welcome: '/bambu/welcome.mp4',
-  'hero-intro': '/bambu/hero-intro.webm',
   'hero-panda': '/bambu/panda-front.mp4',
 };
 
