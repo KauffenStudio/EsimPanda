@@ -18,6 +18,14 @@ export function BottomNav() {
   const locale = useLocale();
   const t = useTranslations();
 
+  // Checkout owns the bottom of the viewport: the pay bar is `fixed bottom-0`
+  // at z-30 and this nav is fixed at the same edge at z-50, so the nav sat on
+  // top of the Pay button and swallowed every tap aimed at it — the tap landed
+  // on /dashboard instead. No scroll position separated them, which made card
+  // payment impossible on mobile. Checkout also should not offer four exits
+  // mid-payment, so the nav is dropped from the route entirely.
+  if ((pathname ?? '').includes('/checkout')) return null;
+
   const handleTap = () => {
     if (typeof navigator !== 'undefined' && navigator.vibrate) {
       navigator.vibrate(10);
