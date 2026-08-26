@@ -2,6 +2,7 @@ import { createServiceClient } from '@/lib/supabase/service';
 
 export interface CreateOrderParams {
   user_id?: string;
+  buyer_country?: string;
   email: string;
   plan_id: string;
   stripe_payment_intent_id: string;
@@ -55,6 +56,7 @@ export async function createOrder(params: CreateOrderParams): Promise<OrderRow |
       currency: params.currency || 'USD',
       coupon_code: params.coupon_code || null,
       discount_cents: params.discount_cents || 0,
+      buyer_country: params.buyer_country || null,
       status: 'pending',
     })
     .select()

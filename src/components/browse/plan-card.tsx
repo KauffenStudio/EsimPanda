@@ -1,15 +1,14 @@
 'use client';
 
-import { useState } from 'react';
-import { useTranslations } from 'next-intl';
-import { Check, Plus } from 'lucide-react';
+import { useTranslations, useLocale } from 'next-intl';
+import { useRouter } from 'next/navigation';
+import { ArrowRight } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { useCartStore } from '@/stores/cart';
 import { useCurrencyStore } from '@/stores/currency';
 import { formatPrice } from '@/lib/currency/rates';
 import { getOriginalPrice, getDiscountPercent } from '@/lib/plans/pricing-display';
-import type { Plan } from '@/lib/db/destinations';
+import { useVatRate } from '@/lib/geo/use-vat-rate';
 
 interface PlanCardProps {
   id: string;
@@ -35,38 +34,34 @@ export function PlanCard({
   isMostPopular,
 }: PlanCardProps) {
   const t = useTranslations();
-  const addItem = useCartStore((state) => state.addItem);
+  const locale = useLocale();
+  const router = useRouter();
   const currency = useCurrencyStore((state) => state.currency);
-  const [added, setAdded] = useState(false);
 
-  // PlanCard keeps its flat-props API and reconstructs a minimal Plan object
-  // here from the flat props for the cart store, which is Plan-typed.
-  const plan: Plan = {
-    id,
-    destination_id: '',
-    wholesale_plan_id: '',
-    provider: 'celitech',
-    name: `${data_gb}GB · ${formatDuration(duration_days)}`,
-    data_gb,
-    duration_days,
-    wholesale_price_cents: 0,
-    retail_price_cents,
-    currency: 'USD',
-    is_active: true,
-  };
+  // The card used to show the pre-tax price while checkout added VAT at the
+  // final step — a $9.99 plan billing $12.29. Unexpected cost at checkout is
+  // the most cited reason people abandon a purchase, so the card now shows
+  // what the pay button will show.
+  const vatRate = useVatRate();
+
+  // Price actually charged, so the card and the pay button agree.
+  const displayPriceCents = Math.round(retail_price_cents * (1 + vatRate / 100));
 
   const planLabel = `${data_gb}GB · ${formatDuration(duration_days)}`;
+
+  // Straight to checkout. The cart used to sit here, and it only ever handed
+  // `items[0]` to a checkout route that accepts a single plan — so a returning
+  // visitor with a stale persisted item was charged for the wrong plan. A
+  // sub-$20 instantly-delivered item nobody bundles does not need a basket.
   const handleCardClick = () => {
-    addItem(plan);
-    setAdded(true);
-    window.setTimeout(() => setAdded(false), 1600);
+    router.push(`/${locale}/checkout?plan=${id}`);
   };
 
   return (
     <Card
       variant="flat"
       onClick={handleCardClick}
-      aria-label={added ? `${planLabel} — ${t('cart.added')}` : `${t('cart.addToCart')} — ${planLabel}`}
+      aria-label={`${t('cart.buyNow')} — ${planLabel}`}
       className="relative p-4 cursor-pointer transition-colors hover:border-accent/40 dark:hover:border-accent/40"
     >
       <div className="flex items-center justify-between">
@@ -101,31 +96,25 @@ export function PlanCard({
               </span>
             )}
             <span className="text-xl font-bold text-accent">
-              {formatPrice(retail_price_cents, currency)}
+              {formatPrice(displayPriceCents, currency)}
             </span>
           </div>
+          {vatRate > 0 && (
+            <span className="text-[10px] text-gray-400 mt-0.5">
+              {t('browse.vatIncluded')}
+            </span>
+          )}
         </div>
       </div>
 
-      {/* Explicit purchase affordance — the whole card is the button, but users
-          need to see the action and get confirmation that it registered. */}
+      {/* Explicit purchase affordance — the whole card is the button, but the
+          action has to be visible for the card to read as buyable. */}
       <div
         aria-hidden="true"
-        className={`mt-3 pt-3 border-t border-border dark:border-border-dark flex items-center justify-center gap-1.5 text-sm font-semibold transition-colors ${
-          added ? 'text-success' : 'text-accent'
-        }`}
+        className="mt-3 pt-3 border-t border-border dark:border-border-dark flex items-center justify-center gap-1.5 text-sm font-semibold text-accent"
       >
-        {added ? (
-          <>
-            <Check size={16} className="shrink-0" />
-            {t('cart.added')}
-          </>
-        ) : (
-          <>
-            <Plus size={16} className="shrink-0" />
-            {t('cart.addToCart')}
-          </>
-        )}
+        {t('cart.buyNow')}
+        <ArrowRight size={16} className="shrink-0" />
       </div>
     </Card>
   );

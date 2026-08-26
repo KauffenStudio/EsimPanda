@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { useCheckoutStore } from '@/stores/checkout';
 import { useCurrencyStore } from '@/stores/currency';
 import { formatPrice } from '@/lib/currency/rates';
+import { isoToFlag } from '@/lib/i18n/flag';
 import type { Plan } from '@/lib/db/destinations';
 
 interface StickyOrderBarProps {
@@ -45,8 +46,18 @@ export function StickyOrderBar({ plan, observeRef }: StickyOrderBarProps) {
           className="fixed top-16 left-0 right-0 z-40 bg-white/95 dark:bg-background-dark/95 backdrop-blur-sm border-b border-gray-100 dark:border-border-dark px-4 py-2 md:hidden"
         >
           <div className="flex items-center justify-between max-w-[480px] mx-auto">
+            {/* Names the destination, like the order summary — this bar is the
+                only order context visible once the buyer scrolls to the card
+                fields, and "5GB / 30 days" alone does not say which country. */}
             <span className="text-sm font-medium text-gray-700 dark:text-gray-300 truncate">
-              {plan.name}
+              {plan.destination_name ? (
+                <>
+                  <span aria-hidden="true">{isoToFlag(plan.destination_iso)}</span>{' '}
+                  {plan.destination_name} · {plan.name}
+                </>
+              ) : (
+                plan.name
+              )}
             </span>
             <span className="text-sm font-bold text-gray-900 dark:text-gray-100">
               {formatPrice(displayTotal, currency)}

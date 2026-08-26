@@ -12,6 +12,7 @@ import { DestinationHero } from '@/components/seo/destination-hero';
 import { FAQSection } from '@/components/seo/faq-section';
 import { PlanCard } from '@/components/browse/plan-card';
 import { PageCurrencyBar } from '@/components/layout/page-currency-bar';
+import { LiveActivity } from '@/components/activity/live-activity';
 
 // Hero buckets — must match `region_bucket` (the curation column), not `region`
 // (the Celitech classifier, which is only ever 'country' | 'region').
@@ -73,6 +74,11 @@ export default async function DestinationPage({ params }: Props) {
       {taggedPlans.map((plan) => (
         <JsonLd key={plan.id} data={buildProductJsonLd(plan, displayName, destination.image_url ?? undefined)} />
       ))}
+
+      {/* Records this view and shows the live activity feed for this
+          destination. Everything it displays comes from real orders and real
+          recorded views — see lib/activity/feed.ts. */}
+      <LiveActivity destinationId={destination.id} />
 
       <Breadcrumb locale={locale} destinationName={displayName} />
 

@@ -119,7 +119,34 @@ describe('getPlanById', () => {
     expect(await getPlanById('nope')).toBeNull();
 
     setQueryResults({ data: planRow(), error: null });
-    expect(await getPlanById('plan-1')).toEqual(planRow());
+    // getPlanById joins `destinations` so checkout can name the country being
+    // bought. A row with no joined destination still resolves, with the three
+    // display fields explicitly null.
+    expect(await getPlanById('plan-1')).toEqual({
+      ...planRow(),
+      destination_name: null,
+      destination_slug: null,
+      destination_iso: null,
+    });
+  });
+
+  it('lifts the joined destination onto the plan and drops the nested row', async () => {
+    const { getPlanById } = await import('../destinations');
+
+    setQueryResults({
+      data: {
+        ...planRow(),
+        destinations: { name: 'Spain', slug: 'spain', iso_code: 'ES' },
+      },
+      error: null,
+    });
+
+    expect(await getPlanById('plan-1')).toEqual({
+      ...planRow(),
+      destination_name: 'Spain',
+      destination_slug: 'spain',
+      destination_iso: 'ES',
+    });
   });
 });
 

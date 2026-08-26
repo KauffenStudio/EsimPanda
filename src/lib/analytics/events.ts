@@ -47,21 +47,108 @@ export const ANALYTICS_EVENTS = {
 
 export type AnalyticsEvent = (typeof ANALYTICS_EVENTS)[keyof typeof ANALYTICS_EVENTS];
 
+declare global {
+  interface Window {
+    dataLayer?: unknown[];
+    gtag?: (...args: unknown[]) => void;
+  }
+}
+
 /**
- * Track an analytics event. Currently logs to console in development.
- * Replace the implementation body with your analytics provider
- * (PostHog, Mixpanel, GA4, etc.) when ready.
+ * Push an event into gtag/dataLayer.
+ *
+ * `gtag` is only defined once the Google tag script has loaded, which is
+ * `afterInteractive` — early events (a checkout page view fired on mount) can
+ * beat it. Pushing straight onto `dataLayer` instead of calling `window.gtag`
+ * means those events queue and replay when the tag initialises rather than
+ * being dropped on the floor.
+ */
+function push(...args: unknown[]): void {
+  if (typeof window === 'undefined') return;
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push(args);
+}
+
+/**
+ * Track an analytics event. Sends to GA4 / Google Ads via gtag.
+ *
+ * This was a no-op stub for the whole of the first ad campaign: every call
+ * site below was already wired up, but nothing left the browser, so Google Ads
+ * optimised against zero signal and the funnel was invisible.
  */
 export function trackEvent(event: AnalyticsEvent, properties?: EventProperties): void {
   if (typeof window === 'undefined') return;
 
-  // Development logging
   if (process.env.NODE_ENV === 'development') {
     console.log(`[Analytics] ${event}`, properties || '');
   }
 
-  // TODO: Replace with your analytics provider
-  // Example: posthog.capture(event, properties);
-  // Example: mixpanel.track(event, properties);
-  // Example: gtag('event', event, properties);
+  push('event', event, properties ?? {});
+}
+
+/**
+ * Fire the purchase conversion.
+ *
+ * Sends two events on purpose:
+ *  - GA4 `purchase`, the standard ecommerce event, for reporting and for
+ *    Google Ads accounts that import GA4 conversions.
+ *  - a Google Ads `conversion` hit with send_to = "<ads-id>/<label>", which is
+ *    what smart bidding actually optimises against.
+ *
+ * `transaction_id` is the Stripe payment intent id so Google de-duplicates if
+ * the buyer refreshes the success page — without it a reload counts as a
+ * second sale and skews bidding.
+ */
+export function trackPurchase(input: {
+  transactionId: string;
+  valueCents: number;
+  currency: string;
+  planId?: string;
+  planName?: string;
+  destination?: string;
+}): void {
+  if (typeof window === 'undefined') return;
+
+  const value = Number((input.valueCents / 100).toFixed(2));
+
+  push('event', 'purchase', {
+    transaction_id: input.transactionId,
+    value,
+    currency: input.currency,
+    items: [
+      {
+        item_id: input.planId,
+        item_name: input.planName,
+        item_category: input.destination,
+        price: value,
+        quantity: 1,
+      },
+    ],
+  });
+
+  const adsId = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID;
+  const label = process.env.NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_LABEL;
+  if (adsId && label) {
+    push('event', 'conversion', {
+      send_to: `${adsId}/${label}`,
+      transaction_id: input.transactionId,
+      value,
+      currency: input.currency,
+    });
+  }
+}
+
+/**
+ * Grant or deny consent after the visitor answers the banner. Consent Mode
+ * defaults to denied in the EEA/UK (see google-tag.tsx), so without this call
+ * no conversion from the campaign's core market is ever observed.
+ */
+export function updateConsent(granted: boolean): void {
+  const state = granted ? 'granted' : 'denied';
+  push('consent', 'update', {
+    ad_storage: state,
+    ad_user_data: state,
+    ad_personalization: state,
+    analytics_storage: state,
+  });
 }

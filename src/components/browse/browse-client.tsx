@@ -25,6 +25,7 @@ import { RegionalPlanCard } from './regional-plan-card';
 import { BrowseErrorBanner } from './browse-error-banner';
 import { ComparisonBar } from './comparison-bar';
 import { ComparisonSheet } from './comparison-sheet';
+import { LiveActivity } from '@/components/activity/live-activity';
 
 const MemoizedDestinationCard = memo(DestinationCard);
 
@@ -219,6 +220,7 @@ export function BrowseClient({
       {catalog.error && <BrowseErrorBanner onRetry={handleRetry} />}
 
       <DestinationSearch ref={searchInputRef} />
+      <LiveActivity />
       <RegionalPlanCard regionalPlans={catalog.regionalPlans} />
 
       {/* Popular in Europe — curated featured row. Hidden while searching so

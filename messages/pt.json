@@ -126,7 +126,8 @@
     "planUnavailableNotice": {
       "message": "Esse plano já não está disponível — aqui está o catálogo atual.",
       "dismiss": "Dispensar"
-    }
+    },
+    "vatIncluded": "IVA incluído"
   },
   "dashboard": {
     "title": "Meus eSIMs",
@@ -213,7 +214,8 @@
     "promo_remove": "Remover",
     "promo_invalid": "Código promocional inválido",
     "addToCart": "Adicionar ao carrinho",
-    "added": "Adicionado"
+    "added": "Adicionado",
+    "buyNow": "Obter este eSIM"
   },
   "errors": {
     "generic": "Algo correu mal. Tente novamente ou visite a nossa página de Ajuda.",
@@ -587,5 +589,22 @@
     "offline_last_updated": "Última atualização {time}",
     "sync_complete": "Dados atualizados",
     "sw_error": "Modo offline indisponível — tente atualizar a página."
+  },
+  "consent": {
+    "title": "Cookies de medição",
+    "body": "Gostávamos de medir que anúncios trazem viajantes até aqui. Nada é usado para o identificar.",
+    "accept": "Aceitar",
+    "decline": "Recusar",
+    "privacy": "Política de privacidade"
+  },
+  "activity": {
+    "purchase": "Plano {data}GB {destination} comprado",
+    "purchaseFrom": "Alguém em {country} comprou um plano {data}GB {destination}",
+    "viewingNow": "{count} pessoas estão a ver {destination} agora",
+    "viewedToday": "{count} pessoas viram {destination} hoje",
+    "boughtThisWeek": "{count} planos {destination} comprados esta semana",
+    "minutesAgo": "há {minutes} min",
+    "liveNow": "Em direto",
+    "dismiss": "Fechar"
   }
 }

@@ -7,7 +7,6 @@ import { ThemeToggle } from './theme-toggle';
 import { LanguageSwitcher } from '@/components/layout/language-switcher';
 import { CurrencySwitcher } from '@/components/layout/currency-switcher';
 import { UserMenu } from '@/components/auth/user-menu';
-import { CartIcon } from '@/components/cart/cart-icon';
 
 const navLinks = [
   { path: '', labelKey: 'nav.home' },
@@ -54,7 +53,6 @@ export function Header() {
         <div className="flex items-center gap-1.5">
           <LanguageSwitcher />
           <ThemeToggle />
-          <CartIcon />
           {/* Desktop only: currency, user menu */}
           <div className="hidden md:flex items-center gap-1.5">
             <CurrencySwitcher />

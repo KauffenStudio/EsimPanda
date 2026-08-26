@@ -13,8 +13,9 @@ import { AuthProvider } from '@/components/auth/auth-provider';
 import { PushManager } from '@/components/pwa/push-manager';
 import { OfflineIndicator } from '@/components/pwa/offline-indicator';
 import { SwRegister } from '@/components/pwa/sw-register';
-import { CartDrawer } from '@/components/cart/cart-drawer';
 import { JsonLd } from '@/components/seo/json-ld';
+import { GoogleTag } from '@/components/analytics/google-tag';
+import { ConsentBanner } from '@/components/analytics/consent-banner';
 import { buildOrganizationJsonLd, buildWebsiteJsonLd } from '@/lib/seo/structured-data';
 import { ogLocale } from '@/lib/seo/meta-templates';
 import { createClient } from '@/lib/supabase/server';
@@ -106,6 +107,7 @@ export default async function LocaleLayout({
     <html lang={locale} className={outfit.variable}>
       <body className="font-sans antialiased bg-background dark:bg-background-dark text-primary dark:text-gray-100 transition-colors">
         <script dangerouslySetInnerHTML={{ __html: darkModeHydrationScript }} />
+        <GoogleTag />
         <JsonLd data={buildOrganizationJsonLd()} />
         <JsonLd data={buildWebsiteJsonLd(locale)} />
         <NextIntlClientProvider locale={locale} messages={messages}>
@@ -118,9 +120,9 @@ export default async function LocaleLayout({
               <LegalFooter />
             </main>
             <BottomNav />
+            <ConsentBanner />
             <Toaster />
             <PushManager />
-            <CartDrawer />
           </AuthProvider>
         </NextIntlClientProvider>
       </body>

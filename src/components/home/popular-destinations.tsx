@@ -1,15 +1,7 @@
 import { getTranslations } from 'next-intl/server';
 import Link from 'next/link';
 import { localizedDestinationName } from '@/lib/i18n/destination-name';
-
-function isoToFlag(isoCode: string): string {
-  if (isoCode.length !== 2) return '🌍';
-  return isoCode
-    .toUpperCase()
-    .split('')
-    .map((c) => String.fromCodePoint(127397 + c.charCodeAt(0)))
-    .join('');
-}
+import { isoToFlag } from '@/lib/i18n/flag';
 
 export type PopularDestination = {
   slug: string;
