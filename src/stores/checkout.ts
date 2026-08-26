@@ -8,6 +8,8 @@ interface CheckoutState {
   discount_cents: number;
   subtotal_cents: number;
   tax_cents: number;
+  /** VAT percentage the API resolved from the buyer's country. 0 outside the EU. */
+  tax_rate: number;
   total_cents: number;
   payment_status: PaymentStatus;
   error_message: string | null;
@@ -17,7 +19,7 @@ interface CheckoutState {
   setEmail: (email: string) => void;
   applyCoupon: (code: string, discount: number, newSubtotal: number, newTax: number, newTotal: number) => void;
   removeCoupon: () => void;
-  setPricing: (subtotal: number, tax: number, total: number, discount: number) => void;
+  setPricing: (subtotal: number, tax: number, total: number, discount: number, taxRate?: number) => void;
   setPaymentStatus: (status: PaymentStatus, error?: string) => void;
   setClientSecret: (secret: string) => void;
   reset: () => void;
@@ -30,6 +32,7 @@ const initialState = {
   discount_cents: 0,
   subtotal_cents: 0,
   tax_cents: 0,
+  tax_rate: 0,
   total_cents: 0,
   payment_status: 'idle' as PaymentStatus,
   error_message: null as string | null,
@@ -58,10 +61,11 @@ export const useCheckoutStore = create<CheckoutState>((set) => ({
       discount_cents: 0,
     }),
 
-  setPricing: (subtotal, tax, total, discount) =>
+  setPricing: (subtotal, tax, total, discount, taxRate = 0) =>
     set({
       subtotal_cents: subtotal,
       tax_cents: tax,
+      tax_rate: taxRate,
       total_cents: total,
       discount_cents: discount,
     }),

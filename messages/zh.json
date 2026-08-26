@@ -126,7 +126,8 @@
     "planUnavailableNotice": {
       "message": "该套餐已不再提供，以下是当前的可选套餐。",
       "dismiss": "关闭"
-    }
+    },
+    "vatIncluded": "含增值税"
   },
   "dashboard": {
     "title": "我的eSIM",
@@ -213,7 +214,8 @@
     "promo_remove": "移除",
     "promo_invalid": "无效的优惠码",
     "addToCart": "加入购物车",
-    "added": "已加入"
+    "added": "已加入",
+    "buyNow": "获取此 eSIM"
   },
   "errors": {
     "generic": "出错了。请重试或访问我们的帮助页面。",
@@ -587,5 +589,22 @@
     "offline_last_updated": "最近更新 {time}",
     "sync_complete": "数据已刷新",
     "sw_error": "离线模式不可用——请尝试刷新页面。"
+  },
+  "consent": {
+    "title": "用于统计的 Cookie",
+    "body": "我们希望了解哪些广告为旅行者带来了访问。这些数据不会用于识别您的身份。",
+    "accept": "接受",
+    "decline": "拒绝",
+    "privacy": "隐私政策"
+  },
+  "activity": {
+    "purchase": "已购买 {destination} {data}GB 套餐",
+    "purchaseFrom": "{country} 的用户购买了 {destination} {data}GB 套餐",
+    "viewingNow": "当前有 {count} 人正在浏览 {destination}",
+    "viewedToday": "今天有 {count} 人浏览了 {destination}",
+    "boughtThisWeek": "本周售出 {count} 份 {destination} 套餐",
+    "minutesAgo": "{minutes} 分钟前",
+    "liveNow": "实时",
+    "dismiss": "关闭"
   }
 }

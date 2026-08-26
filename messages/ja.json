@@ -126,7 +126,8 @@
     "planUnavailableNotice": {
       "message": "そのプランは現在ご利用いただけません。最新のカタログをご覧ください。",
       "dismiss": "閉じる"
-    }
+    },
+    "vatIncluded": "税込"
   },
   "dashboard": {
     "title": "マイeSIM",
@@ -213,7 +214,8 @@
     "promo_remove": "削除",
     "promo_invalid": "無効なプロモコード",
     "addToCart": "カートに追加",
-    "added": "追加しました"
+    "added": "追加しました",
+    "buyNow": "このeSIMを購入"
   },
   "errors": {
     "generic": "エラーが発生しました。再試行するか、ヘルプページをご覧ください。",
@@ -587,5 +589,22 @@
     "offline_last_updated": "最終更新 {time}",
     "sync_complete": "データが更新されました",
     "sw_error": "オフラインモードは利用できません——ページを更新してみてください。"
+  },
+  "consent": {
+    "title": "計測用Cookie",
+    "body": "どの広告から旅行者が訪れたかを計測させてください。個人の特定には使用しません。",
+    "accept": "同意する",
+    "decline": "拒否する",
+    "privacy": "プライバシーポリシー"
+  },
+  "activity": {
+    "purchase": "{destination} {data}GBプランが購入されました",
+    "purchaseFrom": "{country}のお客様が{destination} {data}GBプランを購入",
+    "viewingNow": "現在{count}人が{destination}を閲覧中",
+    "viewedToday": "本日{count}人が{destination}を閲覧",
+    "boughtThisWeek": "今週{destination}プランが{count}件購入",
+    "minutesAgo": "{minutes}分前",
+    "liveNow": "リアルタイム",
+    "dismiss": "閉じる"
   }
 }

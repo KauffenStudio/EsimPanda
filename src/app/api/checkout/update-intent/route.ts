@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { mockCreateIntent } from '@/lib/mock-data/checkout';
 import { calculatePrice } from '@/lib/checkout/pricing';
 import { calculateTax } from '@/lib/checkout/tax';
+import { getCountry } from '@/lib/geo/country';
 import { IS_MOCK } from '@/lib/config/mode';
 import { type CurrencyCode } from '@/lib/currency/rates';
 
@@ -19,9 +20,14 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'plan_id is required' }, { status: 400 });
     }
 
+    // Tax country comes from the edge geo header, not a hardcoded 'PT'. See
+    // create-intent for why: every customer worldwide was billed Portuguese
+    // VAT. Unknown location means no VAT.
+    const taxCountry = getCountry(request.headers) ?? '';
+
     // --- Mock mode ---
     if (IS_MOCK) {
-      const result = await mockCreateIntent(plan_id, coupon_code, 'PT', currency ?? 'USD');
+      const result = await mockCreateIntent(plan_id, coupon_code, taxCountry, currency ?? 'USD');
       if (!result) {
         return NextResponse.json({ error: 'Plan not found' }, { status: 404 });
       }
@@ -34,7 +40,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Plan not found' }, { status: 404 });
     }
 
-    const tax = calculateTax(pricing.subtotal_cents, 'PT');
+    const tax = calculateTax(pricing.subtotal_cents, taxCountry);
 
     if (payment_intent_id) {
       const { getStripeServer } = await import('@/lib/stripe/server');
@@ -52,6 +58,7 @@ export async function POST(request: Request) {
     return NextResponse.json({
       amount: tax.total_cents,
       tax_amount: tax.tax_amount_cents,
+      tax_rate: tax.tax_rate,
       subtotal: pricing.subtotal_cents,
       discount: pricing.discount_cents,
     });

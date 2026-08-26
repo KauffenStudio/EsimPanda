@@ -50,6 +50,11 @@ export interface Plan {
   synced_at?: string;
   created_at?: string;
   updated_at?: string;
+  // Populated by getPlanById's join so checkout can name the destination.
+  // Null when the plan row has no matching destination.
+  destination_name?: string | null;
+  destination_slug?: string | null;
+  destination_iso?: string | null;
 }
 
 // Browse-grid destination enriched with per-destination pricing computed
@@ -149,16 +154,31 @@ export const getDestinationBySlug = cache(
 /** Single plan by id. null (not throw) when 0 rows. Reused by Phase 12. */
 export async function getPlanById(planId: string): Promise<Plan | null> {
   const supabase = catalogClient();
+  // Joins the destination so checkout can name what is being bought. Without
+  // it the order summary printed the plan name twice ("2GB / 30 days",
+  // "2GB / 30 days") and never said Spain — a buyer at the payment step could
+  // not confirm which country's eSIM they were about to pay for.
   const { data, error } = await supabase
     .from('plans')
-    .select('*')
+    .select('*, destinations(name, slug, iso_code)')
     .eq('id', planId)
     .maybeSingle();
   if (error) {
     console.error('getPlanById error:', error);
     return null;
   }
-  return data;
+  if (!data) return null;
+
+  const { destinations, ...plan } = data as Plan & {
+    destinations: { name: string; slug: string; iso_code: string } | null;
+  };
+
+  return {
+    ...plan,
+    destination_name: destinations?.name ?? null,
+    destination_slug: destinations?.slug ?? null,
+    destination_iso: destinations?.iso_code ?? null,
+  };
 }
 
 /**

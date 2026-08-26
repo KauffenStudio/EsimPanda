@@ -29,7 +29,11 @@ interface CartState {
  * recoverable → return a clean empty cart. Silent — no toast, no notice.
  */
 export function migrateCart(persistedState: unknown, version: number) {
-  if (version < 2) {
+  // v3: the cart was removed from the purchase path — plan cards go straight
+  // to checkout. Any persisted v2 cart is a stale basket from before that
+  // change (it never expired), and it is exactly what caused buyers to be
+  // charged for a plan they had chosen days earlier. Drop it.
+  if (version < 3) {
     return { items: [], coupon_code: null, discount_percent: 0 };
   }
   return persistedState as CartState;
@@ -72,7 +76,7 @@ export const useCartStore = create<CartState>()(
     }),
     {
       name: 'esim-panda-cart',
-      version: 2,
+      version: 3,
       migrate: migrateCart,
       partialize: (state) => ({
         items: state.items,

@@ -9,18 +9,11 @@ import { toast } from 'sonner';
 import { QrCodeDisplay } from '@/components/delivery/qr-code-display';
 import { resendDeliveryEmail } from '@/lib/dashboard/actions';
 import type { PurchaseRecord } from '@/lib/dashboard/types';
+import { isoToFlag } from '@/lib/i18n/flag';
 
 interface PurchaseHistoryRowProps {
   purchase: PurchaseRecord;
   onResendEmail: (orderId: string) => void;
-}
-
-function isoToFlag(iso: string): string {
-  return iso
-    .toUpperCase()
-    .split('')
-    .map((c) => String.fromCodePoint(0x1f1e6 + c.charCodeAt(0) - 65))
-    .join('');
 }
 
 export function PurchaseHistoryRow({ purchase, onResendEmail }: PurchaseHistoryRowProps) {

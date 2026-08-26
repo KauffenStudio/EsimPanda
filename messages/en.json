@@ -126,7 +126,8 @@
     "planUnavailableNotice": {
       "message": "That plan is no longer available — here is the current catalog.",
       "dismiss": "Dismiss"
-    }
+    },
+    "vatIncluded": "VAT included"
   },
   "dashboard": {
     "title": "My eSIMs",
@@ -213,7 +214,8 @@
     "promo_remove": "Remove",
     "promo_invalid": "Invalid promo code",
     "addToCart": "Add to cart",
-    "added": "Added"
+    "added": "Added",
+    "buyNow": "Get this eSIM"
   },
   "errors": {
     "generic": "Something went wrong. Try again or visit our Help page.",
@@ -587,5 +589,22 @@
     "offline_last_updated": "Last updated {time}",
     "sync_complete": "Data refreshed",
     "sw_error": "Offline mode unavailable — try refreshing the page."
+  },
+  "consent": {
+    "title": "Cookies for measurement",
+    "body": "We'd like to measure which ads bring travellers here. Nothing is used to identify you.",
+    "accept": "Accept",
+    "decline": "Decline",
+    "privacy": "Privacy policy"
+  },
+  "activity": {
+    "purchase": "{data}GB {destination} plan bought",
+    "purchaseFrom": "Someone in {country} bought a {data}GB {destination} plan",
+    "viewingNow": "{count} people are viewing {destination} right now",
+    "viewedToday": "{count} people looked at {destination} today",
+    "boughtThisWeek": "{count} {destination} plans bought this week",
+    "minutesAgo": "{minutes} min ago",
+    "liveNow": "Live now",
+    "dismiss": "Dismiss"
   }
 }

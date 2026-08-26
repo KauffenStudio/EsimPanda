@@ -2,6 +2,7 @@ import createMiddleware from 'next-intl/middleware';
 import { routing } from './i18n/routing';
 import { updateSession } from './lib/supabase/middleware';
 import { NextResponse, type NextRequest } from 'next/server';
+import { getCountry } from './lib/geo/country';
 
 const handleI18nRouting = createMiddleware(routing);
 
@@ -70,7 +71,21 @@ export async function middleware(request: NextRequest) {
   // 2. Refresh Supabase auth session (writes cookies to the same response)
   await updateSession(request, response);
 
-  // 3. Protect dashboard routes (redirect unauthenticated users to login)
+  // 3. Publish the edge-resolved country to the client. The destination pages
+  // are statically generated (generateStaticParams), so they cannot read
+  // request headers themselves — without this they would have to become
+  // dynamic just to know whether VAT applies. A cookie lets them stay static
+  // and still price correctly, and gives the consent banner its region.
+  const country = getCountry(request.headers);
+  if (country) {
+    response.cookies.set('esim-country', country, {
+      path: '/',
+      maxAge: 60 * 60 * 24,
+      sameSite: 'lax',
+    });
+  }
+
+  // 4. Protect dashboard routes (redirect unauthenticated users to login)
   if (isProtectedPath(pathname)) {
     // Check for Supabase auth session cookie
     const hasSession = request.cookies.getAll().some(

@@ -88,7 +88,7 @@ export function CheckoutPage({ plan, couponFromUrl }: CheckoutPageProps) {
         const data = await res.json();
 
         setClientSecret(data.client_secret);
-        setPricing(data.subtotal, data.tax_amount, data.amount, data.discount);
+        setPricing(data.subtotal, data.tax_amount, data.amount, data.discount, data.tax_rate ?? 0);
         setPaymentStatus('idle');
 
         // Only an explicit coupon from the URL is applied. There is no
