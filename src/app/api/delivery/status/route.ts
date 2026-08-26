@@ -72,11 +72,23 @@ export async function GET(request: NextRequest) {
     return pending();
   }
 
+  // Payment is already settled by the time this route is reachable, so the
+  // conversion payload rides along with every authorized response. The client
+  // fires the Google Ads conversion from it exactly once, keyed on the payment
+  // intent id — previously no purchase event existed anywhere, so the ad
+  // account had no signal to optimise against at all.
+  const purchase = {
+    transaction_id: piId,
+    value_cents: order.amount_paid_cents ?? 0,
+    currency: 'USD',
+    plan_id: order.plan_id ?? null,
+  };
+
   // Email verified — safe to serve the (possibly fresher) in-memory status,
   // which may already hold the credentials set by /api/delivery/provision.
   const state = provisioningState.get(piId);
   if (state) {
-    return NextResponse.json(state);
+    return NextResponse.json({ ...state, purchase });
   }
 
   if (order.status === 'delivered' && order.esim_iccid && order.esim_qr_encrypted) {
@@ -85,6 +97,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({
       status: 'ready',
       order_id: 'ORD-' + piId.slice(-8).toUpperCase(),
+      purchase,
       data: {
         iccid: order.esim_iccid,
         activation_qr_base64: qrData.qr_base64,
@@ -98,6 +111,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({
       status: 'failed',
       order_id: 'ORD-' + piId.slice(-8).toUpperCase(),
+      purchase,
       error: 'Provisioning failed',
     });
   }
@@ -112,5 +126,6 @@ export async function GET(request: NextRequest) {
   // Still processing
   return NextResponse.json({
     status: order.status === 'provisioning' ? 'provisioning' : 'pending',
+    purchase,
   });
 }

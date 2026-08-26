@@ -12,6 +12,7 @@ import { OutOfStockScreen } from './out-of-stock-screen';
 import { DeliverySteps } from './delivery-steps';
 import { InstallBanner } from '@/components/pwa/install-banner';
 import { useReferralStore } from '@/stores/referral';
+import { trackPurchase } from '@/lib/analytics/events';
 
 interface DeliveryPageProps {
   paymentIntentId: string;
@@ -68,6 +69,10 @@ export function DeliveryPage({ paymentIntentId, email }: DeliveryPageProps) {
     }
   }, []);
 
+  // Google de-duplicates on transaction_id, but a page refresh creates a fresh
+  // client too — this guard keeps one visit to exactly one conversion hit.
+  const conversionSentRef = useRef(false);
+
   const pollStatus = useCallback(async () => {
     try {
       // email is required server-side to authorize returning eSIM credentials
@@ -78,6 +83,20 @@ export function DeliveryPage({ paymentIntentId, email }: DeliveryPageProps) {
       const res = await fetch(statusUrl);
       if (!res.ok) return;
       const result = await res.json();
+
+      // Fire as soon as the order is confirmed — the payment has settled by
+      // then, whether or not provisioning has finished. Waiting for 'ready'
+      // would under-report every sale that was still provisioning when the
+      // buyer closed the tab.
+      if (result.purchase && !conversionSentRef.current) {
+        conversionSentRef.current = true;
+        trackPurchase({
+          transactionId: result.purchase.transaction_id,
+          valueCents: result.purchase.value_cents,
+          currency: result.purchase.currency,
+          planId: result.purchase.plan_id ?? undefined,
+        });
+      }
 
       if (result.status === 'ready' && result.data) {
         stopPolling();
