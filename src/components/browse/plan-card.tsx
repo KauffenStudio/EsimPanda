@@ -45,7 +45,14 @@ export function PlanCard({
   const vatRate = useVatRate();
 
   // Price actually charged, so the card and the pay button agree.
-  const displayPriceCents = Math.round(retail_price_cents * (1 + vatRate / 100));
+  const withVat = (cents: number) => Math.round(cents * (1 + vatRate / 100));
+  const displayPriceCents = withVat(retail_price_cents);
+
+  // The struck-through price has to sit on the same tax basis as the live one.
+  // Showing a pre-VAT original beside a VAT-inclusive price made a 20% saving
+  // render as "was $9.99, now $9.83" — the discount badge and the two numbers
+  // openly contradicting each other on the page where the buyer decides.
+  const originalPriceCents = withVat(getOriginalPrice(retail_price_cents, data_gb));
 
   const planLabel = `${data_gb}GB · ${formatDuration(duration_days)}`;
 
@@ -86,7 +93,7 @@ export function PlanCard({
         <div className="flex flex-col items-end">
           {data_gb > 1 && (
             <span className="text-xs text-gray-400 line-through">
-              {formatPrice(getOriginalPrice(retail_price_cents, data_gb), currency)}
+              {formatPrice(originalPriceCents, currency)}
             </span>
           )}
           <div className="flex items-center gap-1.5">
