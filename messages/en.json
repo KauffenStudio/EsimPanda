@@ -606,5 +606,12 @@
     "minutesAgo": "{minutes} min ago",
     "liveNow": "Live now",
     "dismiss": "Dismiss"
+  },
+  "whatsapp": {
+    "bubbleTitle": "Need help with your eSIM?",
+    "bubbleText": "Chat with us on WhatsApp",
+    "prefill": "Hi eSIM Panda! I have a question about an eSIM.",
+    "ariaLabel": "Chat with us on WhatsApp",
+    "close": "Close message"
   }
 }

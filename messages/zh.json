@@ -606,5 +606,12 @@
     "minutesAgo": "{minutes} 分钟前",
     "liveNow": "实时",
     "dismiss": "关闭"
+  },
+  "whatsapp": {
+    "bubbleTitle": "eSIM 有疑问？",
+    "bubbleText": "通过 WhatsApp 联系我们",
+    "prefill": "你好 eSIM Panda！我有一个关于 eSIM 的问题。",
+    "ariaLabel": "通过 WhatsApp 联系我们",
+    "close": "关闭消息"
   }
 }

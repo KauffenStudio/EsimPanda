@@ -606,5 +606,12 @@
     "minutesAgo": "il y a {minutes} min",
     "liveNow": "En direct",
     "dismiss": "Fermer"
+  },
+  "whatsapp": {
+    "bubbleTitle": "Une question sur votre eSIM ?",
+    "bubbleText": "Écrivez-nous sur WhatsApp",
+    "prefill": "Bonjour eSIM Panda ! J'ai une question sur une eSIM.",
+    "ariaLabel": "Nous écrire sur WhatsApp",
+    "close": "Fermer le message"
   }
 }
