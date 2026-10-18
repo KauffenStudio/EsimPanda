@@ -20,3 +20,31 @@ export function retailPriceFromWholesale(wholesaleCents: number): number {
   if (rounded <= cap) return rounded;
   return Math.floor((cap + 1) / 10) * 10 - 1;
 }
+
+/**
+ * Plans sold below the standard margin, keyed `ISO:dataGB:days`. Canada 50GB
+ * costs $112 wholesale while competitors retail at ~$54–84, so it runs thinner
+ * than the 1.6× default.
+ */
+export const MARGIN_OVERRIDES: Readonly<Record<string, number>> = {
+  'CA:50:30': 0.3,
+};
+
+/** Highest .99 price at or under `margin` gross margin. */
+function priceAtMargin(wholesaleCents: number, margin: number): number {
+  const cap = Math.floor(wholesaleCents / (1 - margin));
+  return Math.floor((cap + 1) / 100) * 100 - 1;
+}
+
+/** Retail for a specific plan: its override when one exists, else the default rule. */
+export function retailPriceForPlan(plan: {
+  iso: string;
+  dataGb: number;
+  durationDays: number;
+  wholesaleCents: number;
+}): number {
+  const override = MARGIN_OVERRIDES[`${plan.iso}:${plan.dataGb}:${plan.durationDays}`];
+  return override === undefined
+    ? retailPriceFromWholesale(plan.wholesaleCents)
+    : priceAtMargin(plan.wholesaleCents, override);
+}

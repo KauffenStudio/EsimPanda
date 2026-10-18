@@ -71,7 +71,7 @@ process.env.NEXT_PUBLIC_SUPABASE_URL = 'https://test.supabase.co';
 process.env.SUPABASE_SERVICE_ROLE_KEY = 'test-service-role-key';
 
 import { syncCatalog } from '../sync';
-import { retailPriceFromWholesale } from '@/lib/plans/retail-price';
+import { retailPriceFromWholesale, retailPriceForPlan } from '@/lib/plans/retail-price';
 
 describe('syncCatalog', () => {
   beforeEach(() => {
@@ -173,6 +173,12 @@ describe('syncCatalog', () => {
       expect((r - w) / r).toBeLessThanOrEqual(0.4);
       expect(r).toBeGreaterThan(w);
     }
+  });
+
+  it('sells Canada 50GB/30d at the 30% override', () => {
+    expect(retailPriceForPlan({ iso: 'CA', dataGb: 50, durationDays: 30, wholesaleCents: 11200 })).toBe(15999);
+    // Other Canada plans keep the default rule
+    expect(retailPriceForPlan({ iso: 'CA', dataGb: 20, durationDays: 30, wholesaleCents: 5600 })).toBe(8999);
   });
 
   it('should generate correct slugs from destination names', async () => {
