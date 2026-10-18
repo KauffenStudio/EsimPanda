@@ -10,6 +10,9 @@ import { requiresConsent } from '@/lib/geo/country';
 
 const STORAGE_KEY = 'esim-panda-consent';
 
+/** Fired on window once the visitor answers, for widgets that share the corner. */
+export const CONSENT_DECIDED_EVENT = 'esim-panda-consent-decided';
+
 type Choice = 'granted' | 'denied';
 
 function read(): Choice | null {
@@ -71,6 +74,7 @@ export function ConsentBanner() {
     write(choice);
     updateConsent(choice === 'granted');
     setVisible(false);
+    window.dispatchEvent(new Event(CONSENT_DECIDED_EVENT));
   };
 
   if (!visible) return null;

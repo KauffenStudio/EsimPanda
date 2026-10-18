@@ -16,6 +16,7 @@ import { SwRegister } from '@/components/pwa/sw-register';
 import { JsonLd } from '@/components/seo/json-ld';
 import { GoogleTag } from '@/components/analytics/google-tag';
 import { ConsentBanner } from '@/components/analytics/consent-banner';
+import { WhatsAppWidget } from '@/components/support/whatsapp-widget';
 import { buildOrganizationJsonLd, buildWebsiteJsonLd } from '@/lib/seo/structured-data';
 import { ogLocale } from '@/lib/seo/meta-templates';
 import { createClient } from '@/lib/supabase/server';
@@ -120,6 +121,7 @@ export default async function LocaleLayout({
               <LegalFooter />
             </main>
             <BottomNav />
+            <WhatsAppWidget />
             <ConsentBanner />
             <Toaster />
             <PushManager />
