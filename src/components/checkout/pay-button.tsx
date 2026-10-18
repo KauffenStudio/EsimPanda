@@ -8,6 +8,7 @@ import { useCheckoutStore } from '@/stores/checkout';
 import { useCurrencyStore } from '@/stores/currency';
 import { formatPrice } from '@/lib/currency/rates';
 import { STRIPE_MOCK_MODE } from '@/lib/stripe/client';
+import { RatingSummary } from '@/components/reviews/rating-summary';
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -140,7 +141,7 @@ function PayButtonUI({ processing, isDisabled, totalFormatted, onClick }: {
 
   return (
     <>
-      <div className="h-6" />
+      <div className="h-12 md:h-6" />
       <div className="fixed bottom-0 left-0 right-0 z-30 p-4 pb-[calc(16px+env(safe-area-inset-bottom))] bg-white/90 dark:bg-background-dark/90 backdrop-blur-sm border-t border-gray-100 dark:border-border-dark md:static md:bg-transparent md:backdrop-blur-none md:border-0 md:p-0 md:pb-0">
         {showEmailHint && (
           <p className="text-xs text-destructive text-center mb-2">
@@ -163,6 +164,12 @@ function PayButtonUI({ processing, isDisabled, totalFormatted, onClick }: {
             t('pay', { amount: totalFormatted })
           )}
         </Button>
+        {/* Same sourced rating as the homepage hero, at the moment of decision —
+            inside the fixed bar so it stays on screen on mobile. */}
+        <RatingSummary
+          starSize={14}
+          className="mt-2 justify-center text-xs text-gray-500 dark:text-gray-400 font-medium"
+        />
       </div>
     </>
   );

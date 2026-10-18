@@ -2,7 +2,6 @@
 
 import { Lock, Shield, Users } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { RatingBadge } from './rating-badge';
 
 export function TrustSignals() {
   const t = useTranslations('checkout.trust');
@@ -15,7 +14,6 @@ export function TrustSignals() {
 
   return (
     <div className="mt-4 rounded-card border border-border dark:border-border-dark p-4">
-      <RatingBadge />
       <ul className="flex flex-col gap-3">
         {items.map(({ Icon, label }) => (
           <li key={label} className="flex items-center gap-3 text-sm text-gray-600 dark:text-gray-300">
