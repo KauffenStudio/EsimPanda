@@ -220,6 +220,29 @@ export async function attachOrderEmail(
   return true;
 }
 
+/**
+ * Re-price an unpaid order after a coupon is applied or removed at checkout,
+ * so the row matches the PaymentIntent amount Stripe will charge. Scoped to
+ * pending rows: a settled order's amount is history, not a draft.
+ */
+export async function updateOrderPricing(
+  paymentIntentId: string,
+  pricing: { amount_paid_cents: number; coupon_code: string | null; discount_cents: number },
+): Promise<boolean> {
+  const supabase = createServiceClient();
+  const { error } = await supabase
+    .from('orders')
+    .update({ ...pricing, updated_at: new Date().toISOString() })
+    .eq('stripe_payment_intent_id', paymentIntentId)
+    .eq('status', 'pending');
+
+  if (error) {
+    console.error('updateOrderPricing error:', error);
+    return false;
+  }
+  return true;
+}
+
 export async function updateOrderProvisionData(
   paymentIntentId: string,
   data: {

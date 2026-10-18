@@ -20,7 +20,7 @@ export async function mockCreateIntent(
   const plan = await getPlanById(planId);
   if (!plan) return null;
 
-  const pricing = await calculatePrice(planId, couponCode, currency);
+  const pricing = await calculatePrice(planId, couponCode, currency, countryCode);
   if (!pricing) return null;
 
   const tax = calculateTax(pricing.subtotal_cents, countryCode);

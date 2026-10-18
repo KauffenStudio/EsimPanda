@@ -243,7 +243,8 @@
       "savings": "${amount}お得",
       "invalid": "無効なコードです——綴りを確認して再試行してください",
       "min_order": "このクーポンには最低$9.99の注文が必要です",
-      "remove": "コードを削除"
+      "remove": "コードを削除",
+      "minTotalEur": "このコードは €{amount} 以上のご注文で使えます"
     },
     "express": {
       "title": "エクスプレスチェックアウト"
@@ -265,7 +266,10 @@
     "trust": {
       "secure": "安全な決済",
       "guarantee": "返金保証",
-      "travelers": "旅行者に信頼されています"
+      "travelers": "旅行者に信頼されています",
+      "rated": "{source} で {count} 人のお客様が {rating}/5 と評価",
+      "ratedSurvey": "お客様アンケートで {rating}/5 の評価",
+      "ratedSurveyCount": "{count} 人のお客様アンケートで {rating}/5 の評価"
     },
     "email_required_hint": "続行するには有効なメールアドレスを入力してください",
     "pay": "{amount}を支払う",
@@ -613,5 +617,18 @@
     "prefill": "こんにちは、eSIM Panda！eSIMについて質問があります。",
     "ariaLabel": "WhatsAppでお問い合わせ",
     "close": "メッセージを閉じる"
+  },
+  "promo": {
+    "soldOut": "売り切れ",
+    "unavailable": "購入できません",
+    "endsIn": "終了まで",
+    "allPlans": "全プラン {percent}% オフ",
+    "panda5": {
+      "heading": "今すぐ €{amount} オフ",
+      "body": "コードをコピーして、お支払い画面で貼り付けてください。€{min} 以上のご注文が対象です。",
+      "cta": "プランを選ぶ",
+      "copied": "コードをコピーしました！",
+      "copyAria": "コード {code} をコピー"
+    }
   }
 }

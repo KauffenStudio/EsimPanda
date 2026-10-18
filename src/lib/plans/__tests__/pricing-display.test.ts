@@ -1,5 +1,11 @@
 import { describe, it, expect } from 'vitest';
-import { tagPlans, getOriginalPrice, getDiscountPercent } from '../pricing-display';
+import {
+  tagPlans,
+  getOriginalPrice,
+  getDiscountPercent,
+  isSoldOut,
+  DISPLAY_DISCOUNT_PERCENT,
+} from '../pricing-display';
 
 describe('tagPlans', () => {
   it('tags plan with lowest price-per-GB as bestValue', () => {
@@ -61,18 +67,10 @@ describe('getOriginalPrice', () => {
     expect(getOriginalPrice(449, 1)).toBe(0);
   });
 
-  it('returns an inflated price ending in 99 for a 3GB plan', () => {
-    // 899 * 1.25 = 1123.75 → ceil(11.2375) * 100 - 1 = 1200 - 1 = 1199
-    const original = getOriginalPrice(899, 3);
-    expect(original).toBe(1199);
-    expect(original % 100).toBe(99);
-  });
-
-  it('returns an inflated price ending in 99 for a 5GB plan', () => {
-    // 1299 * 1.45 = 1883.55 → ceil(18.8355) * 100 - 1 = 1900 - 1 = 1899
-    const original = getOriginalPrice(1299, 5);
-    expect(original).toBe(1899);
-    expect(original % 100).toBe(99);
+  it('returns the price the live price is 15% off', () => {
+    // 899 / 0.85 = 1057.6 → 1058
+    expect(getOriginalPrice(899, 3)).toBe(1058);
+    expect(getOriginalPrice(1299, 5)).toBe(1528);
   });
 });
 
@@ -81,17 +79,35 @@ describe('getDiscountPercent', () => {
     expect(getDiscountPercent(449, 1)).toBe(0);
   });
 
-  it('returns roughly 30% for a 5GB plan', () => {
-    // original 1899, retail 1299 → (1899-1299)/1899 = 31.6% → round 32
-    const pct = getDiscountPercent(1299, 5);
-    expect(pct).toBeGreaterThanOrEqual(28);
-    expect(pct).toBeLessThanOrEqual(33);
+  it('is a flat 15% on every tier above 1GB', () => {
+    for (const gb of [3, 5, 8, 20, 50]) {
+      expect(getDiscountPercent(1299, gb)).toBe(DISPLAY_DISCOUNT_PERCENT);
+    }
   });
 
-  it('returns roughly 20% for a 3GB plan', () => {
-    // original 1199, retail 899 → (1199-899)/1199 = 25% → round 25
-    const pct = getDiscountPercent(899, 3);
-    expect(pct).toBeGreaterThanOrEqual(18);
-    expect(pct).toBeLessThanOrEqual(27);
+  it('agrees with the struck-through price it sits beside', () => {
+    const retail = 2099;
+    const original = getOriginalPrice(retail, 20);
+    expect(Math.round(((original - retail) / original) * 100)).toBe(getDiscountPercent(retail, 20));
+  });
+});
+
+describe('sold-out 2GB tier', () => {
+  it('marks only 2GB plans as sold out', () => {
+    expect(isSoldOut(2)).toBe(true);
+    for (const gb of [1, 3, 5, 8, 20, 50]) expect(isSoldOut(gb)).toBe(false);
+  });
+
+  it('never badges a sold-out plan', () => {
+    const plans = [
+      { id: 'two', data_gb: 2, duration_days: 30, retail_price_cents: 100 }, // cheapest per GB
+      { id: 'three', data_gb: 3, duration_days: 30, retail_price_cents: 999 },
+      { id: 'five', data_gb: 5, duration_days: 30, retail_price_cents: 1299 },
+    ];
+    const tagged = tagPlans(plans);
+    const two = tagged.find((p) => p.id === 'two')!;
+    expect(two.isBestValue).toBe(false);
+    expect(two.isMostPopular).toBe(false);
+    expect(tagged.find((p) => p.id === 'five')?.isBestValue).toBe(true);
   });
 });

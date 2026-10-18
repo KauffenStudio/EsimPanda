@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation';
 import { getPlanById } from '@/lib/db/destinations';
 import { CheckoutPage } from '@/components/checkout/checkout-page';
+import { isSoldOut } from '@/lib/plans/pricing-display';
 
 interface CheckoutPageProps {
   params: Promise<{ locale: string }>;
@@ -22,6 +23,16 @@ export default async function CheckoutRoute({ params, searchParams }: CheckoutPa
 
   if (!plan) {
     redirect(`/${locale}/browse?notice=plan-unavailable`);
+  }
+
+  // Sold-out tier (2GB): the card is not clickable, but an old link or a
+  // shared URL can still land here. Send them back to the destination's plans.
+  if (isSoldOut(plan.data_gb)) {
+    redirect(
+      plan.destination_slug
+        ? `/${locale}/esim/${plan.destination_slug}`
+        : `/${locale}/browse?notice=plan-unavailable`,
+    );
   }
 
   return <CheckoutPage plan={plan} couponFromUrl={coupon} />;

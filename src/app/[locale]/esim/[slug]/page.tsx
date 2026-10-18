@@ -2,7 +2,7 @@ import { setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import { getDestinationBySlug, listActiveDestinations, listPlansForDestination } from '@/lib/db/destinations';
-import { tagPlans } from '@/lib/plans/pricing-display';
+import { tagPlans, isSoldOut } from '@/lib/plans/pricing-display';
 import { buildProductJsonLd, buildBreadcrumbJsonLd } from '@/lib/seo/structured-data';
 import { buildDestinationMeta } from '@/lib/seo/meta-templates';
 import { localizedDestinationName } from '@/lib/i18n/destination-name';
@@ -32,7 +32,9 @@ export async function generateMetadata({ params }: Props) {
   const destination = await getDestinationBySlug(slug);
   if (!destination) return {};
   const isRegional = REGIONAL_BUCKETS.includes(destination.region_bucket ?? '');
-  const plans = await listPlansForDestination(destination.id);
+  const plans = (await listPlansForDestination(destination.id)).filter(
+    (p) => !isSoldOut(p.data_gb),
+  );
   const startingPriceCents = plans.length
     ? Math.min(...plans.map((p) => p.retail_price_cents))
     : 0;

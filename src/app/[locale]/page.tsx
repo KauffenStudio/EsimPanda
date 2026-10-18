@@ -10,6 +10,7 @@ import { HowItWorks } from '@/components/home/how-it-works';
 import { PopularDestinations } from '@/components/home/popular-destinations';
 import { WhyPanda } from '@/components/home/why-panda';
 import { HomeFaq } from '@/components/home/home-faq';
+import { Panda5Banner } from '@/components/promo/panda5-banner';
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -37,6 +38,7 @@ export default async function LandingPage({ params }: Props) {
   return (
     <>
       <LandingClient />
+      <Panda5Banner />
       <ValueProps />
       <HowItWorks />
       <PopularDestinations locale={locale} destinations={popular} />

@@ -243,7 +243,8 @@
       "savings": "Vous économisez ${amount}",
       "invalid": "Code invalide — vérifiez l'orthographe et réessayez",
       "min_order": "Commande minimum de $9.99 requise pour ce coupon",
-      "remove": "Supprimer le code"
+      "remove": "Supprimer le code",
+      "minTotalEur": "Ce code est valable dès {amount} € d'achat"
     },
     "express": {
       "title": "Paiement express"
@@ -265,7 +266,10 @@
     "trust": {
       "secure": "Paiement sécurisé",
       "guarantee": "Garantie de remboursement",
-      "travelers": "Approuvé par les voyageurs"
+      "travelers": "Approuvé par les voyageurs",
+      "rated": "Noté {rating}/5 par {count} clients sur {source}",
+      "ratedSurvey": "Noté {rating}/5 dans notre enquête clients",
+      "ratedSurveyCount": "Noté {rating}/5 par {count} clients dans notre enquête"
     },
     "email_required_hint": "Veuillez entrer une adresse email valide pour continuer",
     "pay": "Payer {amount}",
@@ -613,5 +617,18 @@
     "prefill": "Bonjour eSIM Panda ! J'ai une question sur une eSIM.",
     "ariaLabel": "Nous écrire sur WhatsApp",
     "close": "Fermer le message"
+  },
+  "promo": {
+    "soldOut": "Épuisé",
+    "unavailable": "Indisponible",
+    "endsIn": "Se termine dans",
+    "allPlans": "-{percent} % sur tous les forfaits",
+    "panda5": {
+      "heading": "{amount} € de réduction immédiate",
+      "body": "Copiez le code et collez-le au moment du paiement. Dès {min} € d'achat.",
+      "cta": "Choisir un forfait",
+      "copied": "Code copié !",
+      "copyAria": "Copier le code {code}"
+    }
   }
 }
