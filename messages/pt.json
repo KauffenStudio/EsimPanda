@@ -623,7 +623,7 @@
     "unavailable": "Não disponível",
     "endsIn": "Termina em",
     "allPlans": "{percent}% de desconto em todos os planos",
-    "panda5": {
+    "promoCode": {
       "heading": "{amount} € de desconto imediato",
       "body": "Copie o código e cole-o no final da compra. Em compras a partir de {min} €.",
       "cta": "Escolher plano",
