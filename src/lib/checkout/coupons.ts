@@ -9,9 +9,9 @@ import { getRate, type CurrencyCode } from '@/lib/currency/rates';
 export const WELCOME_COUPON_CODE = 'WELCOME10';
 
 /** Homepage promo code: €2 off orders from €20 (VAT-inclusive). */
-export const PANDA5_COUPON_CODE = 'PANDA5';
-export const PANDA5_AMOUNT_EUR_CENTS = 200;
-export const PANDA5_MIN_TOTAL_EUR_CENTS = 2000;
+export const PROMO_COUPON_CODE = 'ILOVEPANDA';
+export const PROMO_AMOUNT_EUR_CENTS = 200;
+export const PROMO_MIN_TOTAL_EUR_CENTS = 2000;
 
 const FLAT_MIN_CURRENCIES: ReadonlySet<CurrencyCode> = new Set(['USD', 'EUR', 'GBP']);
 const COUPON_MIN_BASE_CENTS = 999;
@@ -49,12 +49,12 @@ export const COUPONS: Coupon[] = [
     is_active: true,
   },
   {
-    code: PANDA5_COUPON_CODE,
+    code: PROMO_COUPON_CODE,
     discount_percent: 0,
-    discount_amount_eur_cents: PANDA5_AMOUNT_EUR_CENTS,
+    discount_amount_eur_cents: PROMO_AMOUNT_EUR_CENTS,
     // €2, not €5: at €5 the €20–30 plans kept under $1 of margin after Stripe.
     // The €20 VAT-inclusive floor keeps the cheapest plans out entirely.
-    min_total_eur_cents: PANDA5_MIN_TOTAL_EUR_CENTS,
+    min_total_eur_cents: PROMO_MIN_TOTAL_EUR_CENTS,
     max_uses: 999999,
     current_uses: 0,
     valid_from: '2026-01-01T00:00:00Z',
@@ -118,7 +118,7 @@ export function validateCoupon(
     return null;
   }
 
-  // VAT-inclusive euro minimum (PANDA5). Skipped when the caller has no order
+  // VAT-inclusive euro minimum (ILOVEPANDA). Skipped when the caller has no order
   // context, the same way the min_order_cents gate is.
   if (
     coupon.min_total_eur_cents &&

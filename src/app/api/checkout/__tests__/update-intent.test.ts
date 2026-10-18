@@ -4,7 +4,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
  * Applying a coupon has to move the amount Stripe will actually charge. The
  * coupon field used to call this route without naming the PaymentIntent, so
  * the buyer saw the discount and was billed full price. These tests pin the
- * re-price, the capability check, and the PANDA5 rules (€2 off from €20 VAT
+ * re-price, the capability check, and the ILOVEPANDA rules (€2 off from €20 VAT
  * included, never on a sold-out plan).
  */
 const retrieve = vi.hoisted(() => vi.fn());
@@ -54,10 +54,10 @@ describe('POST /api/checkout/update-intent', () => {
     country.code = 'PT';
   });
 
-  it('re-prices the PaymentIntent and the order row with PANDA5', async () => {
+  it('re-prices the PaymentIntent and the order row with ILOVEPANDA', async () => {
     retrieve.mockResolvedValue(intentFor('plan-20gb'));
 
-    const res = await post({ plan_id: 'plan-20gb', client_secret: CLIENT_SECRET, coupon_code: 'panda5' });
+    const res = await post({ plan_id: 'plan-20gb', client_secret: CLIENT_SECRET, coupon_code: 'ilovepanda' });
     const data = await res.json();
 
     // €2 → 217 USD cents at the static 0.92 rate; VAT on the discounted subtotal.
@@ -70,13 +70,13 @@ describe('POST /api/checkout/update-intent', () => {
       amount: expectedTotal,
       metadata: expect.objectContaining({
         plan_id: 'plan-20gb',
-        coupon_code: 'panda5',
+        coupon_code: 'ilovepanda',
         discount_cents: '217',
       }),
     });
     expect(updateOrderPricing).toHaveBeenCalledWith('pi_test_123', {
       amount_paid_cents: expectedTotal,
-      coupon_code: 'panda5',
+      coupon_code: 'ilovepanda',
       discount_cents: 217,
     });
   });
@@ -84,7 +84,7 @@ describe('POST /api/checkout/update-intent', () => {
   it('does not discount below the €20 VAT-inclusive minimum', async () => {
     retrieve.mockResolvedValue(intentFor('plan-3gb-cheap'));
 
-    const res = await post({ plan_id: 'plan-3gb-cheap', client_secret: CLIENT_SECRET, coupon_code: 'PANDA5' });
+    const res = await post({ plan_id: 'plan-3gb-cheap', client_secret: CLIENT_SECRET, coupon_code: 'ILOVEPANDA' });
     const data = await res.json();
 
     expect(data.discount).toBe(0);
@@ -104,7 +104,7 @@ describe('POST /api/checkout/update-intent', () => {
   });
 
   it('refuses without the client_secret', async () => {
-    const res = await post({ plan_id: 'plan-20gb', coupon_code: 'PANDA5' });
+    const res = await post({ plan_id: 'plan-20gb', coupon_code: 'ILOVEPANDA' });
     expect(res.status).toBe(400);
     expect(update).not.toHaveBeenCalled();
   });
@@ -112,7 +112,7 @@ describe('POST /api/checkout/update-intent', () => {
   it('refuses a client_secret that does not match the intent', async () => {
     retrieve.mockResolvedValue({ ...intentFor('plan-20gb'), client_secret: 'pi_test_123_secret_other' });
 
-    const res = await post({ plan_id: 'plan-20gb', client_secret: CLIENT_SECRET, coupon_code: 'PANDA5' });
+    const res = await post({ plan_id: 'plan-20gb', client_secret: CLIENT_SECRET, coupon_code: 'ILOVEPANDA' });
     expect(res.status).toBe(403);
     expect(update).not.toHaveBeenCalled();
   });
@@ -120,7 +120,7 @@ describe('POST /api/checkout/update-intent', () => {
   it('leaves a paid intent alone', async () => {
     retrieve.mockResolvedValue(intentFor('plan-20gb', 'succeeded'));
 
-    const res = await post({ plan_id: 'plan-20gb', client_secret: CLIENT_SECRET, coupon_code: 'PANDA5' });
+    const res = await post({ plan_id: 'plan-20gb', client_secret: CLIENT_SECRET, coupon_code: 'ILOVEPANDA' });
     expect(res.status).toBe(409);
     expect(update).not.toHaveBeenCalled();
   });

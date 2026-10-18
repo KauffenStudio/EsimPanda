@@ -623,7 +623,7 @@
     "unavailable": "暂不可购",
     "endsIn": "剩余",
     "allPlans": "所有套餐 {percent}% 折扣",
-    "panda5": {
+    "promoCode": {
       "heading": "立减 €{amount}",
       "body": "复制优惠码，在结账时粘贴即可。满 €{min} 可用。",
       "cta": "选择套餐",

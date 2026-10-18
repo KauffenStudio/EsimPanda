@@ -30,7 +30,7 @@ export async function POST(request: Request) {
       }
       orderTotalInCurrency = convertPrice(plan.retail_price_cents, currency);
       minOrder = getCouponMinOrderCents(currency);
-      // What the plan card shows: VAT-inclusive, here in euros (PANDA5 gate).
+      // What the plan card shows: VAT-inclusive, here in euros (ILOVEPANDA gate).
       const taxCountry = getCountry(request.headers) ?? '';
       grossTotalEur = convertPrice(
         calculateTax(plan.retail_price_cents, taxCountry).total_cents,

@@ -103,7 +103,11 @@ async function main() {
 
     for (const p of pkgs) {
       const wholesale = typeof p.priceInCents === 'number' ? p.priceInCents : Math.round((p.price ?? 0) * 100);
-      const retail = Math.ceil((wholesale * 1.6) / 100) * 100 - 1;
+      // Mirrors src/lib/plans/retail-price.ts: 1.6× rounded up to .99, capped at
+      // a 40% gross margin (highest price ending in 9 cents under the cap).
+      const rounded = Math.ceil((wholesale * 1.6) / 100) * 100 - 1;
+      const cap = Math.floor(wholesale / 0.6);
+      const retail = rounded <= cap ? rounded : Math.floor((cap + 1) / 10) * 10 - 1;
       const dataGB = p.dataLimitInGb;
       const durationDays = p.maxDays ?? p.duration ?? 0;
 

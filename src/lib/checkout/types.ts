@@ -14,7 +14,7 @@ export interface CouponResult {
   valid: boolean;
   code: string;
   discount_percent: number;
-  /** Fixed-amount coupons (PANDA5): euros off, in euro cents. 0 for percent coupons. */
+  /** Fixed-amount coupons (ILOVEPANDA): euros off, in euro cents. 0 for percent coupons. */
   discount_amount_eur_cents?: number;
   error?: string;
 }
@@ -37,7 +37,7 @@ export interface Coupon {
   code: string;
   discount_percent: number;
   /**
-   * Fixed amount off, in EURO cents (PANDA5 = 500). When set it replaces
+   * Fixed amount off, in EURO cents (ILOVEPANDA = 200). When set it replaces
    * discount_percent. Converted to USD at the static rate because Stripe
    * charges USD.
    */

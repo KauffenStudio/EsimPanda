@@ -623,7 +623,7 @@
     "unavailable": "Indisponible",
     "endsIn": "Se termine dans",
     "allPlans": "-{percent} % sur tous les forfaits",
-    "panda5": {
+    "promoCode": {
       "heading": "{amount} € de réduction immédiate",
       "body": "Copiez le code et collez-le au moment du paiement. Dès {min} € d'achat.",
       "cta": "Choisir un forfait",

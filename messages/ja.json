@@ -623,7 +623,7 @@
     "unavailable": "購入できません",
     "endsIn": "終了まで",
     "allPlans": "全プラン {percent}% オフ",
-    "panda5": {
+    "promoCode": {
       "heading": "今すぐ €{amount} オフ",
       "body": "コードをコピーして、お支払い画面で貼り付けてください。€{min} 以上のご注文が対象です。",
       "cta": "プランを選ぶ",
