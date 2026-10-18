@@ -1,5 +1,6 @@
 import { createProvider } from './provider';
 import { createClient } from '@supabase/supabase-js';
+import { retailPriceFromWholesale } from '@/lib/plans/retail-price';
 
 /**
  * Columns the daily Celitech sync is allowed to write to `destinations`.
@@ -112,11 +113,9 @@ export async function syncCatalog() {
     }
 
     const planRows = packages.map((pkg) => {
-      // Retail price: 1.6× wholesale, rounded UP to the next .99 ending. This is
-      // intentional .99 psychological pricing — small wholesale prices get a
-      // higher effective % markup as a side-effect of the rounding floor.
-      const retailPriceCents =
-        Math.ceil((pkg.wholesalePriceCents * 1.6) / 100) * 100 - 1;
+      // 1.6× wholesale rounded up to .99, capped at a 40% gross margin — see
+      // retailPriceFromWholesale.
+      const retailPriceCents = retailPriceFromWholesale(pkg.wholesalePriceCents);
       return {
         destination_id: destRow.id,
         wholesale_plan_id: pkg.wholesaleId,

@@ -71,6 +71,7 @@ process.env.NEXT_PUBLIC_SUPABASE_URL = 'https://test.supabase.co';
 process.env.SUPABASE_SERVICE_ROLE_KEY = 'test-service-role-key';
 
 import { syncCatalog } from '../sync';
+import { retailPriceFromWholesale } from '@/lib/plans/retail-price';
 
 describe('syncCatalog', () => {
   beforeEach(() => {
@@ -159,10 +160,19 @@ describe('syncCatalog', () => {
   it('should calculate retail price with 60% markup rounded to X.99', () => {
     // wholesale 1000 cents * 1.6 = 1600
     // ceil(1600/100) * 100 - 1 = 1599
-    const wholesalePriceCents = 1000;
-    const retailPriceCents =
-      Math.ceil((wholesalePriceCents * 1.6) / 100) * 100 - 1;
-    expect(retailPriceCents).toBe(1599);
+    expect(retailPriceFromWholesale(1000)).toBe(1599);
+  });
+
+  it('caps gross margin at 40% when the .99 round-up would cross it', () => {
+    // $7 wholesale: 1.6× → $11.99 would be 41.6%; capped to $11.59 (39.6%)
+    expect(retailPriceFromWholesale(700)).toBe(1159);
+    // $4 wholesale: $6.99 would be 42.8%; capped to $6.59
+    expect(retailPriceFromWholesale(400)).toBe(659);
+    for (let w = 100; w <= 20000; w += 100) {
+      const r = retailPriceFromWholesale(w);
+      expect((r - w) / r).toBeLessThanOrEqual(0.4);
+      expect(r).toBeGreaterThan(w);
+    }
   });
 
   it('should generate correct slugs from destination names', async () => {
