@@ -7,7 +7,8 @@ import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { useCurrencyStore } from '@/stores/currency';
 import { formatPrice } from '@/lib/currency/rates';
-import { getOriginalPrice, getDiscountPercent } from '@/lib/plans/pricing-display';
+import { getOriginalPrice, getDiscountPercent, isSoldOut } from '@/lib/plans/pricing-display';
+import { DealCountdown } from '@/components/promo/deal-countdown';
 import { useVatRate } from '@/lib/geo/use-vat-rate';
 
 interface PlanCardProps {
@@ -55,21 +56,28 @@ export function PlanCard({
   const originalPriceCents = withVat(getOriginalPrice(retail_price_cents, data_gb));
 
   const planLabel = `${data_gb}GB · ${formatDuration(duration_days)}`;
+  const soldOut = isSoldOut(data_gb);
+  const hasDiscount = data_gb > 1 && !soldOut;
 
   // Straight to checkout. The cart used to sit here, and it only ever handed
   // `items[0]` to a checkout route that accepts a single plan — so a returning
   // visitor with a stale persisted item was charged for the wrong plan. A
   // sub-$20 instantly-delivered item nobody bundles does not need a basket.
   const handleCardClick = () => {
+    if (soldOut) return;
     router.push(`/${locale}/checkout?plan=${id}`);
   };
 
   return (
     <Card
       variant="flat"
-      onClick={handleCardClick}
-      aria-label={`${t('cart.buyNow')} — ${planLabel}`}
-      className="relative p-4 cursor-pointer transition-colors hover:border-accent/40 dark:hover:border-accent/40"
+      onClick={soldOut ? undefined : handleCardClick}
+      aria-label={`${soldOut ? t('promo.soldOut') : t('cart.buyNow')} — ${planLabel}`}
+      className={
+        soldOut
+          ? 'relative p-4 cursor-not-allowed select-none opacity-55 grayscale'
+          : 'relative p-4 cursor-pointer transition-colors hover:border-accent/40 dark:hover:border-accent/40'
+      }
     >
       <div className="flex items-center justify-between">
         <div className="flex flex-col gap-1">
@@ -81,6 +89,11 @@ export function PlanCard({
             </span>
           </div>
           <div className="flex gap-1.5">
+            {soldOut && (
+              <Badge className="uppercase tracking-wide text-xs font-bold">
+                {t('promo.soldOut')}
+              </Badge>
+            )}
             {isBestValue && (
               <Badge variant="success">{t('browse.bestValue')}</Badge>
             )}
@@ -91,21 +104,24 @@ export function PlanCard({
         </div>
 
         <div className="flex flex-col items-end">
-          {data_gb > 1 && (
+          {hasDiscount && (
             <span className="text-xs text-gray-400 line-through">
               {formatPrice(originalPriceCents, currency)}
             </span>
           )}
           <div className="flex items-center gap-1.5">
-            {data_gb > 1 && (
+            {hasDiscount && (
               <span className="text-[10px] font-bold text-white bg-destructive px-1.5 py-0.5 rounded">
                 -{getDiscountPercent(retail_price_cents, data_gb)}%
               </span>
             )}
-            <span className="text-xl font-bold text-accent">
+            <span
+              className={`text-xl font-bold ${soldOut ? 'text-gray-400 dark:text-gray-500 line-through' : 'text-accent'}`}
+            >
               {formatPrice(displayPriceCents, currency)}
             </span>
           </div>
+          {hasDiscount && <DealCountdown className="mt-1" />}
           {vatRate > 0 && (
             <span className="text-[10px] text-gray-400 mt-0.5">
               {t('browse.vatIncluded')}
@@ -118,10 +134,16 @@ export function PlanCard({
           action has to be visible for the card to read as buyable. */}
       <div
         aria-hidden="true"
-        className="mt-3 pt-3 border-t border-border dark:border-border-dark flex items-center justify-center gap-1.5 text-sm font-semibold text-accent"
+        className={`mt-3 pt-3 border-t border-border dark:border-border-dark flex items-center justify-center gap-1.5 text-sm font-semibold ${soldOut ? 'text-gray-400 dark:text-gray-500' : 'text-accent'}`}
       >
-        {t('cart.buyNow')}
-        <ArrowRight size={16} className="shrink-0" />
+        {soldOut ? (
+          t('promo.unavailable')
+        ) : (
+          <>
+            {t('cart.buyNow')}
+            <ArrowRight size={16} className="shrink-0" />
+          </>
+        )}
       </div>
     </Card>
   );

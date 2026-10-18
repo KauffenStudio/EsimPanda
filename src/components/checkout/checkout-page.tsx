@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState, useRef } from 'react';
-import { Elements } from '@stripe/react-stripe-js';
+import { Elements, useElements } from '@stripe/react-stripe-js';
 import { getStripe, STRIPE_MOCK_MODE } from '@/lib/stripe/client';
 import { stripeAppearance } from '@/lib/stripe/config';
 import { useCheckoutStore } from '@/stores/checkout';
@@ -22,6 +22,29 @@ import { TrustSignals } from './trust-signals';
 import { StickyOrderBar } from './sticky-order-bar';
 import { CheckoutProgress } from './checkout-progress';
 import { trackEvent, ANALYTICS_EVENTS } from '@/lib/analytics/events';
+
+/**
+ * Express buttons (Apple Pay / Google Pay) read the amount from Elements, not
+ * from the store. When a coupon re-prices the PaymentIntent, Elements has to
+ * be told to re-fetch it or the wallet sheet shows the old total.
+ */
+function ElementsAmountSync() {
+  const elements = useElements();
+  const total_cents = useCheckoutStore((s) => s.total_cents);
+  const isFirst = useRef(true);
+
+  useEffect(() => {
+    if (isFirst.current) {
+      isFirst.current = false;
+      return;
+    }
+    elements?.fetchUpdates().catch(() => {
+      // Card payment still confirms against the server-side amount.
+    });
+  }, [elements, total_cents]);
+
+  return null;
+}
 
 interface CheckoutPageProps {
   plan: Plan;
@@ -108,8 +131,13 @@ export function CheckoutPage({ plan, couponFromUrl }: CheckoutPageProps) {
               const updateRes = await fetch('/api/checkout/update-intent', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ plan_id: plan.id, coupon_code: couponToApply }),
+                body: JSON.stringify({
+                  plan_id: plan.id,
+                  client_secret: data.client_secret,
+                  coupon_code: couponToApply,
+                }),
               });
+              if (!updateRes.ok) throw new Error('update-intent failed');
               const updateData = await updateRes.json();
 
               applyCoupon(
@@ -215,6 +243,7 @@ export function CheckoutPage({ plan, couponFromUrl }: CheckoutPageProps) {
           appearance: stripeAppearance,
         }}
       >
+        <ElementsAmountSync />
         {checkoutContent}
       </Elements>
     </div>

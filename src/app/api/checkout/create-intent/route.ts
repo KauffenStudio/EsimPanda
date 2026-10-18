@@ -40,7 +40,7 @@ export async function POST(request: Request) {
     }
 
     // --- Production: Real Stripe ---
-    const pricing = await calculatePrice(plan_id, coupon_code, currency ?? 'USD');
+    const pricing = await calculatePrice(plan_id, coupon_code, currency ?? 'USD', taxCountry);
     if (!pricing) {
       return NextResponse.json({ error: 'Plan not found' }, { status: 404 });
     }

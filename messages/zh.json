@@ -243,7 +243,8 @@
       "savings": "节省 ${amount}",
       "invalid": "优惠码无效——请检查后重试",
       "min_order": "此优惠码需最低消费$9.99",
-      "remove": "移除优惠码"
+      "remove": "移除优惠码",
+      "minTotalEur": "此优惠码适用于满 €{amount} 的订单"
     },
     "express": {
       "title": "快速结账"
@@ -265,7 +266,10 @@
     "trust": {
       "secure": "安全支付",
       "guarantee": "退款保证",
-      "travelers": "深受旅行者信赖"
+      "travelers": "深受旅行者信赖",
+      "rated": "{source} 上 {count} 位顾客评分 {rating}/5",
+      "ratedSurvey": "在我们的客户调查中评分 {rating}/5",
+      "ratedSurveyCount": "{count} 位顾客在我们的调查中评分 {rating}/5"
     },
     "email_required_hint": "请输入有效的邮箱地址以继续",
     "pay": "支付 {amount}",
@@ -613,5 +617,18 @@
     "prefill": "你好 eSIM Panda！我有一个关于 eSIM 的问题。",
     "ariaLabel": "通过 WhatsApp 联系我们",
     "close": "关闭消息"
+  },
+  "promo": {
+    "soldOut": "已售罄",
+    "unavailable": "暂不可购",
+    "endsIn": "剩余",
+    "allPlans": "所有套餐 {percent}% 折扣",
+    "panda5": {
+      "heading": "立减 €{amount}",
+      "body": "复制优惠码，在结账时粘贴即可。满 €{min} 可用。",
+      "cta": "选择套餐",
+      "copied": "已复制优惠码！",
+      "copyAria": "复制优惠码 {code}"
+    }
   }
 }

@@ -8,6 +8,11 @@ import { getRate, type CurrencyCode } from '@/lib/currency/rates';
 
 export const WELCOME_COUPON_CODE = 'WELCOME10';
 
+/** Homepage promo code: €5 off orders from €20 (VAT-inclusive). */
+export const PANDA5_COUPON_CODE = 'PANDA5';
+export const PANDA5_AMOUNT_EUR_CENTS = 500;
+export const PANDA5_MIN_TOTAL_EUR_CENTS = 2000;
+
 const FLAT_MIN_CURRENCIES: ReadonlySet<CurrencyCode> = new Set(['USD', 'EUR', 'GBP']);
 const COUPON_MIN_BASE_CENTS = 999;
 
@@ -43,7 +48,33 @@ export const COUPONS: Coupon[] = [
     valid_until: null,
     is_active: true,
   },
+  {
+    code: PANDA5_COUPON_CODE,
+    discount_percent: 0,
+    discount_amount_eur_cents: PANDA5_AMOUNT_EUR_CENTS,
+    // Below ~€15 pre-tax a €5 discount eats the whole margin on a slice of the
+    // catalog; €20 VAT-inclusive keeps every eligible plan profitable.
+    min_total_eur_cents: PANDA5_MIN_TOTAL_EUR_CENTS,
+    max_uses: 999999,
+    current_uses: 0,
+    valid_from: '2026-01-01T00:00:00Z',
+    valid_until: null,
+    is_active: true,
+  },
 ];
+
+/**
+ * Discount a coupon takes off a plan, in USD cents (the currency Stripe
+ * charges). Fixed-euro coupons convert at the static rate and never exceed
+ * the price itself.
+ */
+export function getCouponDiscountCents(coupon: Coupon, retailUsdCents: number): number {
+  if (coupon.discount_amount_eur_cents) {
+    const usdCents = Math.round(coupon.discount_amount_eur_cents / getRate('EUR'));
+    return Math.min(usdCents, retailUsdCents);
+  }
+  return Math.round((retailUsdCents * coupon.discount_percent) / 100);
+}
 
 function getInfluencerCoupons(): Coupon[] {
   return getMockInfluencerCoupons()
@@ -65,6 +96,7 @@ export function validateCoupon(
   code: string,
   orderAmountCents?: number,
   minOrderOverride?: number,
+  grossTotalEurCents?: number,
 ): Coupon | null {
   const normalized = code.toUpperCase();
   const allCoupons = [...COUPONS, ...getInfluencerCoupons(), ...getAllActiveRewardCoupons()];
@@ -83,6 +115,16 @@ export function validateCoupon(
   const staticMin = coupon.min_order_cents ?? 0;
   const effectiveMin = staticMin > 0 ? (minOrderOverride ?? staticMin) : 0;
   if (effectiveMin && orderAmountCents !== undefined && orderAmountCents < effectiveMin) {
+    return null;
+  }
+
+  // VAT-inclusive euro minimum (PANDA5). Skipped when the caller has no order
+  // context, the same way the min_order_cents gate is.
+  if (
+    coupon.min_total_eur_cents &&
+    grossTotalEurCents !== undefined &&
+    grossTotalEurCents < coupon.min_total_eur_cents
+  ) {
     return null;
   }
 

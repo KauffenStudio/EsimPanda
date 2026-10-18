@@ -1,4 +1,5 @@
 import type { Plan } from '@/lib/db/destinations';
+import { isSoldOut } from '@/lib/plans/pricing-display';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://esimpanda.co';
 
@@ -53,7 +54,9 @@ export function buildProductJsonLd(plan: Plan, destinationName: string, imageUrl
       '@type': 'Offer',
       price: (plan.retail_price_cents / 100).toFixed(2),
       priceCurrency: 'USD',
-      availability: 'https://schema.org/InStock',
+      availability: isSoldOut(plan.data_gb)
+        ? 'https://schema.org/SoldOut'
+        : 'https://schema.org/InStock',
     },
   };
 }

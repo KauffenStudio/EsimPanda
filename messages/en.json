@@ -243,7 +243,8 @@
       "savings": "You save ${amount}",
       "invalid": "Invalid code -- check spelling and try again",
       "min_order": "Minimum order of $9.99 required for this coupon",
-      "remove": "Remove code"
+      "remove": "Remove code",
+      "minTotalEur": "This code applies to orders from €{amount}"
     },
     "express": {
       "title": "Express checkout"
@@ -265,7 +266,10 @@
     "trust": {
       "secure": "Secure checkout",
       "guarantee": "Money-back guarantee",
-      "travelers": "Trusted by travelers"
+      "travelers": "Trusted by travelers",
+      "rated": "Rated {rating}/5 by {count} customers on {source}",
+      "ratedSurvey": "Rated {rating}/5 in our customer survey",
+      "ratedSurveyCount": "Rated {rating}/5 by {count} customers in our survey"
     },
     "email_required_hint": "Please enter a valid email address to continue",
     "pay": "Pay {amount}",
@@ -613,5 +617,18 @@
     "prefill": "Hi eSIM Panda! I have a question about an eSIM.",
     "ariaLabel": "Chat with us on WhatsApp",
     "close": "Close message"
+  },
+  "promo": {
+    "soldOut": "Sold out",
+    "unavailable": "Not available",
+    "endsIn": "Ends in",
+    "allPlans": "{percent}% off every plan",
+    "panda5": {
+      "heading": "€{amount} off instantly",
+      "body": "Copy the code and paste it at checkout. On orders from €{min}.",
+      "cta": "Pick a plan",
+      "copied": "Code copied!",
+      "copyAria": "Copy code {code}"
+    }
   }
 }

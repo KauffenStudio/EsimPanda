@@ -81,7 +81,7 @@ export function DestinationCard({
         {/* Discount badge — shows best available discount */}
         {bestDiscountPercent > 0 && (
           <div className="absolute top-2.5 right-2.5 bg-destructive text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
-            up to -{bestDiscountPercent}%
+            -{bestDiscountPercent}%
           </div>
         )}
 

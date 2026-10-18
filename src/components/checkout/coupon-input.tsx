@@ -9,7 +9,7 @@ import { useCheckoutStore } from '@/stores/checkout';
 
 export function CouponInput() {
   const t = useTranslations('checkout.coupon');
-  const { coupon_code, plan_id, applyCoupon, removeCoupon } = useCheckoutStore();
+  const { coupon_code, plan_id, client_secret, applyCoupon, removeCoupon } = useCheckoutStore();
   const [expanded, setExpanded] = useState(false);
   const [code, setCode] = useState('');
   const [validating, setValidating] = useState(false);
@@ -29,21 +29,30 @@ export function CouponInput() {
       const data = await res.json();
 
       if (!data.valid) {
-        setError(data.error === 'min_order' ? t('min_order') : t('invalid'));
+        setError(
+          data.error === 'min_total_eur'
+            ? t('minTotalEur', { amount: data.min_total_eur })
+            : data.error === 'min_order'
+              ? t('min_order')
+              : t('invalid'),
+        );
         setValidating(false);
         return;
       }
 
-      // Update intent with coupon
+      // Re-price the PaymentIntent itself. Without the client_secret the
+      // server cannot touch the intent, and the buyer would see a discount
+      // that Stripe never applies.
       const intentRes = await fetch('/api/checkout/update-intent', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ plan_id, coupon_code: code.trim() }),
+        body: JSON.stringify({ plan_id, client_secret, coupon_code: code.trim() }),
       });
+      if (!intentRes.ok) throw new Error('update-intent failed');
       const intentData = await intentRes.json();
 
       applyCoupon(
-        code.trim(),
+        code.trim().toUpperCase(),
         intentData.discount,
         intentData.subtotal,
         intentData.tax_amount,
@@ -56,7 +65,7 @@ export function CouponInput() {
     } finally {
       setValidating(false);
     }
-  }, [code, plan_id, applyCoupon, t]);
+  }, [code, plan_id, client_secret, applyCoupon, t]);
 
   const handleRemove = useCallback(async () => {
     removeCoupon();
@@ -65,7 +74,7 @@ export function CouponInput() {
       const intentRes = await fetch('/api/checkout/update-intent', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ plan_id }),
+        body: JSON.stringify({ plan_id, client_secret }),
       });
       const intentData = await intentRes.json();
 
@@ -82,7 +91,7 @@ export function CouponInput() {
     setCode('');
     setError(undefined);
     setExpanded(false);
-  }, [plan_id, removeCoupon]);
+  }, [plan_id, client_secret, removeCoupon]);
 
   // Applied state
   if (coupon_code) {

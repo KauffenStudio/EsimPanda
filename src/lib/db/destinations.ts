@@ -1,7 +1,7 @@
 import 'server-only'; // build-time guard: a client component importing this fails the build
 import { cache } from 'react';
 import { createClient as createSupabaseClient } from '@supabase/supabase-js';
-import { getDiscountPercent } from '@/lib/plans/pricing-display';
+import { getDiscountPercent, isSoldOut } from '@/lib/plans/pricing-display';
 
 // Cookieless anon client for public catalog reads. The destinations/plans
 // tables are public-readable under RLS, so no auth cookie is needed — and a
@@ -237,7 +237,9 @@ export async function getCatalog(): Promise<Catalog> {
   }
 
   const enrich = (d: Destination): CatalogDestination => {
-    const ps = byDest.get(d.id) ?? [];
+    // "From $X" must be a price someone can actually pay — sold-out 2GB plans
+    // are usually the cheapest, so they are left out of the headline numbers.
+    const ps = (byDest.get(d.id) ?? []).filter((p) => !isSoldOut(p.data_gb));
     const startingPriceCents = ps.length
       ? Math.min(...ps.map((p) => p.retail_price_cents))
       : 0;
