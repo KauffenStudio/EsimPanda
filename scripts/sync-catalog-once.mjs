@@ -103,13 +103,21 @@ async function main() {
 
     for (const p of pkgs) {
       const wholesale = typeof p.priceInCents === 'number' ? p.priceInCents : Math.round((p.price ?? 0) * 100);
-      // Mirrors src/lib/plans/retail-price.ts: 1.6× rounded up to .99, capped at
-      // a 40% gross margin (highest price ending in 9 cents under the cap).
-      const rounded = Math.ceil((wholesale * 1.6) / 100) * 100 - 1;
-      const cap = Math.floor(wholesale / 0.6);
-      const retail = rounded <= cap ? rounded : Math.floor((cap + 1) / 10) * 10 - 1;
       const dataGB = p.dataLimitInGb;
       const durationDays = p.maxDays ?? p.duration ?? 0;
+      // Mirrors src/lib/plans/retail-price.ts: 1.6× rounded up to .99, capped at
+      // a 40% gross margin (highest price ending in 9 cents under the cap), and
+      // the per-plan MARGIN_OVERRIDES there (Canada 50GB/30d at 30%).
+      const MARGIN_OVERRIDES = { 'CA:50:30': 0.3 };
+      const override = MARGIN_OVERRIDES[`${lookupIso}:${dataGB}:${durationDays}`];
+      let retail;
+      if (override !== undefined) {
+        retail = Math.floor((Math.floor(wholesale / (1 - override)) + 1) / 100) * 100 - 1;
+      } else {
+        const rounded = Math.ceil((wholesale * 1.6) / 100) * 100 - 1;
+        const cap = Math.floor(wholesale / 0.6);
+        retail = rounded <= cap ? rounded : Math.floor((cap + 1) / 10) * 10 - 1;
+      }
 
       const { error } = await supabase.from('plans').upsert(
         {

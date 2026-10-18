@@ -1,6 +1,6 @@
 import { createProvider } from './provider';
 import { createClient } from '@supabase/supabase-js';
-import { retailPriceFromWholesale } from '@/lib/plans/retail-price';
+import { retailPriceForPlan } from '@/lib/plans/retail-price';
 
 /**
  * Columns the daily Celitech sync is allowed to write to `destinations`.
@@ -113,9 +113,14 @@ export async function syncCatalog() {
     }
 
     const planRows = packages.map((pkg) => {
-      // 1.6× wholesale rounded up to .99, capped at a 40% gross margin — see
-      // retailPriceFromWholesale.
-      const retailPriceCents = retailPriceFromWholesale(pkg.wholesalePriceCents);
+      // 1.6× wholesale rounded up to .99, capped at a 40% gross margin, with
+      // per-plan margin overrides — see retailPriceForPlan.
+      const retailPriceCents = retailPriceForPlan({
+        iso: lookupIso,
+        dataGb: pkg.dataGB,
+        durationDays: pkg.durationDays,
+        wholesaleCents: pkg.wholesalePriceCents,
+      });
       return {
         destination_id: destRow.id,
         wholesale_plan_id: pkg.wholesaleId,
