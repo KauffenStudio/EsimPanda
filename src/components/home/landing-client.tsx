@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { BambuVideo } from '@/components/bambu/bambu-video';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
+import { RatingSummary } from '@/components/reviews/rating-summary';
 
 export function LandingClient() {
   const t = useTranslations();
@@ -92,6 +93,11 @@ export function LandingClient() {
             {t('landing.socialProof')}
           </span>
         </div>
+
+        <RatingSummary
+          starSize={14}
+          className="mt-2 justify-center text-xs md:text-sm text-gray-500 dark:text-gray-400 font-medium"
+        />
       </motion.div>
     </div>
   );
