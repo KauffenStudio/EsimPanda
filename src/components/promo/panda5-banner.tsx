@@ -13,7 +13,7 @@ import { DISPLAY_DISCOUNT_PERCENT } from '@/lib/plans/pricing-display';
 import { DealCountdown } from './deal-countdown';
 
 /**
- * Homepage promo: the PANDA5 code (€5 off from €20) the buyer copies and pastes
+ * Homepage promo: the PANDA5 code (€2 off from €20) the buyer copies and pastes
  * into the checkout coupon field, plus the storefront discount countdown.
  */
 export function Panda5Banner() {

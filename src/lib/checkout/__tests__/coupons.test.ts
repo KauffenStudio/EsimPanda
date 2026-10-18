@@ -135,11 +135,11 @@ describe('currency-aware minimum order', () => {
 });
 
 describe('PANDA5', () => {
-  it('is €5 off, converted to the USD cents Stripe charges', async () => {
+  it('is €2 off, converted to the USD cents Stripe charges', async () => {
     const { getCouponDiscountCents } = await import('../coupons');
     const coupon = validateCoupon('panda5', undefined, undefined, 2000)!;
     expect(coupon).not.toBeNull();
-    expect(getCouponDiscountCents(coupon, 2599)).toBe(Math.round(500 / getRate('EUR')));
+    expect(getCouponDiscountCents(coupon, 2599)).toBe(Math.round(200 / getRate('EUR')));
   });
 
   it('needs €20 VAT-inclusive', () => {
@@ -150,6 +150,6 @@ describe('PANDA5', () => {
   it('never takes more than the price', async () => {
     const { getCouponDiscountCents } = await import('../coupons');
     const coupon = validateCoupon('PANDA5')!;
-    expect(getCouponDiscountCents(coupon, 300)).toBe(300);
+    expect(getCouponDiscountCents(coupon, 100)).toBe(100);
   });
 });
